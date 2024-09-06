@@ -1,0 +1,103 @@
+<div class="page-header">
+  <span>
+    <h3 class="page-title">Mentors</h3>
+    <br />
+    <h6>Add and Update Mentor</h6>
+  </span>
+  <button type="button" class="btn btn-outline-primary" routerLink="/mentors">
+    Show All Mentors
+  </button>
+</div>
+
+<div class="col-md-10 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Enter Mentor's Information</h4>
+      <hr>
+      <form
+        class="forms-sample"
+        #empForm="ngForm"
+        enctype="multipart/form-data"
+      >
+        <div class="col-md-50 p-0">
+          <div class="form-group col-lg-12">
+            <label>Mentor's name</label>
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="mentorsname"
+              [(ngModel)]="formData.name"
+              (change)="getSlug($event)"
+              placeholder="Mentor's Full Name"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Slug</label>
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="slug"
+              [(ngModel)]="formData.slug"
+              (change)="getSlug($event)"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Mentor's Title</label>
+
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="mentorstitle"
+              [(ngModel)]="formData.title"
+              placeholder="Mentors Title"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label for="">Mentor Description</label>
+            <!-- <editor apiKey="test" [init]="{plugins: 'link'}" name="desc" [(ngModel)]="formData.intro"></editor> -->
+            <ck-editor name="editor1" [(ngModel)]="formData.intro" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+
+          </div>
+
+          <div class="form-group col-lg-12">
+           <p>Mentor's Photo (Thumbnail) (Upload a square image. Best thumbnail size 480px X 480px)</p>
+           <input type="file" name="thumb" (change)="selectThumb($event)">
+
+           <div class="thumb-image mt-3" *ngIf="thumbFetch">
+            <img class="image-show" src="{{url}}{{thumbFetch}}">
+           </div>
+          </div>
+
+
+          <div class="form-group col-lg-12">
+            <p>Mentor's Photo (Full size) (Upload a wallpaper size image. Image size must be less than 1MB)</p>
+            <input type="file" name="picture" (change)="selectPicture($event)">
+
+            <div class="thumb-image mt-3" *ngIf="pictureFetch">
+              <img class="image-show" src="{{url}}{{pictureFetch}}">
+
+            </div>
+           </div>
+
+           <div class="form-group col-lg-12 float-left">
+             <span>
+              <a href="#">cancel</a>
+             </span>
+             <span style="float: right;">
+              <button type="submit" class="btn btn-outline-primary"
+              (click)="createMentor(formData)">
+               Save mentor Information
+              </button>
+             </span>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

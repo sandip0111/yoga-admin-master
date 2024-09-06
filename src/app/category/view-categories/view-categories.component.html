@@ -1,0 +1,93 @@
+<div class="page-header">
+  <h3 class="page-title">Category</h3>
+  <br />
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/add-category"
+  >
+    Add Category
+  </button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Category Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of categoryData">
+      <th scope="row">{{ data.categoryname }}</th>
+      <td>{{ data.isActive ? 'Active' : 'Inactive' }}</td>
+      <td>
+        <button class="btn btn-primary btn-sm"  routerLink="/add-category/{{data._id}}">Edit</button>
+        <button class="btn btn-danger btn-sm"  (click)="deleteCategory(data._id)">Delete</button>
+        <button class="btn btn-info btn-sm"  routerLink="/subcategory/{{data._id}}">SubCategory</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- <ng-template
+  #mediumModalContent
+  let-modal
+  class="modal fade"
+  id="exampleModal-2"
+  aria-labelledby="exampleModalLabel-2"
+>
+  <div class="modal-content" style="padding: 18px;">
+    <div class="modal-header">
+      <h2 class="modal-title" id="exampleModalLabel-2">Subcategories</h2>
+      <button
+        type="button"
+        class="close"
+        (click)="modal.dismiss()"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form>
+      <div class="row mb-3">
+        <label for="" class="col-sm-4 col-form-label"
+          >Subcategory name</label
+        >
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="subcategoryname" [(ngModel)]="subDetails.subcategoryname"/>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="" class="col-sm-4 col-form-label"
+          >Meta Title</label
+        >
+        <div class="col-sm-8">
+          <input type="text" class="form-control"  name="metatitle" [(ngModel)]="subDetails.metatitle"/>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="" class="col-sm-4 col-form-label"
+          >Meta Description</label
+        >
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="metadesc" [(ngModel)]="subDetails.metadesc"/>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <label for="" class="col-sm-4 col-form-label"
+          >Meta keyword</label
+        >
+        <div class="col-sm-8">
+          <input type="text" class="form-control" name="metakeyword" id="inputEmail3" [(ngModel)]="subDetails.metakeyword" />
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-evenly;">
+        <button type="submit" class="btn btn-primary" (click)="submitdata();">Submit</button>
+        <button type="reset" class="btn btn-primary">Reset</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template> -->

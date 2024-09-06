@@ -1,0 +1,99 @@
+<nav class="sidebar hover-open sidebar-offcanvas" id="sidebar">
+  <ul class="nav">
+    <li class="nav-item" [ngClass]="{ 'active': forms.isActive }">
+      <a class="nav-link" routerLink="/course" routerLinkActive #forms="routerLinkActive">
+        <span class="menu-title">Courses</span>
+        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': student.isActive }">
+      <a class="nav-link" routerLink="/view-student" routerLinkActive #student="routerLinkActive">
+        <span class="menu-title">Student</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': blog.isActive }">
+      <a class="nav-link" routerLink="/view-blog" routerLinkActive #blog="routerLinkActive">
+        <span class="menu-title">Blog</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': mentors.isActive }">
+      <a class="nav-link" routerLink="/mentors" routerLinkActive #mentors="routerLinkActive">
+        <span class="menu-title">Mentors</span>
+        <i class="mdi mdi-chart-bar menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': media.isActive }">
+      <a class="nav-link" routerLink="/media" routerLinkActive #media="routerLinkActive">
+        <span class="menu-title">Media</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': images.isActive }">
+      <a class="nav-link" routerLink="/view-images" routerLinkActive #images="routerLinkActive">
+        <span class="menu-title">Sliders</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': category.isActive }">
+      <a class="nav-link" routerLink="/add-category" routerLinkActive #category="routerLinkActive">
+        <span class="menu-title">Category</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': pages.isActive }">
+      <a class="nav-link" routerLink="/pages" routerLinkActive #pages="routerLinkActive">
+        <span class="menu-title">Pages</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': testimonial.isActive }">
+      <a class="nav-link" routerLink="/testimonial" routerLinkActive #testimonial="routerLinkActive">
+        <span class="menu-title">Testimonial</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': videoReview.isActive }">
+      <a class="nav-link" routerLink="/video-review" routerLinkActive #videoReview="routerLinkActive">
+        <span class="menu-title">Student Video Reviews</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': inquiry.isActive }">
+      <a class="nav-link" routerLink="/inquiry" routerLinkActive #inquiry="routerLinkActive">
+        <span class="menu-title">Inquiry</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': payment.isActive }">
+      <a class="nav-link" routerLink="/payment-details" routerLinkActive #payment="routerLinkActive">
+        <span class="menu-title">Payment Details</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': analytics.isActive }">
+      <a class="nav-link" routerLink="/analytics" routerLinkActive #analytics="routerLinkActive">
+        <span class="menu-title">Analytics</span>
+        <i class="mdi mdi-contacts menu-icon"></i>
+      </a>
+    </li>
+
+    <!-- <li class="nav-item" [ngClass]="{ 'active' : blankPage.isActive || login.isActive || register.isActive || error404.isActive || error500.isActive }">
+      <a class="nav-link" (click)="samplePagesCollapsed = !samplePagesCollapsed"  [attr.aria-expanded]="samplePagesCollapsed" aria-controls="auth">
+        <span class="menu-title">Sample Pages</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-medical-bag menu-icon"></i>
+      </a>
+      <div class="collapse" id="auth" [ngbCollapse]="!samplePagesCollapsed">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" routerLink="general-pages/blank-page" routerLinkActive="active" #blankPage="routerLinkActive"> Blank Page </a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="user-pages/login" routerLinkActive="active" #login="routerLinkActive"> Login </a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="user-pages/register" routerLinkActive="active" #register="routerLinkActive"> Register </a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="error-pages/404" routerLinkActive="active" #error404="routerLinkActive"> 404 </a></li>
+          <li class="nav-item"> <a class="nav-link" routerLink="error-pages/500" routerLinkActive="active" #error500="routerLinkActive"> 500 </a></li>
+        </ul>
+      </div>
+    </li> -->
+  </ul>
+</nav>

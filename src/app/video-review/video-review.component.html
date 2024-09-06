@@ -1,0 +1,31 @@
+
+<div class="page-header">
+  <span>
+    <h3 class="page-title">Video Reviews By Course</h3>
+    <!-- <h6>Total {{imagedetails.length}} sliders(s)</h6> -->
+  </span>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Student Name</th>
+        <th scope="col">Course Title</th>
+        <th scope="col">Day</th>
+        <th scope="col">Video link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of videoList | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
+        <td>{{item.studentData[0].firstName}}</td>
+        <td>{{item.courseData[0].coursetitle}}</td>
+        <td>
+        {{item.day}}
+        </td>
+        <td>
+          <a class="btn btn-primary btn-sm" target="_blank" href="{{url}}{{item.videoReview}}">Video Link</a>
+        </td>
+      </tr>
+    </tbody>
+  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+  </table>

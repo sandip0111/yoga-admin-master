@@ -1,0 +1,167 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import './assets/scss/variables';
+@import "~compass-mixins/lib/compass";
+@import "~compass-mixins/lib/animate";
+@import "~bootstrap/scss/bootstrap";
+@import "./assets/scss/fonts";
+@import "./assets/scss/functions";
+
+/* === Icon fonts === */
+@import "~@mdi/font/scss/materialdesignicons";
+
+
+/* === Template mixins === */
+@import "./assets/scss/mixins/animation";
+@import "./assets/scss/mixins/badges";
+@import "./assets/scss/mixins/buttons";
+@import "./assets/scss/mixins/misc";
+@import "./assets/scss/mixins/color-functions";
+@import "./assets/scss/mixins/cards";
+@import "./assets/scss/mixins/blockqoute";
+@import "./assets/scss/mixins/popovers";
+@import "./assets/scss/mixins/tooltips";
+
+/* === Core Styles === */
+@import "./assets/scss/background";
+@import "./assets/scss/typography";
+@import "./assets/scss/reset";
+@import "./assets/scss/responsive";
+@import "./assets/scss/misc";
+@import "./assets/scss/utilities";
+@import "./assets/scss/demo";
+@import "./assets/scss/spinner";
+
+/* === Components === */
+@import "./assets/scss/components/forms";
+@import "./assets/scss/components/checkbox-radio";
+@import "./assets/scss/components/icons";
+@import "./assets/scss/components/tables";
+@import "./assets/scss/components/accordions";
+@import "./assets/scss/components/buttons";
+@import "./assets/scss/components/breadcrumbs";
+@import "./assets/scss/components/badges";
+@import "./assets/scss/components/cards";
+@import "./assets/scss/components/preview";
+@import "./assets/scss/components/tooltips";
+@import "./assets/scss/components/popovers";
+@import "./assets/scss/components/lists";
+@import "./assets/scss/components/bootstrap-progress";
+@import "./assets/scss/components/bootstrap-alerts";
+@import "./assets/scss/components/tabs";
+@import "./assets/scss/components/dropdowns";
+@import "./assets/scss/components/date-picker";
+@import "./assets/scss/components/pagination";
+@import "./assets/scss/components/portfolio";
+@import "./assets/scss/components/todo-list";
+@import "./assets/scss/components/landing-screens/auth";
+
+/* === Layout === */
+@import "./assets/scss/layout";
+
+.image-show{
+   border-radius: 0px !important;
+   width:200px !important;
+   height:auto !important;
+}
+
+
+.navbar .navbar-menu-wrapper {
+
+    padding-left: 0px !important;
+
+    width: calc(100% - 170px) !important;
+    height: 50px !important;
+  }
+
+  .navbar .navbar-brand-wrapper{
+    width: 170px !important;
+    height: 50px !important;
+  }
+  .page-body-wrapper {
+    min-height: calc(100vh - 50px) !important;
+    padding-top: 50px !important;
+
+  }
+  .sidebar{
+    min-height: calc(100vh - 50px);
+      background: #ffffff;
+
+      width: 170px;
+  }
+  .main-panel {
+    transition: width 0.25s ease, margin 0.25s ease;
+    width: calc(100% - 170px);
+    min-height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card{
+
+  }
+  .d-grid-1{
+
+  }
+  .dashboard-tbl{
+
+  }
+  .dashboard-tbl h5{
+    font-size: 1rem;
+  }
+  .dashboard-tbl img{
+    width: 50px;
+  }
+  .p-0, .p-none{
+    padding: 0 !important;
+  }
+
+  [class^='col-md']{
+    float: left;
+  }
+  .card-header{
+    width: 100%;
+    padding: 5px 0;
+  }
+  .card-header h4{
+  font-size:18px;
+  }
+  .card-body{
+    width: 100%;
+    padding: 0;
+  }
+  .d-grid-1 .card{
+    padding: 10px;
+    position: relative;
+      display: flex;
+      flex-direction: row;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem;
+      align-items: center;
+  }
+  .d-grid-2 .card{
+    /* padding: 10px; */
+    position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.25rem;
+      align-items: center;
+  }
+  .iconimg{
+    width: 44px;
+  }
+  .title {
+      font-size: 12px;
+      color: #838080;
+  }

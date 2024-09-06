@@ -1,0 +1,112 @@
+<div class="page-header">
+    <h3 class="page-title">Category</h3>
+    <br />
+    <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/subcategory">
+    subcategory
+  </button>
+
+  </div>
+  <div class="row">
+    <div class="col-md-6 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add Category</h4>
+          <form class="forms-sample" #empForm="ngForm">
+            <div class="col-md-50 p-0">
+
+                <div class="form-group col-lg-10 float-left">
+                    <label>Category name</label>
+                    <input
+                      type="text"
+                      value=""
+                      name="categoryname"
+                      placeholder="Category Name"
+                      class="form-control"
+                       [(ngModel)]="categoryDetails.categoryname"
+                    />
+                  </div>
+                  <div class="form-group col-lg-10 float-left">
+                    <label>Slug</label>
+                    <input
+                      type="text"
+                      value=""
+                      name="slug"
+                      placeholder="Slug"
+                      class="form-control"
+                       [(ngModel)]="categoryDetails.slug"
+                    />
+                  </div>
+                <div class="form-group col-lg-10 float-left">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  value=""
+                  name="metatitle"
+                  placeholder="Meta title"
+                  class="form-control"
+                  [(ngModel)]="categoryDetails.metatitle"
+                />
+              </div>
+
+              <div class="form-group col-lg-10 float-left">
+                <label>Meta discription</label>
+                <input
+                  type="text"
+                  value=""
+                  name="metadesc"
+                  placeholder="Meta discription"
+                  class="form-control"
+                  [(ngModel)]="categoryDetails.metadescription"
+                    />
+              </div>
+              <div class="form-group col-lg-10 float-left">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                  value=""
+                  name="metakeyword"
+                  placeholder="Meta Keyword"
+                  class="form-control"
+                  [(ngModel)]="categoryDetails.metakeyword"
+                />
+              </div>
+
+              <div class="form-group col-lg-12 float-left">
+              <button
+        type="submit"
+        class="btn btn-outline-primary"
+        (click)="createCategory(categoryDetails)"
+      >
+       Submit
+      </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Category Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of categoryData">
+            <th scope="row">{{ data.categoryname }}</th>
+            <td>{{ data.isActive ? 'Active' : 'Inactive' }}</td>
+            <td>
+              <button class="btn btn-primary btn-sm"  routerLink="/add-category/{{data._id}}">Edit</button>
+              <button class="btn btn-danger btn-sm"  (click)="deleteCategory(data._id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

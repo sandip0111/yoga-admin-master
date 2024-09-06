@@ -1,0 +1,52 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="page-header">
+    <span>
+    <h3 class="page-title">Students</h3><br>
+    <h6>Total {{total}} student(s)</h6>
+</span>
+<div>
+  <input type="search" name="search" (keyup.enter)="searchStudent($event)" class="form-control" placeholder="Type Name here...">
+</div>
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      routerLink="/addstudent"
+    >
+      Add New Student
+    </button>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <!-- <th>lastname</th> -->
+        <th>Email Address</th>
+        <th>password</th>
+        <th>status</th>
+        <th>Enrollment Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of userList | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
+        <td>{{data.firstName}}</td>
+        <!-- <td>{{data.lastName}}</td> -->
+        <td>{{data.email}}</td>
+        <td>{{data.password}}</td>
+        <td>{{data.isActive ? 'Active':'Inactive'}}</td>
+        <td>{{data.enrollmentDate}}</td>
+        <td><button type="button" class="btn btn-primary btn-lg" routerLink="/addstudent/{{data._id}}" >Edit</button></td>
+        <td><button type="button"  class="btn btn-danger btn-lg" (click)="deleteStudent(data._id)">Delete</button></td>
+        <td>
+          <button *ngIf="data.pranCounter === false" type="button"  class="btn btn-info btn-lg" (click)="setAccess(data._id)">Give Prana Arambha Access</button>
+          <button *ngIf="data.pranCounter === true" type="button"  class="btn btn-warning btn-lg">Prana Arambha Enrolled</button>
+        </td>
+        <td>
+          <button *ngIf="data.fCounter === false" type="button"  class="btn btn-info btn-lg" (click)="setAccessV2(data._id)">Give Foundation Access</button>
+          <button *ngIf="data.fCounter === true" type="button"  class="btn btn-warning btn-lg">Foundation Enrolled</button>
+        </td>
+      </tr>
+    </tbody>
+  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+  </table>

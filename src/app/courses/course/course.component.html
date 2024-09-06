@@ -1,0 +1,36 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="page-header">
+  <span>
+    <h3 class="page-title">Courses</h3>
+    <br />
+    <h6>Total {{total}} Courses(s)</h6>
+  </span>
+  <button type="button" class="btn btn-primary" routerLink="/addcourse">
+    Add new course
+  </button>
+</div>
+<div class="filter-side col-15 px-0">
+  <table [cellPadding]="10">
+    <thead class="table-secondary">
+      <th>title</th>
+      <th>LINK SLUG</th>
+      <th>STATUS</th>
+      <th>ACTIONS</th>
+    </thead>
+    <tbody>
+      <tr class="table-light" *ngFor="let data of courseData | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
+        <td><a href="#">{{data.coursetitle}}</a></td>
+        <td><a routerLink="#">{{data.slug}}</a></td>
+        <td style="color: green">{{data.isActive ? 'Active':'inActive'}}</td>
+        <td>
+          <a class="btn btn-primary btn-sm mx-2 my-2" routerLink="/addcourse/{{data._id}}">Edit</a>
+          <a class="btn btn-primary btn-sm mx-2 my-2" routerLink="/content/{{data._id}}">Content</a>
+          <a class="btn btn-primary btn-sm mx-2 my-2" routerLink="/fee/{{data._id}}">Fee</a>
+          <a class="btn btn-primary btn-sm mx-2 my-2" routerLink="/upEvent/{{data._id}}">Upcoming Events</a>
+          <a class="btn btn-primary btn-sm mx-2 my-2" *ngIf="data._id == '63c3f26c461e531f3c3452e1' || data._id == '644f9dfc499ffcfb45df35cd'" routerLink="/course-video/{{data._id}}">Uploaded Course Videos</a>
+        </td>
+      </tr>
+    </tbody>
+  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+  </table>
+</div>

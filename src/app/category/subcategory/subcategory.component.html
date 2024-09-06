@@ -1,0 +1,122 @@
+<div class="page-header">
+    <h3 class="page-title">Sub-Category</h3>
+    <br />
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      routerLink="/subcategorycourse"
+    >
+         Courses
+    </button>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Add Sub-Category</h4>
+          <form class="forms-sample" #empForm="ngForm">
+            <div class="col-md-50 p-0">
+
+              <div class="form-group col-lg-10 float-left">
+                <label>Category</label>
+                <select class="form-control" name="categoryId" [(ngModel)]="formData.categoryId">
+                  <option value="undefined">select Category</option>
+                  <option *ngFor="let cat of categoryData" value="{{cat._id}}">{{cat.categoryname}}</option>
+                </select>
+              </div>
+
+
+                <div class="form-group col-lg-10 float-left">
+                    <label>Sub-Category name</label>
+                    <input
+                      type="text"
+                      name="subcategoryname"
+                      placeholder="Sub Category Name"
+                      class="form-control"
+                      [(ngModel)]="formData.subcategoryname"
+                    />
+                  </div>
+                  <div class="form-group col-lg-10 float-left">
+                    <label>Slug</label>
+                    <input
+                      type="text"
+                      value=""
+                      name="slug"
+                      placeholder="Slug"
+                      class="form-control"
+                       [(ngModel)]="formData.slug"
+                    />
+                  </div>
+                <div class="form-group col-lg-10 float-left">
+                <label>Meta Title</label>
+                <input
+                  type="text"
+                  name="metatitle"
+                  placeholder="Meta title"
+                  class="form-control"
+                  [(ngModel)]="formData.metatitle"
+                />
+              </div>
+
+              <div class="form-group col-lg-10 float-left">
+                <label>Meta discription</label>
+                <input
+                  type="text"
+                    [(ngModel)]="formData.metadescription"
+                  name="metadesc"
+                  placeholder="Meta discription"
+                  class="form-control"
+                    />
+              </div>
+              <div class="form-group col-lg-10 float-left">
+                <label>Meta Keyword</label>
+                <input
+                  type="text"
+                    [(ngModel)]="formData.metakeyword"
+                  name="metakeyword"
+                  class="form-control"
+                  placeholder="Meta Keyword"
+                />
+              </div>
+
+              <div class="form-group col-lg-12 float-left">
+              <button
+        type="submit"
+        class="btn btn-outline-primary"
+        (click)="createSubCategory(formData)"
+        >
+       Submit
+      </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Subcategory Name</th>
+            <th>Category Name</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+      <tr *ngFor="let sub of subcategoryData">
+        <td>{{sub.subcategoryname}}</td>
+        <td>{{sub?.categoryData?.categoryname}}</td>
+        <td>{{sub.isActive ? 'Active' : 'Inactive'}}</td>
+        <td>
+          <button class="btn btn-primary btn-sm"  routerLink="/subcategory/{{sub._id}}">Edit</button>
+          <button class="btn btn-danger btn-sm"  (click)="deleteSubCategory(sub._id)">Delete</button>
+        </td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+

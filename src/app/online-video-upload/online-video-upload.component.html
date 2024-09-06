@@ -1,0 +1,28 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+
+<div class="container">
+  <h1>Upload Video</h1>
+  <form #up ="ngForm" >
+    <div class="mb-3">
+      <label for="name" class="form-label">Course</label>
+      <!-- <input type="text" class="form-control" placeholder="Enter your name"> -->
+      <select class="form-control" name="courseId" [(ngModel)]="formData.courseId">
+        <option value="undefined">Select Course</option>
+        <option *ngFor="let d of courseList" value="{{d._id}}">{{d.coursetitle}}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="title" class="form-label">title</label>
+      <input type="text" name="title" class="form-control" [(ngModel)]="formData.title" placeholder="Enter Title">
+    </div>
+    <div class="mb-3">
+      <label for="order" class="form-label">Order</label>
+      <input type="text" name="order"  class="form-control" [(ngModel)]="formData.order" placeholder="Enter Order">
+    </div>
+    <div class="mb-3">
+      <label for="video" class="form-label">Video</label>
+      <input type="file" class="form-control" (change)="uploadVideo($event)">
+    </div>
+    <button type="submit" (click)="InsertData(formData)" class="btn btn-primary">Submit</button>
+  </form>
+</div>

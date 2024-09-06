@@ -1,0 +1,99 @@
+<div class="page-header">
+  <h3 class="page-title">Manage course content</h3>
+  <br />
+  <!-- <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/view-categories"
+  >
+    view Category
+  </button> -->
+</div>
+<div class="row">
+  <div class="col-md-8 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form class="forms-sample" #empForm="ngForm">
+          <div class="col-md-50 p-0">
+            <div class="form-group col-lg-12">
+              <label>Title</label>
+              <input
+                type="text"
+                value=""
+                class="form-control"
+                name="navTitle"
+                placeholder="nav title"
+                class="form-control"
+                [(ngModel)]="contentData.title"
+              />
+            </div>
+
+            <div class="form-group col-lg-12">
+              <label>order</label>
+              <input
+                type="number"
+                value=""
+                class="form-control"
+                name="navorder"
+                placeholder="Nav order"
+                class="form-control"
+                [(ngModel)]="contentData.order"
+              />
+            </div>
+            <div class="form-group col-lg-12">
+              <label>Content</label>
+              <!-- <editor
+                apiKey="test"
+                [init]="{ plugins: 'link' }"
+                name="para"
+                [(ngModel)]="contentData.para"
+              ></editor> -->
+            <ck-editor name="editor1" [(ngModel)]="contentData.para" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+
+            </div>
+            <div class="form-group">
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-primary"
+                style="padding: 0.45rem 0.25rem"
+                (click)="createContent(contentData)"
+              >
+                Save Content information
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table card-table table-vcenter table-striped">
+          <thead>
+            <tr>
+              <th >Title</th>
+              <!-- <th>order</th> -->
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cont of contentList; let i =index">
+              <td>
+               {{cont.title}}
+              </td>
+              <!-- <td>
+                {{cont.order}}
+              </td> -->
+              <td class="text-end">
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="editContent(cont,i)">edit</a>
+                <a href="javascript:void(0)" class="btn btn-danger btn-sm" (click)="deleteContent(cont,i)">delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

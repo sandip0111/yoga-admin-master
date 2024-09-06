@@ -1,0 +1,38 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="page-header">
+  <span>
+  <h3 class="page-title">Blogs</h3><br>
+  <h6>Total {{total}} mentors(s)</h6>
+</span>
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/blog"
+  >
+    Add new Blog
+  </button>
+</div>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Slug</th>
+      <th>Status</th>
+      <!-- <th>Content</th> -->
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of blogList | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
+      <th scope="row">{{item.title}}</th>
+      <td>{{item.slug}}</td>
+      <td>{{item.isActive ? "active" : "inactive"}}</td>
+      <td>
+        <a routerLink="/blog/{{item._id}}" class="btn btn-primary btn-sm">Edit</a>
+        <a href="javascript:void(0)" (click)="deleteBlog(item._id)" class="btn btn-danger btn-sm">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+</table>

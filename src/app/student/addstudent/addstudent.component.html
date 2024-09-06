@@ -1,0 +1,124 @@
+<div class="page-header">
+  <h3 class="page-title">Student</h3>
+  <br />
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/view-student"
+  >
+    Show All Student
+  </button>
+</div>
+<div class="row">
+  <div class="col-md-16 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">New Student information</h4>
+        <form
+          class="forms-sample"
+          #empForm="ngForm"
+        >
+          <div class="col-md-50 p-0">
+            <div class="form-group col-lg-6 float-left">
+              <label>First Name</label>
+              <input
+                type="text"
+                value=""
+                class="form-control"
+                name="firstName"
+                [(ngModel)]="userdetails.firstName"
+                placeholder="Enter firstname"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group col-lg-6 float-left">
+              <label>last Name</label>
+
+              <input
+                type="text"
+                value=""
+                class="form-control"
+                name="lastName"
+                [(ngModel)]="userdetails.lastName"
+                placeholder="Enter lastname"
+                class="form-control"
+              />
+            </div>
+
+            <div class="form-group col-lg-6 float-left">
+              <label>Email Address</label>
+              <input
+                type="text"
+                class="form-control"
+                name="email"
+                [(ngModel)]="userdetails.email"
+                placeholder="Enter email"
+                class="form-control"
+                (change)="checkEmail($event)"
+              />
+            </div>
+            <div class="form-group col-lg-6 float-left">
+              <label>Password</label>
+
+              <input
+                type="password"
+                value=""
+                name="password"
+                [(ngModel)]="userdetails.password"
+                placeholder="password"
+                class="form-control"
+              />
+
+            </div>
+            <div class="form-group col-lg-6 float-left">
+              <label>Phone Number</label>
+              <input
+                type="text"
+                value=""
+                name="phoneNumber"
+                [(ngModel)]="userdetails.phoneNumber"
+                placeholder="Phone Number"
+                class="form-control"
+
+              />
+            </div>
+            <div class="form-group col-lg-6 float-left">
+              <label>Enrollment Date</label>
+
+              <input
+                type="date"
+                name="enrollmentDate"
+                [(ngModel)]="userdetails.enrollmentDate"
+                placeholder=""
+                class="form-control"
+              />
+            </div>
+            <div class="form-group col-lg-6 float-left">
+              <label>SELECT COURSE</label>
+              <select name="mySelect" multiple class="form-control" [(ngModel)]="userdetails.selected">
+                <option *ngFor="let option of courseList" [value]="option._id">{{ option.coursetitle }}</option>
+            </select>
+            </div>
+
+            <div class="form-group col-lg-12 text-center float-left">
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-info btn-sm mx-2 filter-toggle"
+                style="padding: 0.45rem 0.25rem"
+                data-toggle="collapse"
+                data-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+                (click)="createStudent(userdetails);"
+              >
+                Save Student information
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

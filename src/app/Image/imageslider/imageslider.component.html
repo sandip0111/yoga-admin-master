@@ -1,0 +1,94 @@
+<div class="page-header">
+  <h3 class="page-title">Create Image slider</h3>
+  <br />
+  <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/view-images"
+  >
+    Show All Images
+  </button>
+</div>
+<div class="row">
+  <div class="col-md-40 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add image slider</h4>
+        <form class="forms-sample" #empForm="ngForm">
+          <div class="col-md-50 p-0">
+            <div class="form-group col-lg-10 float-left">
+              <label>Meta Title</label>
+              <input
+                type="text"
+                value=""
+                name="metatitle"
+                placeholder="Meta title"
+                class="form-control"
+                [(ngModel)]="formData.metatitle"
+              />
+            </div>
+
+            <div class="form-group col-lg-10 float-left">
+              <label>Meta discription</label>
+              <input
+                type="text"
+                value=""
+                name="metadesc"
+                placeholder="Meta discription"
+                class="form-control"
+                [(ngModel)]="formData.metadesc"
+                  />
+            </div>
+            <div class="form-group col-lg-10 float-left">
+              <label>Meta Keyword</label>
+              <input
+                type="text"
+                value=""
+                name="metakeyword"
+                placeholder="Meta Keyword"
+                class="form-control"
+                [(ngModel)]="formData.metakeyword"
+              />
+            </div>
+
+            <div class="form-group col-lg-10 float-left">
+
+                <input type="file" title="Choose Image" name="fileimage" (change)="selectSlider($event)">
+
+                <div class="image-update mt-3" *ngIf="imageFetch">
+                  <img class="image-show" src="{{url}}{{imageFetch}}">
+                </div>
+            </div>
+
+            <div class="form-group col-lg-10 float-left">
+              <label>Slider Title</label>
+              <input type="text" class="form-control" title="title" name="title"  [(ngModel)]="formData.title">
+          </div>
+          <div class="form-group col-lg-10 float-left">
+            <label>Slider Para</label>
+            <textarea name="para" id="" class="form-control" [(ngModel)]="formData.para" cols="30" rows="10"></textarea>
+            <!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="htmlContent"></app-ngx-editor> -->
+        </div>
+
+            <div class="form-group col-lg-12 float-left">
+              <button
+              type="reset"
+              class="btn btn-outline-primary"
+              style="float: right;"
+              >
+              Reset
+            </button>
+            <button
+      type="submit"
+      class="btn btn-outline-primary"
+      (click)="createSlider(formData)"
+    >
+     Submit
+    </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

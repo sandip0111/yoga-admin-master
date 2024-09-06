@@ -1,0 +1,128 @@
+<app-spinner *ngIf="isLoading"></app-spinner>
+
+<div class="page-header">
+  <span>
+    <h3 class="page-title">Blog</h3>
+    <br />
+    <h6>Add and Update Blog</h6>
+  </span>
+  <button type="button" class="btn btn-outline-primary" routerLink="/view-blog">
+    Show All Blogs
+  </button>
+</div>
+
+<div class="col-md-10 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Enter Mentor's Information</h4>
+      <hr>
+      <form
+        class="forms-sample"
+        #empForm="ngForm"
+        enctype="multipart/form-data"
+      >
+        <div class="col-md-50 p-0">
+          <div class="form-group col-lg-12">
+            <label>Blog title</label>
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="mentorsname"
+              [(ngModel)]="formData.title"
+              placeholder="Blog title"
+              (change)="getSlug($event)"
+              size="70"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Blog Slug</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="slug"
+              [(ngModel)]="formData.slug"
+              placeholder="slug"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Blog Author</label>
+            <select class="form-control" name="authorId" [(ngModel)]="formData.authorId">
+              <!-- <option value="undefined">Select Author</option> -->
+              <option *ngFor="let mentor of mentorList" value="{{mentor._id}}">{{mentor.name}}</option>
+            </select>
+          </div>
+          <div class="form-group col-lg-12">
+            <label>Blog Short Desc</label>
+
+            <input
+              type="text"
+              class="form-control"
+              name="shortDesc"
+              [(ngModel)]="formData.shortDesc"
+              placeholder="Blog short desc"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label for="">Content</label>
+            <!-- <editor apiKey="test" [init]="{plugins: 'link'}" name="content" [(ngModel)]="formData.content"></editor> -->
+            <ck-editor name="editor1" [(ngModel)]="formData.content" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Blog Seo Keywords</label>
+
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="seokeywords"
+              [(ngModel)]="formData.seokeywords"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+            <label>Blog Seo Description</label>
+
+            <input
+              type="text"
+              value=""
+              class="form-control"
+              name="seodescription"
+              [(ngModel)]="formData.seodescription"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group col-lg-12">
+           <p>Blog Image *(size should be less than 500kb)</p>
+           <input type="file" name="blogImage" (change)="selectBlogImage($event)">
+
+           <!-- <div class="thumb-image mt-3" *ngIf="thumbFetch">
+            <img class="image-show" src="{{url}}{{thumbFetch}}">
+           </div> -->
+          </div>
+
+           <div class="form-group col-lg-12 float-left">
+             <span>
+              <a href="#">cancel</a>
+             </span>
+             <span style="float: right;">
+              <button type="submit" class="btn btn-outline-primary"
+              (click)="createBlog(formData)">
+               Save Blog Information
+              </button>
+             </span>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="page-wrapper">
+  <div class="container-xl">
+     <!-- Page title -->
+     <div class="page-header d-print-none">
+        <div class="row align-items-center">
+           <div class="col">
+              <h2 class="page-title">
+                 Update Page Content
+              </h2>
+              <div class="text-muted mt-1">About</div>
+           </div>
+           <!-- Page title actions -->
+           <div class="col-auto ms-auto d-print-none">
+              <div class="d-flex">
+                 <a href="cms.php" class="btn btn-outline-primary">
+                 Show All Pages
+                 </a>
+              </div>
+           </div>
+        </div>
+     </div>
+  </div>
+  <div class="page-body">
+     <div class="container-xl">
+        <form #page="ngForm">
+           <div class="row row-cards">
+              <div class="col-8">
+                 <div class="card">
+                     <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                           <div class="mb-3">
+                              <label class="form-label">Select Page</label>
+                              <div class="row g-2">
+                                 <div class="col">
+                               <select name="slug" [(ngModel)]="formData.slug" class="form-control">
+                                <option value="undefined">Select Page</option>
+                                <option value="home">Home Page</option>
+                                <option value="about-us">About Page</option>
+                                <option value="terms-and-condtions">Terms & Conditions Page</option>
+                                <option value="privacy-policy">Privacy Policy Page</option>
+                               </select>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="row">
+                      <div class="col-12">
+                         <div class="mb-3">
+                            <label class="form-label">Title</label>
+                            <div class="row g-2">
+                               <div class="col">
+                             <input type="text" name="title" [(ngModel)]="formData.title" class="form-control">
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+
+                       <div class="row">
+                          <div class="col-12">
+                             <div class="mb-3">
+                                <label class="form-label">Page Text</label>
+                                <div class="row g-2">
+                                   <div class="col">
+
+            <ck-editor name="editor1" [(ngModel)]="formData.text" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+
+                       <div class="row">
+                        <div class="col-12">
+                          <div class="mb-3">
+                             <div class="form-label">Page SEO Title</div>
+                             <input type="text" class="form-control" [(ngModel)]="formData.seotitle" name="seotitle" placeholder="Page SEO Title">
+                          </div>
+                       </div>
+                          <div class="col-12">
+                             <div class="mb-3">
+                                <div class="form-label">Page SEO Keywords</div>
+                                <input type="text" class="form-control" [(ngModel)]="formData.seokeywords" name="seokeywords" placeholder="Page SEO Keywords">
+                             </div>
+                          </div>
+                          <div class="col-12">
+                             <div class="mb-3">
+                                <div class="form-label">Page SEO Description</div>
+                                <input type="text" class="form-control" [(ngModel)]="formData.seodescription" name="seodescription"  placeholder="Page SEO Description">
+                             </div>
+                          </div>
+                       </div>
+
+                    </div>
+
+                    <div class="card-footer text-end">
+                       <div class="d-flex">
+                          <button type="submit" (click)="createPageData(formData)" class="btn btn-primary ms-auto">Update Page</button>
+                       </div>
+                    </div>
+
+                 </div>
+              </div>
+
+              <div class="col-4">
+                <div class="card">
+                   <div class="table-responsive">
+                      <table class="table card-table table-vcenter table-striped">
+                         <thead>
+                            <tr>
+                               <th>Title</th>
+                               <th>Status</th>
+                               <th>Actions</th>
+                            </tr>
+                         </thead>
+                         <tbody>
+                           <tr *ngFor="let page of pageData">
+                               <td>{{page.title}}</td>
+                               <td>
+                                  {{page.isActive ? 'Active' : 'Inactive'}}
+                               </td>
+                               <td>
+                                  <a routerLink="/pages/{{page._id}}" class="btn btn-primary btn-sm">Edit</a>
+                                  <a href="javascript:void(0);" class="btn btn-danger btn-sm" (click)="deletePage(page._id)">Delete</a>
+                                </td>
+                            </tr>
+                      </tbody>
+                      </table>
+                   </div>
+                </div>
+             </div>
+
+           </div>
+        </form>
+     </div>
+  </div>
+</div>

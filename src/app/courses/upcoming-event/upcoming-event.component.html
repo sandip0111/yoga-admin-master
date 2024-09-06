@@ -1,0 +1,107 @@
+<div class="page-header">
+  <h3 class="page-title">Manage Upcoming Events</h3>
+  <br />
+  <!-- <button
+    type="button"
+    class="btn btn-outline-primary"
+    routerLink="/view-categories"
+  >
+    view Category
+  </button> -->
+</div>
+<div class="row">
+  <div class="col-md-4 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <form class="forms-sample" #empForm="ngForm">
+          <div class="col-md-50 p-0">
+            <div class="form-group col-lg-12">
+              <label>Start Date</label>
+              <input
+                type="date"
+                value=""
+                class="form-control"
+                name="startDate"
+                class="form-control"
+                [(ngModel)]="contentData.startDate"
+              />
+            </div>
+            <div class="form-group col-lg-12">
+              <label>End Date</label>
+              <input
+                type="date"
+                value=""
+                class="form-control"
+                name="endDate"
+                class="form-control"
+                [(ngModel)]="contentData.endDate"
+              />
+            </div>
+
+            <div class="form-group col-lg-12">
+              <label>Seat</label>
+              <input
+                type="number"
+                value=""
+                class="form-control"
+                name="seat"
+                placeholder="No. of Seat"
+                class="form-control"
+                [(ngModel)]="contentData.seat"
+              />
+            </div>
+            <!-- <div class="form-group col-lg-12">
+              <label>Content</label>
+            <ck-editor name="editor1" [(ngModel)]="contentData.para" skin="moono-lisa" language="en" [fullPage]="false"></ck-editor>
+
+            </div> -->
+            <div class="form-group">
+              <button
+                mat-raised-button
+                type="submit"
+                class="btn btn-primary"
+                style="padding: 0.45rem 0.25rem"
+                (click)="createContent(contentData)"
+              >
+                Save Content information
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table card-table table-vcenter table-striped">
+          <thead>
+            <tr>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Seat</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cont of contentList; let i =index">
+              <td>
+               {{cont.startDate}}
+              </td>
+              <td>
+                {{cont.endDate}}
+              </td>
+              <td>
+                {{cont.seat}}
+              </td>
+              <td class="text-end">
+                <a href="javascript:void(0)" class="btn btn-primary btn-sm" (click)="editContent(cont,i)">edit</a>
+                <a href="javascript:void(0)" class="btn btn-danger btn-sm" (click)="deleteContent(cont,i)">delete</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

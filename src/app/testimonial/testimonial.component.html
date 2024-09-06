@@ -1,0 +1,120 @@
+<div class="page-wrapper">
+  <div class="container-xl">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+      <div class="row align-items-center">
+        <div class="col">
+          <h2 class="page-title">Testimonials</h2>
+          <div class="text-muted mt-1">{{testList?.length}} Testimonial(s)</div>
+        </div>
+        <!-- Page title actions -->
+        <div class="col-auto ms-auto d-print-none">
+          <div class="d-flex">
+            <div class="ms-auto mt-2 strong"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-body">
+    <div class="container-xl">
+      <form #testimonial="ngForm">
+        <div class="row row-cards" style="position: relative; height: 870px">
+          <div class="col-6" style="position: absolute; left: 0%; top: 0px">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="page-title mb-2">Add New Testimonials</h2>
+                <div class="mb-3">
+                  <div class="form-label">Testimonial</div>
+                  <textarea
+                    class="form-control"
+                    name="testimonial"
+                    placeholder="Enter Testimonial"
+                    rows="10"
+                    [(ngModel)]="formData.testimonial"
+                  ></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <div class="mb-3">
+                      <label class="form-label"
+                        >Testimonial By
+                        <small class="text-muted">(Enter Name)</small></label
+                      >
+                      <div class="row g-2">
+                        <div class="col">
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="name"
+                            placeholder="Enter Testimonial By Name"
+                            [(ngModel)]="formData.name"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="mb-3">
+                      <label class="form-label"
+                        >Upload Photo
+                        <small class="text-muted"
+                          >(Photo size must be lesss than 2MB)</small
+                        ></label
+                      >
+                      <div class="row g-2">
+                        <div class="col">
+                          <input type="file" (change)="uploadImage($event)" accept="image/*" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <div class="row">
+                    <div class="col">
+                      <button type="submit" (click)="saveTestimonial(formData)" class="btn btn-primary w-100">
+                        Save Testimonial
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 testmonial d-flex flex-column" style="position: absolute; left: 50%; top: 0px">
+            <div *ngFor="let test of testList; let i=index" class="mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="text-center mb-3">
+                    <span
+                      class="avatar avatar-xl avatar-rounded"
+                    >
+                  <img style="border-radius: 100rem;" src="{{imageUrl}}{{test.image}}" alt="image" width="100">
+                  </span>
+                  </div>
+                  <div class="card-title mb-3 mt-2 text-center">{{test.name}}</div>
+                  <p class="m-0 mb-3 mt-2 text-truncate">
+                   {{test.testimonial}}
+                  </p>
+                </div>
+                <div class="card-footer">
+                  <div class="row align-items-center">
+                    <div class="col-auto ms-auto">
+                      <a
+                        class="btn btn-danger"
+                        (click)="deleteTestimonial(test._id)"
+                        >
+                        Delete Testimonial
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

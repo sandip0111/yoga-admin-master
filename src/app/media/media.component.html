@@ -1,0 +1,98 @@
+<div class="page-wrapper">
+  <div class="container-xl">
+     <!-- Page title -->
+     <div class="page-header d-print-none">
+        <div class="row align-items-center">
+           <div class="col">
+              <h2 class="page-title">
+                 Media
+              </h2>
+              <div class="text-muted mt-1">Total <strong>111</strong> Media Upload(s)</div>
+           </div>
+           <!-- Page title actions -->
+           <div class="col-auto ms-auto d-print-none">
+              <div class="d-flex">
+                 <div class=" ms-auto mt-2 strong"></div>
+              </div>
+           </div>
+        </div>
+
+     </div>
+  </div>
+  <div class="page-body">
+     <div class="container-xl">
+     <form #upload="ngForm">
+        <div class="row">
+        <div class="col-4">
+                 <div class="card">
+                    <div class="card-body">
+                       <h2 class="page-title mb-2">
+                          Upload New Media
+                       </h2>
+                       <div class="row">
+                          <div class="col-12">
+                             <div class="mb-3">
+                                <label class="form-label">Media Title</label>
+                                <div class="row g-2">
+                                   <div class="col">
+                                      <input type="text" class="form-control" name="title" placeholder="Enter Media Title" [(ngModel)]="formData.title">
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                          <div class="col-12">
+                             <div class="mb-3">
+                                <label class="form-label">Upload Media</label>
+                                <div class="row g-2">
+                                   <div class="col">
+                                      <input type="file" (change)="uploadMedia($event)">
+                                   </div>
+                                </div>
+                             </div>
+                          </div>
+                       </div>
+                       <div class="mt-2">
+                          <div class="row">
+                             <div class="col">
+                                <button type="submit" (click)="createMedia(formData)" class="btn btn-primary w-100">
+                                Upload Media
+                                </button>
+                             </div>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+           <div class="col-8">
+              <div class="card">
+                 <div class="table-responsive">
+                    <table class="table card-table table-vcenter table-striped">
+                       <thead>
+                          <tr>
+                             <th width="20%">Title</th>
+                             <th>URL</th>
+                             <!-- <th width="10%">Type</th>                                        -->
+                             <th width="10%">Actions</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                                                              <tr *ngFor="let media of mediaList">
+                             <td>
+                                {{media.title}}                                       </td>
+                             <td>
+                                <a href="{{imageUrl}}{{media.image}}" target="_blank">{{imageUrl}}{{media.image}}</a>
+                             </td>
+                             <td class="text-end">
+                                <a href="javascript:void(0);" title="Delete Media" (click)="deleteMedia(media._id)">Delete</a>
+                              </td>
+                          </tr>
+                    </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+        </div>
+        </form>
+     </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Edit Video Data</h1>
+  <form #videoForm="ngForm">
+    <div class="mb-3">
+      <label for="name" class="form-label">Title</label>
+      <input type="text" [(ngModel)]="formData.title" class="form-control" name="title" placeholder="Enter Title">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Order</label>
+      <input type="email" [(ngModel)]="formData.sortBy" class="form-control" name="order" placeholder="Enter order">
+    </div>
+    <button type="submit" (click)="setData(formData)" class="btn btn-primary">Submit</button>
+  </form>
+</div>

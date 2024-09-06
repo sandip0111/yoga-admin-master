@@ -1,0 +1,114 @@
+<div class="page-header">
+  <h3 class="page-title">Sub-Category Course</h3>
+  <br />
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Add Sub-Category Course</h4>
+        <form class="forms-sample" #subcoursecat="ngForm">
+          <div class="col-md-50 p-0">
+
+            <div class="form-group col-lg-10 float-left">
+              <label>Sub-Category</label>
+              <select class="form-control" name="subcategoryId" [(ngModel)]="formData.subcategoryId">
+                <option value="undefined">select Sub Category</option>
+                <option *ngFor="let cat of subcategoryData" value="{{cat._id}}">{{cat.subcategoryname}}</option>
+              </select>
+            </div>
+
+              <div class="form-group col-lg-10 float-left">
+                  <label>Sub-Category Course name</label>
+                  <input
+                    type="text"
+                    name="subcategorycoursename"
+                    placeholder="sub courseCategory Name"
+                    class="form-control"
+                    [(ngModel)]="formData.subcategorycoursename"
+                  />
+                </div>
+                <div class="form-group col-lg-10 float-left">
+                  <label>Slug</label>
+                  <input
+                    type="text"
+                    name="slug"
+                    placeholder="Slug"
+                    class="form-control"
+                     [(ngModel)]="formData.slug"
+                  />
+                </div>
+              <div class="form-group col-lg-10 float-left">
+              <label>Meta Title</label>
+              <input
+                type="text"
+
+                name="metatitle"
+                placeholder="Meta title"
+                class="form-control"
+                [(ngModel)]="formData.metatitle"
+              />
+            </div>
+
+            <div class="form-group col-lg-10 float-left">
+              <label>Meta discription</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.metadescription"
+                name="metadescription"
+                placeholder="Meta discription"
+                class="form-control"
+                  />
+            </div>
+            <div class="form-group col-lg-10 float-left">
+              <label>Meta Keyword</label>
+              <input
+                type="text"
+                [(ngModel)]="formData.metakeyword"
+                name="metakeyword"
+                class="form-control"
+                placeholder="Meta Keyword"
+              />
+            </div>
+
+            <div class="form-group col-lg-12 float-left">
+            <button
+      type="submit"
+      class="btn btn-outline-primary"
+      (click)="createSubCourseCategory(formData)"
+      >
+     Submit
+    </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Subcategory Course Name</th>
+          <th>sub category name</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+    <tr *ngFor="let c of subcoursecategoryData">
+      <td>{{c.subcategorycoursename}}</td>
+      <td>{{c.subcategoryData.subcategoryname}}</td>
+      <td>{{c.isActive ? 'Active': 'Inactive'}}</td>
+      <td>
+        <button class="btn btn-primary btn-sm"  routerLink="/subcategorycourse/{{c._id}}">Edit</button>
+        <button class="btn btn-danger btn-sm"  (click)="deleteSubCourseCategory(c._id)">Delete</button>
+      </td>
+    </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
