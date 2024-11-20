@@ -7,9 +7,9 @@ import { HttpClient } from "@angular/common/http";
 export class ServiceService {
   // private url = "http://34.203.244.83:3000/";
 
-  private url = "http://localhost:3000/";
+  //private url = "http://localhost:3000/";
   // public imageUrl = "http://localhost:3000/public/images/";
-  // private url = 'https://yogavidyaschool.com:3000/';
+  private url = 'https://yogavidyaschool.com:3000/';
   public imageUrl = "https://yogavidyaschool.com:3000/public/images/";
   public videoUrl = "https://yogavidyaschool.com:3000/public/video/";
 
@@ -76,6 +76,11 @@ export class ServiceService {
   getAllCourse(data:any){
    return this.data.post(this.url + 'api/v1/getAllCourse',data);
 }
+
+getAllWebinarRegistration(data:any){
+  return this.data.post(this.url + 'api/v1/getAllWebinarRegistration',data);
+}
+
 getAllCourseV2(id=""){
   return this.data.get(this.url + 'api/v1/getAllCourseV2');
 }

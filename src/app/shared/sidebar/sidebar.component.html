@@ -6,6 +6,12 @@
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
     </li>
+    <li class="nav-item" [ngClass]="{ 'active': webinar.isActive }">
+      <a class="nav-link" routerLink="/webinar" routerLinkActive #webinar="routerLinkActive">
+        <span class="menu-title">Yoga-Webinar</span>
+        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+      </a>
+    </li>
     <li class="nav-item" [ngClass]="{ 'active': student.isActive }">
       <a class="nav-link" routerLink="/view-student" routerLinkActive #student="routerLinkActive">
         <span class="menu-title">Student</span>

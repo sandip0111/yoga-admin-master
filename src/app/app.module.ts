@@ -47,6 +47,7 @@ import { UploadedVideosComponent } from './uploaded-videos/uploaded-videos.compo
 import { VideoEditComponent } from './video-edit/video-edit.component';
 import { OnlineVideoUploadComponent } from './online-video-upload/online-video-upload.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
+import { WebinarRegistrationComponent } from './webinarRegistrationForms/webinar-registration/webinar-registration.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { AnalyticsComponent } from './analytics/analytics.component';
     UploadedVideosComponent,
     VideoEditComponent,
     OnlineVideoUploadComponent,
-    AnalyticsComponent
+    AnalyticsComponent,
+    WebinarRegistrationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
