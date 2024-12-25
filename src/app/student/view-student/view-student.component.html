@@ -43,6 +43,10 @@
           <button *ngIf="data.pranCounter === true" type="button"  class="btn btn-warning btn-lg">Prana Arambha Enrolled</button>
         </td>
         <td>
+          <button *ngIf="data.BCounter === false" type="button"  class="btn btn-info btn-lg" (click)="setAccessV3(data._id)">Give Breath Detox Access</button>
+          <button *ngIf="data.BCounter === true" type="button"  class="btn btn-warning btn-lg">Breath Detox Enrolled</button>
+        </td>
+        <td>
           <button *ngIf="data.fCounter === false" type="button"  class="btn btn-info btn-lg" (click)="setAccessV2(data._id)">Give Foundation Access</button>
           <button *ngIf="data.fCounter === true" type="button"  class="btn btn-warning btn-lg">Foundation Enrolled</button>
         </td>

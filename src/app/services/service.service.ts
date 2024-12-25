@@ -197,6 +197,10 @@ setAccessPran(data: any) {
 setAccessFoundation(data: any) {
   return this.data.post(this.url + "api/v1/setAccessFoundation", data);
 }
+setAccessBreath(data: any) {
+  return this.data.post(this.url + "api/v1/setAccessBreath", data);
+}
+
 
 getCourseVideoDataById(id) {
   return this.data.get(this.url + "api/v1/getCourseVideoDataById/" + id);

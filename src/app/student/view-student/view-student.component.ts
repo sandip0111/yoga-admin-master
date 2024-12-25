@@ -34,19 +34,25 @@ export class ViewStudentComponent implements OnInit {
 
        for (const it of this.userList) {
         console.log(it.course.length);
-
+        it.pranCounter = false;
+        it.fCounter = false;
+        it.BCounter = false;
         if(it.course.length > 0) {
           if(it.course.includes("644f9dfc499ffcfb45df35cd")){
             it.pranCounter = true;
           }
-          else if(it.course.includes("63c4de4a2bce43a907211c74")){
+          if(it.course.includes("63c4de4a2bce43a907211c74")){
             it.fCounter = true;
           }
+         if(it.course.includes("63c3f26c461e531f3c3452e1")){
+            it.BCounter = true;
+          }
         }
-        else{
-          it.pranCounter = false;
-          it.fCounter = false;
-        }
+        // else{
+        //   it.pranCounter = false;
+        //   it.fCounter = false;
+        //   it.BCounter = false;
+        // }      
       }
       // console.log(this.userList,'-------');
     });
@@ -114,6 +120,25 @@ export class ViewStudentComponent implements OnInit {
       "studentId":id,
      }
      this.service.setAccessFoundation(val).subscribe((res:any)=>{
+       console.log(res,'---');
+       if(res.status == "ok"){
+        alert("Access has been granted and emailed.");
+        this.getstudent(this.filter);
+       }
+       else{
+        console.log('sowething went wrong..');
+
+       }
+   })
+  }
+ }
+ setAccessV3(id:any){
+  let c = confirm("Are you sure you want to Give Access?");
+  if(c){
+    let val={
+      "studentId":id,
+     }
+     this.service.setAccessBreath(val).subscribe((res:any)=>{
        console.log(res,'---');
        if(res.status == "ok"){
         alert("Access has been granted and emailed.");
