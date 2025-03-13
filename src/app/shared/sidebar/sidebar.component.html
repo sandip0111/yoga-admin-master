@@ -1,7 +1,13 @@
 <nav class="sidebar hover-open sidebar-offcanvas" id="sidebar">
   <ul class="nav">
     <li class="nav-item" [ngClass]="{ 'active': forms.isActive }">
-      <a class="nav-link" routerLink="/course" routerLinkActive #forms="routerLinkActive">
+      <a class="nav-link" routerLink="/dashboard" routerLinkActive #forms="routerLinkActive">
+        <span class="menu-title">Dashboard</span>
+        <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item" [ngClass]="{ 'active': course.isActive }">
+      <a class="nav-link" routerLink="/course" routerLinkActive #course="routerLinkActive">
         <span class="menu-title">Courses</span>
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
