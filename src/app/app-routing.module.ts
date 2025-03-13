@@ -30,6 +30,7 @@ import { VideoEditComponent } from './video-edit/video-edit.component';
 import { OnlineVideoUploadComponent } from './online-video-upload/online-video-upload.component';
 import { AnalyticsComponent } from './analytics/analytics.component';
 import { WebinarRegistrationComponent } from './webinarRegistrationForms/webinar-registration/webinar-registration.component';
+import {DashboardComponent} from './dashboards/dashboard.component';
 const routes: Routes = [
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   // { path: 'dashboard', component: DashboardComponent,canActivate:[AuthGuard]},
@@ -97,6 +98,7 @@ const routes: Routes = [
   {path: 'video-upload',component:OnlineVideoUploadComponent,canActivate:[AuthGuard]},
   {path: 'analytics',component:AnalyticsComponent,canActivate:[AuthGuard]},
   {path: 'webinar',component:WebinarRegistrationComponent,canActivate:[AuthGuard]},
+  {path: 'dashboard', component: DashboardComponent,canActivate:[AuthGuard]},
 ];
 
 @NgModule({

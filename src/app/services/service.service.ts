@@ -225,5 +225,17 @@ insertVideo(data: any) {
 getAnalyticsByDate(data: any) {
   return this.data.post(this.url + "api/v1/getAnalyticsByDate", data);
 }
+getAllParayanamStudent(data:any){
+  return this.data.post(this.url + "api/v1/getAllParayanamStudent", data);
+}
 
+getAllLiveClassStudent(data:any){
+  return this.data.post(this.url + "api/v1/getAllLiveClassStudent", data);
+}
+getAllFoundationOfSpiritualityStudent(data:any){
+  return this.data.post(this.url + "api/v1/getAllFoundationOfSpiritualityStudent",data);
+}
+getAllBreathDetoxStudent(data:any){
+  return this.data.post(this.url + "api/v1/getAllBreathDetoxStudent", data);
+}
 }
