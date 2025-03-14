@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
   isLoading = false;
   filteredStudents: any[] = [];
   filter:any={};
+  allPranayamStudents: any[] =[];
   breathDetoxfilter:any={};
   foundationDetoxfilter:any={};
   pranayamStudentTotal:any;
@@ -35,10 +36,7 @@ export class DashboardComponent implements OnInit {
   
     ngOnInit(): void {
      
-      this.filter = {
-        pageNo:1,
-        size:10      
-    }
+    this.filter = { pageNo:1, size:10}
     this.breathDetoxfilter = {pageNo:1, size:10}
     this.foundationDetoxfilter = {pageNo:1, size:10}
     this.getAllParayanamStudent();
@@ -47,21 +45,16 @@ export class DashboardComponent implements OnInit {
     this.getAllFoundationOfSpiritualityStudent();
 }
 
-getAllParayanamStudent(fetchAll: boolean = false){
+getAllParayanamStudent(): void {
   this.isLoading = true;
-  // If fetchAll is true, request all records
-  let filter = { ...this.filter };
-  if (fetchAll) {
-    filter.itemsPerPage = 0; // 0 or a very high number fetches all records
-    
-  }
-    this.service.getAllParayanamStudent(this.filter).subscribe((res:any)=>{
-      console.log('filter',this.filter);
-       this.students = res.data;
-       this.pranayamStudentTotal = res.total;      
-       this.isLoading = false;
-     })
-  }  
+  this.service.getAllParayanamStudent(this.filter).subscribe((res: any) => {
+    console.log("Fetched Students:", res.total);
+    this.students = res.data;
+    this.pranayamStudentTotal = res.total;
+    this.isLoading = false;
+  });
+}
+
      getAllLiveClassStudent(){
       this.service.getAllLiveClassStudent(this.filter).subscribe((response:any)=>{
         if (response && response.data.length > 0) {
@@ -76,9 +69,6 @@ getAllParayanamStudent(fetchAll: boolean = false){
         }
       }, error => {
         console.error('Error fetching customer data:', error);
-      
-        // this.total = response.total;
-        // this.isLoading = false;
       })
      }
      getAllFoundationOfSpiritualityStudent(){
@@ -142,21 +132,21 @@ getAllParayanamStudent(fetchAll: boolean = false){
    behavior: 'smooth'
  });
 }
-exportToExcel(tableId: string): void {
-  const table = document.getElementById(tableId) as HTMLTableElement;
-  const previousFilter = { ...this.filter };
+pranayamExportToExcel(tableId: string): void {
+  let pranarambhFilter = { size: 10000 }; // Ensure fetching all records
 
-  // Temporarily fetch all records
-  this.filter.size = 10000; // 0 means fetch all records
-  this.getAllParayanamStudent(true);
-  setTimeout(() => {
+  this.service.getAllParayanamStudent(pranarambhFilter).subscribe((res: any) => {
+    if (!res.data || res.data.length === 0) {
+      console.error("No data available for export.");
+      return;
+    }
+
+    let csvContent = "";
     const table = document.getElementById(tableId) as HTMLTableElement;
     if (!table) {
       console.error("Table not found:", tableId);
       return;
     }
-
-    let csvContent = "";
 
     // Extract headers
     const headers = Array.from(table.querySelectorAll("thead th"))
@@ -164,11 +154,11 @@ exportToExcel(tableId: string): void {
       .join(",");
     csvContent += headers + "\n";
 
-    // Extract rows
+    // Extract rows from API response
     const rowsData: any[][] = [];
-    this.students.forEach((student, index) => {
+    res.data.forEach((student, index) => {
       rowsData.push([
-        index + 1, // Serial number
+        index + 1,
         student.firstName,
         student.email,
         student.paymentDetails[0]?.amount || "N/A",
@@ -180,7 +170,7 @@ exportToExcel(tableId: string): void {
         student.latestOnlinePayment?.paymentStatus || "N/A",
       ]);
     });
-console.log('rowsData',rowsData)
+
     // Add rows to CSV content
     rowsData.forEach(row => {
       csvContent += row.join(",") + "\n";
@@ -194,10 +184,141 @@ console.log('rowsData',rowsData)
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-
-    // Restore previous filter & pagination
-    this.filter = previousFilter;
-    this.getAllParayanamStudent(); // Fetch back paginated data
-  }, 2000); // Wait for 2 seconds to fetch al
+  });
 }
+
+
+breathDetoxExportToExcel(tableId: string): void {
+  let breathdetoxFilter = { size: 10000 }; // Ensure fetching all records
+
+  this.service.getAllBreathDetoxStudent(breathdetoxFilter).subscribe((res: any) => {
+    if (!res.data || res.data.length === 0) {
+      console.error("No data available for export.");
+      return;
+    }
+
+    let csvContent = "";
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) {
+      console.error("Table not found:", tableId);
+      return;
+    }
+
+    // Extract headers
+    const headers = Array.from(table.querySelectorAll("thead th"))
+      .map(th => (th as HTMLElement).innerText)
+      .join(",");
+    csvContent += headers + "\n";
+
+    // Extract rows from API response
+    const rowsData: any[][] = [];
+    res.data.forEach((student, index) => {
+      rowsData.push([
+        index + 1,
+        student.firstName,
+        student.email,
+        student.city,
+        student.isActive,
+      ]);
+    });
+
+    // Add rows to CSV content
+    rowsData.forEach(row => {
+      csvContent += row.join(",") + "\n";
+    });
+
+    // Create & Download CSV file
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", `${tableId}_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+}
+
+foundationExportToExcel(tableId: string): void {
+  let foundationFilter = { size: 10000 }; // Ensure fetching all records
+
+  this.service.getAllFoundationOfSpiritualityStudent(foundationFilter).subscribe((res: any) => {
+    if (!res.data || res.data.length === 0) {
+      console.error("No data available for export.");
+      return;
+    }
+
+    let csvContent = "";
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) {
+      console.error("Table not found:", tableId);
+      return;
+    }
+
+    // Extract headers
+    const headers = Array.from(table.querySelectorAll("thead th"))
+      .map(th => (th as HTMLElement).innerText)
+      .join(",");
+    csvContent += headers + "\n";
+
+    // Extract rows from API response
+    const rowsData: any[][] = [];
+    res.data.forEach((student, index) => {
+      rowsData.push([
+        index + 1,
+        student.firstName,
+        student.email,
+        student.isActive,
+      ]);
+    });
+
+    // Add rows to CSV content
+    rowsData.forEach(row => {
+      csvContent += row.join(",") + "\n";
+    });
+
+    // Create & Download CSV file
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", `${tableId}_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+}
+
+liveClassStudentExportToExcel(tableId: string) {
+  const table = document.getElementById(tableId) as HTMLTableElement;
+  if (!table) {
+    console.error("Table not found:", tableId);
+    return;
+  }
+
+  let csvContent = "";
+
+  // Extract headers
+  const headers = Array.from(table.querySelectorAll("thead th"))
+    .map(th => (th as HTMLElement).innerText) // ✅ Fix: Cast to HTMLElement
+    .join(",");
+  csvContent += headers + "\n";
+
+  // Extract rows
+  const rows = Array.from(table.querySelectorAll("tbody tr"));
+  rows.forEach(row => {
+    const rowData = Array.from(row.querySelectorAll("td"))
+      .map(td => (td as HTMLElement).innerText) // ✅ Fix: Cast to HTMLElement
+      .join(",");
+    csvContent += rowData + "\n";
+  });
+
+  // Create & Download CSV file
+  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.setAttribute("download", `${tableId}_export.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
 }

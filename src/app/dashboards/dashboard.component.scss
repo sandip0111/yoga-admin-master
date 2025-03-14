@@ -11,3 +11,25 @@
   white-space: nowrap; /* Prevents text from breaking */
   }
 
+  .pagination {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left; /* or space-between */
+    gap: 5px; /* Adjust spacing between items */
+    overflow-x: auto; /* Add horizontal scroll if needed */
+    white-space: nowrap;
+  }
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+  
+  .export-link {
+    text-decoration: none;
+    color: blue; /* Change color as needed */
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
