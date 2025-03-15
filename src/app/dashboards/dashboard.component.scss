@@ -11,6 +11,41 @@
   white-space: nowrap; /* Prevents text from breaking */
   }
 
+  .pranarambh-table-responsive{
+    display: block;
+    width: 85%;
+    /* overflow-x: auto; */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .container_search {
+    margin-bottom: 20px;
+  }
+
+  .media-body{
+    width: 60%;
+  }
+  
+  .search-input {
+    width: 300px;
+    padding: 8px;
+    margin-right: 10px;
+  }
+  
+  button {
+    padding: 8px 15px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: darkblue;
+  }
+  
+
+
   .pagination {
     display: flex;
     flex-wrap: nowrap;

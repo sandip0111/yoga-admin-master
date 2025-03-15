@@ -14,7 +14,17 @@
                   <h4>Prana Arambh</h4>
                   <a (click)="pranayamExportToExcel('Pranarambh')"  class="export-link">Export to Excel</a>
                 </div>
-                <div class="table-responsive">
+                
+                <div class="container_search">
+                  <input
+                    type="text"
+                    placeholder="Search by Name or Email"
+                    [(ngModel)]="searchText"
+                    class="search-input"
+                  />
+                  <button (click)="search()">Search</button>
+                </div>
+                <div class="pranarambh-table-responsive">
                   <table id="Pranarambh" class="table table-bordered table-striped">
                     <thead class="table-secondary">
                       <th style="width: 10% !important;">Sl No.</th>
@@ -67,8 +77,17 @@
                   <div class="header-container">
                     <h4>Breath Detox</h4>
                     <a (click)="breathDetoxExportToExcel('BreathDetox')" class="export-link">Export to Excel</a>
+                  </div>                  
+                 
+                  <div class="container_search">
+                    <input
+                      type="text"
+                      placeholder="Search by Name or Email or City or Phone number"
+                      [(ngModel)]="searchTextBreathDetox"
+                      class="search-input"
+                    />
+                    <button (click)="searchBreath()">Search</button>
                   </div>
-                  
                   <div class="table-responsive">
                     <table id="BreathDetox" class="table table-bordered table-striped">
                       <thead class="table-secondary">
@@ -76,6 +95,7 @@
                         <th style="width: 4% !important;">Sl No.</th>
                         <th>StudentName</th>
                         <th>Email</th>
+                        <th>Mobile</th>
                         <th>City</th>
                         <th>Is Active</th>
                         </tr>
@@ -85,6 +105,7 @@
                        <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
                           <td>{{ breath.firstName }} {{ breath.lastName || '' }}</td>
                           <td>{{ breath.email }}</td>
+                          <td>{{ breath.phoneNumber }}</td>
                           <td>{{ breath.city }}</td>
                           <td>{{ breath.isActive }}</td>
                         </tr>
@@ -105,6 +126,15 @@
               <div class="header-container">
                 <h4>Foundation of Spirituality</h4>
                 <a (click)="foundationExportToExcel('Foundation')"  class="export-link">Export to Excel</a>
+              </div>
+              <div class="container_search">
+                <input
+                  type="text"
+                  placeholder="Search by Name or Email"
+                  [(ngModel)]="searchTextFOS"
+                  class="search-input"
+                />
+                <button (click)="searchFOS()">Search</button>
               </div>
               <div class="table-responsive">
                   <table id="Foundation" class="table table-bordered table-striped">
@@ -130,7 +160,7 @@
             </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab [title]="'Live Class Students (' + totalCustomersAll + ')'" (click)="onTabChange('LiveClass')">
+          <ngb-tab [title]="'Live Class Students (' + totalCustomersAll + ')'">
             <ng-template ngbTabContent>
               <div class="media">
                 <div class="media-body"> 

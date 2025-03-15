@@ -31,6 +31,9 @@ export class DashboardComponent implements OnInit {
   customerGroups: any[] = [];
   breathDetox : any[] = [];
   spiritualityStudent: any[] = [];
+  searchText: string = '';
+  searchTextBreathDetox: string = '';
+  searchTextFOS: string = '';
 
     constructor(private service:ServiceService,private route:ActivatedRoute) { }
   
@@ -43,6 +46,44 @@ export class DashboardComponent implements OnInit {
     this.getAllLiveClassStudent();
     this.getAllBreathDetoxStudent();
     this.getAllFoundationOfSpiritualityStudent();
+}
+
+search() {
+  this.filter.searchText = this.searchText;
+  this.service.getAllParayanamStudent(this.filter).subscribe((res:any)=>{
+    console.log('filter',this.filter);
+     this.students = res.data;
+     this.pranayamStudentTotal = res.total;      
+     this.isLoading = false;
+   })
+
+}
+
+searchBreath() {
+  this.breathDetoxfilter.searchText = this.searchTextBreathDetox;
+  this.service.getAllBreathDetoxStudent(this.breathDetoxfilter).subscribe((response:any)=>{
+    if (response && response.data.length > 0) {
+      this.breathDetoxTotal = response.total;
+      this.breathDetox = response.data;
+    }
+  }, error => {
+    console.error('Error fetching breathDetox data:', error);
+  })
+ 
+}
+
+searchFOS() {
+  this.foundationDetoxfilter.searchText = this.searchTextFOS;
+  this.service.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter).subscribe((response:any)=>{
+    if (response && response.data.length > 0) {
+      this.foundationTotal  = response.total;
+      this.spiritualityStudent = response.data;
+      console.log('Response fetching spiritualityStudent data:', this.spiritualityStudent,'total',this.foundationTotal);
+    }
+  }, error => {
+    console.error('Error fetching breathDetox data:', error);
+  })
+ 
 }
 
 getAllParayanamStudent(): void {
