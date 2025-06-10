@@ -1,3 +1,8 @@
+<div *ngIf="isLoading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
 <div class="row">
   <div class="col-md-12 grid-margin stretch-card">
     <div class="card">
@@ -6,66 +11,144 @@
         <!-- <p class="card-description">Horizontal bootstrap tab</p> -->
         <ngb-tabset>
           <ngb-tab [title]="'Prana Arambh (' + pranayamStudentTotal + ')'">
-            
-            <ng-template ngbTabContent>         
+            <ng-template ngbTabContent>
               <div class="media">
                 <div class="media-body">
-                <div class="header-container">
-                  <h4>Prana Arambh</h4>
-                  <a (click)="pranayamExportToExcel('Pranarambh')"  class="export-link">Export to Excel</a>
-                </div>
-                
-                <div class="container_search">
-                  <input
-                    type="text"
-                    placeholder="Search by Name or Email"
-                    [(ngModel)]="searchText"
-                    class="search-input"
-                  />
-                  <button (click)="search()">Search</button>
-                </div>
-                <div class="pranarambh-table-responsive">
-                  <table id="Pranarambh" class="table table-bordered table-striped">
-                    <thead class="table-secondary">
-                      <th style="width: 10% !important;">Sl No.</th>
-                      <th>Student Name</th>
-                      <th>Email</th>
-                      <!-- <th>Course</th> -->
-                      <th>Payment Amount</th>
-                      <th>Currency</th>
-                      <th>Payment Status</th>
-                      <th>Payment By</th>
-                      <th>Latest Payment Price</th>
-                      <th>Latest Payment Currency</th>
-                      <th>Latest Payment Status</th>
-                    </thead>
-                    <tbody>
-                     
-                      <tr  *ngFor="let student of students | paginate: { itemsPerPage: 10, currentPage: p, totalItems: pranayamStudentTotal };let i = index">
-                     <td>{{ i + 1 + (p - 1) * 10 }}</td>
-                        <td>{{ student.firstName }} {{ student.lastName || '' }}</td>
-                        <td>{{ student.email }}</td>
-                        <!-- <td>{{ student.course[0] }}</td> -->
-                        
-                        <!-- Show First Payment Detail (if available) -->
-                        <td>{{ student.paymentDetails.length > 0 ? student.paymentDetails[0].amount : 'N/A' }}</td>
-                        <td>{{ student.paymentDetails.length > 0 ? student.paymentDetails[0].currency : 'N/A' }}</td>
-                        <td>{{ student.paymentDetails.length > 0 ? student.paymentDetails[0].paymentStatus : 'N/A' }}</td>
-                        <td>{{ student.paymentDetails.length > 0 ? student.paymentDetails[0].paymentBy : 'N/A' }}</td>
-                        
-                        <!-- Latest Online Payment -->
-                        <td>{{ student.latestOnlinePayment ? student.latestOnlinePayment.price : 'N/A' }}</td>
-                        <td>{{ student.latestOnlinePayment ? student.latestOnlinePayment.currency : 'N/A' }}</td>
-                        <td>{{ student.latestOnlinePayment ? student.latestOnlinePayment.paymentStatus : 'N/A' }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="pagination">
-                  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+                  <div class="header-container">
+                    <h4>Prana Arambh</h4>
+                    <a
+                      (click)="pranayamExportToExcel('Pranarambh')"
+                      class="export-link"
+                      >Export to Excel</a
+                    >
+                  </div>
+
+                  <div class="container_search">
+                    <input
+                      type="text"
+                      placeholder="Search by Name or Email"
+                      [(ngModel)]="filter.searchText"
+                      class="search-input"
+                    />
+
+                    <div style="display: flex; align-items: center">
+                      <label for="fromDate" style="margin-right: 8px"
+                        >From Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="fromDate"
+                        [(ngModel)]="filter.fromDate"
+                        class="date-input"
+                      />
+                    </div>
+
+                    <div style="display: flex; align-items: center">
+                      <label for="toDate" style="margin-right: 8px"
+                        >To Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="toDate"
+                        [(ngModel)]="filter.toDate"
+                        class="date-input"
+                      />
+                    </div>
+
+                    <button (click)="getAllParayanamStudent(filter)">
+                      Search
+                    </button>
+                  </div>
+
+                  <div class="pranarambh-table-responsive">
+                    <table
+                      id="Pranarambh"
+                      class="table table-bordered table-striped"
+                    >
+                      <thead class="table-secondary">
+                        <th style="width: 10% !important">Sl No.</th>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Payment Amount</th>
+                        <th>Currency</th>
+                        <th>Payment Status</th>
+                        <th>Payment By</th>
+                        <th>Payment Date</th>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let student of students
+                              | paginate
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: p,
+                                    totalItems: pranayamStudentTotal
+                                  };
+                            let i = index
+                          "
+                        >
+                          <td>{{ i + 1 + (p - 1) * 10 }}</td>
+                          <td>
+                            {{ student.firstName }} {{ student.lastName || "" }}
+                          </td>
+                          <td>{{ student.email }}</td>
+                          <!-- <td>{{ student.course[0] }}</td> -->
+
+                          <!-- Show First Payment Detail (if available) -->
+                          <td>
+                            {{
+                              student.paymentDetails.length > 0
+                                ? student.paymentDetails[0].amount
+                                : "N/A"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              student.paymentDetails.length > 0
+                                ? student.paymentDetails[0].currency
+                                : "N/A"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              student.paymentDetails.length > 0
+                                ? student.paymentDetails[0].paymentStatus
+                                : "N/A"
+                            }}
+                          </td>
+                          <td>
+                            {{
+                              student.paymentDetails.length > 0
+                                ? student.paymentDetails[0].paymentBy
+                                : "N/A"
+                            }}
+                          </td>
+                          <td>
+                            <ng-container
+                              *ngIf="
+                                student.paymentDetails.length > 0;
+                                else noPayment
+                              "
+                            >
+                              {{
+                                student.paymentDetails[0].created
+                                  | date : "dd-MM-yyyy"
+                              }}
+                            </ng-container>
+                            <ng-template #noPayment>N/A</ng-template>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="pagination">
+                    <pagination-controls
+                      (pageChange)="onTableDataChange($event)"
+                    ></pagination-controls>
+                  </div>
                 </div>
               </div>
-            </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="'Breath Detox (' + breathDetoxTotal + ')'">
@@ -76,9 +159,13 @@
                   -->
                   <div class="header-container">
                     <h4>Breath Detox</h4>
-                    <a (click)="breathDetoxExportToExcel('BreathDetox')" class="export-link">Export to Excel</a>
-                  </div>                  
-                 
+                    <a
+                      (click)="breathDetoxExportToExcel('BreathDetox')"
+                      class="export-link"
+                      >Export to Excel</a
+                    >
+                  </div>
+
                   <div class="container_search">
                     <input
                       type="text"
@@ -89,21 +176,37 @@
                     <button (click)="searchBreath()">Search</button>
                   </div>
                   <div class="table-responsive">
-                    <table id="BreathDetox" class="table table-bordered table-striped">
+                    <table
+                      id="BreathDetox"
+                      class="table table-bordered table-striped"
+                    >
                       <thead class="table-secondary">
                         <tr>
-                        <th style="width: 4% !important;">Sl No.</th>
-                        <th>StudentName</th>
-                        <th>Email</th>
-                        <th>Mobile</th>
-                        <th>City</th>
-                        <th>Is Active</th>
+                          <th style="width: 4% !important">Sl No.</th>
+                          <th>StudentName</th>
+                          <th>Email</th>
+                          <th>Mobile</th>
+                          <th>City</th>
+                          <th>Is Active</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr  *ngFor="let breath of breathDetox | paginate: { itemsPerPage: 10, currentPage: breathP, totalItems: breathDetoxTotal };let j = index">
-                       <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
-                          <td>{{ breath.firstName }} {{ breath.lastName || '' }}</td>
+                        <tr
+                          *ngFor="
+                            let breath of breathDetox
+                              | paginate
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: breathP,
+                                    totalItems: breathDetoxTotal
+                                  };
+                            let j = index
+                          "
+                        >
+                          <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
+                          <td>
+                            {{ breath.firstName }} {{ breath.lastName || "" }}
+                          </td>
                           <td>{{ breath.email }}</td>
                           <td>{{ breath.phoneNumber }}</td>
                           <td>{{ breath.city }}</td>
@@ -113,109 +216,171 @@
                     </table>
                   </div>
                   <div class="pagination">
-                    <pagination-controls (pageChange)="onBreathDetoxTableDataChange($event)"></pagination-controls>
+                    <pagination-controls
+                      (pageChange)="onBreathDetoxTableDataChange($event)"
+                    ></pagination-controls>
                   </div>
                 </div>
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab [title]="'Foundation of Spirituality  (' + foundationTotal + ')'">
+          <ngb-tab
+            [title]="'Foundation of Spirituality  (' + foundationTotal + ')'"
+          >
             <ng-template ngbTabContent>
               <div class="media">
-                <div class="media-body">             
-              <div class="header-container">
-                <h4>Foundation of Spirituality</h4>
-                <a (click)="foundationExportToExcel('Foundation')"  class="export-link">Export to Excel</a>
-              </div>
-              <div class="container_search">
-                <input
-                  type="text"
-                  placeholder="Search by Name or Email"
-                  [(ngModel)]="searchTextFOS"
-                  class="search-input"
-                />
-                <button (click)="searchFOS()">Search</button>
-              </div>
-              <div class="table-responsive">
-                  <table id="Foundation" class="table table-bordered table-striped">
-                    <thead class="table-secondary">
-                      <th style="width: 4% !important;">Sl No.</th>
-                      <th>Student Name</th>
-                      <th>Email</th>
-                      <th>Is Active</th>
-                    </thead>
-                    <tbody>
-                       <tr *ngFor="let spiritualityStdnt of spiritualityStudent | paginate: { itemsPerPage: 10, currentPage: foundationP, totalItems: foundationTotal };let k = index">
-                     <td >{{ k + 1 + (foundationP - 1) * 10 }}</td>
-                     <td>{{ spiritualityStdnt.firstName }} {{ spiritualityStdnt.lastName || '' }}</td>
-                        <td>{{ spiritualityStdnt.email }}</td>
-                        <td>{{ spiritualityStdnt.isActive }}</td>                     
-                    </tbody>
-                  </table>
+                <div class="media-body">
+                  <div class="header-container">
+                    <h4>Foundation of Spirituality</h4>
+                    <a
+                      (click)="foundationExportToExcel('Foundation')"
+                      class="export-link"
+                      >Export to Excel</a
+                    >
+                  </div>
+                  <div class="container_search">
+                    <input
+                      type="text"
+                      placeholder="Search by Name or Email"
+                      [(ngModel)]="searchTextFOS"
+                      class="search-input"
+                    />
+                    <button (click)="searchFOS()">Search</button>
+                  </div>
+                  <div class="table-responsive">
+                    <table
+                      id="Foundation"
+                      class="table table-bordered table-striped"
+                    >
+                      <thead class="table-secondary">
+                        <th style="width: 4% !important">Sl No.</th>
+                        <th>Student Name</th>
+                        <th>Email</th>
+                        <th>Is Active</th>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let spiritualityStdnt of spiritualityStudent
+                              | paginate
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: foundationP,
+                                    totalItems: foundationTotal
+                                  };
+                            let k = index
+                          "
+                        >
+                          <td>{{ k + 1 + (foundationP - 1) * 10 }}</td>
+                          <td>
+                            {{ spiritualityStdnt.firstName }}
+                            {{ spiritualityStdnt.lastName || "" }}
+                          </td>
+                          <td>{{ spiritualityStdnt.email }}</td>
+                          <td>{{ spiritualityStdnt.isActive }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="pagination">
+                    <pagination-controls
+                      (pageChange)="onfoundationTableDataChange($event)"
+                    ></pagination-controls>
+                  </div>
                 </div>
-                <div class="pagination">
-                  <pagination-controls (pageChange)="onfoundationTableDataChange($event)"></pagination-controls>
-                </div>
               </div>
-            </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="'Live Class Students (' + totalCustomersAll + ')'">
             <ng-template ngbTabContent>
               <div class="media">
-                <div class="media-body"> 
-              <div class="header-container">
-                <h4>Live Class Students</h4>
-                <a (click)="liveClassStudentExportToExcel('LiveClass')"  class="export-link">Export to Excel</a>
-              </div>
-                  <select id="customerGroup" class="form-control" (change)="onSelectCustomerGroup($event.target.value)">
+                <div class="media-body">
+                  <div class="header-container">
+                    <h4>Live Class Students</h4>
+                    <a
+                      (click)="liveClassStudentExportToExcel('LiveClass')"
+                      class="export-link"
+                      >Export to Excel</a
+                    >
+                  </div>
+                  <select
+                    id="customerGroup"
+                    class="form-control"
+                    (change)="onSelectCustomerGroup($event.target.value)"
+                  >
                     <!-- <option *ngFor="let group of customerGroups" [value]="group._id">{{ group._id }} ({{ totalCustomers}})</option>-->
-                    <option *ngFor="let group of customerGroups" [value]="group._id">{{ group._id }}</option>
-                  </select><br>
+                    <option
+                      *ngFor="let group of customerGroups"
+                      [value]="group._id"
+                    >
+                      {{ group._id }}
+                    </option></select
+                  ><br />
                   <div class="table-responsive">
-              <table id="LiveClass" class="table table-bordered table-striped">
-                <thead class="table-secondary">
-                  <tr>
-                    <th style="width: 4%;">Sl No.</th>
-                    <th>Customer Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <!-- <th>Course Title</th> -->
-                    <th>Course Time</th>
-                    <th>Price</th>
-                    <th>Currency</th>
-                    <th>Payment Status</th>
-                    <!-- <th>Created Date</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr  *ngFor="let customer of customers | paginate: { itemsPerPage: 10, currentPage: p, totalItems: liveClassStudentTotal };let i = index">
-                    <td>{{ i + 1 + (p - 1) * 10 }}</td>
-                    <td>{{ customer?.name}}</td>
-                    <td>{{ customer?.email }}</td>
-                    <td>{{ customer?.phone }}</td>
-                    <!-- <td>{{ customer?.courses?.title }}</td> -->
-                    <td>{{ customer?.courses?.shortDescription }}</td>
-                    <td>{{ customer?.price }}</td>
-                    <td>{{ customer?.currency }}</td>
-                    <td [ngClass]="{'text-success': customer?.paymentStatus == 'paid', 'text-danger': customer?.paymentStatus == 'unpaid'}">
-                      {{ customer?.paymentStatus }}
-                    </td>
-                    <!-- <td>{{ customer?.created | date:'yyyy-MM-dd HH:mm' }}</td> -->
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="pagination">
-              <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
-            </div>
-          </div>
-        </div>
+                    <table
+                      id="LiveClass"
+                      class="table table-bordered table-striped"
+                    >
+                      <thead class="table-secondary">
+                        <tr>
+                          <th style="width: 4%">Sl No.</th>
+                          <th>Customer Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <!-- <th>Course Title</th> -->
+                          <th>Course Time</th>
+                          <th>Price</th>
+                          <th>Currency</th>
+                          <th>Payment Status</th>
+                          <!-- <th>Created Date</th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let customer of customers
+                              | paginate
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: p,
+                                    totalItems: liveClassStudentTotal
+                                  };
+                            let i = index
+                          "
+                        >
+                          <td>{{ i + 1 + (p - 1) * 10 }}</td>
+                          <td>{{ customer?.name }}</td>
+                          <td>{{ customer?.email }}</td>
+                          <td>{{ customer?.phone }}</td>
+                          <!-- <td>{{ customer?.courses?.title }}</td> -->
+                          <td>{{ customer?.courses?.shortDescription }}</td>
+                          <td>{{ customer?.price }}</td>
+                          <td>{{ customer?.currency }}</td>
+                          <td
+                            [ngClass]="{
+                              'text-success': customer?.paymentStatus == 'paid',
+                              'text-danger': customer?.paymentStatus == 'unpaid'
+                            }"
+                          >
+                            {{ customer?.paymentStatus }}
+                          </td>
+                          <!-- <td>{{ customer?.created | date:'yyyy-MM-dd HH:mm' }}</td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="pagination">
+                    <pagination-controls
+                      (pageChange)="onTableDataChange($event)"
+                    ></pagination-controls>
+                  </div>
+                </div>
+              </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab title="Master (Total)">
             <ng-template ngbTabContent>
-              <h4>Master (Total)</h4>       
+              <h4>Master (Total)</h4>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

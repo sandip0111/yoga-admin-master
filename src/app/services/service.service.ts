@@ -1,23 +1,19 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { searchPranaRambhFilter } from "../models/filter";
 
 @Injectable({
   providedIn: "root",
 })
 export class ServiceService {
-  // private url = "http://34.203.244.83:3000/";
-
-  //private url = "http://localhost:3000/";
-  // public imageUrl = "http://localhost:3000/public/images/";
-  private url = 'https://yogavidyaschool.com:3000/';
-  public imageUrl = "https://yogavidyaschool.com:3000/public/images/";
+  private url = environment.apiUrl;
+  public imageUrl = environment.imageUrl;
   public videoUrl = "https://yogavidyaschool.com:3000/public/video/";
-
   constructor(private data: HttpClient) {}
 
-
-  isLogedIn(){
-    return sessionStorage.getItem('token');
+  isLogedIn() {
+    return sessionStorage.getItem("token");
   }
 
   createStudent(data: any) {
@@ -25,12 +21,11 @@ export class ServiceService {
   }
 
   getstudent(data: any) {
-    return this.data.post(this.url + "api/v1/student",data);
+    return this.data.post(this.url + "api/v1/student", data);
   }
   checkEmail(data: any) {
-    return this.data.post(this.url + "api/v1/checkEmail",data);
+    return this.data.post(this.url + "api/v1/checkEmail", data);
   }
-
 
   getstudentByid(id) {
     return this.data.get(this.url + "api/v1/student/" + id);
@@ -43,8 +38,8 @@ export class ServiceService {
   getAllMentor(id = "") {
     return this.data.get(this.url + "api/v1/getAllMentor");
   }
-  getMentorById(id:any) {
-    return this.data.get(this.url + "api/v1/getMentorById/"+id);
+  getMentorById(id: any) {
+    return this.data.get(this.url + "api/v1/getMentorById/" + id);
   }
 
   createSlider(data: any) {
@@ -54,8 +49,8 @@ export class ServiceService {
   getSlider(id = "") {
     return this.data.get(this.url + "api/v1/getSlider");
   }
-  getSliderById(id:any) {
-    return this.data.get(this.url + "api/v1/getimagesliderById/"+id);
+  getSliderById(id: any) {
+    return this.data.get(this.url + "api/v1/getimagesliderById/" + id);
   }
 
   createCategory(data: any) {
@@ -63,7 +58,7 @@ export class ServiceService {
   }
 
   getAllCategory(id = "") {
-    return this.data.get(this.url + "api/v1/getAllCategory"+id);
+    return this.data.get(this.url + "api/v1/getAllCategory" + id);
   }
 
   getCategoryById(id) {
@@ -73,169 +68,173 @@ export class ServiceService {
   createCourse(data: any) {
     return this.data.post(this.url + "api/v1/createCourse", data);
   }
-  getAllCourse(data:any){
-   return this.data.post(this.url + 'api/v1/getAllCourse',data);
-}
+  getAllCourse(data: any) {
+    return this.data.post(this.url + "api/v1/getAllCourse", data);
+  }
 
-getAllWebinarRegistration(data:any){
-  return this.data.post(this.url + 'api/v1/getAllWebinarRegistration',data);
-}
+  getAllWebinarRegistration(data: any) {
+    return this.data.post(this.url + "api/v1/getAllWebinarRegistration", data);
+  }
 
-getAllCourseV2(id=""){
-  return this.data.get(this.url + 'api/v1/getAllCourseV2');
-}
-getCourseByid(id) {
-  return this.data.get(this.url + "api/v1/getCourseById/" + id);
-}
-createEmploye(data:any){
-  return this.data.post(this.url + "api/v1/createEmploye",data);
-}
+  getAllCourseV2(id = "") {
+    return this.data.get(this.url + "api/v1/getAllCourseV2");
+  }
+  getCourseByid(id) {
+    return this.data.get(this.url + "api/v1/getCourseById/" + id);
+  }
+  createEmploye(data: any) {
+    return this.data.post(this.url + "api/v1/createEmploye", data);
+  }
 
-getEmploye(id=""){
- return this.data.get(this.url +'api/v1/getEmploye');
-}
+  getEmploye(id = "") {
+    return this.data.get(this.url + "api/v1/getEmploye");
+  }
 
-getEmployeById(id){
-  return this.data.get(this.url + "api/v1/getEmployeById/" + id)
-}
+  getEmployeById(id) {
+    return this.data.get(this.url + "api/v1/getEmployeById/" + id);
+  }
 
-uploadImage(dam:any){
-  console.log(dam);
-return this.data.post(this.url+"api/v1/uploadImage",dam);
-}
+  uploadImage(dam: any) {
+    console.log(dam);
+    return this.data.post(this.url + "api/v1/uploadImage", dam);
+  }
 
-createBlog(data: any) {
-  return this.data.post(this.url + "api/v1/createBlog", data);
-}
-getAllBlog(data:any){
-  return this.data.post(this.url + 'api/v1/getAllBlog',data);
-}
-getBlogById(id){
-  return this.data.get(this.url + "api/v1/getBlogById/" + id)
-}
+  createBlog(data: any) {
+    return this.data.post(this.url + "api/v1/createBlog", data);
+  }
+  getAllBlog(data: any) {
+    return this.data.post(this.url + "api/v1/getAllBlog", data);
+  }
+  getBlogById(id) {
+    return this.data.get(this.url + "api/v1/getBlogById/" + id);
+  }
 
-createMedia(data: any) {
-  return this.data.post(this.url + "api/v1/createMedia", data);
-}
-getAllMedia(id=""){
-  return this.data.get(this.url + 'api/v1/getAllMedia'+id);
-}
+  createMedia(data: any) {
+    return this.data.post(this.url + "api/v1/createMedia", data);
+  }
+  getAllMedia(id = "") {
+    return this.data.get(this.url + "api/v1/getAllMedia" + id);
+  }
 
-createPage(data: any) {
-  return this.data.post(this.url + "api/v1/createPage", data);
-}
+  createPage(data: any) {
+    return this.data.post(this.url + "api/v1/createPage", data);
+  }
 
-getAllPages(id = "") {
-  return this.data.get(this.url + "api/v1/getAllPages");
-}
-getPageById(id:any) {
-  return this.data.get(this.url + "api/v1/getPageById/"+id);
-}
+  getAllPages(id = "") {
+    return this.data.get(this.url + "api/v1/getAllPages");
+  }
+  getPageById(id: any) {
+    return this.data.get(this.url + "api/v1/getPageById/" + id);
+  }
 
-createTestimonial(data: any) {
-  return this.data.post(this.url + "api/v1/createTestimonial", data);
-}
+  createTestimonial(data: any) {
+    return this.data.post(this.url + "api/v1/createTestimonial", data);
+  }
 
-getAllTestimonial(id = "") {
-  return this.data.get(this.url + "api/v1/getAllTestimonial");
-}
-getTestimonialById(id:any) {
-  return this.data.get(this.url + "api/v1/getTestimonialById/"+id);
-}
+  getAllTestimonial(id = "") {
+    return this.data.get(this.url + "api/v1/getAllTestimonial");
+  }
+  getTestimonialById(id: any) {
+    return this.data.get(this.url + "api/v1/getTestimonialById/" + id);
+  }
 
-createSubCategory(data: any) {
-  return this.data.post(this.url + "api/v1/createSubcategory", data);
-}
+  createSubCategory(data: any) {
+    return this.data.post(this.url + "api/v1/createSubcategory", data);
+  }
 
-getAllSubCategory(id = "") {
-  return this.data.get(this.url + "api/v1/getAllSubCategory"+id);
-}
+  getAllSubCategory(id = "") {
+    return this.data.get(this.url + "api/v1/getAllSubCategory" + id);
+  }
 
-getSubCategoryById(id) {
-  return this.data.get(this.url + "api/v1/getSubCategoryById/" + id);
-}
+  getSubCategoryById(id) {
+    return this.data.get(this.url + "api/v1/getSubCategoryById/" + id);
+  }
 
-createSubCourseCategory(data: any) {
-  return this.data.post(this.url + "api/v1/createSubCoursecategory", data);
-}
+  createSubCourseCategory(data: any) {
+    return this.data.post(this.url + "api/v1/createSubCoursecategory", data);
+  }
 
-getAllSubCourseCategory(id = "") {
-  return this.data.get(this.url + "api/v1/getAllSubCourseCategory"+id);
-}
+  getAllSubCourseCategory(id = "") {
+    return this.data.get(this.url + "api/v1/getAllSubCourseCategory" + id);
+  }
 
-getSubCourseCategoryById(id) {
-  return this.data.get(this.url + "api/v1/getSubCourseCategoryById/" + id);
-}
+  getSubCourseCategoryById(id) {
+    return this.data.get(this.url + "api/v1/getSubCourseCategoryById/" + id);
+  }
 
-doLogin(data:any){
-  return this.data.post(this.url+"api/v1/doLogin",data);
- }
- searchStudent(data:any){
-  return this.data.post(this.url+"api/v1/searchStudent",data);
- }
+  doLogin(data: any) {
+    return this.data.post(this.url + "api/v1/doLogin", data);
+  }
+  searchStudent(data: any) {
+    return this.data.post(this.url + "api/v1/searchStudent", data);
+  }
 
- getAllVideoReviews(data: any) {
-  return this.data.post(this.url + "api/v1/getAllVideoReviews",data);
-}
-getAllInquiry(data: any) {
-  return this.data.post(this.url + "api/v1/getAllInquiry",data);
-}
-getAllPayment(data: any) {
-  return this.data.post(this.url + "api/v1/getAllPayment",data);
-}
+  getAllVideoReviews(data: any) {
+    return this.data.post(this.url + "api/v1/getAllVideoReviews", data);
+  }
+  getAllInquiry(data: any) {
+    return this.data.post(this.url + "api/v1/getAllInquiry", data);
+  }
+  getAllPayment(data: any) {
+    return this.data.post(this.url + "api/v1/getAllPayment", data);
+  }
 
-exportFile(id:any=""){
-  return this.data.get(this.url+"api/v1/exportInquiry",{ responseType: 'arraybuffer' });
-}
+  exportFile(id: any = "") {
+    return this.data.get(this.url + "api/v1/exportInquiry", {
+      responseType: "arraybuffer",
+    });
+  }
 
-getCourseVideoV2(data: any) {
-  return this.data.post(this.url + "api/v1/getCourseVideosById", data);
-}
-setAccessPran(data: any) {
-  return this.data.post(this.url + "api/v1/setAccessPran", data);
-}
-setAccessFoundation(data: any) {
-  return this.data.post(this.url + "api/v1/setAccessFoundation", data);
-}
-setAccessBreath(data: any) {
-  return this.data.post(this.url + "api/v1/setAccessBreath", data);
-}
+  getCourseVideoV2(data: any) {
+    return this.data.post(this.url + "api/v1/getCourseVideosById", data);
+  }
+  setAccessPran(data: any) {
+    return this.data.post(this.url + "api/v1/setAccessPran", data);
+  }
+  setAccessFoundation(data: any) {
+    return this.data.post(this.url + "api/v1/setAccessFoundation", data);
+  }
+  setAccessBreath(data: any) {
+    return this.data.post(this.url + "api/v1/setAccessBreath", data);
+  }
 
+  getCourseVideoDataById(id) {
+    return this.data.get(this.url + "api/v1/getCourseVideoDataById/" + id);
+  }
 
-getCourseVideoDataById(id) {
-  return this.data.get(this.url + "api/v1/getCourseVideoDataById/" + id);
-}
+  createVideo(data: any) {
+    return this.data.post(this.url + "api/v1/createVideo", data);
+  }
 
-createVideo(data: any) {
-  return this.data.post(this.url + "api/v1/createVideo", data);
-}
+  getAllCourseAdmin(id = "") {
+    return this.data.get(this.url + "api/v1/getAllCourseAdmin");
+  }
 
-getAllCourseAdmin(id = "") {
-  return this.data.get(this.url + "api/v1/getAllCourseAdmin");
-}
+  uploadVideo(data: any) {
+    return this.data.post(this.url + "api/v1/uploadVideo", data);
+  }
 
-uploadVideo(data: any) {
-  return this.data.post(this.url + "api/v1/uploadVideo", data);
-}
+  insertVideo(data: any) {
+    return this.data.post(this.url + "api/v1/uploadOnlineVideo", data);
+  }
 
-insertVideo(data: any) {
-  return this.data.post(this.url + "api/v1/uploadOnlineVideo", data);
-}
+  getAnalyticsByDate(data: any) {
+    return this.data.post(this.url + "api/v1/getAnalyticsByDate", data);
+  }
+  getAllParayanamStudent(data: searchPranaRambhFilter) {
+    return this.data.post(this.url + "api/v1/getAllParayanamStudent", data);
+  }
 
-getAnalyticsByDate(data: any) {
-  return this.data.post(this.url + "api/v1/getAnalyticsByDate", data);
-}
-getAllParayanamStudent(data:any){
-  return this.data.post(this.url + "api/v1/getAllParayanamStudent", data);
-}
-
-getAllLiveClassStudent(data:any){
-  return this.data.post(this.url + "api/v1/getAllLiveClassStudent", data);
-}
-getAllFoundationOfSpiritualityStudent(data:any){
-  return this.data.post(this.url + "api/v1/getAllFoundationOfSpiritualityStudent",data);
-}
-getAllBreathDetoxStudent(data:any){
-  return this.data.post(this.url + "api/v1/getAllBreathDetoxStudent", data);
-}
+  getAllLiveClassStudent(data: any) {
+    return this.data.post(this.url + "api/v1/getAllLiveClassStudent", data);
+  }
+  getAllFoundationOfSpiritualityStudent(data: any) {
+    return this.data.post(
+      this.url + "api/v1/getAllFoundationOfSpiritualityStudent",
+      data
+    );
+  }
+  getAllBreathDetoxStudent(data: any) {
+    return this.data.post(this.url + "api/v1/getAllBreathDetoxStudent", data);
+  }
 }
