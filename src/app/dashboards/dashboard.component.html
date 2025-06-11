@@ -1,4 +1,9 @@
-<div *ngIf="isLoading" class="loader-overlay">
+<div
+  *ngIf="
+    isLoading || swaraLoading || bDtoxLoading || fosLoading || liveClassLoading
+  "
+  class="loader-overlay"
+>
   <div class="spinner-border text-primary" role="status">
     <span class="sr-only">Loading...</span>
   </div>
@@ -22,7 +27,6 @@
                       >Export to Excel</a
                     >
                   </div>
-
                   <div class="container_search">
                     <input
                       type="text"
@@ -55,11 +59,10 @@
                       />
                     </div>
 
-                    <button (click)="getAllParayanamStudent(filter)">
+                    <button (click)="getAllParayanamStudent(filter, true)">
                       Search
                     </button>
                   </div>
-
                   <div class="pranarambh-table-responsive">
                     <table
                       id="Pranarambh"
@@ -93,46 +96,59 @@
                             {{ student.firstName }} {{ student.lastName || "" }}
                           </td>
                           <td>{{ student.email }}</td>
-                          <!-- <td>{{ student.course[0] }}</td> -->
-
-                          <!-- Show First Payment Detail (if available) -->
                           <td>
-                            {{
-                              student.paymentDetails.length > 0
-                                ? student.paymentDetails[0].amount
-                                : "N/A"
-                            }}
-                          </td>
-                          <td>
-                            {{
-                              student.paymentDetails.length > 0
-                                ? student.paymentDetails[0].currency
-                                : "N/A"
-                            }}
-                          </td>
-                          <td>
-                            {{
-                              student.paymentDetails.length > 0
-                                ? student.paymentDetails[0].paymentStatus
-                                : "N/A"
-                            }}
-                          </td>
-                          <td>
-                            {{
-                              student.paymentDetails.length > 0
-                                ? student.paymentDetails[0].paymentBy
-                                : "N/A"
-                            }}
+                            <ng-container
+                              *ngIf="
+                                student.paymentDetailsObject.amount;
+                                else noPayment
+                              "
+                            >
+                              {{ student.paymentDetailsObject.amount }}
+                            </ng-container>
+                            <ng-template #noPayment>N/A</ng-template>
                           </td>
                           <td>
                             <ng-container
                               *ngIf="
-                                student.paymentDetails.length > 0;
+                                student.paymentDetailsObject.currency;
+                                else noPayment
+                              "
+                            >
+                              {{ student.paymentDetailsObject.currency }}
+                            </ng-container>
+                            <ng-template #noPayment>N/A</ng-template>
+                          </td>
+                          <td>
+                            <ng-container
+                              *ngIf="
+                                student.paymentDetailsObject.paymentStatus;
+                                else noPayment
+                              "
+                            >
+                              {{ student.paymentDetailsObject.paymentStatus }}
+                            </ng-container>
+                            <ng-template #noPayment>N/A</ng-template>
+                          </td>
+                          <td>
+                            <ng-container
+                              *ngIf="
+                                student.paymentDetailsObject.paymentBy;
+                                else noPayment
+                              "
+                            >
+                              {{ student.paymentDetailsObject.paymentBy }}
+                            </ng-container>
+                            <ng-template #noPayment>N/A</ng-template>
+                          </td>
+                          <td>
+                            <ng-container
+                              *ngIf="
+                                student.paymentDetailsObject.created;
                                 else noPayment
                               "
                             >
                               {{
-                                student.paymentDetails[0].created
+                                student.paymentDetailsObject.created
                                   | date : "dd-MM-yyyy"
                               }}
                             </ng-container>
@@ -165,15 +181,18 @@
                       >Export to Excel</a
                     >
                   </div>
-
                   <div class="container_search">
                     <input
                       type="text"
                       placeholder="Search by Name or Email or City or Phone number"
-                      [(ngModel)]="searchTextBreathDetox"
+                      [(ngModel)]="breathDetoxfilter.searchText"
                       class="search-input"
                     />
-                    <button (click)="searchBreath()">Search</button>
+                    <button
+                      (click)="getAllBreathDetoxStudent(breathDetoxfilter)"
+                    >
+                      Search
+                    </button>
                   </div>
                   <div class="table-responsive">
                     <table
@@ -303,19 +322,55 @@
                       >Export to Excel</a
                     >
                   </div>
+                  <div class="container_search">
+                    <input
+                      type="text"
+                      placeholder="Search by Name or Email or phone number"
+                      [(ngModel)]="liveClassFilter.searchText"
+                      class="search-input"
+                    />
+
+                    <div style="display: flex; align-items: center">
+                      <label for="fromDate" style="margin-right: 8px"
+                        >From Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="fromDate"
+                        [(ngModel)]="liveClassFilter.fromDate"
+                        class="date-input"
+                      />
+                    </div>
+
+                    <div style="display: flex; align-items: center">
+                      <label for="toDate" style="margin-right: 8px"
+                        >To Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="toDate"
+                        [(ngModel)]="liveClassFilter.toDate"
+                        class="date-input"
+                      />
+                    </div>
+                    <button (click)="getAllLiveClassStudent(liveClassFilter)">
+                      Search
+                    </button>
+                  </div>
                   <select
                     id="customerGroup"
                     class="form-control"
                     (change)="onSelectCustomerGroup($event.target.value)"
+                    [(ngModel)]="selectedGroupId"
                   >
-                    <!-- <option *ngFor="let group of customerGroups" [value]="group._id">{{ group._id }} ({{ totalCustomers}})</option>-->
                     <option
                       *ngFor="let group of customerGroups"
                       [value]="group._id"
                     >
                       {{ group._id }}
-                    </option></select
-                  ><br />
+                    </option>
+                  </select>
+                  <br />
                   <div class="table-responsive">
                     <table
                       id="LiveClass"
@@ -327,12 +382,11 @@
                           <th>Customer Name</th>
                           <th>Email</th>
                           <th>Phone</th>
-                          <!-- <th>Course Title</th> -->
                           <th>Course Time</th>
                           <th>Price</th>
                           <th>Currency</th>
                           <th>Payment Status</th>
-                          <!-- <th>Created Date</th> -->
+                          <th>Payment Date</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -343,7 +397,7 @@
                                 : {
                                     itemsPerPage: 10,
                                     currentPage: p,
-                                    totalItems: liveClassStudentTotal
+                                    totalItems: totalCustomers
                                   };
                             let i = index
                           "
@@ -364,23 +418,122 @@
                           >
                             {{ customer?.paymentStatus }}
                           </td>
-                          <!-- <td>{{ customer?.created | date:'yyyy-MM-dd HH:mm' }}</td> -->
+                          <td>{{ customer?.created | date : "dd-MM-yyyy" }}</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
                   <div class="pagination">
                     <pagination-controls
-                      (pageChange)="onTableDataChange($event)"
+                      (pageChange)="onLiveClassTableDataChange($event)"
                     ></pagination-controls>
                   </div>
                 </div>
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab title="Master (Total)">
+          <ngb-tab [title]="swarSadhnaTitle">
             <ng-template ngbTabContent>
-              <h4>Master (Total)</h4>
+              <div class="header-container">
+                <h4>Swara Sadhana</h4>
+                <a class="export-link" (click)="swaraExportToExcel()"
+                  >Export to Excel</a
+                >
+              </div>
+              <div class="container_search">
+                <input
+                  type="text"
+                  placeholder="Search by Name or Email or phone"
+                  [(ngModel)]="swaraSadhnaFilter.searchText"
+                  class="search-input"
+                />
+
+                <div style="display: flex; align-items: center">
+                  <label for="fromDate" style="margin-right: 8px"
+                    >From Date:</label
+                  >
+                  <input
+                    type="date"
+                    id="fromDate"
+                    [(ngModel)]="swaraSadhnaFilter.fromDate"
+                    class="date-input"
+                  />
+                </div>
+
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px">To Date:</label>
+                  <input
+                    type="date"
+                    id="toDate"
+                    [(ngModel)]="swaraSadhnaFilter.toDate"
+                    class="date-input"
+                  />
+                </div>
+
+                <button
+                  (click)="getAllSwaraSadhnaStudent(swaraSadhnaFilter, true)"
+                >
+                  Search
+                </button>
+              </div>
+              <div class="pranarambh-table-responsive">
+                <table
+                  id="Swara_Sadhana"
+                  class="table table-bordered table-striped"
+                >
+                  <thead class="table-secondary">
+                    <th style="width: 10% !important">Sl No.</th>
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>City</th>
+                    <th>Payment Status</th>
+                    <th>Payment Date</th>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let obj of swaraSadhanaList
+                          | paginate
+                            : {
+                                itemsPerPage: 10,
+                                currentPage: swarSadhanaPage,
+                                totalItems: swarSadhanaTotal
+                              };
+                        let i = index
+                      "
+                    >
+                      <td>{{ i + 1 + (swarSadhanaPage - 1) * 10 }}</td>
+                      <td>
+                        {{ obj.name }}
+                      </td>
+                      <td>{{ obj.email }}</td>
+                      <td>{{ obj.phone }}</td>
+                      <td>{{ obj.city }}</td>
+                      <td
+                        [ngClass]="{
+                          'text-success': obj?.paymentStatus == 'paid',
+                          'text-warning': obj?.paymentStatus == 'pending',
+                          'text-danger': obj?.paymentStatus == 'failed'
+                        }"
+                      >
+                        {{ obj.paymentStatus }}
+                      </td>
+                      <td>
+                        <ng-container *ngIf="obj.created; else noPayment">
+                          {{ obj.created | date : "dd-MM-yyyy" }}
+                        </ng-container>
+                        <ng-template #noPayment>N/A</ng-template>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="pagination">
+                <pagination-controls
+                  (pageChange)="onswarSadhnaTableDataChange($event)"
+                ></pagination-controls>
+              </div>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

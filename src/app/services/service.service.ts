@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { searchPranaRambhFilter } from "../models/filter";
+import { searchPranaRambhFilter } from "../models/dashboard";
 
 @Injectable({
   providedIn: "root",
@@ -225,7 +225,7 @@ export class ServiceService {
     return this.data.post(this.url + "api/v1/getAllParayanamStudent", data);
   }
 
-  getAllLiveClassStudent(data: any) {
+  getAllLiveClassStudent(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllLiveClassStudent", data);
   }
   getAllFoundationOfSpiritualityStudent(data: any) {
@@ -234,7 +234,10 @@ export class ServiceService {
       data
     );
   }
-  getAllBreathDetoxStudent(data: any) {
+  getAllBreathDetoxStudent(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllBreathDetoxStudent", data);
+  }
+  getAllSwaraSadhanaData(data: searchPranaRambhFilter) {
+    return this.data.post(this.url + "api/v1/getAllSwaraSadhanaData", data);
   }
 }

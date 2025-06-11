@@ -3,7 +3,12 @@ import { ServiceService } from "src/app/services/service.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import { searchPranaRambhFilter } from "../models/filter";
+import {
+  searchPranaRambhFilter,
+  swarSadhnaDataModel,
+  swarSadhnaStudentModel,
+} from "../models/dashboard";
+import { paymentStatus } from "../enums/payment";
 
 @Component({
   selector: "app-dashboard",
@@ -11,17 +16,17 @@ import { searchPranaRambhFilter } from "../models/filter";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-  isLoading = false;
+  isLoading: boolean = false;
   filteredStudents: any[] = [];
   filter: searchPranaRambhFilter;
   allPranayamStudents: any[] = [];
-  breathDetoxfilter: any = {};
+  breathDetoxfilter: searchPranaRambhFilter;
   foundationDetoxfilter: any = {};
-  pranayamStudentTotal: any;
-  liveClassStudentTotal: any;
+  pranayamStudentTotal: number;
+  liveClassStudentTotal: number;
   foundationTotal: any;
   breathDetoxTotal: any;
-  p: any = 1;
+  p: number = 1;
   breathP: any = 1;
   foundationP: any = 1;
   students: any[] = []; // Store student data
@@ -33,8 +38,18 @@ export class DashboardComponent implements OnInit {
   spiritualityStudent: any[] = [];
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
+  liveClassFilter: searchPranaRambhFilter;
+  swaraSadhnaFilter: searchPranaRambhFilter;
+  swaraSadhanaList: swarSadhnaStudentModel[] = [];
+  swarSadhanaTotal: number = 0;
+  swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
+  swarSadhanaPage: number = 1;
+  paymentStatusEnum = paymentStatus;
+  swaraLoading: boolean = false;
+  bDtoxLoading: boolean = false;
+  fosLoading: boolean = false;
+  liveClassLoading: boolean = false;
   constructor(private service: ServiceService, private route: ActivatedRoute) {}
-
   ngOnInit(): void {
     this.filter = {
       pageNo: 1,
@@ -43,28 +58,34 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
-    this.breathDetoxfilter = { pageNo: 1, size: 10 };
+    this.breathDetoxfilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+    };
+    this.liveClassFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+    };
+    this.swaraSadhnaFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+    };
     this.foundationDetoxfilter = { pageNo: 1, size: 10 };
-    this.getAllParayanamStudent(this.filter);
-    this.getAllLiveClassStudent();
-    this.getAllBreathDetoxStudent();
+    this.getAllParayanamStudent(this.filter, false);
+    this.getAllLiveClassStudent(this.liveClassFilter);
+    this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent();
+    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
   }
-  searchBreath() {
-    this.breathDetoxfilter.searchText = this.searchTextBreathDetox;
-    this.service.getAllBreathDetoxStudent(this.breathDetoxfilter).subscribe(
-      (response: any) => {
-        if (response && response.data.length > 0) {
-          this.breathDetoxTotal = response.total;
-          this.breathDetox = response.data;
-        }
-      },
-      (error) => {
-        console.error("Error fetching breathDetox data:", error);
-      }
-    );
-  }
-
   searchFOS() {
     this.foundationDetoxfilter.searchText = this.searchTextFOS;
     this.service
@@ -87,32 +108,51 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
-
-  getAllParayanamStudent(filter: searchPranaRambhFilter): void {
+  getAllParayanamStudent(
+    filter: searchPranaRambhFilter,
+    isSearch: boolean
+  ): void {
     this.isLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.p = isSearch ? 1 : this.p;
     this.service.getAllParayanamStudent(filter).subscribe((res: any) => {
-      console.log("Fetched Students:", res);
       this.students = res.data;
       this.pranayamStudentTotal = res.total;
+      if (this.students && this.students.length > 0) {
+        for (let obj of this.students) {
+          if (obj.paymentDetails?.length > 0) {
+            for (let i in obj.paymentDetails) {
+              if (+i > 0) {
+                // ++this.pranayamStudentTotal;
+              } else {
+                obj.paymentDetailsObject = obj.paymentDetails[i];
+              }
+            }
+          } else {
+            obj.paymentDetailsObject = {};
+          }
+        }
+      }
       this.isLoading = this.students ? false : true;
     });
   }
-
-  getAllLiveClassStudent() {
-    this.service.getAllLiveClassStudent(this.filter).subscribe(
+  getAllLiveClassStudent(filter: searchPranaRambhFilter) {
+    this.liveClassLoading = true;
+    this.service.getAllLiveClassStudent(filter).subscribe(
       (response: any) => {
         if (response && response.data.length > 0) {
           this.customerGroups = response.data;
           this.liveClassStudentTotal = response.total;
-          this.isLoading = false;
-          this.onSelectCustomerGroup(this.customerGroups[0]._id);
-          this.totalCustomers = response.data[0].totalCustomers;
+          this.liveClassLoading = false;
+          const selectCorse =
+            this.selectedGroupId ?? this.customerGroups[0]._id;
+          this.onSelectCustomerGroup(selectCorse);
           this.totalCustomersAll = response.data.reduce(
             (sum, item) => sum + item.totalCustomers,
             0
           );
-          this.customers = response.data[0].customers;
-          console.log("live class stdnt", this.totalCustomersAll);
+          console.log("live class stdnt", this.customers);
         }
       },
       (error) => {
@@ -141,24 +181,43 @@ export class DashboardComponent implements OnInit {
         }
       );
   }
-  getAllBreathDetoxStudent() {
-    this.service.getAllBreathDetoxStudent(this.breathDetoxfilter).subscribe(
+  getAllBreathDetoxStudent(filter: searchPranaRambhFilter): void {
+    this.bDtoxLoading = true;
+    this.service.getAllBreathDetoxStudent(filter).subscribe(
       (response: any) => {
-        if (response && response.data.length > 0) {
-          this.breathDetoxTotal = response.total;
-          this.breathDetox = response.data;
-        }
+        this.breathDetoxTotal = response.total;
+        this.breathDetox = response.data;
+        this.bDtoxLoading = this.breathDetox ? false : true;
       },
       (error) => {
         console.error("Error fetching breathDetox data:", error);
       }
     );
   }
-
+  getAllSwaraSadhnaStudent(
+    filter: searchPranaRambhFilter,
+    isSearch: boolean
+  ): void {
+    this.swaraLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.swarSadhanaPage = isSearch ? 1 : this.swarSadhanaPage;
+    this.service
+      .getAllSwaraSadhanaData(filter)
+      .subscribe((res: swarSadhnaDataModel) => {
+        this.swaraSadhanaList = res.data;
+        this.swarSadhanaTotal = res.total;
+        this.swarSadhnaTitle = `Swara Sadhana (${this.swarSadhanaTotal})`;
+        this.swaraLoading = this.swaraSadhanaList ? false : true;
+      });
+  }
+  selectedGroupId: string;
   onSelectCustomerGroup(selectedId: string) {
     const selectedGroup = this.customerGroups.find(
       (group) => group._id === selectedId
     );
+    this.selectedGroupId = selectedId;
+    console.log(selectedGroup);
     if (selectedGroup) {
       this.totalCustomers = selectedGroup.totalCustomers;
       this.customers = selectedGroup.customers;
@@ -167,12 +226,19 @@ export class DashboardComponent implements OnInit {
       this.customers = [];
     }
   }
-
+  onLiveClassTableDataChange(event: number) {
+    this.liveClassFilter.pageNo = event;
+    this.getAllLiveClassStudent(this.liveClassFilter);
+    this.p = event;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
   onTableDataChange(event: number) {
     this.filter.pageNo = event;
-    this.getAllParayanamStudent(this.filter);
-    // this.getAllLiveClassStudent();
     this.p = event;
+    this.getAllParayanamStudent(this.filter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -180,7 +246,7 @@ export class DashboardComponent implements OnInit {
   }
   onBreathDetoxTableDataChange(event: any) {
     this.breathDetoxfilter.pageNo = event;
-    this.getAllBreathDetoxStudent();
+    this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.breathP = event;
     window.scrollTo({
       top: 0,
@@ -191,6 +257,15 @@ export class DashboardComponent implements OnInit {
     this.foundationDetoxfilter.pageNo = event;
     this.getAllFoundationOfSpiritualityStudent();
     this.foundationP = event;
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+  onswarSadhnaTableDataChange(event: number) {
+    this.swaraSadhnaFilter.pageNo = event;
+    this.swarSadhanaPage = event;
+    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -260,10 +335,14 @@ export class DashboardComponent implements OnInit {
         document.body.removeChild(link);
       });
   }
-
   breathDetoxExportToExcel(tableId: string): void {
-    let breathdetoxFilter = { size: 10000 }; // Ensure fetching all records
-
+    let breathdetoxFilter: searchPranaRambhFilter = {
+      size: 10000,
+      pageNo: 0,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+    };
     this.service
       .getAllBreathDetoxStudent(breathdetoxFilter)
       .subscribe((res: any) => {
@@ -314,7 +393,6 @@ export class DashboardComponent implements OnInit {
         document.body.removeChild(link);
       });
   }
-
   foundationExportToExcel(tableId: string): void {
     let foundationFilter = { size: 10000 }; // Ensure fetching all records
 
@@ -367,7 +445,6 @@ export class DashboardComponent implements OnInit {
         document.body.removeChild(link);
       });
   }
-
   liveClassStudentExportToExcel(tableId: string) {
     const table = document.getElementById(tableId) as HTMLTableElement;
     if (!table) {
@@ -400,5 +477,55 @@ export class DashboardComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+  swaraExportToExcel() {
+    this.swaraLoading = true;
+    const tableId = "Swara_Sadhana";
+    let filter = { ...this.swaraSadhnaFilter };
+    filter.size = 100000;
+    filter.pageNo = 0;
+    this.service
+      .getAllSwaraSadhanaData(filter)
+      .subscribe((res: swarSadhnaDataModel) => {
+        if (!res.data || res.data.length === 0) {
+          console.error("No data available for export.");
+          return;
+        }
+        let csvContent = "";
+        const table = document.getElementById(tableId) as HTMLTableElement;
+        if (!table) {
+          console.error("Table not found:", tableId);
+          return;
+        }
+        const headers = Array.from(table.querySelectorAll("thead th"))
+          .map((th) => (th as HTMLElement).innerText)
+          .join(",");
+        csvContent += headers + "\n";
+        const rowsData: any[][] = [];
+        res.data.forEach((student, index) => {
+          rowsData.push([
+            index + 1,
+            student.name,
+            student.email,
+            student.phone,
+            student.city,
+            student.paymentStatus,
+            student.created || "N/A",
+          ]);
+        });
+        rowsData.forEach((row) => {
+          csvContent += row.join(",") + "\n";
+        });
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", `${tableId}_export.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        this.swaraLoading = false;
+      });
   }
 }
