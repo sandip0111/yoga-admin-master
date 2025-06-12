@@ -173,8 +173,6 @@
             <ng-template ngbTabContent>
               <div class="media">
                 <div class="media-body">
-                  <!-- <h4 class="mt-0">Breath Detox</h4><button (click)="breathDetoxExportToExcel('BreathDetox')">Export to Excel</button>
-                  -->
                   <div class="header-container">
                     <h4>Breath Detox</h4>
                     <a
@@ -263,10 +261,10 @@
                     <input
                       type="text"
                       placeholder="Search by Name or Email"
-                      [(ngModel)]="searchTextFOS"
+                      [(ngModel)]="foundationDetoxfilter.searchText"
                       class="search-input form-control"
                     />
-                    <button (click)="searchFOS()">Search</button>
+                    <button (click)="getAllFoundationOfSpiritualityStudent(foundationDetoxfilter)">Search</button>
                   </div>
                   <div class="table-responsive">
                     <table

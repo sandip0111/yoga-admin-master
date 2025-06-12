@@ -67,3 +67,8 @@ export interface liveClassDataModel {
   data: liveClassCustomerModel[];
   total: number;
 }
+export interface fosFilterModel {
+  pageNo: number;
+  size: number;
+  searchText: string;
+}
