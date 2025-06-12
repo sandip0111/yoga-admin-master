@@ -23,7 +23,47 @@ export class swarSadhnaStudentModel {
     this.created = "";
   }
 }
-export interface swarSadhnaDataModel{
-  data: swarSadhnaStudentModel[],
-  total: number
+export interface swarSadhnaDataModel {
+  data: swarSadhnaStudentModel[];
+  total: number;
+}
+export class liveClassTeacherModel {
+  courseName: string;
+  courseValue: number;
+  constructor() {
+    this.courseName = "";
+    this.courseValue = 0;
+  }
+}
+export interface searchLiveClassFilter {
+  pageNo: number;
+  size: number;
+  searchText: string;
+  fromDate: string;
+  toDate: string;
+  course: string;
+}
+export class liveClassCustomerModel {
+  name: string;
+  email: string;
+  phone: string;
+  currency: string;
+  price: string;
+  paymentStatus: string;
+  created: string;
+  courseTimming: string;
+  constructor() {
+    this.name = "";
+    this.email = "";
+    this.phone = "";
+    this.currency = "";
+    this.price = "";
+    this.paymentStatus = "";
+    this.created = "";
+    this.courseTimming = "";
+  }
+}
+export interface liveClassDataModel {
+  data: liveClassCustomerModel[];
+  total: number;
 }

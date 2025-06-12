@@ -32,7 +32,7 @@
                       type="text"
                       placeholder="Search by Name or Email"
                       [(ngModel)]="filter.searchText"
-                      class="search-input"
+                      class="search-input form-control"
                     />
 
                     <div style="display: flex; align-items: center">
@@ -43,7 +43,7 @@
                         type="date"
                         id="fromDate"
                         [(ngModel)]="filter.fromDate"
-                        class="date-input"
+                        class="date-input form-control"
                       />
                     </div>
 
@@ -55,7 +55,9 @@
                         type="date"
                         id="toDate"
                         [(ngModel)]="filter.toDate"
-                        class="date-input"
+                        class="date-input form-control"
+                        [min]="filter.fromDate"
+                        [disabled]="!filter.fromDate"
                       />
                     </div>
 
@@ -186,7 +188,7 @@
                       type="text"
                       placeholder="Search by Name or Email or City or Phone number"
                       [(ngModel)]="breathDetoxfilter.searchText"
-                      class="search-input"
+                      class="search-input form-control"
                     />
                     <button
                       (click)="getAllBreathDetoxStudent(breathDetoxfilter)"
@@ -262,7 +264,7 @@
                       type="text"
                       placeholder="Search by Name or Email"
                       [(ngModel)]="searchTextFOS"
-                      class="search-input"
+                      class="search-input form-control"
                     />
                     <button (click)="searchFOS()">Search</button>
                   </div>
@@ -327,7 +329,7 @@
                       type="text"
                       placeholder="Search by Name or Email or phone number"
                       [(ngModel)]="liveClassFilter.searchText"
-                      class="search-input"
+                      class="search-input form-control"
                     />
 
                     <div style="display: flex; align-items: center">
@@ -338,7 +340,7 @@
                         type="date"
                         id="fromDate"
                         [(ngModel)]="liveClassFilter.fromDate"
-                        class="date-input"
+                        class="date-input form-control"
                       />
                     </div>
 
@@ -350,24 +352,28 @@
                         type="date"
                         id="toDate"
                         [(ngModel)]="liveClassFilter.toDate"
-                        class="date-input"
+                        class="date-input form-control"
+                        [min]="liveClassFilter.fromDate"
+                        [disabled]="!liveClassFilter.fromDate"
                       />
                     </div>
-                    <button (click)="getAllLiveClassStudent(liveClassFilter)">
+                    <button
+                      (click)="getAllLiveClassStudent(liveClassFilter, true)"
+                    >
                       Search
                     </button>
                   </div>
                   <select
                     id="customerGroup"
                     class="form-control"
-                    (change)="onSelectCustomerGroup($event.target.value)"
-                    [(ngModel)]="selectedGroupId"
+                    (change)="getAllLiveClassStudent(liveClassFilter, true)"
+                    [(ngModel)]="liveClassFilter.course"
                   >
                     <option
                       *ngFor="let group of customerGroups"
-                      [value]="group._id"
+                      [value]="group.courseName"
                     >
-                      {{ group._id }}
+                      {{ group.courseName }}
                     </option>
                   </select>
                   <br />
@@ -396,19 +402,22 @@
                               | paginate
                                 : {
                                     itemsPerPage: 10,
-                                    currentPage: p,
-                                    totalItems: totalCustomers
+                                    currentPage: liveClassPage,
+                                    totalItems: totalCustomersAll
                                   };
                             let i = index
                           "
                         >
-                          <td>{{ i + 1 + (p - 1) * 10 }}</td>
+                          <td>{{ i + 1 + (liveClassPage - 1) * 10 }}</td>
                           <td>{{ customer?.name }}</td>
                           <td>{{ customer?.email }}</td>
                           <td>{{ customer?.phone }}</td>
-                          <!-- <td>{{ customer?.courses?.title }}</td> -->
-                          <td>{{ customer?.courses?.shortDescription }}</td>
-                          <td>{{ customer?.price }}</td>
+                          <td>{{ customer?.courseTimming }}</td>
+                          <td>
+                            {{
+                              customer?.price | currency : customer?.currency
+                            }}
+                          </td>
                           <td>{{ customer?.currency }}</td>
                           <td
                             [ngClass]="{
@@ -445,7 +454,7 @@
                   type="text"
                   placeholder="Search by Name or Email or phone"
                   [(ngModel)]="swaraSadhnaFilter.searchText"
-                  class="search-input"
+                  class="search-input form-control"
                 />
 
                 <div style="display: flex; align-items: center">
@@ -456,7 +465,7 @@
                     type="date"
                     id="fromDate"
                     [(ngModel)]="swaraSadhnaFilter.fromDate"
-                    class="date-input"
+                    class="date-input form-control"
                   />
                 </div>
 
@@ -466,7 +475,9 @@
                     type="date"
                     id="toDate"
                     [(ngModel)]="swaraSadhnaFilter.toDate"
-                    class="date-input"
+                    class="date-input form-control"
+                    [min]="swaraSadhnaFilter.fromDate"
+                    [disabled]="!swaraSadhnaFilter.fromDate"
                   />
                 </div>
 

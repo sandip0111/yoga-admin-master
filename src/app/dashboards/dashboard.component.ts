@@ -4,6 +4,10 @@ import { Router, ActivatedRoute } from "@angular/router";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import {
+  liveClassCustomerModel,
+  liveClassDataModel,
+  liveClassTeacherModel,
+  searchLiveClassFilter,
   searchPranaRambhFilter,
   swarSadhnaDataModel,
   swarSadhnaStudentModel,
@@ -23,7 +27,6 @@ export class DashboardComponent implements OnInit {
   breathDetoxfilter: searchPranaRambhFilter;
   foundationDetoxfilter: any = {};
   pranayamStudentTotal: number;
-  liveClassStudentTotal: number;
   foundationTotal: any;
   breathDetoxTotal: any;
   p: number = 1;
@@ -32,13 +35,13 @@ export class DashboardComponent implements OnInit {
   students: any[] = []; // Store student data
   totalCustomers: number = 0;
   totalCustomersAll: number = 0;
-  customers: any[] = [];
-  customerGroups: any[] = [];
+  customers: liveClassCustomerModel[] = [];
+  customerGroups: liveClassTeacherModel[] = [];
   breathDetox: any[] = [];
   spiritualityStudent: any[] = [];
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
-  liveClassFilter: searchPranaRambhFilter;
+  liveClassFilter: searchLiveClassFilter;
   swaraSadhnaFilter: searchPranaRambhFilter;
   swaraSadhanaList: swarSadhnaStudentModel[] = [];
   swarSadhanaTotal: number = 0;
@@ -49,8 +52,9 @@ export class DashboardComponent implements OnInit {
   bDtoxLoading: boolean = false;
   fosLoading: boolean = false;
   liveClassLoading: boolean = false;
-  constructor(private service: ServiceService, private route: ActivatedRoute) {}
-  ngOnInit(): void {
+  selectedGroupId: string;
+  liveClassPage: number = 1;
+  constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
       size: 10,
@@ -65,12 +69,32 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
+    this.customerGroups = [
+      {
+        courseName: "Acharya Prashant Jakhmola online yoga class",
+        courseValue: 0,
+      },
+      {
+        courseName: "Anuj online yoga class",
+        courseValue: 1,
+      },
+      {
+        courseName: "Taniya online yoga class",
+        courseValue: 2,
+      },
+      {
+        courseName: "Shivam Joshi online yoga class",
+        courseValue: 3,
+      },
+    ];
+    this.selectedGroupId = this.customerGroups[0].courseName;
     this.liveClassFilter = {
       pageNo: 1,
       size: 10,
       searchText: "",
       fromDate: "",
       toDate: "",
+      course: this.selectedGroupId,
     };
     this.swaraSadhnaFilter = {
       pageNo: 1,
@@ -79,9 +103,11 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
+  }
+  ngOnInit(): void {
     this.foundationDetoxfilter = { pageNo: 1, size: 10 };
     this.getAllParayanamStudent(this.filter, false);
-    this.getAllLiveClassStudent(this.liveClassFilter);
+    this.getAllLiveClassStudent(this.liveClassFilter, false);
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent();
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
@@ -137,23 +163,16 @@ export class DashboardComponent implements OnInit {
       this.isLoading = this.students ? false : true;
     });
   }
-  getAllLiveClassStudent(filter: searchPranaRambhFilter) {
+  getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
     this.liveClassLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.liveClassPage = isSearch ? 1 : this.liveClassPage;
     this.service.getAllLiveClassStudent(filter).subscribe(
-      (response: any) => {
-        if (response && response.data.length > 0) {
-          this.customerGroups = response.data;
-          this.liveClassStudentTotal = response.total;
-          this.liveClassLoading = false;
-          const selectCorse =
-            this.selectedGroupId ?? this.customerGroups[0]._id;
-          this.onSelectCustomerGroup(selectCorse);
-          this.totalCustomersAll = response.data.reduce(
-            (sum, item) => sum + item.totalCustomers,
-            0
-          );
-          console.log("live class stdnt", this.customers);
-        }
+      (response: liveClassDataModel) => {
+        this.customers = response.data;
+        this.totalCustomersAll = response.total;
+        this.liveClassLoading = false;
       },
       (error) => {
         console.error("Error fetching customer data:", error);
@@ -211,25 +230,10 @@ export class DashboardComponent implements OnInit {
         this.swaraLoading = this.swaraSadhanaList ? false : true;
       });
   }
-  selectedGroupId: string;
-  onSelectCustomerGroup(selectedId: string) {
-    const selectedGroup = this.customerGroups.find(
-      (group) => group._id === selectedId
-    );
-    this.selectedGroupId = selectedId;
-    console.log(selectedGroup);
-    if (selectedGroup) {
-      this.totalCustomers = selectedGroup.totalCustomers;
-      this.customers = selectedGroup.customers;
-    } else {
-      this.totalCustomers = 0;
-      this.customers = [];
-    }
-  }
   onLiveClassTableDataChange(event: number) {
     this.liveClassFilter.pageNo = event;
-    this.getAllLiveClassStudent(this.liveClassFilter);
-    this.p = event;
+    this.liveClassPage = event;
+    this.getAllLiveClassStudent(this.liveClassFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -446,37 +450,47 @@ export class DashboardComponent implements OnInit {
       });
   }
   liveClassStudentExportToExcel(tableId: string) {
-    const table = document.getElementById(tableId) as HTMLTableElement;
-    if (!table) {
-      console.error("Table not found:", tableId);
-      return;
-    }
-
-    let csvContent = "";
-
-    // Extract headers
-    const headers = Array.from(table.querySelectorAll("thead th"))
-      .map((th) => (th as HTMLElement).innerText) // ✅ Fix: Cast to HTMLElement
-      .join(",");
-    csvContent += headers + "\n";
-
-    // Extract rows
-    const rows = Array.from(table.querySelectorAll("tbody tr"));
-    rows.forEach((row) => {
-      const rowData = Array.from(row.querySelectorAll("td"))
-        .map((td) => (td as HTMLElement).innerText) // ✅ Fix: Cast to HTMLElement
-        .join(",");
-      csvContent += rowData + "\n";
-    });
-
-    // Create & Download CSV file
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute("download", `${tableId}_export.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    this.liveClassLoading = true;
+    let filter = { ...this.liveClassFilter };
+    filter.size = 100000;
+    filter.pageNo = 0;
+    this.service
+      .getAllLiveClassStudent(filter)
+      .subscribe((res: liveClassDataModel) => {
+        if (!res.data || res.data.length === 0) {
+          console.error("No data available for export.");
+          return;
+        }
+        let csvContent = "";
+        const table = document.getElementById(tableId) as HTMLTableElement;
+        if (!table) {
+          console.error("Table not found:", tableId);
+          return;
+        }
+        const headers = Array.from(table.querySelectorAll("thead th"))
+          .map((th) => (th as HTMLElement).innerText)
+          .join(",");
+        csvContent += headers + "\n";
+        const rowsData: any[][] = [];
+        res.data.forEach((student, index) => {
+          rowsData.push([
+            index + 1,
+            student.name,
+            student.email,
+            student.phone,
+            student.courseTimming,
+            student.price,
+            student.currency,
+            student.paymentStatus,
+            student.created || "N/A",
+          ]);
+        });
+        rowsData.forEach((row) => {
+          csvContent += row.join(",") + "\n";
+        });
+        this.downloadCsv(csvContent, tableId);
+        this.liveClassLoading = false;
+      });
   }
   swaraExportToExcel() {
     this.swaraLoading = true;
@@ -516,16 +530,19 @@ export class DashboardComponent implements OnInit {
         rowsData.forEach((row) => {
           csvContent += row.join(",") + "\n";
         });
-        const blob = new Blob([csvContent], {
-          type: "text/csv;charset=utf-8;",
-        });
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.setAttribute("download", `${tableId}_export.csv`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        this.downloadCsv(csvContent, tableId);
         this.swaraLoading = false;
       });
+  }
+  downloadCsv(csvContent: string, tableId: string) {
+    const blob = new Blob([csvContent], {
+      type: "text/csv;charset=utf-8;",
+    });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute("download", `${tableId}_export.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
