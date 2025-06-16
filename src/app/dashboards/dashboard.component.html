@@ -188,6 +188,32 @@
                       [(ngModel)]="breathDetoxfilter.searchText"
                       class="search-input form-control"
                     />
+
+                    <div style="display: flex; align-items: center">
+                      <label for="fromDate" style="margin-right: 8px"
+                        >From Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="breathDetoxfilterFromDate"
+                        [(ngModel)]="breathDetoxfilter.fromDate"
+                        class="date-input form-control"
+                      />
+                    </div>
+
+                    <div style="display: flex; align-items: center">
+                      <label for="toDate" style="margin-right: 8px"
+                        >To Date:</label
+                      >
+                      <input
+                        type="date"
+                        id="toDate"
+                        [(ngModel)]="breathDetoxfilter.toDate"
+                        class="date-input form-control"
+                        [min]="breathDetoxfilter.fromDate"
+                        [disabled]="!breathDetoxfilter.fromDate"
+                      />
+                    </div>
                     <button
                       (click)="getAllBreathDetoxStudent(breathDetoxfilter)"
                     >
