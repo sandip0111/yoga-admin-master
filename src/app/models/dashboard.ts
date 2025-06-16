@@ -5,6 +5,16 @@ export interface searchPranaRambhFilter {
   fromDate: string;
   toDate: string;
 }
+
+export interface createSwaraSadhna {
+   name: string;
+   email: string;
+   phone: string;
+   webinar: string ;
+   city: string ;
+   timeSlot: string ;
+   password: string;
+}
 export class swarSadhnaStudentModel {
   _id: string;
   name: string;
@@ -13,6 +23,7 @@ export class swarSadhnaStudentModel {
   city: string;
   paymentStatus: string;
   created: string;
+  password: string;
   constructor() {
     this._id = "";
     this.name = "";
@@ -72,3 +83,15 @@ export interface fosFilterModel {
   size: number;
   searchText: string;
 }
+
+export const generatePassword = () => {
+      const digits = "0123456789";
+      const specialChars = "!@#$&";
+
+      let password = "";     
+      for (let i = 0; i < 5; i++) {
+        password += digits[Math.floor(Math.random() * digits.length)];
+      }     
+      password += specialChars[Math.floor(Math.random() * specialChars.length)];
+      return password;
+    }

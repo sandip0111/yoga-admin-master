@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { searchLiveClassFilter, searchPranaRambhFilter } from "../models/dashboard";
+import { createSwaraSadhna, searchLiveClassFilter, searchPranaRambhFilter } from "../models/dashboard";
 
 @Injectable({
   providedIn: "root",
@@ -239,5 +239,9 @@ export class ServiceService {
   }
   getAllSwaraSadhanaData(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllSwaraSadhanaData", data);
+  }
+
+  registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
+    return this.data.post(this.url + "api/v1/registerSwarSadhanaWebinarUser", data);
   }
 }
