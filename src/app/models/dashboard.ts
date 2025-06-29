@@ -72,3 +72,51 @@ export interface fosFilterModel {
   size: number;
   searchText: string;
 }
+export class PaymentDetailsModel {
+  amount: string;
+  created: string;
+  currency: string;
+  paymentBy: string;
+  paymentStatus: string;
+  studentId: string;
+}
+export class StudentModel {
+  _id: string;
+  firstName: string;
+  email: string;
+  phoneNumber: number;
+  password: string;
+  created: string;
+  paymentDetails: PaymentDetailsModel[];
+  paymentDetailsObject: PaymentDetailsModel;
+}
+export interface PranArambhModel {
+  data: StudentModel[];
+  total: number;
+}
+export class searchPranicPurificationFilter {
+  pageNo: number;
+  size: number;
+  searchText: string;
+  fromDate: string;
+  toDate: string;
+}
+export interface pranicPurificationModel {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address?: string;
+  courseStartDate: Date | string;
+  courseTimeDuration: string;
+  price: number | string;
+  currency: string;
+  paymentStatus: string;
+  created?: Date | string;
+  couponUsed: boolean;
+  couponcode: string;
+}
+export interface pranicPurificationResultModel {
+  data: pranicPurificationModel[];
+  total: number;
+}

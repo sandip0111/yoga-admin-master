@@ -8,10 +8,16 @@ import {
   liveClassCustomerModel,
   liveClassDataModel,
   liveClassTeacherModel,
+  PranArambhModel,
   searchLiveClassFilter,
   searchPranaRambhFilter,
+  StudentModel,
   swarSadhnaDataModel,
   swarSadhnaStudentModel,
+  PaymentDetailsModel,
+  searchPranicPurificationFilter,
+  pranicPurificationResultModel,
+  pranicPurificationModel,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 
@@ -33,7 +39,7 @@ export class DashboardComponent implements OnInit {
   p: number = 1;
   breathP: any = 1;
   foundationP: any = 1;
-  students: any[] = []; // Store student data
+  students: StudentModel[] = [];
   totalCustomers: number = 0;
   totalCustomersAll: number = 0;
   customers: liveClassCustomerModel[] = [];
@@ -55,6 +61,13 @@ export class DashboardComponent implements OnInit {
   liveClassLoading: boolean = false;
   selectedGroupId: string;
   liveClassPage: number = 1;
+  pranicPurificationFilter: searchPranicPurificationFilter =
+    new searchPranicPurificationFilter();
+  pranicLoading: boolean = false;
+  pranicPurificationList: pranicPurificationModel[] = [];
+  pranicPurificationTotal: number = 0;
+  pranicPurificationPage: number = 1;
+  pranicPurificationTitle: string = "";
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -105,6 +118,13 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
+    this.pranicPurificationFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+    };
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
@@ -112,6 +132,7 @@ export class DashboardComponent implements OnInit {
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+    this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
@@ -121,26 +142,27 @@ export class DashboardComponent implements OnInit {
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     this.p = isSearch ? 1 : this.p;
-    this.service.getAllParayanamStudent(filter).subscribe((res: any) => {
-      this.students = res.data;
-      this.pranayamStudentTotal = res.total;
-      if (this.students && this.students.length > 0) {
-        for (let obj of this.students) {
-          if (obj.paymentDetails?.length > 0) {
-            for (let i in obj.paymentDetails) {
-              if (+i > 0) {
-                // ++this.pranayamStudentTotal;
-              } else {
-                obj.paymentDetailsObject = obj.paymentDetails[i];
+    this.service
+      .getAllParayanamStudent(filter)
+      .subscribe((res: PranArambhModel) => {
+        this.students = res.data;
+        this.pranayamStudentTotal = res.total;
+        if (this.students && this.students.length > 0) {
+          for (let obj of this.students) {
+            if (obj.paymentDetails?.length > 0) {
+              for (let i in obj.paymentDetails) {
+                if (+i == 0) {
+                  obj.paymentDetailsObject = obj.paymentDetails[i];
+                }
               }
+            } else {
+              obj.paymentDetailsObject = new PaymentDetailsModel();
             }
-          } else {
-            obj.paymentDetailsObject = {};
           }
         }
-      }
-      this.isLoading = this.students ? false : true;
-    });
+        this.isLoading = this.students ? false : true;
+        console.log(this.students);
+      });
   }
   getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
     this.liveClassLoading = true;
@@ -463,5 +485,32 @@ export class DashboardComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+  getAllPranicPurificationStudent(
+    filter: searchPranaRambhFilter,
+    isSearch: boolean
+  ): void {
+    this.pranicLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.pranicPurificationPage = isSearch ? 1 : this.pranicPurificationPage;
+    this.service
+      .getAllPranicPurificationStudent(filter)
+      .subscribe((res: pranicPurificationResultModel) => {
+        this.pranicPurificationList = res.data;
+        this.pranicPurificationTotal = res.total;
+        this.pranicPurificationTitle = `Pranic Purification (${this.pranicPurificationTotal})`;
+        this.pranicLoading = this.pranicPurificationList ? false : true;
+        console.log("mukta di kal theke amake message korbe, teams e call o korbe", this.pranicPurificationList);
+      });
+  }
+  onPranicPurificationTableDataChange(event: number) {
+    this.pranicPurificationFilter.pageNo = event;
+    this.pranicPurificationPage = event;
+    this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 }

@@ -240,4 +240,7 @@ export class ServiceService {
   getAllSwaraSadhanaData(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllSwaraSadhanaData", data);
   }
+  getAllPranicPurificationStudent(data: searchPranaRambhFilter) {
+    return this.data.post(this.url + "api/v1/getAllPranicPurificationStudent", data);
+  }
 }
