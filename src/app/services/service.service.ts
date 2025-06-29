@@ -247,4 +247,7 @@ export class ServiceService {
   getAllPranicPurificationStudent(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllPranicPurificationStudent", data);
   }
+  getAll200ttcStudent(data: searchPranaRambhFilter) {
+    return this.data.post(this.url + "api/v1/get200ttcData", data);
+  }
 }

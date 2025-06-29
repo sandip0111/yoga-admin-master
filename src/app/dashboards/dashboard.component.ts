@@ -17,9 +17,10 @@ import {
   createSwaraSadhna,
   generatePassword,
   PaymentDetailsModel,
-  searchPranicPurificationFilter,
   pranicPurificationResultModel,
   pranicPurificationModel,
+  twoHunTTCModelResultModel,
+  twoHunTTCModel,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 
@@ -56,7 +57,7 @@ export class DashboardComponent implements OnInit {
   swarSadhanaTotal: number = 0;
   swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
   createSwaraSadhnaFrom: createSwaraSadhna;
-  createSwaraSadhnaTitle:  string = `Create Swara Sadhana`;
+  createSwaraSadhnaTitle: string = `Create Swara Sadhana`;
   swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
@@ -65,13 +66,20 @@ export class DashboardComponent implements OnInit {
   liveClassLoading: boolean = false;
   selectedGroupId: string;
   liveClassPage: number = 1;
-  pranicPurificationFilter: searchPranicPurificationFilter =
-    new searchPranicPurificationFilter();
+  pranicPurificationFilter: searchPranaRambhFilter =
+    new searchPranaRambhFilter();
   pranicLoading: boolean = false;
   pranicPurificationList: pranicPurificationModel[] = [];
   pranicPurificationTotal: number = 0;
   pranicPurificationPage: number = 1;
   pranicPurificationTitle: string = "";
+  twoHunTTCTitle: string = "";
+  twoHunTTCFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
+  twoHunTTCLoading: boolean = false;
+  twoHunTTCPage: number = 1;
+  twoHunTTCList: twoHunTTCModel[] = [];
+  twoHunTTCTotal: number = 0;
+
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -129,7 +137,7 @@ export class DashboardComponent implements OnInit {
       city: "",
       timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
       password: "",
-      webinar: "Swara Sadhana"
+      webinar: "Swara Sadhana",
     };
     this.pranicPurificationFilter = {
       pageNo: 1,
@@ -138,6 +146,7 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
+    this.twoHunTTCFilter = this.pranicPurificationFilter;
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
@@ -146,6 +155,7 @@ export class DashboardComponent implements OnInit {
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
+    this.getAll200TTCStudent(this.twoHunTTCFilter, false);
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
@@ -491,10 +501,10 @@ export class DashboardComponent implements OnInit {
 
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     this.swaraLoading = true;
-    if(!data.name){
+    if (!data.name) {
       data.name = "Guest";
     }
-    if(!data.phone){
+    if (!data.phone) {
       data.phone = "N/A";
     }
     data.email = String(data.email).toLowerCase();
@@ -502,12 +512,12 @@ export class DashboardComponent implements OnInit {
     data.city = data.city || "N/A";
     data.timeSlot = data.timeSlot || "67e033dc5cd9be5b6d38a7ff";
     data.password = data.password || generatePassword();
-    if(data.name && data.email && data.phone) {
+    if (data.name && data.email && data.phone) {
       this.service.registerSwarSadhanaWebinarUser(data).subscribe(
         (res: any) => {
           if (res.status == "ok") {
             this.swaraLoading = false;
-            this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);            
+            this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
             this.createSwaraSadhnaFrom = {
               name: "",
               email: "",
@@ -515,7 +525,7 @@ export class DashboardComponent implements OnInit {
               city: "",
               timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
               password: "",
-              webinar: "Swara Sadhana"
+              webinar: "Swara Sadhana",
             };
             alert("Registration successful!");
           } else {
@@ -563,6 +573,30 @@ export class DashboardComponent implements OnInit {
     this.pranicPurificationFilter.pageNo = event;
     this.pranicPurificationPage = event;
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+  getAll200TTCStudent(filter: searchPranaRambhFilter, isSearch: boolean): void {
+    this.twoHunTTCLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.twoHunTTCPage = isSearch ? 1 : this.twoHunTTCPage;
+    this.service
+      .getAll200ttcStudent(filter)
+      .subscribe((res: twoHunTTCModelResultModel) => {
+        console.log("mukta di kal theke teams e call korbe amai", res);
+        this.twoHunTTCList = res.data;
+        this.twoHunTTCTotal = res.total;
+        this.twoHunTTCTitle = `200 TTC (${this.twoHunTTCTotal})`;
+        this.twoHunTTCLoading = this.pranicPurificationList ? false : true;
+      });
+  }
+  onTwoHunTTCTableDataChange(event: number) {
+    this.twoHunTTCFilter.pageNo = event;
+    this.twoHunTTCPage = event;
+    this.getAll200TTCStudent(this.twoHunTTCFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",

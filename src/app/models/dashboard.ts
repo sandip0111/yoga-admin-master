@@ -1,4 +1,4 @@
-export interface searchPranaRambhFilter {
+export class searchPranaRambhFilter {
   pageNo: number;
   size: number;
   searchText: string;
@@ -117,13 +117,6 @@ export interface PranArambhModel {
   data: StudentModel[];
   total: number;
 }
-export class searchPranicPurificationFilter {
-  pageNo: number;
-  size: number;
-  searchText: string;
-  fromDate: string;
-  toDate: string;
-}
 export interface pranicPurificationModel {
   _id: string;
   name: string;
@@ -141,5 +134,23 @@ export interface pranicPurificationModel {
 }
 export interface pranicPurificationResultModel {
   data: pranicPurificationModel[];
+  total: number;
+}
+export interface twoHunTTCModel {
+  courseStartDate: string;
+  courseTimeDuration: string;
+  created: string;
+  currency: string;
+  email: string;
+  name: string;
+  package: string;
+  paymentId: string;
+  paymentStatus: string;
+  phoneNumber: string;
+  price: string;
+  _id: string;
+}
+export interface twoHunTTCModelResultModel {
+  data: twoHunTTCModel[];
   total: number;
 }
