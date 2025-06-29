@@ -534,6 +534,7 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>City</th>
+                    <th>Password</th>
                     <th>Payment Status</th>
                     <th>Payment Date</th>
                   </thead>
@@ -557,6 +558,7 @@
                       <td>{{ obj.email }}</td>
                       <td>{{ obj.phone }}</td>
                       <td>{{ obj.city }}</td>
+                      <td>{{ obj.password }}</td>
                       <td
                         [ngClass]="{
                           'text-success': obj?.paymentStatus == 'paid',
@@ -581,6 +583,45 @@
                   (pageChange)="onswarSadhnaTableDataChange($event)"
                 ></pagination-controls>
               </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="createSwaraSadhnaTitle">
+            <ng-template ngbTabContent>
+              
+              <div class="container_search">
+                <input
+                  type="text"
+                  placeholder="Email"
+                  [(ngModel)]="createSwaraSadhnaFrom.email"
+                  class="search-input form-control"
+                />
+                <input
+                  type="text"
+                  placeholder="name"
+                  [(ngModel)]="createSwaraSadhnaFrom.name"
+                  class="search-input form-control"
+                />
+
+                <div style="display: flex; align-items: center">
+                  
+                  <input
+                    type="text"
+                    id="whatsAppnumber"
+                    placeholder="Whatsapp number"
+                    [(ngModel)]="createSwaraSadhnaFrom.phone"
+                    class="search-input form-control"
+                  />
+                </div>
+
+               
+
+                <button
+                  (click)="registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)"
+                >
+                  Register
+                </button>
+              </div>
+              
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="pranicPurificationTitle">

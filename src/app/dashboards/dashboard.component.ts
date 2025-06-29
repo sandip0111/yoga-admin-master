@@ -14,6 +14,8 @@ import {
   StudentModel,
   swarSadhnaDataModel,
   swarSadhnaStudentModel,
+  createSwaraSadhna,
+  generatePassword,
   PaymentDetailsModel,
   searchPranicPurificationFilter,
   pranicPurificationResultModel,
@@ -53,6 +55,8 @@ export class DashboardComponent implements OnInit {
   swaraSadhanaList: swarSadhnaStudentModel[] = [];
   swarSadhanaTotal: number = 0;
   swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
+  createSwaraSadhnaFrom: createSwaraSadhna;
+  createSwaraSadhnaTitle:  string = `Create Swara Sadhana`;
   swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
@@ -117,6 +121,15 @@ export class DashboardComponent implements OnInit {
       searchText: "",
       fromDate: "",
       toDate: "",
+    };
+    this.createSwaraSadhnaFrom = {
+      name: "",
+      email: "",
+      phone: "",
+      city: "",
+      timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
+      password: "",
+      webinar: "Swara Sadhana"
     };
     this.pranicPurificationFilter = {
       pageNo: 1,
@@ -475,6 +488,49 @@ export class DashboardComponent implements OnInit {
         this.swaraLoading = false;
       });
   }
+
+  registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
+    this.swaraLoading = true;
+    if(!data.name){
+      data.name = "Guest";
+    }
+    if(!data.phone){
+      data.phone = "N/A";
+    }
+    data.email = String(data.email).toLowerCase();
+    data.webinar = "Swara Sadhana";
+    data.city = data.city || "N/A";
+    data.timeSlot = data.timeSlot || "67e033dc5cd9be5b6d38a7ff";
+    data.password = data.password || generatePassword();
+    if(data.name && data.email && data.phone) {
+      this.service.registerSwarSadhanaWebinarUser(data).subscribe(
+        (res: any) => {
+          if (res.status == "ok") {
+            this.swaraLoading = false;
+            this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);            
+            this.createSwaraSadhnaFrom = {
+              name: "",
+              email: "",
+              phone: "",
+              city: "",
+              timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
+              password: "",
+              webinar: "Swara Sadhana"
+            };
+            alert("Registration successful!");
+          } else {
+            this.swaraLoading = false;
+            alert("Registration failed: " + res.message);
+          }
+        },
+        (error) => {
+          this.swaraLoading = false;
+          console.error("Error registering Swara Sadhana user:", error);
+          alert("An error occurred while registering. Please try again.");
+        }
+      );
+    }
+  }
   downloadCsv(csvContent: string, tableId: string) {
     const blob = new Blob([csvContent], {
       type: "text/csv;charset=utf-8;",
@@ -501,7 +557,6 @@ export class DashboardComponent implements OnInit {
         this.pranicPurificationTotal = res.total;
         this.pranicPurificationTitle = `Pranic Purification (${this.pranicPurificationTotal})`;
         this.pranicLoading = this.pranicPurificationList ? false : true;
-        console.log("mukta di kal theke amake message korbe, teams e call o korbe", this.pranicPurificationList);
       });
   }
   onPranicPurificationTableDataChange(event: number) {
