@@ -184,7 +184,6 @@ export class DashboardComponent implements OnInit {
           }
         }
         this.isLoading = this.students ? false : true;
-        console.log(this.students);
       });
   }
   getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
@@ -209,12 +208,6 @@ export class DashboardComponent implements OnInit {
       (response: any) => {
         this.foundationTotal = response.total;
         this.spiritualityStudent = response.data;
-        console.log(
-          "Response fetching spiritualityStudent data:",
-          this.spiritualityStudent,
-          "total",
-          this.foundationTotal
-        );
         this.fosLoading = false;
       },
       (error) => {
@@ -586,7 +579,6 @@ export class DashboardComponent implements OnInit {
     this.service
       .getAll200ttcStudent(filter)
       .subscribe((res: twoHunTTCModelResultModel) => {
-        console.log("mukta di kal theke teams e call korbe amai", res);
         this.twoHunTTCList = res.data;
         this.twoHunTTCTotal = res.total;
         this.twoHunTTCTitle = `200 TTC (${this.twoHunTTCTotal})`;
