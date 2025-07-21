@@ -154,3 +154,9 @@ export interface twoHunTTCModelResultModel {
   data: twoHunTTCModel[];
   total: number;
 }
+export interface createPranicPurification {
+  name: string;
+  email: string;
+  phone: string;
+  address?: string;
+}

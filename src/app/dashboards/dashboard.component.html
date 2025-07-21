@@ -600,7 +600,6 @@
                   [(ngModel)]="createSwaraSadhnaFrom.name"
                   class="search-input form-control"
                 />
-
                 <div style="display: flex; align-items: center">
                   <input
                     type="text"
@@ -610,7 +609,17 @@
                     class="search-input form-control"
                   />
                 </div>
-
+                <select
+                  [(ngModel)]="selectedOption"
+                  class="search-input form-control"
+                >
+                  <option [value]="0" disabled selected hidden>
+                    Select a course
+                  </option>
+                  <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
                 <button
                   (click)="
                     registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)
@@ -680,7 +689,7 @@
                     <th>Student Name</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Address</th>
+                    <th class="wrap-field">Address</th>
                     <th>Price</th>
                     <th>Coupon code</th>
                     <th>Payment Status</th>
@@ -705,7 +714,7 @@
                       </td>
                       <td>{{ obj.email }}</td>
                       <td>{{ obj.phoneNumber }}</td>
-                      <td>{{ obj.address }}</td>
+                      <td class="address">{{ obj.address }}</td>
                       <td>{{ obj.price | currency : obj.currency }}</td>
                       <td
                         [ngClass]="{

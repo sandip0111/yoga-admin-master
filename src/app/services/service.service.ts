@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
-import { createSwaraSadhna, searchLiveClassFilter, searchPranaRambhFilter } from "../models/dashboard";
+import {
+  createPranicPurification,
+  createSwaraSadhna,
+  searchLiveClassFilter,
+  searchPranaRambhFilter,
+} from "../models/dashboard";
 
 @Injectable({
   providedIn: "root",
@@ -242,10 +247,25 @@ export class ServiceService {
   }
 
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
-    return this.data.post(this.url + "api/v1/registerSwarSadhanaWebinarUser", data);
+    return this.data.post(
+      this.url + "api/v1/registerSwarSadhanaWebinarUser",
+      data
+    );
+  }
+  registerPranicPurificationUser(data: createPranicPurification) {
+    return this.data.post(
+      this.url + "api/v1/registerPranicPurificationUser",
+      data
+    );
+  }
+  register200TTCUser(data: createPranicPurification) {
+    return this.data.post(this.url + "api/v1/register200TTCUser", data);
   }
   getAllPranicPurificationStudent(data: searchPranaRambhFilter) {
-    return this.data.post(this.url + "api/v1/getAllPranicPurificationStudent", data);
+    return this.data.post(
+      this.url + "api/v1/getAllPranicPurificationStudent",
+      data
+    );
   }
   getAll200ttcStudent(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/get200ttcData", data);

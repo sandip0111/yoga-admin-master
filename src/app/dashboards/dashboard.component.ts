@@ -21,8 +21,10 @@ import {
   pranicPurificationModel,
   twoHunTTCModelResultModel,
   twoHunTTCModel,
+  createPranicPurification,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
+import { timeSlot } from "../enums/timeslot";
 
 @Component({
   selector: "app-dashboard",
@@ -57,7 +59,7 @@ export class DashboardComponent implements OnInit {
   swarSadhanaTotal: number = 0;
   swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
   createSwaraSadhnaFrom: createSwaraSadhna;
-  createSwaraSadhnaTitle: string = `Create Swara Sadhana`;
+  createSwaraSadhnaTitle: string = `Create Student`;
   swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
@@ -79,7 +81,12 @@ export class DashboardComponent implements OnInit {
   twoHunTTCPage: number = 1;
   twoHunTTCList: twoHunTTCModel[] = [];
   twoHunTTCTotal: number = 0;
-
+  selectedOption: number = 0;
+  options = [
+    { value: 1, label: "Swar Sadhana" },
+    { value: 2, label: "Pranic Purification" },
+    { value: 3, label: "200 Teacher Training Course" },
+  ];
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -493,46 +500,110 @@ export class DashboardComponent implements OnInit {
   }
 
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
+    console.log(
+      "Mukta di next week theke ami message na korleo amake message r teams e call korbe",
+      this.selectedOption
+    );
     this.swaraLoading = true;
-    if (!data.name) {
-      data.name = "Guest";
-    }
-    if (!data.phone) {
-      data.phone = "N/A";
-    }
+    data.name = data.name == "" ? "Guest" : data.name;
+    data.phone = data.phone || "N/A";
     data.email = String(data.email).toLowerCase();
-    data.webinar = "Swara Sadhana";
     data.city = data.city || "N/A";
-    data.timeSlot = data.timeSlot || "67e033dc5cd9be5b6d38a7ff";
-    data.password = data.password || generatePassword();
     if (data.name && data.email && data.phone) {
-      this.service.registerSwarSadhanaWebinarUser(data).subscribe(
-        (res: any) => {
-          if (res.status == "ok") {
-            this.swaraLoading = false;
-            this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
-            this.createSwaraSadhnaFrom = {
-              name: "",
-              email: "",
-              phone: "",
-              city: "",
-              timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
-              password: "",
-              webinar: "Swara Sadhana",
-            };
-            alert("Registration successful!");
-          } else {
-            this.swaraLoading = false;
-            alert("Registration failed: " + res.message);
-          }
-        },
-        (error) => {
-          this.swaraLoading = false;
-          console.error("Error registering Swara Sadhana user:", error);
-          alert("An error occurred while registering. Please try again.");
-        }
-      );
+      if (this.selectedOption == 1) {
+        data.timeSlot = data.timeSlot || timeSlot.evening;
+        data.password = data.password || generatePassword();
+        data.webinar = "Swara Sadhana";
+        this.swarSadhanaSave(data);
+      } else if (this.selectedOption == 2) {
+        const pranicData: createPranicPurification = {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: "N/A",
+        };
+        this.pranicPurificationSave(pranicData);
+      } else if (this.selectedOption == 3) {
+        const ttcData: createPranicPurification = {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+        };
+        this.twoHunTTCSave(ttcData);
+      } else {
+        alert("Please select a course.");
+        this.swaraLoading = false;
+      }
+    } else {
+      alert("Email is required");
+      this.swaraLoading = false;
     }
+  }
+  swarSadhanaSave(data: createSwaraSadhna) {
+    this.service.registerSwarSadhanaWebinarUser(data).subscribe(
+      (res: any) => {
+        if (res.status == "ok") {
+          this.swaraLoading = false;
+          this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+          this.createSwaraSadhnaFrom = {
+            name: "",
+            email: "",
+            phone: "",
+            city: "",
+            timeSlot: timeSlot.evening,
+            password: "",
+            webinar: "Swara Sadhana",
+          };
+          alert("Registration successful!");
+        } else {
+          this.swaraLoading = false;
+          alert("Registration failed: " + res.message);
+        }
+      },
+      (error) => {
+        this.swaraLoading = false;
+        alert("An error occurred while registering. Please try again.");
+      }
+    );
+  }
+  pranicPurificationSave(data: createPranicPurification) {
+    this.service.registerPranicPurificationUser(data).subscribe(
+      (res: any) => {
+        if (res.status == "ok") {
+          this.swaraLoading = false;
+          this.getAllPranicPurificationStudent(
+            this.pranicPurificationFilter,
+            false
+          );
+          alert("Registration successful!");
+        } else {
+          this.swaraLoading = false;
+          alert("Registration failed: " + res.message);
+        }
+      },
+      (error) => {
+        this.swaraLoading = false;
+        alert("An error occurred while registering. Please try again.");
+      }
+    );
+  }
+  twoHunTTCSave(data: createPranicPurification) {
+    this.service.register200TTCUser(data).subscribe(
+      (res: any) => {
+        if (res.status == "ok") {
+          this.swaraLoading = false;
+          this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+          alert("Registration successful!");
+        } else {
+          this.swaraLoading = false;
+          alert("Registration failed: " + res.message);
+        }
+      },
+      (error) => {
+        this.swaraLoading = false;
+        alert("An error occurred while registering. Please try again.");
+      }
+    );
   }
   downloadCsv(csvContent: string, tableId: string) {
     const blob = new Blob([csvContent], {
