@@ -500,10 +500,6 @@ export class DashboardComponent implements OnInit {
   }
 
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
-    console.log(
-      "Mukta di next week theke ami message na korleo amake message r teams e call korbe",
-      this.selectedOption
-    );
     this.swaraLoading = true;
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
