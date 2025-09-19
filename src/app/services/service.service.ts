@@ -270,4 +270,8 @@ export class ServiceService {
   getAll200ttcStudent(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/get200ttcData", data);
   }
+  sendMailToPrashantJi(data: { name: string; email: string }) {
+    console.log('mdamk')
+    return this.data.post(this.url + "api/v1/sendMailToPrashantJi", data);
+  }
 }
