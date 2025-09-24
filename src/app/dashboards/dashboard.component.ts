@@ -81,6 +81,12 @@ export class DashboardComponent implements OnInit {
   twoHunTTCPage: number = 1;
   twoHunTTCList: twoHunTTCModel[] = [];
   twoHunTTCTotal: number = 0;
+  octoberPrashantTitle: string = "";
+  octoberPrashantFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
+  octoberPrashantLoading: boolean = false;
+  octoberPrashantPage: number = 1;
+  octoberPrashantList: any;
+  octoberPrashantTotal: number = 0;
   selectedOption: number = 0;
   options = [
     { value: 1, label: "Swar Sadhana" },
@@ -154,6 +160,7 @@ export class DashboardComponent implements OnInit {
       toDate: "",
     };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
+    this.octoberPrashantFilter = this.pranicPurificationFilter;
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
@@ -163,6 +170,7 @@ export class DashboardComponent implements OnInit {
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
@@ -649,13 +657,39 @@ export class DashboardComponent implements OnInit {
         this.twoHunTTCList = res.data;
         this.twoHunTTCTotal = res.total;
         this.twoHunTTCTitle = `200 TTC (${this.twoHunTTCTotal})`;
-        this.twoHunTTCLoading = this.pranicPurificationList ? false : true;
+        this.twoHunTTCLoading = this.twoHunTTCList ? false : true;
+      });
+  }
+  getAllOctoberPrashantStudent(
+    filter: searchPranaRambhFilter,
+    isSearch: boolean
+  ): void {
+    this.octoberPrashantLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.octoberPrashantPage = isSearch ? 1 : this.octoberPrashantPage;
+    this.service
+      .getAll200ttcStudent(filter)
+      .subscribe((res: twoHunTTCModelResultModel) => {
+        this.octoberPrashantList = res.data;
+        this.octoberPrashantTotal = res.total;
+        this.octoberPrashantTitle = `October Prashant Jhakmola (${this.octoberPrashantTotal})`;
+        this.octoberPrashantLoading = this.octoberPrashantList ? false : true;
       });
   }
   onTwoHunTTCTableDataChange(event: number) {
     this.twoHunTTCFilter.pageNo = event;
     this.twoHunTTCPage = event;
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+  onoctoberPrashantTableDataChange(event: number) {
+    this.octoberPrashantFilter.pageNo = event;
+    this.octoberPrashantPage = event;
+    this.getAll200TTCStudent(this.octoberPrashantFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
