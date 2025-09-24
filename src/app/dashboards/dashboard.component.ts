@@ -22,6 +22,7 @@ import {
   twoHunTTCModelResultModel,
   twoHunTTCModel,
   createPranicPurification,
+  octoberPrashantFilter,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 import { timeSlot } from "../enums/timeslot";
@@ -82,7 +83,7 @@ export class DashboardComponent implements OnInit {
   twoHunTTCList: twoHunTTCModel[] = [];
   twoHunTTCTotal: number = 0;
   octoberPrashantTitle: string = "";
-  octoberPrashantFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
+  octoberPrashantFilter: octoberPrashantFilter;
   octoberPrashantLoading: boolean = false;
   octoberPrashantPage: number = 1;
   octoberPrashantList: any;
@@ -159,8 +160,16 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
+     this.octoberPrashantFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+      month: "October",
+      course: this.selectedGroupId,
+    };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
-    this.octoberPrashantFilter = this.pranicPurificationFilter;
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
@@ -661,16 +670,18 @@ export class DashboardComponent implements OnInit {
       });
   }
   getAllOctoberPrashantStudent(
-    filter: searchPranaRambhFilter,
+    filter: octoberPrashantFilter,
     isSearch: boolean
   ): void {
     this.octoberPrashantLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     this.octoberPrashantPage = isSearch ? 1 : this.octoberPrashantPage;
+    filter.month = "October";
+    filter.course = "Acharya Prashant Jakhmola";
     this.service
-      .getAll200ttcStudent(filter)
-      .subscribe((res: twoHunTTCModelResultModel) => {
+      .getAllLiveClassStudent(filter)
+      .subscribe((res: liveClassDataModel) => {
         this.octoberPrashantList = res.data;
         this.octoberPrashantTotal = res.total;
         this.octoberPrashantTitle = `October Prashant Jhakmola (${this.octoberPrashantTotal})`;

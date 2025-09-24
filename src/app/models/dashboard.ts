@@ -6,6 +6,10 @@ export class searchPranaRambhFilter {
   toDate: string;
 }
 
+export interface octoberPrashantFilter extends searchLiveClassFilter {
+  month: string;
+}
+
 export interface createSwaraSadhna {
   name: string;
   email: string;
