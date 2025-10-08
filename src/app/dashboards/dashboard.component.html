@@ -866,6 +866,22 @@
                   [(ngModel)]="octoberPrashantFilter.searchText"
                   class="search-input form-control"
                 />
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment status</label
+                  >
+                  <select
+                    (change)="onPayStatusValueChange($event.target.value)"
+                    class="search-input form-control"
+                  >
+                    <option
+                      *ngFor="let option of paymentOption"
+                      [value]="option.value"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
                 <button
                   (click)="
                     getAllOctoberPrashantStudent(octoberPrashantFilter, true)
@@ -912,7 +928,9 @@
                         [ngClass]="{
                           'text-success': obj?.paymentStatus == 'paid',
                           'text-warning': obj?.paymentStatus == 'pending',
-                          'text-danger': obj?.paymentStatus == 'failed'
+                          'text-danger':
+                            obj?.paymentStatus == 'failed' ||
+                            obj?.paymentStatus == 'unpaid'
                         }"
                       >
                         {{ obj.paymentStatus }}

@@ -8,6 +8,7 @@ export class searchPranaRambhFilter {
 
 export interface octoberPrashantFilter extends searchLiveClassFilter {
   month: string;
+  paymentStatus: string;
 }
 
 export interface createSwaraSadhna {
@@ -57,6 +58,8 @@ export interface searchLiveClassFilter {
   fromDate: string;
   toDate: string;
   course: string;
+  paymentStatus: string;
+  month: string;
 }
 export class liveClassCustomerModel {
   name: string;

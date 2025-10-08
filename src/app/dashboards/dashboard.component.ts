@@ -94,6 +94,11 @@ export class DashboardComponent implements OnInit {
     { value: 2, label: "Pranic Purification" },
     { value: 3, label: "200 Teacher Training Course" },
   ];
+  paymentOption = [
+    { value: "all", name: "All" },
+    { value: "paid", name: "Paid" },
+    { value: "unpaid", name: "Unpaid" },
+  ];
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -136,6 +141,8 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
       course: this.selectedGroupId,
+      paymentStatus: "all",
+      month: 'October'
     };
     this.swaraSadhnaFilter = {
       pageNo: 1,
@@ -160,7 +167,7 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
-     this.octoberPrashantFilter = {
+    this.octoberPrashantFilter = {
       pageNo: 1,
       size: 10,
       searchText: "",
@@ -168,6 +175,7 @@ export class DashboardComponent implements OnInit {
       toDate: "",
       month: "October",
       course: this.selectedGroupId,
+      paymentStatus: "all",
     };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
   }
@@ -705,5 +713,10 @@ export class DashboardComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+  onPayStatusValueChange(event: string) {
+    console.log("mdamk", event);
+    this.octoberPrashantFilter.paymentStatus = event;
+    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
   }
 }
