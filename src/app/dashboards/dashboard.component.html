@@ -5,7 +5,9 @@
     bDtoxLoading ||
     fosLoading ||
     liveClassLoading ||
-    pranicLoading
+    pranicLoading ||
+    twoHunTTCLoading ||
+    octoberPrashantLoading
   "
   class="loader-overlay"
 >
@@ -856,7 +858,6 @@
             <ng-template ngbTabContent>
               <div class="header-container">
                 <h4>Prashant Jhakmola October Class</h4>
-              
               </div>
               <div class="container_search">
                 <input
@@ -864,9 +865,12 @@
                   placeholder="Search by Name or Email or phone"
                   [(ngModel)]="octoberPrashantFilter.searchText"
                   class="search-input form-control"
-                />               
-
-                <button (click)="getAllOctoberPrashantStudent(octoberPrashantFilter, true)">
+                />
+                <button
+                  (click)="
+                    getAllOctoberPrashantStudent(octoberPrashantFilter, true)
+                  "
+                >
                   Search
                 </button>
               </div>
@@ -925,7 +929,7 @@
               </div>
               <div class="pagination">
                 <pagination-controls
-                  (pageChange)="onTwoHunTTCTableDataChange($event)"
+                  (pageChange)="onoctoberPrashantTableDataChange($event)"
                 ></pagination-controls>
               </div>
             </ng-template>

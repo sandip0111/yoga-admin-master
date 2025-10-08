@@ -700,7 +700,7 @@ export class DashboardComponent implements OnInit {
   onoctoberPrashantTableDataChange(event: number) {
     this.octoberPrashantFilter.pageNo = event;
     this.octoberPrashantPage = event;
-    this.getAll200TTCStudent(this.octoberPrashantFilter, false);
+    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
