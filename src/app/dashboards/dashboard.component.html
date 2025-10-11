@@ -590,6 +590,17 @@
           <ngb-tab [title]="createSwaraSadhnaTitle">
             <ng-template ngbTabContent>
               <div class="container_search">
+                <select
+                  [(ngModel)]="selectedOption"
+                  class="search-input form-control"
+                >
+                  <option [value]="0" disabled selected hidden>
+                    Select a course
+                  </option>
+                  <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
                 <input
                   type="text"
                   placeholder="Email"
@@ -611,17 +622,13 @@
                     class="search-input form-control"
                   />
                 </div>
-                <select
-                  [(ngModel)]="selectedOption"
+                 <input
+                 *ngIf="selectedOption == 1"
+                  type="text"
+                  placeholder="City"
+                  [(ngModel)]="createSwaraSadhnaFrom.city"
                   class="search-input form-control"
-                >
-                  <option [value]="0" disabled selected hidden>
-                    Select a course
-                  </option>
-                  <option *ngFor="let option of options" [value]="option.value">
-                    {{ option.label }}
-                  </option>
-                </select>
+                />
                 <button
                   (click)="
                     registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)

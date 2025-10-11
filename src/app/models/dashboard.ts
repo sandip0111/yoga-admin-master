@@ -17,7 +17,6 @@ export interface createSwaraSadhna {
   phone: string;
   webinar: string;
   city: string;
-  timeSlot: string;
   password: string;
 }
 export class swarSadhnaStudentModel {

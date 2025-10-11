@@ -25,7 +25,6 @@ import {
   octoberPrashantFilter,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
-import { timeSlot } from "../enums/timeslot";
 
 @Component({
   selector: "app-dashboard",
@@ -93,6 +92,7 @@ export class DashboardComponent implements OnInit {
     { value: 1, label: "Swar Sadhana" },
     { value: 2, label: "Pranic Purification" },
     { value: 3, label: "200 Teacher Training Course" },
+    { value: 4, label: "Online Sadhana" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -156,7 +156,6 @@ export class DashboardComponent implements OnInit {
       email: "",
       phone: "",
       city: "",
-      timeSlot: "67e033dc5cd9be5b6d38a7ff", // Default time slot
       password: "",
       webinar: "Swara Sadhana",
     };
@@ -532,7 +531,6 @@ export class DashboardComponent implements OnInit {
     data.city = data.city || "N/A";
     if (data.name && data.email && data.phone) {
       if (this.selectedOption == 1) {
-        data.timeSlot = data.timeSlot || timeSlot.evening;
         data.password = data.password || generatePassword();
         data.webinar = "Swara Sadhana";
         this.swarSadhanaSave(data);
@@ -571,7 +569,6 @@ export class DashboardComponent implements OnInit {
             email: "",
             phone: "",
             city: "",
-            timeSlot: timeSlot.evening,
             password: "",
             webinar: "Swara Sadhana",
           };
