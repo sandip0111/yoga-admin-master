@@ -92,7 +92,7 @@ export class DashboardComponent implements OnInit {
     { value: 1, label: "Swar Sadhana" },
     { value: 2, label: "Pranic Purification" },
     { value: 3, label: "200 Teacher Training Course" },
-    { value: 4, label: "Online Sadhana" },
+    { value: 4, label: "Online Class" },
   ];
   paymentOption = [
     { value: "all", name: "All" },

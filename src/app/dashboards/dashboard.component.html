@@ -538,6 +538,7 @@
                     <th>City</th>
                     <th>Password</th>
                     <th>Payment Status</th>
+                    <th>Payment Type</th>
                     <th>Payment Date</th>
                   </thead>
                   <tbody>
@@ -570,6 +571,7 @@
                       >
                         {{ obj.paymentStatus }}
                       </td>
+                      <td>{{ obj.paymentType }}</td>
                       <td>
                         <ng-container *ngIf="obj.created; else noPayment">
                           {{ obj.created | date : "dd-MM-yyyy" }}
@@ -825,6 +827,7 @@
                     <th>Phone</th>
                     <th>Price</th>
                     <th>Payment Status</th>
+                    <th>Payment Type</th>
                     <th>Payment Date</th>
                   </thead>
                   <tbody>
@@ -856,6 +859,7 @@
                       >
                         {{ obj.paymentStatus }}
                       </td>
+                      <td>{{ obj.paymentType }}</td>
                       <td>
                         <ng-container *ngIf="obj.created; else noPayment">
                           {{ obj.created | date : "dd-MM-yyyy" }}
@@ -921,6 +925,7 @@
                     <th>Phone</th>
                     <th>Price</th>
                     <th>Payment Status</th>
+                    <th>Payment Type</th>
                     <th>Payment Date</th>
                   </thead>
                   <tbody>
@@ -954,6 +959,7 @@
                       >
                         {{ obj.paymentStatus }}
                       </td>
+                      <td>{{ obj.paymentType }}</td>
                       <td>
                         <ng-container *ngIf="obj.created; else noPayment">
                           {{ obj.created | date : "dd-MM-yyyy" }}
