@@ -274,4 +274,7 @@ export class ServiceService {
     console.log('mdamk')
     return this.data.post(this.url + "api/v1/sendMailToPrashantJi", data);
   }
+  createLiveCourseCustomer(data: createPranicPurification) {
+    return this.data.post(this.url + "api/v1/createLiveCourseCustomer", data);
+  }
 }

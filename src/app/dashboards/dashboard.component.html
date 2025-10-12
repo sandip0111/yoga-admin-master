@@ -622,13 +622,25 @@
                     class="search-input form-control"
                   />
                 </div>
-                 <input
-                 *ngIf="selectedOption == 1"
+                <input
+                  *ngIf="selectedOption == 1"
                   type="text"
                   placeholder="City"
                   [(ngModel)]="createSwaraSadhnaFrom.city"
                   class="search-input form-control"
                 />
+                <ng-container *ngIf="selectedOption == 4">
+                  <label
+                    class="line"
+                    *ngFor="let option of onlineTeacherOption; let i = index"
+                  >
+                    <input
+                      type="checkbox"
+                      (change)="onCheckboxChange(option)"
+                    />&nbsp;
+                    <span>{{ option.title }}</span>
+                  </label>
+                </ng-container>
                 <button
                   (click)="
                     registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)

@@ -165,4 +165,6 @@ export interface createPranicPurification {
   email: string;
   phone: string;
   address?: string;
+  course?: any[];
+  courseList?: string[];
 }

@@ -99,6 +99,28 @@ export class DashboardComponent implements OnInit {
     { value: "paid", name: "Paid" },
     { value: "unpaid", name: "Unpaid" },
   ];
+  onlineTeacherOption = [
+    {
+      id: 1,
+      priceINR: 2999,
+      priceUSD: 70,
+      quantity: 1,
+      title: "Acharya Prashant Jakhmola - Yoga Sadhana",
+      name: "Yoga Sadhana",
+      shortDescription:
+        "Interactive class combining Hatha asanas and pranayama each morning for holistic physical, mental, and spiritual growth. Suitable for all levels, with focus on correct alignment and routine building.",
+    },
+    {
+      id: 3,
+      priceINR: 1999,
+      priceUSD: 40,
+      quantity: 1,
+      title: "Taniya Verma - Woman Wellness Yoga",
+      name: "Woman Wellness Yoga",
+      shortDescription:
+        "A gentle and supportive practice designed specially for women from menstruation to menopause combining asana, pranayama, nutrition tips and hormone-balancing restorative techniques.",
+    },
+  ];
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -142,7 +164,7 @@ export class DashboardComponent implements OnInit {
       toDate: "",
       course: this.selectedGroupId,
       paymentStatus: "all",
-      month: 'October'
+      month: "October",
     };
     this.swaraSadhnaFilter = {
       pageNo: 1,
@@ -524,17 +546,18 @@ export class DashboardComponent implements OnInit {
   }
 
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
-    this.swaraLoading = true;
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
     data.email = String(data.email).toLowerCase();
     data.city = data.city || "N/A";
     if (data.name && data.email && data.phone) {
       if (this.selectedOption == 1) {
+        this.swaraLoading = true;
         data.password = data.password || generatePassword();
         data.webinar = "Swara Sadhana";
         this.swarSadhanaSave(data);
       } else if (this.selectedOption == 2) {
+        this.swaraLoading = true;
         const pranicData: createPranicPurification = {
           name: data.name,
           email: data.email,
@@ -543,18 +566,25 @@ export class DashboardComponent implements OnInit {
         };
         this.pranicPurificationSave(pranicData);
       } else if (this.selectedOption == 3) {
+        this.swaraLoading = true;
         const ttcData: createPranicPurification = {
           name: data.name,
           email: data.email,
           phone: data.phone,
         };
         this.twoHunTTCSave(ttcData);
+      } else if (this.selectedOption == 4) {
+        if (this.checkedTeacher.length > 0) {
+          this.octoberPrashantLoading = true;
+          this.onlineSadhanaSave(data);
+        } else {
+          alert("Please select at least one teacher.");
+        }
       } else {
         alert("Please select a course.");
-        this.swaraLoading = false;
       }
     } else {
-      alert("Email is required");
+      alert("Fields are required");
       this.swaraLoading = false;
     }
   }
@@ -622,6 +652,40 @@ export class DashboardComponent implements OnInit {
         alert("An error occurred while registering. Please try again.");
       }
     );
+  }
+  onlineSadhanaSave(data: createSwaraSadhna) {
+    let course = [];
+    let courseList: string[] = [];
+    this.checkedTeacher.map((item) => {
+      course.push({
+        id: item.id,
+        priceINR: item.priceINR,
+        priceUSD: item.priceUSD,
+        quantity: item.quantity,
+        title: item.title,
+        shortDescription: item.shortDescription,
+      });
+      courseList.push(item.name);
+    });
+    const onlineSadhna: createPranicPurification = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      course: course,
+      courseList: courseList,
+    };
+    this.service
+      .createLiveCourseCustomer(onlineSadhna)
+      .subscribe((res: any) => {
+        if (res.status == "ok") {
+          this.getAllLiveClassStudent(this.liveClassFilter, false);
+          this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+          alert(res.message);
+        } else {
+          alert("Registration failed: " + res.message);
+        }
+        this.octoberPrashantLoading = false;
+      });
   }
   downloadCsv(csvContent: string, tableId: string) {
     const blob = new Blob([csvContent], {
@@ -712,8 +776,18 @@ export class DashboardComponent implements OnInit {
     });
   }
   onPayStatusValueChange(event: string) {
-    console.log("mdamk", event);
     this.octoberPrashantFilter.paymentStatus = event;
     this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+  }
+  checkedTeacher: any[] = [];
+  onCheckboxChange(event: any) {
+    if (this.checkedTeacher.includes(event)) {
+      const index = this.checkedTeacher.indexOf(event);
+      if (index > -1) {
+        this.checkedTeacher.splice(index, 1);
+      }
+    } else {
+      this.checkedTeacher.push(event);
+    }
   }
 }
