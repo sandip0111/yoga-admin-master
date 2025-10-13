@@ -518,7 +518,40 @@
                     [disabled]="!swaraSadhnaFilter.fromDate"
                   />
                 </div>
-
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment status</label
+                  >
+                  <select
+                    (change)="onPayStatusValueChange($event.target.value, 1)"
+                    class="search-input form-control"
+                  >
+                    <option
+                      *ngFor="let option of paymentOption"
+                      [value]="option.value"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment Type</label
+                  >
+                  <select
+                    [(ngModel)]="swaraPayType"
+                    (change)="onPayTypeValueChange($event.target.value, 1)"
+                    class="search-input form-control"
+                  >
+                    <option [value]="0" selected hidden>Select a type</option>
+                    <option
+                      *ngFor="let option of paymentTypeOption"
+                      [value]="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </select>
+                </div>
                 <button
                   (click)="getAllSwaraSadhnaStudent(swaraSadhnaFilter, true)"
                 >
@@ -596,9 +629,7 @@
                   [(ngModel)]="selectedOption"
                   class="search-input form-control"
                 >
-                  <option [value]="0" disabled selected hidden>
-                    Select a course
-                  </option>
+                  <option [value]="0" selected hidden>Select a course</option>
                   <option *ngFor="let option of options" [value]="option.value">
                     {{ option.label }}
                   </option>
@@ -615,7 +646,7 @@
                   [(ngModel)]="createSwaraSadhnaFrom.name"
                   class="search-input form-control"
                 />
-                <div style="display: flex; align-items: center">
+                <!-- <div style="display: flex; align-items: center">
                   <input
                     type="text"
                     id="whatsAppnumber"
@@ -623,7 +654,7 @@
                     [(ngModel)]="createSwaraSadhnaFrom.phone"
                     class="search-input form-control"
                   />
-                </div>
+                </div> -->
                 <input
                   *ngIf="selectedOption == 1"
                   type="text"
@@ -810,7 +841,40 @@
                     [disabled]="!twoHunTTCFilter.fromDate"
                   />
                 </div>
-
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment status</label
+                  >
+                  <select
+                    (change)="onPayStatusValueChange($event.target.value, 2)"
+                    class="search-input form-control"
+                  >
+                    <option
+                      *ngFor="let option of paymentOption"
+                      [value]="option.value"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment Type</label
+                  >
+                  <select
+                    [(ngModel)]="twoHunTTCPayType"
+                    (change)="onPayTypeValueChange($event.target.value, 2)"
+                    class="search-input form-control"
+                  >
+                    <option [value]="0" selected hidden>Select a type</option>
+                    <option
+                      *ngFor="let option of paymentTypeOption"
+                      [value]="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </select>
+                </div>
                 <button (click)="getAll200TTCStudent(twoHunTTCFilter, true)">
                   Search
                 </button>
@@ -894,7 +958,7 @@
                     >Payment status</label
                   >
                   <select
-                    (change)="onPayStatusValueChange($event.target.value)"
+                    (change)="onPayStatusValueChange($event.target.value, 3)"
                     class="search-input form-control"
                   >
                     <option
@@ -902,6 +966,24 @@
                       [value]="option.value"
                     >
                       {{ option.name }}
+                    </option>
+                  </select>
+                </div>
+                <div style="display: flex; align-items: center">
+                  <label for="toDate" style="margin-right: 8px"
+                    >Payment Type</label
+                  >
+                  <select
+                    [(ngModel)]="octoberPrashantPayType"
+                    (change)="onPayTypeValueChange($event.target.value, 3)"
+                    class="search-input form-control"
+                  >
+                    <option [value]="0" selected hidden>Select a type</option>
+                    <option
+                      *ngFor="let option of paymentTypeOption"
+                      [value]="option"
+                    >
+                      {{ option }}
                     </option>
                   </select>
                 </div>

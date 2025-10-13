@@ -98,6 +98,7 @@ export class DashboardComponent implements OnInit {
     { value: "all", name: "All" },
     { value: "paid", name: "Paid" },
     { value: "unpaid", name: "Unpaid" },
+    { value: "pending", name: "Pending" },
   ];
   onlineTeacherOption = [
     {
@@ -121,6 +122,7 @@ export class DashboardComponent implements OnInit {
         "A gentle and supportive practice designed specially for women from menstruation to menopause combining asana, pranayama, nutrition tips and hormone-balancing restorative techniques.",
     },
   ];
+  paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
   constructor(private service: ServiceService, private route: ActivatedRoute) {
     this.filter = {
       pageNo: 1,
@@ -197,6 +199,7 @@ export class DashboardComponent implements OnInit {
       month: "October",
       course: this.selectedGroupId,
       paymentStatus: "all",
+      paymentType: "",
     };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
   }
@@ -775,9 +778,22 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
-  onPayStatusValueChange(event: string) {
-    this.octoberPrashantFilter.paymentStatus = event;
-    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+  onPayStatusValueChange(event: string, type: number) {
+    event = event == "all" ? "" : event;
+    switch (type) {
+      case 1:
+        this.swaraSadhnaFilter.paymentStatus = event;
+        this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+        break;
+      case 2:
+        this.twoHunTTCFilter.paymentStatus = event;
+        this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+      case 3:
+        this.octoberPrashantFilter.paymentStatus = event;
+        this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+      default:
+        break;
+    }
   }
   checkedTeacher: any[] = [];
   onCheckboxChange(event: any) {
@@ -788,6 +804,26 @@ export class DashboardComponent implements OnInit {
       }
     } else {
       this.checkedTeacher.push(event);
+    }
+  }
+  swaraPayType: string = "All";
+  twoHunTTCPayType: string = "All";
+  octoberPrashantPayType: string = "All";
+  onPayTypeValueChange(event: string, type: number) {
+    event = event == "All" ? "" : event;
+    switch (type) {
+      case 1:
+        this.swaraSadhnaFilter.paymentType = event;
+        this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+        break;
+      case 2:
+        this.twoHunTTCFilter.paymentType = event;
+        this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+      case 3:
+        this.octoberPrashantFilter.paymentType = event;
+        this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+      default:
+        break;
     }
   }
 }

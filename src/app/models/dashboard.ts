@@ -4,11 +4,14 @@ export class searchPranaRambhFilter {
   searchText: string;
   fromDate: string;
   toDate: string;
+  paymentType?: string;
+   paymentStatus?: string;
 }
 
 export interface octoberPrashantFilter extends searchLiveClassFilter {
   month: string;
   paymentStatus: string;
+  paymentType: string;
 }
 
 export interface createSwaraSadhna {
