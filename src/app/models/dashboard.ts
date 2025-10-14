@@ -5,7 +5,7 @@ export class searchPranaRambhFilter {
   fromDate: string;
   toDate: string;
   paymentType?: string;
-   paymentStatus?: string;
+  paymentStatus?: string;
 }
 
 export interface octoberPrashantFilter extends searchLiveClassFilter {
@@ -170,4 +170,6 @@ export interface createPranicPurification {
   address?: string;
   course?: any[];
   courseList?: string[];
+  hour?: number;
+  password?: string;
 }

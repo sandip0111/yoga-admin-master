@@ -271,10 +271,16 @@ export class ServiceService {
     return this.data.post(this.url + "api/v1/get200ttcData", data);
   }
   sendMailToPrashantJi(data: { name: string; email: string }) {
-    console.log('mdamk')
+    console.log("mdamk");
     return this.data.post(this.url + "api/v1/sendMailToPrashantJi", data);
   }
   createLiveCourseCustomer(data: createPranicPurification) {
     return this.data.post(this.url + "api/v1/createLiveCourseCustomer", data);
+  }
+  createRishikeshCustomer(data: createPranicPurification) {
+    return this.data.post(this.url + "api/v1/createRishikeshCustomer", data);
+  }
+  createPranaArambhCustomer(data: createPranicPurification) {
+    return this.data.post(this.url + "api/v1/createPranaArambhCustomer", data);
   }
 }

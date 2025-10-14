@@ -90,9 +90,13 @@ export class DashboardComponent implements OnInit {
   selectedOption: number = 0;
   options = [
     { value: 1, label: "Swar Sadhana" },
-    { value: 2, label: "Pranic Purification" },
     { value: 3, label: "200 Teacher Training Course" },
     { value: 4, label: "Online Class" },
+    { value: 5, label: "Rishikesh 100" },
+    { value: 6, label: "Rishikesh 200" },
+    { value: 7, label: "Rishikesh 300" },
+    { value: 8, label: "Prana Arambh" },
+    { value: 2, label: "Pranic Purification" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -583,6 +587,14 @@ export class DashboardComponent implements OnInit {
         } else {
           alert("Please select at least one teacher.");
         }
+      } else if (
+        this.selectedOption == 5 ||
+        this.selectedOption == 6 ||
+        this.selectedOption == 7
+      ) {
+        this.onlineRishikeshSave(data, this.selectedOption);
+      } else if (this.selectedOption == 8) {
+        this.pranaArambhSave(data);
       } else {
         alert("Please select a course.");
       }
@@ -689,6 +701,49 @@ export class DashboardComponent implements OnInit {
         }
         this.octoberPrashantLoading = false;
       });
+  }
+  onlineRishikeshSave(data: createSwaraSadhna, selectedHour: number) {
+    let hour: number =
+      selectedHour == 5
+        ? 100
+        : selectedHour == 6
+        ? 200
+        : selectedHour == 7
+        ? 300
+        : 0;
+    const rishikeshData: createPranicPurification = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      hour: hour,
+    };
+    this.service
+      .createRishikeshCustomer(rishikeshData)
+      .subscribe((res: any) => {
+        if (res.status == "ok") {
+          alert(res.message);
+        } else {
+          alert("Registration failed: " + res.message);
+        }
+        this.octoberPrashantLoading = false;
+      });
+  }
+  pranaArambhSave(data: createSwaraSadhna) {
+    const pranaData: createPranicPurification = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      password: generatePassword(),
+    };
+    this.service.createPranaArambhCustomer(pranaData).subscribe((res: any) => {
+      if (res.status == "ok") {
+        this.getAllParayanamStudent(this.filter, false);
+        alert(res.message);
+      } else {
+        alert("Registration failed: " + res.message);
+      }
+      this.octoberPrashantLoading = false;
+    });
   }
   downloadCsv(csvContent: string, tableId: string) {
     const blob = new Blob([csvContent], {
