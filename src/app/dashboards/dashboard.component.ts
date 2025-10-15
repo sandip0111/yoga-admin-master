@@ -846,6 +846,9 @@ export class DashboardComponent implements OnInit {
       case 3:
         this.octoberPrashantFilter.paymentStatus = event;
         this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+      case 4:
+        this.filter.paymentStatus = event == "paid" ? event : "due";
+        this.getAllParayanamStudent(this.filter, false);
       default:
         break;
     }
