@@ -111,6 +111,7 @@ export class DashboardComponent implements OnInit {
     },
   ];
   paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
+  monthOption = ["All Month Data", "October", "November"];
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService

@@ -102,12 +102,12 @@ export class SwaraSadhanaComponent implements OnInit {
         this.swaraLoading = false;
       });
   }
-  onPayStatusValueChange(event: string, type: number) {
+  onPayStatusValueChange(event: string) {
     event = event == "all" ? "" : event;
     this.swaraSadhnaFilter.paymentStatus = event;
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
   }
-  onPayTypeValueChange(event: string, type: number) {
+  onPayTypeValueChange(event: string) {
     event = event == "All" ? "" : event;
     this.swaraSadhnaFilter.paymentType = event;
     this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);

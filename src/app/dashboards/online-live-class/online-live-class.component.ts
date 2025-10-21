@@ -23,6 +23,7 @@ export class OnlineLiveClassComponent implements OnInit {
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
   @Input() customerGroups;
+  @Input() monthOption: string[];
   constructor(
     private service: ServiceService,
     private dashboardShared: DashboardSharedService
@@ -36,14 +37,14 @@ export class OnlineLiveClassComponent implements OnInit {
       searchText: "",
       fromDate: "",
       toDate: "",
-      month: "October",
+      month: "",
       course: this.selectedGroupId,
       paymentStatus: "all",
       paymentType: "",
     };
-    this.getAllOctoberPrashantStudent(this.onlineClassFilter, false);
+    this.getAllOnlineClassStudent(this.onlineClassFilter, false);
   }
-  getAllOctoberPrashantStudent(
+  getAllOnlineClassStudent(
     filter: searchLiveClassFilter,
     isSearch: boolean
   ): void {
@@ -51,9 +52,10 @@ export class OnlineLiveClassComponent implements OnInit {
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     this.onlineClassPage = isSearch ? 1 : this.onlineClassPage;
-    filter.month = "October";
+    filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
     filter.course = "Acharya Prashant Jakhmola";
-    filter.paymentStatus = filter.paymentStatus == "all" ? "" : filter.paymentStatus;
+    filter.paymentStatus =
+      filter.paymentStatus == "all" ? "" : filter.paymentStatus;
     filter.paymentType = filter.paymentType == "All" ? "" : filter.paymentType;
     this.service
       .getAllLiveClassStudent(filter)
@@ -64,21 +66,25 @@ export class OnlineLiveClassComponent implements OnInit {
         this.onineClassLoading = this.onlineClassList ? false : true;
       });
   }
-  onPayStatusValueChange(event: string) {
-    this.onlineClassFilter.paymentStatus = event;
-    this.getAllOctoberPrashantStudent(this.onlineClassFilter, false);
+  onPayStatusValueChange(status: string) {
+    this.onlineClassFilter.paymentStatus = status;
+    this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
-  onPayTypeValueChange(event: string) {
-    this.onlineClassFilter.paymentType = event;
-    this.getAllOctoberPrashantStudent(this.onlineClassFilter, false);
+  onPayTypeValueChange(type: string) {
+    this.onlineClassFilter.paymentType = type;
+    this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
-  onoctoberPrashantTableDataChange(event: number) {
-    this.onlineClassFilter.pageNo = event;
-    this.onlineClassPage = event;
-    this.getAllOctoberPrashantStudent(this.onlineClassFilter, false);
+  onlineClassTableDataChange(page: number) {
+    this.onlineClassFilter.pageNo = page;
+    this.onlineClassPage = page;
+    this.getAllOnlineClassStudent(this.onlineClassFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+  }
+  onMonthChange(month: string) {
+    this.onlineClassFilter.month = month;
+    this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
 }
