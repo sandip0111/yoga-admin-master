@@ -50,6 +50,8 @@ import { AnalyticsComponent } from './analytics/analytics.component';
 import { DashboardComponent } from './dashboards/dashboard.component';
 import { WebinarRegistrationComponent } from './webinarRegistrationForms/webinar-registration/webinar-registration.component';
 import { SendEmailComponent } from './send-email/send-email.component';
+import { SwaraSadhanaComponent } from './dashboards/swara-sadhana/swara-sadhana.component';
+import { OnlineLiveClassComponent } from './dashboards/online-live-class/online-live-class.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { SendEmailComponent } from './send-email/send-email.component';
     AnalyticsComponent,
     WebinarRegistrationComponent,
     DashboardComponent,
-    SendEmailComponent
+    SendEmailComponent,
+    SwaraSadhanaComponent,
+    OnlineLiveClassComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

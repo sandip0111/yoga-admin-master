@@ -7,13 +7,6 @@ export class searchPranaRambhFilter {
   paymentType?: string;
   paymentStatus?: string;
 }
-
-export interface octoberPrashantFilter extends searchLiveClassFilter {
-  month: string;
-  paymentStatus: string;
-  paymentType: string;
-}
-
 export interface createSwaraSadhna {
   name: string;
   email: string;
@@ -60,8 +53,9 @@ export interface searchLiveClassFilter {
   fromDate: string;
   toDate: string;
   course: string;
-  paymentStatus: string;
   month: string;
+  paymentStatus: string;
+  paymentType?: string;
 }
 export class liveClassCustomerModel {
   name: string;

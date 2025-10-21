@@ -1,0 +1,125 @@
+<div *ngIf="swaraLoading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="header-container">
+  <h4>Swara Sadhana</h4>
+  <a class="export-link" (click)="swaraExportToExcel()">Export to Excel</a>
+</div>
+<div class="container_search">
+  <input
+    type="text"
+    placeholder="Search by Name or Email or phone"
+    [(ngModel)]="swaraSadhnaFilter.searchText"
+    class="search-input form-control"
+  />
+  <div style="display: flex; align-items: center">
+    <label for="fromDate" style="margin-right: 8px">From Date:</label>
+    <input
+      type="date"
+      id="fromDate"
+      [(ngModel)]="swaraSadhnaFilter.fromDate"
+      class="date-input form-control"
+    />
+  </div>
+
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-right: 8px">To Date:</label>
+    <input
+      type="date"
+      id="toDate"
+      [(ngModel)]="swaraSadhnaFilter.toDate"
+      class="date-input form-control"
+      [min]="swaraSadhnaFilter.fromDate"
+      [disabled]="!swaraSadhnaFilter.fromDate"
+    />
+  </div>
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-right: 8px">Payment status</label>
+    <select
+      (change)="onPayStatusValueChange($event.target.value, 1)"
+      class="search-input form-control"
+    >
+      <option *ngFor="let option of paymentOption" [value]="option.value">
+        {{ option.name }}
+      </option>
+    </select>
+  </div>
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-right: 8px">Payment Type</label>
+    <select
+      [(ngModel)]="swaraPayType"
+      (change)="onPayTypeValueChange($event.target.value, 1)"
+      class="search-input form-control"
+    >
+      <option [value]="0" selected hidden>Select a type</option>
+      <option *ngFor="let option of paymentTypeOption" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+  <button (click)="getAllSwaraSadhnaStudent(swaraSadhnaFilter, true)">
+    Search
+  </button>
+</div>
+<div class="pranarambh-table-responsive">
+  <table id="Swara_Sadhana" class="table table-bordered table-striped">
+    <thead class="table-secondary">
+      <th style="width: 10% !important">Sl No.</th>
+      <th>Student Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>City</th>
+      <th>Password</th>
+      <th>Payment Status</th>
+      <th>Payment Type</th>
+      <th>Payment Date</th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let obj of swaraSadhanaList
+            | paginate
+              : {
+                  itemsPerPage: 10,
+                  currentPage: swarSadhanaPage,
+                  totalItems: swarSadhanaTotal
+                };
+          let i = index
+        "
+      >
+        <td>{{ i + 1 + (swarSadhanaPage - 1) * 10 }}</td>
+        <td>
+          {{ obj.name }}
+        </td>
+        <td>{{ obj.email }}</td>
+        <td>{{ obj.phone }}</td>
+        <td>{{ obj.city }}</td>
+        <td>{{ obj.password }}</td>
+        <td
+          [ngClass]="{
+            'text-success': obj?.paymentStatus == 'paid',
+            'text-warning': obj?.paymentStatus == 'pending',
+            'text-danger': obj?.paymentStatus == 'failed'
+          }"
+        >
+          {{ obj.paymentStatus }}
+        </td>
+        <td>{{ obj.paymentType }}</td>
+        <td>
+          <ng-container *ngIf="obj.created; else noPayment">
+            {{ obj.created | date : "dd-MM-yyyy" }}
+          </ng-container>
+          <ng-template #noPayment>N/A</ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination">
+  <pagination-controls
+    (pageChange)="onswarSadhnaTableDataChange($event)"
+  ></pagination-controls>
+</div>

@@ -1,8 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceService } from "src/app/services/service.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
 import {
   fosFilterModel,
   liveClassCustomerModel,
@@ -12,8 +9,6 @@ import {
   searchLiveClassFilter,
   searchPranaRambhFilter,
   StudentModel,
-  swarSadhnaDataModel,
-  swarSadhnaStudentModel,
   createSwaraSadhna,
   generatePassword,
   PaymentDetailsModel,
@@ -22,9 +17,9 @@ import {
   twoHunTTCModelResultModel,
   twoHunTTCModel,
   createPranicPurification,
-  octoberPrashantFilter,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
+import { DashboardSharedService } from "./dashboard-shared.service";
 
 @Component({
   selector: "app-dashboard",
@@ -54,13 +49,8 @@ export class DashboardComponent implements OnInit {
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
   liveClassFilter: searchLiveClassFilter;
-  swaraSadhnaFilter: searchPranaRambhFilter;
-  swaraSadhanaList: swarSadhnaStudentModel[] = [];
-  swarSadhanaTotal: number = 0;
-  swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
   createSwaraSadhnaFrom: createSwaraSadhna;
   createSwaraSadhnaTitle: string = `Create Student`;
-  swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
   bDtoxLoading: boolean = false;
@@ -81,12 +71,6 @@ export class DashboardComponent implements OnInit {
   twoHunTTCPage: number = 1;
   twoHunTTCList: twoHunTTCModel[] = [];
   twoHunTTCTotal: number = 0;
-  octoberPrashantTitle: string = "";
-  octoberPrashantFilter: octoberPrashantFilter;
-  octoberPrashantLoading: boolean = false;
-  octoberPrashantPage: number = 1;
-  octoberPrashantList: any;
-  octoberPrashantTotal: number = 0;
   selectedOption: number = 0;
   options = [
     { value: 1, label: "Swar Sadhana" },
@@ -127,7 +111,20 @@ export class DashboardComponent implements OnInit {
     },
   ];
   paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
-  constructor(private service: ServiceService, private route: ActivatedRoute) {
+  constructor(
+    private service: ServiceService,
+    public dashboardShared: DashboardSharedService
+  ) {
+    this.liveClassFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+      fromDate: "",
+      toDate: "",
+      course: this.selectedGroupId,
+      paymentStatus: "all",
+      month: "October",
+    };
     this.filter = {
       pageNo: 1,
       size: 10,
@@ -162,23 +159,6 @@ export class DashboardComponent implements OnInit {
       },
     ];
     this.selectedGroupId = this.customerGroups[0].courseName;
-    this.liveClassFilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-      course: this.selectedGroupId,
-      paymentStatus: "all",
-      month: "October",
-    };
-    this.swaraSadhnaFilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-    };
     this.createSwaraSadhnaFrom = {
       name: "",
       email: "",
@@ -194,28 +174,15 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
-    this.octoberPrashantFilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-      month: "October",
-      course: this.selectedGroupId,
-      paymentStatus: "all",
-      paymentType: "",
-    };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
-    this.getAllLiveClassStudent(this.liveClassFilter, false);
+    // this.getAllLiveClassStudent(this.liveClassFilter, false);
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
-    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
@@ -288,23 +255,6 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  getAllSwaraSadhnaStudent(
-    filter: searchPranaRambhFilter,
-    isSearch: boolean
-  ): void {
-    this.swaraLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.swarSadhanaPage = isSearch ? 1 : this.swarSadhanaPage;
-    this.service
-      .getAllSwaraSadhanaData(filter)
-      .subscribe((res: swarSadhnaDataModel) => {
-        this.swaraSadhanaList = res.data;
-        this.swarSadhanaTotal = res.total;
-        this.swarSadhnaTitle = `Swara Sadhana (${this.swarSadhanaTotal})`;
-        this.swaraLoading = this.swaraSadhanaList ? false : true;
-      });
-  }
   onLiveClassTableDataChange(event: number) {
     this.liveClassFilter.pageNo = event;
     this.liveClassPage = event;
@@ -336,15 +286,6 @@ export class DashboardComponent implements OnInit {
     this.foundationDetoxfilter.pageNo = event;
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.foundationP = event;
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-  onswarSadhnaTableDataChange(event: number) {
-    this.swaraSadhnaFilter.pageNo = event;
-    this.swarSadhanaPage = event;
-    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -509,49 +450,6 @@ export class DashboardComponent implements OnInit {
         this.liveClassLoading = false;
       });
   }
-  swaraExportToExcel() {
-    this.swaraLoading = true;
-    const tableId = "Swara_Sadhana";
-    let filter = { ...this.swaraSadhnaFilter };
-    filter.size = 100000;
-    filter.pageNo = 0;
-    this.service
-      .getAllSwaraSadhanaData(filter)
-      .subscribe((res: swarSadhnaDataModel) => {
-        if (!res.data || res.data.length === 0) {
-          console.error("No data available for export.");
-          return;
-        }
-        let csvContent = "";
-        const table = document.getElementById(tableId) as HTMLTableElement;
-        if (!table) {
-          console.error("Table not found:", tableId);
-          return;
-        }
-        const headers = Array.from(table.querySelectorAll("thead th"))
-          .map((th) => (th as HTMLElement).innerText)
-          .join(",");
-        csvContent += headers + "\n";
-        const rowsData: any[][] = [];
-        res.data.forEach((student, index) => {
-          rowsData.push([
-            index + 1,
-            student.name,
-            student.email,
-            student.phone,
-            student.city,
-            student.paymentStatus,
-            student.created || "N/A",
-          ]);
-        });
-        rowsData.forEach((row) => {
-          csvContent += row.join(",") + "\n";
-        });
-        this.downloadCsv(csvContent, tableId);
-        this.swaraLoading = false;
-      });
-  }
-
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
@@ -582,7 +480,6 @@ export class DashboardComponent implements OnInit {
         this.twoHunTTCSave(ttcData);
       } else if (this.selectedOption == 4) {
         if (this.checkedTeacher.length > 0) {
-          this.octoberPrashantLoading = true;
           this.onlineSadhanaSave(data);
         } else {
           alert("Please select at least one teacher.");
@@ -608,7 +505,7 @@ export class DashboardComponent implements OnInit {
       (res: any) => {
         if (res.status == "ok") {
           this.swaraLoading = false;
-          this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+          // this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
           this.createSwaraSadhnaFrom = {
             name: "",
             email: "",
@@ -694,12 +591,10 @@ export class DashboardComponent implements OnInit {
       .subscribe((res: any) => {
         if (res.status == "ok") {
           this.getAllLiveClassStudent(this.liveClassFilter, false);
-          this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
           alert(res.message);
         } else {
           alert("Registration failed: " + res.message);
         }
-        this.octoberPrashantLoading = false;
       });
   }
   onlineRishikeshSave(data: createSwaraSadhna, selectedHour: number) {
@@ -725,7 +620,6 @@ export class DashboardComponent implements OnInit {
         } else {
           alert("Registration failed: " + res.message);
         }
-        this.octoberPrashantLoading = false;
       });
   }
   pranaArambhSave(data: createSwaraSadhna) {
@@ -742,7 +636,6 @@ export class DashboardComponent implements OnInit {
       } else {
         alert("Registration failed: " + res.message);
       }
-      this.octoberPrashantLoading = false;
     });
   }
   downloadCsv(csvContent: string, tableId: string) {
@@ -796,25 +689,6 @@ export class DashboardComponent implements OnInit {
         this.twoHunTTCLoading = this.twoHunTTCList ? false : true;
       });
   }
-  getAllOctoberPrashantStudent(
-    filter: octoberPrashantFilter,
-    isSearch: boolean
-  ): void {
-    this.octoberPrashantLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.octoberPrashantPage = isSearch ? 1 : this.octoberPrashantPage;
-    filter.month = "October";
-    filter.course = "Acharya Prashant Jakhmola";
-    this.service
-      .getAllLiveClassStudent(filter)
-      .subscribe((res: liveClassDataModel) => {
-        this.octoberPrashantList = res.data;
-        this.octoberPrashantTotal = res.total;
-        this.octoberPrashantTitle = `October Prashant Jhakmola (${this.octoberPrashantTotal})`;
-        this.octoberPrashantLoading = this.octoberPrashantList ? false : true;
-      });
-  }
   onTwoHunTTCTableDataChange(event: number) {
     this.twoHunTTCFilter.pageNo = event;
     this.twoHunTTCPage = event;
@@ -824,28 +698,12 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
-  onoctoberPrashantTableDataChange(event: number) {
-    this.octoberPrashantFilter.pageNo = event;
-    this.octoberPrashantPage = event;
-    this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
   onPayStatusValueChange(event: string, type: number) {
     event = event == "all" ? "" : event;
     switch (type) {
-      case 1:
-        this.swaraSadhnaFilter.paymentStatus = event;
-        this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
-        break;
       case 2:
         this.twoHunTTCFilter.paymentStatus = event;
         this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-      case 3:
-        this.octoberPrashantFilter.paymentStatus = event;
-        this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
       case 4:
         this.filter.paymentStatus = event == "paid" ? event : "due";
         this.getAllParayanamStudent(this.filter, false);
@@ -864,22 +722,13 @@ export class DashboardComponent implements OnInit {
       this.checkedTeacher.push(event);
     }
   }
-  swaraPayType: string = "All";
   twoHunTTCPayType: string = "All";
-  octoberPrashantPayType: string = "All";
   onPayTypeValueChange(event: string, type: number) {
     event = event == "All" ? "" : event;
     switch (type) {
-      case 1:
-        this.swaraSadhnaFilter.paymentType = event;
-        this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
-        break;
       case 2:
         this.twoHunTTCFilter.paymentType = event;
         this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-      case 3:
-        this.octoberPrashantFilter.paymentType = event;
-        this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
       default:
         break;
     }
