@@ -17,6 +17,12 @@ import {
   twoHunTTCModelResultModel,
   twoHunTTCModel,
   createPranicPurification,
+  
+  freeWebinarDataModel,
+  searchFreeWebinarFilter,
+  freeWebinarStudentModel,
+  swarSadhnaDataModel,
+  swarSadhnaStudentModel,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 import { DashboardSharedService } from "./dashboard-shared.service";
@@ -49,10 +55,21 @@ export class DashboardComponent implements OnInit {
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
   liveClassFilter: searchLiveClassFilter;
+  swaraSadhnaFilter: searchPranaRambhFilter;
+  swaraSadhanaList: swarSadhnaStudentModel[] = [];
+  swarSadhanaTotal: number = 0;
+  swarSadhnaTitle: string = `Swara Sadhana (${this.swarSadhanaTotal})`;
+  freeWebinarFilter: searchFreeWebinarFilter;
+  freeWebinarList: freeWebinarStudentModel[] = [];
+  freeWebinarTotal: number = 0;
+  freeWebinarTitle: string = `Free Webinar (${this.freeWebinarTotal})`;
   createSwaraSadhnaFrom: createSwaraSadhna;
   createSwaraSadhnaTitle: string = `Create Student`;
+  swarSadhanaPage: number = 1;
+  freeWebinarPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
+  freeLoading: boolean = false;
   bDtoxLoading: boolean = false;
   fosLoading: boolean = false;
   liveClassLoading: boolean = false;
@@ -176,6 +193,25 @@ export class DashboardComponent implements OnInit {
       toDate: "",
     };
     this.twoHunTTCFilter = this.pranicPurificationFilter;
+
+    // this.freeWebinarFilter = {
+    //   pageNo: 1,
+    //   size: 10,
+    //   searchText: "",
+    //   fromDate: "",
+    //   toDate: "",
+    //   month: "October",
+    //   course: this.selectedGroupId,
+    //   paymentStatus: "all",
+    //   paymentType: "",
+    // };
+    this.twoHunTTCFilter = this.pranicPurificationFilter;
+
+    this.freeWebinarFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+    }
   }
   ngOnInit(): void {
     this.getAllParayanamStudent(this.filter, false);
@@ -184,6 +220,8 @@ export class DashboardComponent implements OnInit {
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+   // this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
+    this.getAllFreeWebinarData(this.freeWebinarFilter, false);
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
@@ -256,6 +294,41 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+  getAllFreeWebinarData(
+    filter: searchFreeWebinarFilter,
+    isSearch: boolean
+  ): void {
+    this.freeLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.freeWebinarPage = isSearch ? 1 : this.freeWebinarPage;
+    this.service
+      .getAllFreeWebinarData(filter)
+      .subscribe((res: freeWebinarDataModel) => {
+        this.freeWebinarList = res.data;
+        this.freeWebinarTotal = res.total;
+        this.freeWebinarTitle = `Free Webinar (${this.freeWebinarTotal})`;
+        this.freeLoading = this.freeWebinarList ? false : true;
+      });
+  }
+
+  getAllSwaraSadhnaStudent(
+    filter: searchPranaRambhFilter,
+    isSearch: boolean
+  ): void {
+    this.swaraLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.swarSadhanaPage = isSearch ? 1 : this.swarSadhanaPage;
+    this.service
+      .getAllSwaraSadhanaData(filter)
+      .subscribe((res: swarSadhnaDataModel) => {
+        this.swaraSadhanaList = res.data;
+        this.swarSadhanaTotal = res.total;
+        this.swarSadhnaTitle = `Swara Sadhana (${this.swarSadhanaTotal})`;
+        this.swaraLoading = this.swaraSadhanaList ? false : true;
+      });
+  }
   onLiveClassTableDataChange(event: number) {
     this.liveClassFilter.pageNo = event;
     this.liveClassPage = event;
@@ -292,6 +365,26 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
+  onswarSadhnaTableDataChange(event: number) {
+    this.swaraSadhnaFilter.pageNo = event;
+    this.swarSadhanaPage = event;
+    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  onFreeTableDataChange(event: number) {
+    this.freeWebinarFilter.pageNo = event;
+    this.freeWebinarPage = event;
+    this.getAllFreeWebinarData(this.freeWebinarFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
   pranayamExportToExcel(tableId: string): void {
     this.isLoading = true;
     let filter = { ...this.filter };

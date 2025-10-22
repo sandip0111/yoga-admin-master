@@ -7,6 +7,19 @@ export class searchPranaRambhFilter {
   paymentType?: string;
   paymentStatus?: string;
 }
+
+export class searchFreeWebinarFilter {
+  pageNo: number;
+  size: number;
+  searchText: string;
+}
+
+export interface octoberPrashantFilter extends searchLiveClassFilter {
+  month: string;
+  paymentStatus: string;
+  paymentType: string;
+}
+
 export interface createSwaraSadhna {
   name: string;
   email: string;
@@ -34,6 +47,26 @@ export class swarSadhnaStudentModel {
     this.created = "";
   }
 }
+
+export class freeWebinarStudentModel {
+  _id: string;
+  name: string;
+  email: string;
+  created: string;
+  webinarDate: string;  
+  constructor() {
+    this._id = "";
+    this.name = "";
+    this.email = "";
+    this.webinarDate = "";
+    this.created = "";
+  }
+}
+export interface freeWebinarDataModel {
+  data: freeWebinarStudentModel[];
+  total: number;
+}
+
 export interface swarSadhnaDataModel {
   data: swarSadhnaStudentModel[];
   total: number;

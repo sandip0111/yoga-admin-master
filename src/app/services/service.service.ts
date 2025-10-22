@@ -4,6 +4,7 @@ import { environment } from "src/environments/environment";
 import {
   createPranicPurification,
   createSwaraSadhna,
+  searchFreeWebinarFilter,
   searchLiveClassFilter,
   searchPranaRambhFilter,
 } from "../models/dashboard";
@@ -246,6 +247,9 @@ export class ServiceService {
     return this.data.post(this.url + "api/v1/getAllSwaraSadhanaData", data);
   }
 
+  getAllFreeWebinarData(data: searchFreeWebinarFilter) {
+    return this.data.post(this.url + "api/v1/getAllFreeWebinarData", data);
+  }
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     return this.data.post(
       this.url + "api/v1/registerSwarSadhanaWebinarUser",
