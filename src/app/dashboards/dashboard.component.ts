@@ -17,7 +17,7 @@ import {
   twoHunTTCModelResultModel,
   twoHunTTCModel,
   createPranicPurification,
-  
+
   freeWebinarDataModel,
   searchFreeWebinarFilter,
   freeWebinarStudentModel,
@@ -35,17 +35,14 @@ import { DashboardSharedService } from "./dashboard-shared.service";
 export class DashboardComponent implements OnInit {
   isLoading: boolean = false;
   filteredStudents: any[] = [];
-  filter: searchPranaRambhFilter;
+  // filter: searchPranaRambhFilter;
   allPranayamStudents: any[] = [];
   breathDetoxfilter: searchPranaRambhFilter;
   foundationDetoxfilter: fosFilterModel;
-  pranayamStudentTotal: number;
   foundationTotal: any;
   breathDetoxTotal: any;
-  p: number = 1;
   breathP: any = 1;
   foundationP: any = 1;
-  students: StudentModel[] = [];
   totalCustomers: number = 0;
   totalCustomersAll: number = 0;
   customers: liveClassCustomerModel[] = [];
@@ -143,13 +140,7 @@ export class DashboardComponent implements OnInit {
       paymentStatus: "all",
       month: "October",
     };
-    this.filter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-    };
+
     this.breathDetoxfilter = {
       pageNo: 1,
       size: 10,
@@ -214,43 +205,13 @@ export class DashboardComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.getAllParayanamStudent(this.filter, false);
+    // this.getAllParayanamStudent(this.filter, false);
     // this.getAllLiveClassStudent(this.liveClassFilter, false);
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-   // this.getAllOctoberPrashantStudent(this.octoberPrashantFilter, false);
     this.getAllFreeWebinarData(this.freeWebinarFilter, false);
-  }
-  getAllParayanamStudent(
-    filter: searchPranaRambhFilter,
-    isSearch: boolean
-  ): void {
-    this.isLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.p = isSearch ? 1 : this.p;
-    this.service
-      .getAllParayanamStudent(filter)
-      .subscribe((res: PranArambhModel) => {
-        this.students = res.data;
-        this.pranayamStudentTotal = res.total;
-        if (this.students && this.students.length > 0) {
-          for (let obj of this.students) {
-            if (obj.paymentDetails?.length > 0) {
-              for (let i in obj.paymentDetails) {
-                if (+i == 0) {
-                  obj.paymentDetailsObject = obj.paymentDetails[i];
-                }
-              }
-            } else {
-              obj.paymentDetailsObject = new PaymentDetailsModel();
-            }
-          }
-        }
-        this.isLoading = this.students ? false : true;
-      });
   }
   getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
     this.liveClassLoading = true;
@@ -338,15 +299,6 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
-  onTableDataChange(event: number) {
-    this.filter.pageNo = event;
-    this.p = event;
-    this.getAllParayanamStudent(this.filter, false);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
   onBreathDetoxTableDataChange(event: any) {
     this.breathDetoxfilter.pageNo = event;
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
@@ -385,46 +337,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  pranayamExportToExcel(tableId: string): void {
-    this.isLoading = true;
-    let filter = { ...this.filter };
-    filter.size = 100000;
-    filter.pageNo = 0;
-    this.service.getAllParayanamStudent(filter).subscribe((res: any) => {
-      if (!res.data || res.data.length === 0) {
-        console.error("No data available for export.");
-        return;
-      }
-      let csvContent = "";
-      const table = document.getElementById(tableId) as HTMLTableElement;
-      if (!table) {
-        console.error("Table not found:", tableId);
-        return;
-      }
-      const headers = Array.from(table.querySelectorAll("thead th"))
-        .map((th) => (th as HTMLElement).innerText)
-        .join(",");
-      csvContent += headers + "\n";
-      const rowsData: any[][] = [];
-      res.data.forEach((student, index) => {
-        rowsData.push([
-          index + 1,
-          student.firstName,
-          student.email,
-          student.paymentDetails[0]?.amount || "N/A",
-          student.paymentDetails[0]?.currency || "N/A",
-          student.paymentDetails[0]?.paymentStatus || "N/A",
-          student.paymentDetails[0]?.paymentBy || "N/A",
-          student.paymentDetails[0]?.created || "N/A",
-        ]);
-      });
-      rowsData.forEach((row) => {
-        csvContent += row.join(",") + "\n";
-      });
-      this.downloadCsv(csvContent, tableId);
-      this.isLoading = false;
-    });
-  }
   breathDetoxExportToExcel(tableId: string): void {
     this.bDtoxLoading = true;
     let filter = { ...this.breathDetoxfilter };
@@ -725,7 +637,6 @@ export class DashboardComponent implements OnInit {
     };
     this.service.createPranaArambhCustomer(pranaData).subscribe((res: any) => {
       if (res.status == "ok") {
-        this.getAllParayanamStudent(this.filter, false);
         alert(res.message);
       } else {
         alert("Registration failed: " + res.message);
@@ -798,9 +709,6 @@ export class DashboardComponent implements OnInit {
       case 2:
         this.twoHunTTCFilter.paymentStatus = event;
         this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-      case 4:
-        this.filter.paymentStatus = event == "paid" ? event : "due";
-        this.getAllParayanamStudent(this.filter, false);
       default:
         break;
     }

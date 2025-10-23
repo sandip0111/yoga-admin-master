@@ -6,5 +6,6 @@ import { Injectable } from "@angular/core";
 export class DashboardSharedService {
   swarSadhnaTitle: string = "Swara Sadhana";
   onlineClassTitle: string = "Online Live Class"
+
   constructor() {}
 }

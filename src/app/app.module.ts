@@ -52,6 +52,7 @@ import { WebinarRegistrationComponent } from './webinarRegistrationForms/webinar
 import { SendEmailComponent } from './send-email/send-email.component';
 import { SwaraSadhanaComponent } from './dashboards/swara-sadhana/swara-sadhana.component';
 import { OnlineLiveClassComponent } from './dashboards/online-live-class/online-live-class.component';
+import { PranaArambhComponent } from './dashboards/prana-arambh/prana-arambh.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { OnlineLiveClassComponent } from './dashboards/online-live-class/online-
     DashboardComponent,
     SendEmailComponent,
     SwaraSadhanaComponent,
-    OnlineLiveClassComponent
+    OnlineLiveClassComponent,
+    PranaArambhComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
