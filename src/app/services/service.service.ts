@@ -287,4 +287,7 @@ export class ServiceService {
   createPranaArambhCustomer(data: createPranicPurification) {
     return this.data.post(this.url + "api/v1/createPranaArambhCustomer", data);
   }
+  sendBulkMailFreeWebiner() {
+    return this.data.get(this.url + "api/v1/sendBulkMailFreeWebiner");
+  }
 }

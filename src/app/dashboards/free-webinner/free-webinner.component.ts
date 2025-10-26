@@ -1,0 +1,69 @@
+import { Component, OnInit } from "@angular/core";
+import {
+  freeWebinarDataModel,
+  freeWebinarStudentModel,
+  searchFreeWebinarFilter,
+} from "src/app/models/dashboard";
+import { ServiceService } from "src/app/services/service.service";
+import { DashboardSharedService } from "../dashboard-shared.service";
+
+@Component({
+  selector: "app-free-webinner",
+  templateUrl: "./free-webinner.component.html",
+  styleUrls: ["./free-webinner.component.scss"],
+})
+export class FreeWebinnerComponent implements OnInit {
+  freeWebinarFilter: searchFreeWebinarFilter;
+  freeLoading: boolean = false;
+  freeWebinarPage: number = 1;
+  freeWebinarList: freeWebinarStudentModel[] = [];
+  freeWebinarTotal: number = 0;
+  constructor(
+    private service: ServiceService,
+    public dashboardShared: DashboardSharedService
+  ) {}
+
+  ngOnInit(): void {
+    this.freeWebinarFilter = {
+      pageNo: 1,
+      size: 10,
+      searchText: "",
+    };
+    this.getAllFreeWebinarData(this.freeWebinarFilter, false);
+  }
+  getAllFreeWebinarData(
+    filter: searchFreeWebinarFilter,
+    isSearch: boolean
+  ): void {
+    this.freeLoading = true;
+    filter.pageNo = isSearch ? 1 : filter.pageNo;
+    filter.size = isSearch ? 10 : filter.size;
+    this.freeWebinarPage = isSearch ? 1 : this.freeWebinarPage;
+    this.service
+      .getAllFreeWebinarData(filter)
+      .subscribe((res: freeWebinarDataModel) => {
+        this.freeWebinarList = res.data;
+        this.freeWebinarTotal = res.total;
+        this.dashboardShared.freeWebinarTitle = `Free Webinar (${this.freeWebinarTotal})`;
+        this.freeLoading = this.freeWebinarList ? false : true;
+      });
+  }
+  onFreeTableDataChange(event: number) {
+    this.freeWebinarFilter.pageNo = event;
+    this.freeWebinarPage = event;
+    this.getAllFreeWebinarData(this.freeWebinarFilter, false);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+  sendBulkMail() {
+    this.freeLoading = true;
+    this.service.sendBulkMailFreeWebiner().subscribe((res: any) => {
+      alert(res.message);
+      if ((res.status = "ok")) {
+        this.freeLoading = false;
+      }
+    });
+  }
+}

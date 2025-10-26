@@ -1,0 +1,55 @@
+<div *ngIf="freeLoading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="header-container">
+  <h4>Free Webinar</h4>
+  <a class="export-link" (click)="sendBulkMail()">Send Bulk Mail</a>
+</div>
+<div class="container_search">
+  <input
+    type="text"
+    placeholder="Search by Name or Email or phone"
+    [(ngModel)]="freeWebinarFilter.searchText"
+    class="search-input form-control"
+  />
+  <button (click)="getAllFreeWebinarData(freeWebinarFilter, true)">
+    Search
+  </button>
+</div>
+<div class="pranarambh-table-responsive">
+  <table id="free_webinar" class="table table-bordered table-striped">
+    <thead class="table-secondary">
+      <th style="inline-size: 10% !important">Sl No.</th>
+      <th>Student Name</th>
+      <th>Email</th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let obj of freeWebinarList
+            | paginate
+              : {
+                  itemsPerPage: 10,
+                  currentPage: freeWebinarPage,
+                  totalItems: freeWebinarTotal
+                };
+          let i = index
+        "
+      >
+        <td>{{ i + 1 + (freeWebinarPage - 1) * 10 }}</td>
+        <td>
+          {{ obj.name }}
+        </td>
+        <td>{{ obj.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination">
+  <pagination-controls
+    (pageChange)="onFreeTableDataChange($event)"
+  ></pagination-controls>
+</div>

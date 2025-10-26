@@ -343,61 +343,9 @@
             </ng-template>
           </ngb-tab>
 
-          <ngb-tab [title]="freeWebinarTitle">
+          <ngb-tab [title]="dashboardShared.freeWebinarTitle">
             <ng-template ngbTabContent>
-              <div class="header-container">
-                <h4>Free Webinar</h4>
-              </div>
-              <div class="container_search">
-                <input
-                  type="text"
-                  placeholder="Search by Name or Email or phone"
-                  [(ngModel)]="freeWebinarFilter.searchText"
-                  class="search-input form-control"
-                />
-                <button
-                  (click)="getAllFreeWebinarData(freeWebinarFilter, true)"
-                >
-                  Search
-                </button>
-              </div>
-              <div class="pranarambh-table-responsive">
-                <table
-                  id="free_webinar"
-                  class="table table-bordered table-striped"
-                >
-                  <thead class="table-secondary">
-                    <th style="inline-size: 10% !important">Sl No.</th>
-                    <th>Student Name</th>
-                    <th>Email</th>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let obj of freeWebinarList
-                          | paginate
-                            : {
-                                itemsPerPage: 10,
-                                currentPage: freeWebinarPage,
-                                totalItems: freeWebinarTotal
-                              };
-                        let i = index
-                      "
-                    >
-                      <td>{{ i + 1 + (freeWebinarPage - 1) * 10 }}</td>
-                      <td>
-                        {{ obj.name }}
-                      </td>
-                      <td>{{ obj.email }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="pagination">
-                <pagination-controls
-                  (pageChange)="onFreeTableDataChange($event)"
-                ></pagination-controls>
-              </div>
+              <app-free-webinner></app-free-webinner>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="createSwaraSadhnaTitle">
@@ -480,7 +428,9 @@
                 </div>
 
                 <div style="display: flex; align-items: center">
-                  <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+                  <label for="toDate" style="margin-inline-end: 8px"
+                    >To Date:</label
+                  >
                   <input
                     type="date"
                     id="toDate"
@@ -600,7 +550,9 @@
                 </div>
 
                 <div style="display: flex; align-items: center">
-                  <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+                  <label for="toDate" style="margin-inline-end: 8px"
+                    >To Date:</label
+                  >
                   <input
                     type="date"
                     id="toDate"
