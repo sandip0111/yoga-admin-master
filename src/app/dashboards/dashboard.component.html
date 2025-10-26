@@ -20,7 +20,7 @@
       <div class="card-body">
         <h4 class="card-title">Dashboard</h4>
         <ngb-tabset>
-          <ngb-tab [title]="'Prana Arambh'">
+          <ngb-tab [title]="dashboardShared.pranaArambhTitle">
             <ng-template ngbTabContent>
               <app-prana-arambh
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"

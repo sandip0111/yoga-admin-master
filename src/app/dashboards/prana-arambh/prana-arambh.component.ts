@@ -54,6 +54,7 @@ export class PranaArambhComponent implements OnInit {
       .subscribe((res: PranArambhModel) => {
         this.students = res.data;
         this.pranayamStudentTotal = res.total;
+        this.dashboardShared.pranaArambhTitle = `Prana Arambh (${this.pranayamStudentTotal})`;
         if (this.students && this.students.length > 0) {
           for (let obj of this.students) {
             if (obj.paymentDetails?.length > 0) {
