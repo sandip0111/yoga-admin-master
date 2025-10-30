@@ -26,9 +26,7 @@ import { DashboardSharedService } from "./dashboard-shared.service";
   styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-  isLoading: boolean = false;
   filteredStudents: any[] = [];
-  // filter: searchPranaRambhFilter;
   allPranayamStudents: any[] = [];
   breathDetoxfilter: searchPranaRambhFilter;
   foundationDetoxfilter: fosFilterModel;
@@ -66,12 +64,6 @@ export class DashboardComponent implements OnInit {
   pranicPurificationTotal: number = 0;
   pranicPurificationPage: number = 1;
   pranicPurificationTitle: string = "";
-  twoHunTTCTitle: string = "";
-  twoHunTTCFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
-  twoHunTTCLoading: boolean = false;
-  twoHunTTCPage: number = 1;
-  twoHunTTCList: twoHunTTCModel[] = [];
-  twoHunTTCTotal: number = 0;
   selectedOption: number = 0;
   options = [
     { value: 1, label: "Swar Sadhana" },
@@ -170,16 +162,11 @@ export class DashboardComponent implements OnInit {
       fromDate: "",
       toDate: "",
     };
-    this.twoHunTTCFilter = this.pranicPurificationFilter;
-    this.twoHunTTCFilter = this.pranicPurificationFilter;
-
-
   }
   ngOnInit(): void {
     this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
-    this.getAll200TTCStudent(this.twoHunTTCFilter, false);
   }
   getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
     this.liveClassLoading = true;
@@ -452,7 +439,6 @@ export class DashboardComponent implements OnInit {
       (res: any) => {
         if (res.status == "ok") {
           this.swaraLoading = false;
-          // this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
           this.createSwaraSadhnaFrom = {
             name: "",
             email: "",
@@ -499,7 +485,6 @@ export class DashboardComponent implements OnInit {
       (res: any) => {
         if (res.status == "ok") {
           this.swaraLoading = false;
-          this.getAll200TTCStudent(this.twoHunTTCFilter, false);
           alert("Registration successful!");
         } else {
           this.swaraLoading = false;
@@ -621,39 +606,6 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
-  getAll200TTCStudent(filter: searchPranaRambhFilter, isSearch: boolean): void {
-    this.twoHunTTCLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.twoHunTTCPage = isSearch ? 1 : this.twoHunTTCPage;
-    this.service
-      .getAll200ttcStudent(filter)
-      .subscribe((res: twoHunTTCModelResultModel) => {
-        this.twoHunTTCList = res.data;
-        this.twoHunTTCTotal = res.total;
-        this.twoHunTTCTitle = `200 TTC (${this.twoHunTTCTotal})`;
-        this.twoHunTTCLoading = this.twoHunTTCList ? false : true;
-      });
-  }
-  onTwoHunTTCTableDataChange(event: number) {
-    this.twoHunTTCFilter.pageNo = event;
-    this.twoHunTTCPage = event;
-    this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-  onPayStatusValueChange(event: string, type: number) {
-    event = event == "all" ? "" : event;
-    switch (type) {
-      case 2:
-        this.twoHunTTCFilter.paymentStatus = event;
-        this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-      default:
-        break;
-    }
-  }
   checkedTeacher: any[] = [];
   onCheckboxChange(event: any) {
     if (this.checkedTeacher.includes(event)) {
@@ -663,17 +615,6 @@ export class DashboardComponent implements OnInit {
       }
     } else {
       this.checkedTeacher.push(event);
-    }
-  }
-  twoHunTTCPayType: string = "All";
-  onPayTypeValueChange(event: string, type: number) {
-    event = event == "All" ? "" : event;
-    switch (type) {
-      case 2:
-        this.twoHunTTCFilter.paymentType = event;
-        this.getAll200TTCStudent(this.twoHunTTCFilter, false);
-      default:
-        break;
     }
   }
 }

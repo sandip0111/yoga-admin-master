@@ -8,5 +8,6 @@ export class DashboardSharedService {
   onlineClassTitle: string = "Online Live Class";
   pranaArambhTitle: string = "Prana Arambh";
   freeWebinarTitle: string = "Free Webinar";
+  twoHunTTCTitle: string = "200 Online TTC";
   constructor() {}
 }

@@ -1,12 +1,10 @@
 <div
   *ngIf="
-    isLoading ||
     swaraLoading ||
     bDtoxLoading ||
     fosLoading ||
     liveClassLoading ||
-    pranicLoading ||
-    twoHunTTCLoading
+    pranicLoading
   "
   class="loader-overlay"
 >
@@ -342,7 +340,6 @@
               ></app-swara-sadhana>
             </ng-template>
           </ngb-tab>
-
           <ngb-tab [title]="dashboardShared.freeWebinarTitle">
             <ng-template ngbTabContent>
               <app-free-webinner></app-free-webinner>
@@ -523,143 +520,12 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab [title]="twoHunTTCTitle">
+          <ngb-tab [title]="dashboardShared.twoHunTTCTitle">
             <ng-template ngbTabContent>
-              <div class="header-container">
-                <h4>200 TTC</h4>
-                <a class="export-link">Export to Excel</a>
-              </div>
-              <div class="container_search">
-                <input
-                  type="text"
-                  placeholder="Search by Name or Email or phone"
-                  [(ngModel)]="twoHunTTCFilter.searchText"
-                  class="search-input form-control"
-                />
-
-                <div style="display: flex; align-items: center">
-                  <label for="fromDate" style="margin-inline-end: 8px">
-                    From Date:
-                  </label>
-                  <input
-                    type="date"
-                    id="fromDate"
-                    [(ngModel)]="twoHunTTCFilter.fromDate"
-                    class="date-input form-control"
-                  />
-                </div>
-
-                <div style="display: flex; align-items: center">
-                  <label for="toDate" style="margin-inline-end: 8px"
-                    >To Date:</label
-                  >
-                  <input
-                    type="date"
-                    id="toDate"
-                    [(ngModel)]="twoHunTTCFilter.toDate"
-                    class="date-input form-control"
-                    [min]="twoHunTTCFilter.fromDate"
-                    [disabled]="!twoHunTTCFilter.fromDate"
-                  />
-                </div>
-                <div style="display: flex; align-items: center">
-                  <label for="toDate" style="margin-inline-end: 8px"
-                    >Payment status</label
-                  >
-                  <select
-                    (change)="onPayStatusValueChange($event.target.value, 2)"
-                    class="search-input form-control"
-                  >
-                    <option
-                      *ngFor="let option of paymentOption"
-                      [value]="option.value"
-                    >
-                      {{ option.name }}
-                    </option>
-                  </select>
-                </div>
-                <div style="display: flex; align-items: center">
-                  <label for="toDate" style="margin-inline-end: 8px"
-                    >Payment Type</label
-                  >
-                  <select
-                    [(ngModel)]="twoHunTTCPayType"
-                    (change)="onPayTypeValueChange($event.target.value, 2)"
-                    class="search-input form-control"
-                  >
-                    <option [value]="0" selected hidden>Select a type</option>
-                    <option
-                      *ngFor="let option of paymentTypeOption"
-                      [value]="option"
-                    >
-                      {{ option }}
-                    </option>
-                  </select>
-                </div>
-                <button (click)="getAll200TTCStudent(twoHunTTCFilter, true)">
-                  Search
-                </button>
-              </div>
-              <div class="pranarambh-table-responsive">
-                <table
-                  id="two_hun_ttc"
-                  class="table table-bordered table-striped"
-                >
-                  <thead class="table-secondary">
-                    <th style="inline-size: 10% !important">Sl No.</th>
-                    <th>Student Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Price</th>
-                    <th>Payment Status</th>
-                    <th>Payment Type</th>
-                    <th>Payment Date</th>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let obj of twoHunTTCList
-                          | paginate
-                            : {
-                                itemsPerPage: 10,
-                                currentPage: twoHunTTCPage,
-                                totalItems: twoHunTTCTotal
-                              };
-                        let i = index
-                      "
-                    >
-                      <td>{{ i + 1 + (twoHunTTCPage - 1) * 10 }}</td>
-                      <td>
-                        {{ obj.name }}
-                      </td>
-                      <td>{{ obj.email }}</td>
-                      <td>{{ obj.phoneNumber }}</td>
-                      <td>{{ obj.price | currency : obj.currency }}</td>
-                      <td
-                        [ngClass]="{
-                          'text-success': obj?.paymentStatus == 'paid',
-                          'text-warning': obj?.paymentStatus == 'pending',
-                          'text-danger': obj?.paymentStatus == 'failed'
-                        }"
-                      >
-                        {{ obj.paymentStatus }}
-                      </td>
-                      <td>{{ obj.paymentType }}</td>
-                      <td>
-                        <ng-container *ngIf="obj.created; else noPayment">
-                          {{ obj.created | date : "dd-MM-yyyy" }}
-                        </ng-container>
-                        <ng-template #noPayment>N/A</ng-template>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div class="pagination">
-                <pagination-controls
-                  (pageChange)="onTwoHunTTCTableDataChange($event)"
-                ></pagination-controls>
-              </div>
+              <app-two-hundred-online-ttc
+                [paymentOption]="paymentOption"
+                [paymentTypeOption]="paymentTypeOption"
+              ></app-two-hundred-online-ttc>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="dashboardShared.onlineClassTitle">

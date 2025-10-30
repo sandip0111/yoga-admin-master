@@ -54,6 +54,7 @@ import { SwaraSadhanaComponent } from './dashboards/swara-sadhana/swara-sadhana.
 import { OnlineLiveClassComponent } from './dashboards/online-live-class/online-live-class.component';
 import { PranaArambhComponent } from './dashboards/prana-arambh/prana-arambh.component';
 import { FreeWebinnerComponent } from './dashboards/free-webinner/free-webinner.component';
+import { TwoHundredOnlineTtcComponent } from './dashboards/two-hundred-online-ttc/two-hundred-online-ttc.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { FreeWebinnerComponent } from './dashboards/free-webinner/free-webinner.
     SwaraSadhanaComponent,
     OnlineLiveClassComponent,
     PranaArambhComponent,
-    FreeWebinnerComponent
+    FreeWebinnerComponent,
+    TwoHundredOnlineTtcComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
