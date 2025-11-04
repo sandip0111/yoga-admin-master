@@ -1,11 +1,5 @@
 <div
-  *ngIf="
-    swaraLoading ||
-    bDtoxLoading ||
-    fosLoading ||
-    liveClassLoading ||
-    pranicLoading
-  "
+  *ngIf="swaraLoading || fosLoading || liveClassLoading || pranicLoading"
   class="loader-overlay"
 >
   <div class="spinner-border text-primary" role="status">
@@ -27,104 +21,11 @@
               ></app-prana-arambh>
             </ng-template>
           </ngb-tab>
-          <ngb-tab [title]="'Breath Detox (' + breathDetoxTotal + ')'">
+          <ngb-tab [title]="dashboardShared.breathDtoxTitle">
             <ng-template ngbTabContent>
-              <div class="media">
-                <div class="media-body">
-                  <div class="header-container">
-                    <h4>Breath Detox</h4>
-                    <a
-                      (click)="breathDetoxExportToExcel('BreathDetox')"
-                      class="export-link"
-                      >Export to Excel</a
-                    >
-                  </div>
-                  <div class="container_search">
-                    <input
-                      type="text"
-                      placeholder="Search by Name or Email or City or Phone number"
-                      [(ngModel)]="breathDetoxfilter.searchText"
-                      class="search-input form-control"
-                    />
-
-                    <div style="display: flex; align-items: center">
-                      <label for="fromDate" style="margin-inline-end: 8px"
-                        >From Date:</label
-                      >
-                      <input
-                        type="date"
-                        id="breathDetoxfilterFromDate"
-                        [(ngModel)]="breathDetoxfilter.fromDate"
-                        class="date-input form-control"
-                      />
-                    </div>
-
-                    <div style="display: flex; align-items: center">
-                      <label for="toDate" style="margin-inline-end: 8px"
-                        >To Date:</label
-                      >
-                      <input
-                        type="date"
-                        id="toDate"
-                        [(ngModel)]="breathDetoxfilter.toDate"
-                        class="date-input form-control"
-                        [min]="breathDetoxfilter.fromDate"
-                        [disabled]="!breathDetoxfilter.fromDate"
-                      />
-                    </div>
-                    <button
-                      (click)="getAllBreathDetoxStudent(breathDetoxfilter)"
-                    >
-                      Search
-                    </button>
-                  </div>
-                  <div class="table-responsive">
-                    <table
-                      id="BreathDetox"
-                      class="table table-bordered table-striped"
-                    >
-                      <thead class="table-secondary">
-                        <tr>
-                          <th style="inline-size: 4% !important">Sl No.</th>
-                          <th>StudentName</th>
-                          <th>Email</th>
-                          <th>Mobile</th>
-                          <th>City</th>
-                          <th>Is Active</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                            let breath of breathDetox
-                              | paginate
-                                : {
-                                    itemsPerPage: 10,
-                                    currentPage: breathP,
-                                    totalItems: breathDetoxTotal
-                                  };
-                            let j = index
-                          "
-                        >
-                          <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
-                          <td>
-                            {{ breath.firstName }} {{ breath.lastName || "" }}
-                          </td>
-                          <td>{{ breath.email }}</td>
-                          <td>{{ breath.phoneNumber }}</td>
-                          <td>{{ breath.city }}</td>
-                          <td>{{ breath.isActive }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="pagination">
-                    <pagination-controls
-                      (pageChange)="onBreathDetoxTableDataChange($event)"
-                    ></pagination-controls>
-                  </div>
-                </div>
-              </div>
+              <app-breath-dtox
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-breath-dtox>
             </ng-template>
           </ngb-tab>
           <ngb-tab
@@ -536,6 +437,11 @@
                 [customerGroups]="customerGroups"
                 [monthOption]="monthOption"
               ></app-online-live-class>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="dashboardShared.pendingPaymentTitle">
+            <ng-template ngbTabContent>
+              <app-pending-payment></app-pending-payment>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

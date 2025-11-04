@@ -1,0 +1,85 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: left;
+  word-wrap: break-word;
+  white-space: nowrap; /* Prevents text from breaking */
+}
+
+.pranarambh-table-responsive {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.container_search {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping on small screens */
+  align-items: center;
+  gap: 12px;
+}
+
+.media-body {
+  width: 60%;
+}
+
+.search-input {
+  width: 300px;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ced4da;
+}
+
+.date-input {
+  width: 200px;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 8px 15px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: darkblue;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: left; /* or space-between */
+  gap: 5px; /* Adjust spacing between items */
+  overflow-x: auto; /* Add horizontal scroll if needed */
+  white-space: nowrap;
+}
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.export-link {
+  text-decoration: none;
+  color: blue;
+  font-weight: bold;
+  cursor: pointer;
+}
+.wrap-field {
+  min-width: 200px;
+}
+.address {
+  white-space: normal !important;
+  min-width: 200px;
+}

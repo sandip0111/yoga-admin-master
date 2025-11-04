@@ -28,17 +28,13 @@ import { DashboardSharedService } from "./dashboard-shared.service";
 export class DashboardComponent implements OnInit {
   filteredStudents: any[] = [];
   allPranayamStudents: any[] = [];
-  breathDetoxfilter: searchPranaRambhFilter;
   foundationDetoxfilter: fosFilterModel;
   foundationTotal: any;
-  breathDetoxTotal: any;
-  breathP: any = 1;
   foundationP: any = 1;
   totalCustomers: number = 0;
   totalCustomersAll: number = 0;
   customers: liveClassCustomerModel[] = [];
   customerGroups: liveClassTeacherModel[] = [];
-  breathDetox: any[] = [];
   spiritualityStudent: any[] = [];
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
@@ -52,7 +48,6 @@ export class DashboardComponent implements OnInit {
   swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
   swaraLoading: boolean = false;
-  bDtoxLoading: boolean = false;
   fosLoading: boolean = false;
   liveClassLoading: boolean = false;
   selectedGroupId: string;
@@ -119,14 +114,6 @@ export class DashboardComponent implements OnInit {
       paymentStatus: "all",
       month: "October",
     };
-
-    this.breathDetoxfilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-    };
     this.foundationDetoxfilter = { pageNo: 1, size: 10, searchText: "" };
     this.customerGroups = [
       {
@@ -164,7 +151,6 @@ export class DashboardComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    this.getAllBreathDetoxStudent(this.breathDetoxfilter);
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
   }
@@ -197,20 +183,6 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
-  getAllBreathDetoxStudent(filter: searchPranaRambhFilter): void {
-    this.bDtoxLoading = true;
-    this.service.getAllBreathDetoxStudent(filter).subscribe(
-      (response: any) => {
-        this.breathDetoxTotal = response.total;
-        this.breathDetox = response.data;
-        this.bDtoxLoading = this.breathDetox ? false : true;
-      },
-      (error) => {
-        console.error("Error fetching breathDetox data:", error);
-      }
-    );
-  }
-
   getAllSwaraSadhnaStudent(
     filter: searchPranaRambhFilter,
     isSearch: boolean
@@ -237,15 +209,6 @@ export class DashboardComponent implements OnInit {
       behavior: "smooth",
     });
   }
-  onBreathDetoxTableDataChange(event: any) {
-    this.breathDetoxfilter.pageNo = event;
-    this.getAllBreathDetoxStudent(this.breathDetoxfilter);
-    this.breathP = event;
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
   onfoundationTableDataChange(event: any) {
     this.foundationDetoxfilter.pageNo = event;
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
@@ -265,44 +228,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  breathDetoxExportToExcel(tableId: string): void {
-    this.bDtoxLoading = true;
-    let filter = { ...this.breathDetoxfilter };
-    filter.size = 100000;
-    filter.pageNo = 0;
-    this.service.getAllBreathDetoxStudent(filter).subscribe((res: any) => {
-      if (!res.data || res.data.length === 0) {
-        console.error("No data available for export.");
-        return;
-      }
-      let csvContent = "";
-      const table = document.getElementById(tableId) as HTMLTableElement;
-      if (!table) {
-        console.error("Table not found:", tableId);
-        return;
-      }
-      const headers = Array.from(table.querySelectorAll("thead th"))
-        .map((th) => (th as HTMLElement).innerText)
-        .join(",");
-      csvContent += headers + "\n";
-      const rowsData: any[][] = [];
-      res.data.forEach((student, index) => {
-        rowsData.push([
-          index + 1,
-          student.firstName,
-          student.email,
-          student.phoneNumber,
-          student.city,
-          student.isActive,
-        ]);
-      });
-      rowsData.forEach((row) => {
-        csvContent += row.join(",") + "\n";
-      });
-      this.downloadCsv(csvContent, tableId);
-      this.bDtoxLoading = false;
-    });
-  }
   foundationExportToExcel(tableId: string): void {
     this.fosLoading = true;
     let filter = { ...this.foundationDetoxfilter };

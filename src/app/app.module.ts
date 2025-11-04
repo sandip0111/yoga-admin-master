@@ -55,6 +55,8 @@ import { OnlineLiveClassComponent } from './dashboards/online-live-class/online-
 import { PranaArambhComponent } from './dashboards/prana-arambh/prana-arambh.component';
 import { FreeWebinnerComponent } from './dashboards/free-webinner/free-webinner.component';
 import { TwoHundredOnlineTtcComponent } from './dashboards/two-hundred-online-ttc/two-hundred-online-ttc.component';
+import { BreathDtoxComponent } from './dashboards/breath-dtox/breath-dtox.component';
+import { PendingPaymentComponent } from './dashboards/pending-payment/pending-payment.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +104,9 @@ import { TwoHundredOnlineTtcComponent } from './dashboards/two-hundred-online-tt
     OnlineLiveClassComponent,
     PranaArambhComponent,
     FreeWebinnerComponent,
-    TwoHundredOnlineTtcComponent
+    TwoHundredOnlineTtcComponent,
+    BreathDtoxComponent,
+    PendingPaymentComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

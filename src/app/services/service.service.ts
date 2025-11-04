@@ -290,4 +290,7 @@ export class ServiceService {
   sendBulkMailFreeWebiner() {
     return this.data.get(this.url + "api/v1/sendBulkMailFreeWebiner");
   }
+  getAllPendingPaymentList(data: searchPranaRambhFilter) {
+    return this.data.post(this.url + "api/v1/getAllPendingPaymentList", data);
+  }
 }

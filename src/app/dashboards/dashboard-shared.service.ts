@@ -9,5 +9,7 @@ export class DashboardSharedService {
   pranaArambhTitle: string = "Prana Arambh";
   freeWebinarTitle: string = "Free Webinar";
   twoHunTTCTitle: string = "200 Online TTC";
+  breathDtoxTitle: string = "Breath Detox";
+  pendingPaymentTitle: string = "All Pending Payment List";
   constructor() {}
 }
