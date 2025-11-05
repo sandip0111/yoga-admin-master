@@ -48,7 +48,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
       .subscribe((res: twoHunTTCModelResultModel) => {
         this.twoHunTTCList = res.data;
         this.twoHunTTCTotal = res.total ?? 0;
-        this.dashboardShared.twoHunTTCTitle = `${this.dashboardShared.twoHunTTCTitle} (${this.twoHunTTCTotal})`;
+        this.dashboardShared.twoHunTTCTitle = `200 Online TTC (${this.twoHunTTCTotal})`;
         this.twoHunTTCLoading = this.twoHunTTCList ? false : true;
       });
   }

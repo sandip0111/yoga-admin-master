@@ -19,26 +19,6 @@
         [(ngModel)]="filter.searchText"
         class="search-input form-control"
       />
-      <!-- <div style="display: flex; align-items: center">
-        <label for="fromDate" style="margin-right: 8px">From Date: </label>
-        <input
-          type="date"
-          id="fromDate"
-          [(ngModel)]="filter.fromDate"
-          class="date-input form-control"
-        />
-      </div>
-      <div style="display: flex; align-items: center">
-        <label for="toDate" style="margin-right: 8px">To Date:</label>
-        <input
-          type="date"
-          id="toDate"
-          [(ngModel)]="filter.toDate"
-          class="date-input form-control"
-          [min]="filter.fromDate"
-          [disabled]="!filter.fromDate"
-        />
-      </div> -->
       <div style="display: flex; align-items: center">
         <label for="toDate" style="margin-right: 8px">Payment status</label>
         <select
@@ -79,49 +59,39 @@
             "
           >
             <td>{{ i + 1 + (p - 1) * 10 }}</td>
-            <td>{{ student.firstName }} {{ student.lastName || "" }}</td>
-            <td>{{ student.email }}</td>
-            <td>{{ student.password }}</td>
             <td>
-              <ng-container
-                *ngIf="student.paymentDetailsObject.amount; else noPayment"
-              >
-                {{ student.paymentDetailsObject.amount }}
+              {{ student.studentInfo.firstName }}
+              {{ student.studentInfo.lastName || "" }}
+            </td>
+            <td>{{ student.studentInfo.email }}</td>
+            <td>{{ student.studentInfo.password }}</td>
+            <td>
+              <ng-container *ngIf="student.amount; else noPayment">
+                {{ student.amount }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
             <td>
-              <ng-container
-                *ngIf="student.paymentDetailsObject.currency; else noPayment"
-              >
-                {{ student.paymentDetailsObject.currency }}
+              <ng-container *ngIf="student.currency; else noPayment">
+                {{ student.currency }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
             <td>
-              <ng-container
-                *ngIf="
-                  student.paymentDetailsObject.paymentStatus;
-                  else noPayment
-                "
-              >
-                {{ student.paymentDetailsObject.paymentStatus }}
+              <ng-container *ngIf="student.paymentStatus; else noPayment">
+                {{ student.paymentStatus }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
             <td>
-              <ng-container
-                *ngIf="student.paymentDetailsObject.paymentBy; else noPayment"
-              >
-                {{ student.paymentDetailsObject.paymentBy }}
+              <ng-container *ngIf="student.paymentBy; else noPayment">
+                {{ student.paymentBy }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
             <td>
-              <ng-container
-                *ngIf="student.paymentDetailsObject.created; else noPayment"
-              >
-                {{ student.paymentDetailsObject.created | date : "dd-MM-yyyy" }}
+              <ng-container *ngIf="student.created; else noPayment">
+                {{ student.created | date : "dd-MM-yyyy" }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>

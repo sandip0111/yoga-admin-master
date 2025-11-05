@@ -5,25 +5,25 @@
 </div>
 
 <div class="header-container">
-  <h4>Swara Sadhana</h4>
+  <h4>All Pending Payment List</h4>
   <!-- <a class="export-link" (click)="swaraExportToExcel()">Export to Excel</a> -->
 </div>
 <div class="container_search">
-  <input
+  <!-- <input
     type="text"
     placeholder="Search by Name or Email or phone"
     [(ngModel)]="filter.searchText"
     class="search-input form-control"
-  />
-  <div style="display: flex; align-items: center">
-    <label for="fromDate" style="margin-right: 8px">From Date:</label>
-    <input
-      type="date"
-      id="fromDate"
-      [(ngModel)]="filter.fromDate"
-      class="date-input form-control"
-    />
-  </div>
+  /> -->
+  <select
+    [(ngModel)]="filter.course"
+    (change)="onCourseValueChange($event.target.value)"
+    class="search-input form-control"
+  >
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.label }}
+    </option>
+  </select>
   <!-- <div style="display: flex; align-items: center">
     <label for="toDate" style="margin-right: 8px">Payment status</label>
     <select
@@ -106,6 +106,6 @@
 </div>
 <div class="pagination">
   <pagination-controls
-    (pageChange)="onsTableDataChange($event)"
+    (pageChange)="onTableDataChange($event)"
   ></pagination-controls>
 </div>

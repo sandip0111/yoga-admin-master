@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {
   searchPranaRambhFilter,
   twoHunTTCModelResultModel,
@@ -17,6 +17,7 @@ export class PendingPaymentComponent implements OnInit {
   list: any[] = [];
   total: number = 0;
   filter: searchPranaRambhFilter;
+  options: { value: string; label: string }[] = [];
   constructor(
     private service: ServiceService,
     private dashboardShared: DashboardSharedService
@@ -30,8 +31,23 @@ export class PendingPaymentComponent implements OnInit {
       fromDate: "",
       toDate: "",
       paymentStatus: "pending",
+      course: "",
     };
+    this.getCourseOption();
     this.getAllData(this.filter, false);
+  }
+  getCourseOption() {
+    this.options = [
+      { value: "", label: "All Courses" },
+      { value: "644f9dfc499ffcfb45df35cd", label: "Prana Arambh" },
+      { value: "690262b474c8cdacdb607204", label: "Swar Sadhana" },
+      { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
+      { value: "63c4e7e72bce43a907211c78", label: "200 Online TTC" },
+      { value: "63fc3fdc6d203300eae38625", label: "Online Live Class" },
+      { value: "63b817ec3362bfaf05d7cf3b", label: "100 hour Rishikesh" },
+      { value: "63bd41f275bff3365e233ab9", label: "200 hour Rishikesh" },
+      { value: "63c3d9caaa1fce47a3fa6f41", label: "300 hour Rishikesh" },
+    ];
   }
   getAllData(filter: searchPranaRambhFilter, isSearch: boolean): void {
     this.loading = true;
@@ -47,7 +63,7 @@ export class PendingPaymentComponent implements OnInit {
       this.loading = this.list.length > 0 ? false : true;
     });
   }
-  onsTableDataChange(pageNo: number) {
+  onTableDataChange(pageNo: number) {
     this.filter.pageNo = pageNo;
     this.page = pageNo;
     this.getAllData(this.filter, false);
@@ -55,5 +71,9 @@ export class PendingPaymentComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+  onCourseValueChange(event: string) {
+    this.filter.course = event;
+    this.getAllData(this.filter, false);
   }
 }

@@ -5,14 +5,11 @@ import {
   liveClassCustomerModel,
   liveClassDataModel,
   liveClassTeacherModel,
-  searchLiveClassFilter,
   searchPranaRambhFilter,
   createSwaraSadhna,
   generatePassword,
   pranicPurificationResultModel,
   pranicPurificationModel,
-  twoHunTTCModelResultModel,
-  twoHunTTCModel,
   createPranicPurification,
   swarSadhnaDataModel,
   swarSadhnaStudentModel,
@@ -32,13 +29,10 @@ export class DashboardComponent implements OnInit {
   foundationTotal: any;
   foundationP: any = 1;
   totalCustomers: number = 0;
-  totalCustomersAll: number = 0;
-  customers: liveClassCustomerModel[] = [];
   customerGroups: liveClassTeacherModel[] = [];
   spiritualityStudent: any[] = [];
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
-  liveClassFilter: searchLiveClassFilter;
   swaraSadhnaFilter: searchPranaRambhFilter;
   swaraSadhanaList: swarSadhnaStudentModel[] = [];
   swarSadhanaTotal: number = 0;
@@ -50,7 +44,6 @@ export class DashboardComponent implements OnInit {
   swaraLoading: boolean = false;
   fosLoading: boolean = false;
   liveClassLoading: boolean = false;
-  selectedGroupId: string;
   liveClassPage: number = 1;
   pranicPurificationFilter: searchPranaRambhFilter =
     new searchPranaRambhFilter();
@@ -61,14 +54,14 @@ export class DashboardComponent implements OnInit {
   pranicPurificationTitle: string = "";
   selectedOption: number = 0;
   options = [
+    { value: 8, label: "Prana Arambh" },
     { value: 1, label: "Swar Sadhana" },
-    { value: 3, label: "200 Teacher Training Course" },
-    { value: 4, label: "Online Class" },
+    { value: 2, label: "Pranic Purification" },
+    { value: 3, label: "200 Online TTC" },
+    { value: 4, label: "Online Live Class" },
     { value: 5, label: "Rishikesh 100" },
     { value: 6, label: "Rishikesh 200" },
     { value: 7, label: "Rishikesh 300" },
-    { value: 8, label: "Prana Arambh" },
-    { value: 2, label: "Pranic Purification" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -104,16 +97,6 @@ export class DashboardComponent implements OnInit {
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
   ) {
-    this.liveClassFilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-      course: this.selectedGroupId,
-      paymentStatus: "all",
-      month: "October",
-    };
     this.foundationDetoxfilter = { pageNo: 1, size: 10, searchText: "" };
     this.customerGroups = [
       {
@@ -133,7 +116,6 @@ export class DashboardComponent implements OnInit {
         courseValue: 3,
       },
     ];
-    this.selectedGroupId = this.customerGroups[0].courseName;
     this.createSwaraSadhnaFrom = {
       name: "",
       email: "",
@@ -153,22 +135,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
-  }
-  getAllLiveClassStudent(filter: searchLiveClassFilter, isSearch: boolean) {
-    this.liveClassLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.liveClassPage = isSearch ? 1 : this.liveClassPage;
-    this.service.getAllLiveClassStudent(filter).subscribe(
-      (response: liveClassDataModel) => {
-        this.customers = response.data;
-        this.totalCustomersAll = response.total;
-        this.liveClassLoading = false;
-      },
-      (error) => {
-        console.error("Error fetching customer data:", error);
-      }
-    );
   }
   getAllFoundationOfSpiritualityStudent(filter: fosFilterModel) {
     this.fosLoading = true;
@@ -199,15 +165,6 @@ export class DashboardComponent implements OnInit {
         this.swarSadhnaTitle = `Swara Sadhana (${this.swarSadhanaTotal})`;
         this.swaraLoading = this.swaraSadhanaList ? false : true;
       });
-  }
-  onLiveClassTableDataChange(event: number) {
-    this.liveClassFilter.pageNo = event;
-    this.liveClassPage = event;
-    this.getAllLiveClassStudent(this.liveClassFilter, false);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }
   onfoundationTableDataChange(event: any) {
     this.foundationDetoxfilter.pageNo = event;
@@ -264,49 +221,6 @@ export class DashboardComponent implements OnInit {
         });
         this.downloadCsv(csvContent, tableId);
         this.fosLoading = false;
-      });
-  }
-  liveClassStudentExportToExcel(tableId: string) {
-    this.liveClassLoading = true;
-    let filter = { ...this.liveClassFilter };
-    filter.size = 100000;
-    filter.pageNo = 0;
-    this.service
-      .getAllLiveClassStudent(filter)
-      .subscribe((res: liveClassDataModel) => {
-        if (!res.data || res.data.length === 0) {
-          console.error("No data available for export.");
-          return;
-        }
-        let csvContent = "";
-        const table = document.getElementById(tableId) as HTMLTableElement;
-        if (!table) {
-          console.error("Table not found:", tableId);
-          return;
-        }
-        const headers = Array.from(table.querySelectorAll("thead th"))
-          .map((th) => (th as HTMLElement).innerText)
-          .join(",");
-        csvContent += headers + "\n";
-        const rowsData: any[][] = [];
-        res.data.forEach((student, index) => {
-          rowsData.push([
-            index + 1,
-            student.name,
-            student.email,
-            student.phone,
-            student.courseTimming,
-            student.price,
-            student.currency,
-            student.paymentStatus,
-            student.created || "N/A",
-          ]);
-        });
-        rowsData.forEach((row) => {
-          csvContent += row.join(",") + "\n";
-        });
-        this.downloadCsv(csvContent, tableId);
-        this.liveClassLoading = false;
       });
   }
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
@@ -447,7 +361,6 @@ export class DashboardComponent implements OnInit {
       .createLiveCourseCustomer(onlineSadhna)
       .subscribe((res: any) => {
         if (res.status == "ok") {
-          this.getAllLiveClassStudent(this.liveClassFilter, false);
           alert(res.message);
         } else {
           alert("Registration failed: " + res.message);

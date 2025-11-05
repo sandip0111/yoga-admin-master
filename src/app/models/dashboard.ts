@@ -2,10 +2,12 @@ export class searchPranaRambhFilter {
   pageNo: number;
   size: number;
   searchText: string;
-  fromDate: string;
-  toDate: string;
+  fromDate?: string;
+  toDate?: string;
   paymentType?: string;
   paymentStatus?: string;
+  course?: string;
+  isGetAll?: boolean;
 }
 
 export class searchFreeWebinarFilter {
@@ -53,7 +55,7 @@ export class freeWebinarStudentModel {
   name: string;
   email: string;
   created: string;
-  webinarDate: string;  
+  webinarDate: string;
   constructor() {
     this._id = "";
     this.name = "";
@@ -138,6 +140,7 @@ export class PaymentDetailsModel {
   paymentBy: string;
   paymentStatus: string;
   studentId: string;
+  studentInfo: StudentModel;
 }
 export class StudentModel {
   _id: string;
@@ -146,11 +149,9 @@ export class StudentModel {
   phoneNumber: number;
   password: string;
   created: string;
-  paymentDetails: PaymentDetailsModel[];
-  paymentDetailsObject: PaymentDetailsModel;
 }
 export interface PranArambhModel {
-  data: StudentModel[];
+  data: PaymentDetailsModel[];
   total: number;
 }
 export interface pranicPurificationModel {

@@ -16,7 +16,6 @@
             <ng-template ngbTabContent>
               <app-prana-arambh
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
-                [paymentOption]="paymentOption"
                 [paymentTypeOption]="paymentTypeOption"
               ></app-prana-arambh>
             </ng-template>
@@ -103,135 +102,6 @@
               </div>
             </ng-template>
           </ngb-tab>
-          <ngb-tab [title]="'Live Class Students (' + totalCustomersAll + ')'">
-            <ng-template ngbTabContent>
-              <div class="media">
-                <div class="media-body">
-                  <div class="header-container">
-                    <h4>Live Class Students</h4>
-                    <a
-                      (click)="liveClassStudentExportToExcel('LiveClass')"
-                      class="export-link"
-                      >Export to Excel</a
-                    >
-                  </div>
-                  <div class="container_search">
-                    <input
-                      type="text"
-                      placeholder="Search by Name or Email or phone number"
-                      [(ngModel)]="liveClassFilter.searchText"
-                      class="search-input form-control"
-                    />
-
-                    <div style="display: flex; align-items: center">
-                      <label for="fromDate" style="margin-inline-end: 8px"
-                        >From Date:</label
-                      >
-                      <input
-                        type="date"
-                        id="fromDate"
-                        [(ngModel)]="liveClassFilter.fromDate"
-                        class="date-input form-control"
-                      />
-                    </div>
-
-                    <div style="display: flex; align-items: center">
-                      <label for="toDate" style="margin-inline-end: 8px"
-                        >To Date:</label
-                      >
-                      <input
-                        type="date"
-                        id="toDate"
-                        [(ngModel)]="liveClassFilter.toDate"
-                        class="date-input form-control"
-                        [min]="liveClassFilter.fromDate"
-                        [disabled]="!liveClassFilter.fromDate"
-                      />
-                    </div>
-                    <button
-                      (click)="getAllLiveClassStudent(liveClassFilter, true)"
-                    >
-                      Search
-                    </button>
-                  </div>
-                  <select
-                    id="customerGroup"
-                    class="form-control"
-                    (change)="getAllLiveClassStudent(liveClassFilter, true)"
-                    [(ngModel)]="liveClassFilter.course"
-                  >
-                    <option
-                      *ngFor="let group of customerGroups"
-                      [value]="group.courseName"
-                    >
-                      {{ group.courseName }}
-                    </option>
-                  </select>
-                  <br />
-                  <div class="table-responsive">
-                    <table
-                      id="LiveClass"
-                      class="table table-bordered table-striped"
-                    >
-                      <thead class="table-secondary">
-                        <tr>
-                          <th style="inline-size: 4%">Sl No.</th>
-                          <th>Customer Name</th>
-                          <th>Email</th>
-                          <th>Phone</th>
-                          <th>Course Time</th>
-                          <th>Price</th>
-                          <th>Currency</th>
-                          <th>Payment Status</th>
-                          <th>Payment Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                            let customer of customers
-                              | paginate
-                                : {
-                                    itemsPerPage: 10,
-                                    currentPage: liveClassPage,
-                                    totalItems: totalCustomersAll
-                                  };
-                            let i = index
-                          "
-                        >
-                          <td>{{ i + 1 + (liveClassPage - 1) * 10 }}</td>
-                          <td>{{ customer?.name }}</td>
-                          <td>{{ customer?.email }}</td>
-                          <td>{{ customer?.phone }}</td>
-                          <td>{{ customer?.courseTimming }}</td>
-                          <td>
-                            {{
-                              customer?.price | currency : customer?.currency
-                            }}
-                          </td>
-                          <td>{{ customer?.currency }}</td>
-                          <td
-                            [ngClass]="{
-                              'text-success': customer?.paymentStatus == 'paid',
-                              'text-danger': customer?.paymentStatus == 'unpaid'
-                            }"
-                          >
-                            {{ customer?.paymentStatus }}
-                          </td>
-                          <td>{{ customer?.created | date : "dd-MM-yyyy" }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="pagination">
-                    <pagination-controls
-                      (pageChange)="onLiveClassTableDataChange($event)"
-                    ></pagination-controls>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-          </ngb-tab>
           <ngb-tab [title]="dashboardShared.swarSadhnaTitle">
             <ng-template ngbTabContent>
               <app-swara-sadhana
@@ -244,59 +114,6 @@
           <ngb-tab [title]="dashboardShared.freeWebinarTitle">
             <ng-template ngbTabContent>
               <app-free-webinner></app-free-webinner>
-            </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="createSwaraSadhnaTitle">
-            <ng-template ngbTabContent>
-              <div class="container_search">
-                <select
-                  [(ngModel)]="selectedOption"
-                  class="search-input form-control"
-                >
-                  <option [value]="0" selected hidden>Select a course</option>
-                  <option *ngFor="let option of options" [value]="option.value">
-                    {{ option.label }}
-                  </option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="Email"
-                  [(ngModel)]="createSwaraSadhnaFrom.email"
-                  class="search-input form-control"
-                />
-                <input
-                  type="text"
-                  placeholder="name"
-                  [(ngModel)]="createSwaraSadhnaFrom.name"
-                  class="search-input form-control"
-                />
-                <input
-                  *ngIf="selectedOption == 1"
-                  type="text"
-                  placeholder="City"
-                  [(ngModel)]="createSwaraSadhnaFrom.city"
-                  class="search-input form-control"
-                />
-                <ng-container *ngIf="selectedOption == 4">
-                  <label
-                    class="line"
-                    *ngFor="let option of onlineTeacherOption; let i = index"
-                  >
-                    <input
-                      type="checkbox"
-                      (change)="onCheckboxChange(option)"
-                    />&nbsp;
-                    <span>{{ option.title }}</span>
-                  </label>
-                </ng-container>
-                <button
-                  (click)="
-                    registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)
-                  "
-                >
-                  Register
-                </button>
-              </div>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="pranicPurificationTitle">
@@ -441,7 +258,60 @@
           </ngb-tab>
           <ngb-tab [title]="dashboardShared.pendingPaymentTitle">
             <ng-template ngbTabContent>
-              <app-pending-payment></app-pending-payment>
+              <app-pending-payment [options]="options"></app-pending-payment>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="createSwaraSadhnaTitle">
+            <ng-template ngbTabContent>
+              <div class="container_search">
+                <select
+                  [(ngModel)]="selectedOption"
+                  class="search-input form-control"
+                >
+                  <option [value]="0" selected hidden>Select a course</option>
+                  <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.label }}
+                  </option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  [(ngModel)]="createSwaraSadhnaFrom.email"
+                  class="search-input form-control"
+                />
+                <input
+                  type="text"
+                  placeholder="name"
+                  [(ngModel)]="createSwaraSadhnaFrom.name"
+                  class="search-input form-control"
+                />
+                <input
+                  *ngIf="selectedOption == 1"
+                  type="text"
+                  placeholder="City"
+                  [(ngModel)]="createSwaraSadhnaFrom.city"
+                  class="search-input form-control"
+                />
+                <ng-container *ngIf="selectedOption == 4">
+                  <label
+                    class="line"
+                    *ngFor="let option of onlineTeacherOption; let i = index"
+                  >
+                    <input
+                      type="checkbox"
+                      (change)="onCheckboxChange(option)"
+                    />&nbsp;
+                    <span>{{ option.title }}</span>
+                  </label>
+                </ng-container>
+                <button
+                  (click)="
+                    registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)
+                  "
+                >
+                  Register
+                </button>
+              </div>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>
