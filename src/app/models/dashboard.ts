@@ -120,6 +120,7 @@ export interface fosFilterModel {
   pageNo: number;
   size: number;
   searchText: string;
+  isGetAll: boolean;
 }
 
 export const generatePassword = () => {

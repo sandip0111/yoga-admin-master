@@ -25,12 +25,8 @@ import { DashboardSharedService } from "./dashboard-shared.service";
 export class DashboardComponent implements OnInit {
   filteredStudents: any[] = [];
   allPranayamStudents: any[] = [];
-  foundationDetoxfilter: fosFilterModel;
-  foundationTotal: any;
-  foundationP: any = 1;
   totalCustomers: number = 0;
   customerGroups: liveClassTeacherModel[] = [];
-  spiritualityStudent: any[] = [];
   searchTextBreathDetox: string = "";
   searchTextFOS: string = "";
   swaraSadhnaFilter: searchPranaRambhFilter;
@@ -41,9 +37,7 @@ export class DashboardComponent implements OnInit {
   createSwaraSadhnaTitle: string = `Create Student`;
   swarSadhanaPage: number = 1;
   paymentStatusEnum = paymentStatus;
-  swaraLoading: boolean = false;
-  fosLoading: boolean = false;
-  liveClassLoading: boolean = false;
+  loading: boolean = false;
   liveClassPage: number = 1;
   selectedOption: number = 0;
   options = [
@@ -90,7 +84,6 @@ export class DashboardComponent implements OnInit {
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
   ) {
-    this.foundationDetoxfilter = { pageNo: 1, size: 10, searchText: "" };
     this.customerGroups = [
       {
         courseName: "Acharya Prashant Jakhmola online yoga class",
@@ -119,85 +112,6 @@ export class DashboardComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
-  }
-  getAllFoundationOfSpiritualityStudent(filter: fosFilterModel) {
-    this.fosLoading = true;
-    this.service.getAllFoundationOfSpiritualityStudent(filter).subscribe(
-      (response: any) => {
-        this.foundationTotal = response.total;
-        this.spiritualityStudent = response.data;
-        this.fosLoading = false;
-      },
-      (error) => {
-        console.error("Error fetching breathDetox data:", error);
-      }
-    );
-  }
-  getAllSwaraSadhnaStudent(
-    filter: searchPranaRambhFilter,
-    isSearch: boolean
-  ): void {
-    this.swaraLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.swarSadhanaPage = isSearch ? 1 : this.swarSadhanaPage;
-    this.service
-      .getAllSwaraSadhanaData(filter)
-      .subscribe((res: swarSadhnaDataModel) => {
-        this.swaraSadhanaList = res.data;
-        this.swarSadhanaTotal = res.total;
-        this.swarSadhnaTitle = `Swara Sadhana (${this.swarSadhanaTotal})`;
-        this.swaraLoading = this.swaraSadhanaList ? false : true;
-      });
-  }
-  onfoundationTableDataChange(event: any) {
-    this.foundationDetoxfilter.pageNo = event;
-    this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
-    this.foundationP = event;
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-
-  foundationExportToExcel(tableId: string): void {
-    this.fosLoading = true;
-    let filter = { ...this.foundationDetoxfilter };
-    filter.size = 100000;
-    filter.pageNo = 0;
-    this.service
-      .getAllFoundationOfSpiritualityStudent(filter)
-      .subscribe((res: any) => {
-        if (!res.data || res.data.length === 0) {
-          console.error("No data available for export.");
-          return;
-        }
-        let csvContent = "";
-        const table = document.getElementById(tableId) as HTMLTableElement;
-        if (!table) {
-          console.error("Table not found:", tableId);
-          return;
-        }
-        const headers = Array.from(table.querySelectorAll("thead th"))
-          .map((th) => (th as HTMLElement).innerText)
-          .join(",");
-        csvContent += headers + "\n";
-        const rowsData: any[][] = [];
-        res.data.forEach((student, index) => {
-          rowsData.push([
-            index + 1,
-            student.firstName,
-            student.email,
-            student.isActive,
-          ]);
-        });
-        rowsData.forEach((row) => {
-          csvContent += row.join(",") + "\n";
-        });
-        this.downloadCsv(csvContent, tableId);
-        this.fosLoading = false;
-      });
   }
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     data.name = data.name == "" ? "Guest" : data.name;
@@ -206,12 +120,12 @@ export class DashboardComponent implements OnInit {
     data.city = data.city || "N/A";
     if (data.name && data.email && data.phone) {
       if (this.selectedOption == 1) {
-        this.swaraLoading = true;
+        this.loading = true;
         data.password = data.password || generatePassword();
         data.webinar = "Swara Sadhana";
         this.swarSadhanaSave(data);
       } else if (this.selectedOption == 2) {
-        this.swaraLoading = true;
+        this.loading = true;
         const pranicData: createPranicPurification = {
           name: data.name,
           email: data.email,
@@ -220,7 +134,7 @@ export class DashboardComponent implements OnInit {
         };
         this.pranicPurificationSave(pranicData);
       } else if (this.selectedOption == 3) {
-        this.swaraLoading = true;
+        this.loading = true;
         const ttcData: createPranicPurification = {
           name: data.name,
           email: data.email,
@@ -246,14 +160,14 @@ export class DashboardComponent implements OnInit {
       }
     } else {
       alert("Fields are required");
-      this.swaraLoading = false;
+      this.loading = false;
     }
   }
   swarSadhanaSave(data: createSwaraSadhna) {
     this.service.registerSwarSadhanaWebinarUser(data).subscribe(
       (res: any) => {
         if (res.status == "ok") {
-          this.swaraLoading = false;
+          this.loading = false;
           this.createSwaraSadhnaFrom = {
             name: "",
             email: "",
@@ -264,12 +178,12 @@ export class DashboardComponent implements OnInit {
           };
           alert("Registration successful!");
         } else {
-          this.swaraLoading = false;
+          this.loading = false;
           alert("Registration failed: " + res.message);
         }
       },
       (error) => {
-        this.swaraLoading = false;
+        this.loading = false;
         alert("An error occurred while registering. Please try again.");
       }
     );
@@ -278,15 +192,15 @@ export class DashboardComponent implements OnInit {
     this.service.registerPranicPurificationUser(data).subscribe(
       (res: any) => {
         if (res.status == "ok") {
-          this.swaraLoading = false;
+          this.loading = false;
           alert("Registration successful!");
         } else {
-          this.swaraLoading = false;
+          this.loading = false;
           alert("Registration failed: " + res.message);
         }
       },
       (error) => {
-        this.swaraLoading = false;
+        this.loading = false;
         alert("An error occurred while registering. Please try again.");
       }
     );
@@ -295,15 +209,15 @@ export class DashboardComponent implements OnInit {
     this.service.register200TTCUser(data).subscribe(
       (res: any) => {
         if (res.status == "ok") {
-          this.swaraLoading = false;
+          this.loading = false;
           alert("Registration successful!");
         } else {
-          this.swaraLoading = false;
+          this.loading = false;
           alert("Registration failed: " + res.message);
         }
       },
       (error) => {
-        this.swaraLoading = false;
+        this.loading = false;
         alert("An error occurred while registering. Please try again.");
       }
     );

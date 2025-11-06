@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   pranicPurificationModel,
   pranicPurificationResultModel,
@@ -18,6 +18,11 @@ export class PranicPurificationComponent implements OnInit {
   pranicPurificationList: pranicPurificationModel[] = [];
   pranicPurificationTotal: number = 0;
   pranicPurificationPage: number = 1;
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
+
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
@@ -58,5 +63,42 @@ export class PranicPurificationComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+  exportToExcel(tableId: string): void {
+    this.loading = true;
+    let csvContent = "";
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) {
+      console.error("Table not found:", tableId);
+      return;
+    }
+    const headers = Array.from(table.querySelectorAll("thead th"))
+      .map((th) => (th as HTMLElement).innerText)
+      .join(",");
+    csvContent += headers + "\n";
+    const rowsData = [];
+    this.filter.isGetAll = true;
+    this.service
+      .getAllPranicPurificationStudent(this.filter)
+      .subscribe((res: pranicPurificationResultModel) => {
+        res.data.forEach((student, index) => {
+          rowsData.push([
+            index + 1,
+            student.name,
+            student.email,
+            student.phoneNumber,
+            student.address || "N/A",
+            `${student.price} ${student.currency}` || "N/A",
+            student.couponcode || "N/A",
+            student.paymentStatus,
+            student.created || "N/A",
+          ]);
+        });
+        rowsData.forEach((row) => {
+          csvContent += row.join(",") + "\n";
+        });
+        this.downloadCsv.emit({ csvContent, tableId });
+        this.loading = false;
+      });
   }
 }

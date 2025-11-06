@@ -1,7 +1,4 @@
-<div
-  *ngIf="swaraLoading || fosLoading || liveClassLoading"
-  class="loader-overlay"
->
+<div *ngIf="loading" class="loader-overlay">
   <div class="spinner-border text-primary" role="status">
     <span class="sr-only">Loading...</span>
   </div>
@@ -27,79 +24,11 @@
               ></app-breath-dtox>
             </ng-template>
           </ngb-tab>
-          <ngb-tab
-            [title]="'Foundation of Spirituality  (' + foundationTotal + ')'"
-          >
-            <ng-template ngbTabContent>
-              <div class="media">
-                <div class="media-body">
-                  <div class="header-container">
-                    <h4>Foundation of Spirituality</h4>
-                    <a
-                      (click)="foundationExportToExcel('Foundation')"
-                      class="export-link"
-                      >Export to Excel</a
-                    >
-                  </div>
-                  <div class="container_search">
-                    <input
-                      type="text"
-                      placeholder="Search by Name or Email"
-                      [(ngModel)]="foundationDetoxfilter.searchText"
-                      class="search-input form-control"
-                    />
-                    <button
-                      (click)="
-                        getAllFoundationOfSpiritualityStudent(
-                          foundationDetoxfilter
-                        )
-                      "
-                    >
-                      Search
-                    </button>
-                  </div>
-                  <div class="table-responsive">
-                    <table
-                      id="Foundation"
-                      class="table table-bordered table-striped"
-                    >
-                      <thead class="table-secondary">
-                        <th style="inline-size: 4% !important">Sl No.</th>
-                        <th>Student Name</th>
-                        <th>Email</th>
-                        <th>Is Active</th>
-                      </thead>
-                      <tbody>
-                        <tr
-                          *ngFor="
-                            let spiritualityStdnt of spiritualityStudent
-                              | paginate
-                                : {
-                                    itemsPerPage: 10,
-                                    currentPage: foundationP,
-                                    totalItems: foundationTotal
-                                  };
-                            let k = index
-                          "
-                        >
-                          <td>{{ k + 1 + (foundationP - 1) * 10 }}</td>
-                          <td>
-                            {{ spiritualityStdnt.firstName }}
-                            {{ spiritualityStdnt.lastName || "" }}
-                          </td>
-                          <td>{{ spiritualityStdnt.email }}</td>
-                          <td>{{ spiritualityStdnt.isActive }}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="pagination">
-                    <pagination-controls
-                      (pageChange)="onfoundationTableDataChange($event)"
-                    ></pagination-controls>
-                  </div>
-                </div>
-              </div>
+          <ngb-tab [title]="dashboardShared.foundationSpiritualityTitle">
+            <ng-template ngbTabContent
+              ><app-functional-spirituality
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-functional-spirituality>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="dashboardShared.swarSadhnaTitle">
@@ -118,7 +47,9 @@
           </ngb-tab>
           <ngb-tab [title]="dashboardShared.pranicPurificationTitle">
             <ng-template ngbTabContent>
-              <app-pranic-purification></app-pranic-purification>
+              <app-pranic-purification
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-pranic-purification>
             </ng-template>
           </ngb-tab>
           <ngb-tab [title]="dashboardShared.twoHunTTCTitle">
