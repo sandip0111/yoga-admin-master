@@ -111,8 +111,7 @@ export class DashboardComponent implements OnInit {
       webinar: "Swara Sadhana",
     };
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
