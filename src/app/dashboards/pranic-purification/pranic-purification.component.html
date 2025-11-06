@@ -1,0 +1,110 @@
+<div *ngIf="loading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="header-container">
+  <h4>Pranic Purification</h4>
+  <a class="export-link">Export to Excel</a>
+</div>
+<div class="container_search">
+  <input
+    type="text"
+    placeholder="Search by Name or Email or phone"
+    [(ngModel)]="filter.searchText"
+    class="search-input form-control"
+  />
+
+  <div style="display: flex; align-items: center">
+    <label for="fromDate" style="margin-inline-end: 8px"> From Date: </label>
+    <input
+      type="date"
+      id="fromDate"
+      [(ngModel)]="filter.fromDate"
+      class="date-input form-control"
+    />
+  </div>
+
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+    <input
+      type="date"
+      id="toDate"
+      [(ngModel)]="filter.toDate"
+      class="date-input form-control"
+      [min]="filter.fromDate"
+      [disabled]="!filter.fromDate"
+    />
+  </div>
+
+  <button (click)="getAllData(filter, true)">
+    Search
+  </button>
+</div>
+<div class="pranarambh-table-responsive">
+  <table id="Pranic_Purification" class="table table-bordered table-striped">
+    <thead class="table-secondary">
+      <th style="inline-size: 10% !important">Sl No.</th>
+      <th>Student Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th class="wrap-field">Address</th>
+      <th>Price</th>
+      <th>Coupon code</th>
+      <th>Payment Status</th>
+      <th>Payment Date</th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let obj of pranicPurificationList
+            | paginate
+              : {
+                  itemsPerPage: 10,
+                  currentPage: pranicPurificationPage,
+                  totalItems: pranicPurificationTotal
+                };
+          let i = index
+        "
+      >
+        <td>{{ i + 1 + (pranicPurificationPage - 1) * 10 }}</td>
+        <td>
+          {{ obj.name }}
+        </td>
+        <td>{{ obj.email }}</td>
+        <td>{{ obj.phoneNumber }}</td>
+        <td class="address">{{ obj.address }}</td>
+        <td>{{ obj.price | currency : obj.currency }}</td>
+        <td
+          [ngClass]="{
+            'text-success': !obj?.couponUsed,
+            'text-danger': obj?.couponUsed
+          }"
+        >
+          {{ obj.couponcode }}
+        </td>
+        <td
+          [ngClass]="{
+            'text-success': obj?.paymentStatus == 'paid',
+            'text-warning': obj?.paymentStatus == 'pending',
+            'text-danger': obj?.paymentStatus == 'failed'
+          }"
+        >
+          {{ obj.paymentStatus }}
+        </td>
+        <td>
+          <ng-container *ngIf="obj.created; else noPayment">
+            {{ obj.created | date : "dd-MM-yyyy" }}
+          </ng-container>
+          <ng-template #noPayment>N/A</ng-template>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination">
+  <pagination-controls
+    (pageChange)="onPranicPurificationTableDataChange($event)"
+  ></pagination-controls>
+</div>

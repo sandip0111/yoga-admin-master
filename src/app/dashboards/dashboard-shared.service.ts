@@ -11,5 +11,6 @@ export class DashboardSharedService {
   twoHunTTCTitle: string = "200 Online TTC";
   breathDtoxTitle: string = "Breath Detox";
   pendingPaymentTitle: string = "All Pending Payment List";
+  pranicPurificationTitle: string = "Pranic Purification";
   constructor() {}
 }

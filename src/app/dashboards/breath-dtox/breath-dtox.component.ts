@@ -46,7 +46,7 @@ export class BreathDtoxComponent implements OnInit {
       (response: any) => {
         this.breathDetoxTotal = response.total;
         this.breathDetox = response.data;
-        this.dashboardShared.breathDtoxTitle = `${this.dashboardShared.breathDtoxTitle} (${this.breathDetoxTotal})`;
+        this.dashboardShared.breathDtoxTitle = `Breath Detox (${this.breathDetoxTotal})`;
         this.bDtoxLoading = this.breathDetox ? false : true;
       },
       (error) => {

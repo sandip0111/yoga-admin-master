@@ -45,13 +45,6 @@ export class DashboardComponent implements OnInit {
   fosLoading: boolean = false;
   liveClassLoading: boolean = false;
   liveClassPage: number = 1;
-  pranicPurificationFilter: searchPranaRambhFilter =
-    new searchPranaRambhFilter();
-  pranicLoading: boolean = false;
-  pranicPurificationList: pranicPurificationModel[] = [];
-  pranicPurificationTotal: number = 0;
-  pranicPurificationPage: number = 1;
-  pranicPurificationTitle: string = "";
   selectedOption: number = 0;
   options = [
     { value: 8, label: "Prana Arambh" },
@@ -124,17 +117,9 @@ export class DashboardComponent implements OnInit {
       password: "",
       webinar: "Swara Sadhana",
     };
-    this.pranicPurificationFilter = {
-      pageNo: 1,
-      size: 10,
-      searchText: "",
-      fromDate: "",
-      toDate: "",
-    };
   }
   ngOnInit(): void {
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
-    this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
   }
   getAllFoundationOfSpiritualityStudent(filter: fosFilterModel) {
     this.fosLoading = true;
@@ -170,15 +155,6 @@ export class DashboardComponent implements OnInit {
     this.foundationDetoxfilter.pageNo = event;
     this.getAllFoundationOfSpiritualityStudent(this.foundationDetoxfilter);
     this.foundationP = event;
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }
-  onswarSadhnaTableDataChange(event: number) {
-    this.swaraSadhnaFilter.pageNo = event;
-    this.swarSadhanaPage = event;
-    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -303,10 +279,6 @@ export class DashboardComponent implements OnInit {
       (res: any) => {
         if (res.status == "ok") {
           this.swaraLoading = false;
-          this.getAllPranicPurificationStudent(
-            this.pranicPurificationFilter,
-            false
-          );
           alert("Registration successful!");
         } else {
           this.swaraLoading = false;
@@ -417,32 +389,6 @@ export class DashboardComponent implements OnInit {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
-  getAllPranicPurificationStudent(
-    filter: searchPranaRambhFilter,
-    isSearch: boolean
-  ): void {
-    this.pranicLoading = true;
-    filter.pageNo = isSearch ? 1 : filter.pageNo;
-    filter.size = isSearch ? 10 : filter.size;
-    this.pranicPurificationPage = isSearch ? 1 : this.pranicPurificationPage;
-    this.service
-      .getAllPranicPurificationStudent(filter)
-      .subscribe((res: pranicPurificationResultModel) => {
-        this.pranicPurificationList = res.data;
-        this.pranicPurificationTotal = res.total;
-        this.pranicPurificationTitle = `Pranic Purification (${this.pranicPurificationTotal})`;
-        this.pranicLoading = this.pranicPurificationList ? false : true;
-      });
-  }
-  onPranicPurificationTableDataChange(event: number) {
-    this.pranicPurificationFilter.pageNo = event;
-    this.pranicPurificationPage = event;
-    this.getAllPranicPurificationStudent(this.pranicPurificationFilter, false);
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
   }
   checkedTeacher: any[] = [];
   onCheckboxChange(event: any) {

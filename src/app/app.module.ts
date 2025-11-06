@@ -57,6 +57,8 @@ import { FreeWebinnerComponent } from './dashboards/free-webinner/free-webinner.
 import { TwoHundredOnlineTtcComponent } from './dashboards/two-hundred-online-ttc/two-hundred-online-ttc.component';
 import { BreathDtoxComponent } from './dashboards/breath-dtox/breath-dtox.component';
 import { PendingPaymentComponent } from './dashboards/pending-payment/pending-payment.component';
+import { PranicPurificationComponent } from './dashboards/pranic-purification/pranic-purification.component';
+import { FunctionalSpiritualityComponent } from './dashboards/functional-spirituality/functional-spirituality.component';
 
 @NgModule({
   declarations: [
@@ -106,7 +108,9 @@ import { PendingPaymentComponent } from './dashboards/pending-payment/pending-pa
     FreeWebinnerComponent,
     TwoHundredOnlineTtcComponent,
     BreathDtoxComponent,
-    PendingPaymentComponent
+    PendingPaymentComponent,
+    PranicPurificationComponent,
+    FunctionalSpiritualityComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
