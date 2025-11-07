@@ -11,6 +11,17 @@
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
       </a>
     </li>
+    <li class="nav-item" [ngClass]="{ active: addCourseVideo.isActive }">
+      <a
+        class="nav-link"
+        routerLink="/addCourseVideo"
+        routerLinkActive
+        #addCourseVideo="routerLinkActive"
+      >
+        <span class="menu-title">Add Course Video</span>
+        <i class="mdi mdi-plus menu-icon"></i>
+      </a>
+    </li>
     <li class="nav-item" [ngClass]="{ active: course.isActive }">
       <a
         class="nav-link"
@@ -20,17 +31,6 @@
       >
         <span class="menu-title">Courses</span>
         <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-      </a>
-    </li>
-    <li class="nav-item" [ngClass]="{ active: addVideo.isActive }">
-      <a
-        class="nav-link"
-        routerLink="/addVideo"
-        routerLinkActive
-        #addVideo="routerLinkActive"
-      >
-        <span class="menu-title">Add Video</span>
-        <i class="mdi mdi-plus menu-icon"></i>
       </a>
     </li>
     <li class="nav-item" [ngClass]="{ active: sendEmail.isActive }">

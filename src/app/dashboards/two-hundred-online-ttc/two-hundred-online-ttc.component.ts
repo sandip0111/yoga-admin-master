@@ -22,6 +22,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
 
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
+  @Input() monthOption: string[];
 
   constructor(
     private service: ServiceService,
@@ -33,8 +34,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
       pageNo: 1,
       size: 10,
       searchText: "",
-      fromDate: "",
-      toDate: "",
+      month: "",
     };
     this.getAll200TTCStudent(this.twoHunTTCFilter, false);
   }
@@ -42,6 +42,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     this.twoHunTTCLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
+    filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
     this.twoHunTTCPage = isSearch ? 1 : this.twoHunTTCPage;
     this.service
       .getAll200ttcStudent(filter)
@@ -69,6 +70,19 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
+    });
+  }
+  onMonthChange(month: string) {
+    this.twoHunTTCFilter.month = month;
+    this.getAll200TTCStudent(this.twoHunTTCFilter, true);
+  }
+    sendBulkMail() {
+    this.twoHunTTCLoading = true;
+    this.service.sendBulkMail200TTC().subscribe((res: any) => {
+      alert(res.message);
+      if ((res.status = "ok")) {
+        this.twoHunTTCLoading = false;
+      }
     });
   }
 }

@@ -293,4 +293,7 @@ export class ServiceService {
   getAllPendingPaymentList(data: searchPranaRambhFilter) {
     return this.data.post(this.url + "api/v1/getAllPendingPaymentList", data);
   }
+  sendBulkMail200TTC() {
+    return this.data.get(this.url + "api/v1/sendBulkMail200TTC");
+  }
 }

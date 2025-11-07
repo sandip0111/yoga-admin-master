@@ -32,6 +32,7 @@ import { AnalyticsComponent } from "./analytics/analytics.component";
 import { WebinarRegistrationComponent } from "./webinarRegistrationForms/webinar-registration/webinar-registration.component";
 import { DashboardComponent } from "./dashboards/dashboard.component";
 import { SendEmailComponent } from "./send-email/send-email.component";
+import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-video.component";
 const routes: Routes = [
   // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   // { path: 'dashboard', component: DashboardComponent,canActivate:[AuthGuard]},
@@ -113,6 +114,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: "course", component: CourseComponent, canActivate: [AuthGuard] },
+  { path: "addCourseVideo", component: AddCourseVideoComponent, canActivate: [AuthGuard] },
   {
     path: "addcourse",
     component: AddcourseComponent,

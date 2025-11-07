@@ -59,6 +59,7 @@ import { BreathDtoxComponent } from './dashboards/breath-dtox/breath-dtox.compon
 import { PendingPaymentComponent } from './dashboards/pending-payment/pending-payment.component';
 import { PranicPurificationComponent } from './dashboards/pranic-purification/pranic-purification.component';
 import { FunctionalSpiritualityComponent } from './dashboards/functional-spirituality/functional-spirituality.component';
+import { AddCourseVideoComponent } from './courses/add-course-video/add-course-video.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { FunctionalSpiritualityComponent } from './dashboards/functional-spiritu
     BreathDtoxComponent,
     PendingPaymentComponent,
     PranicPurificationComponent,
-    FunctionalSpiritualityComponent
+    FunctionalSpiritualityComponent,
+    AddCourseVideoComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
