@@ -76,9 +76,18 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     this.twoHunTTCFilter.month = month;
     this.getAll200TTCStudent(this.twoHunTTCFilter, true);
   }
-    sendBulkMail() {
+  sendBulkMail() {
     this.twoHunTTCLoading = true;
     this.service.sendBulkMail200TTC().subscribe((res: any) => {
+      alert(res.message);
+      if ((res.status = "ok")) {
+        this.twoHunTTCLoading = false;
+      }
+    });
+  }
+  giveAccessFn(studentData: twoHunTTCModel) {
+    this.twoHunTTCLoading = true;
+    this.service.giveAccessToUser(studentData).subscribe((res: any) => {
       alert(res.message);
       if ((res.status = "ok")) {
         this.twoHunTTCLoading = false;

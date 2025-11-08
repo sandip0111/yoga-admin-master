@@ -94,6 +94,13 @@
           }"
         >
           {{ obj.paymentStatus }}
+          <button
+            class="give-access-warning"
+            *ngIf="obj?.paymentStatus == 'pending'"
+            (click)="giveAccessFn(obj)"
+          >
+            Give Access
+          </button>
         </td>
         <td>{{ obj.paymentType }}</td>
         <td>{{ obj.month }}</td>

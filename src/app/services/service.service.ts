@@ -7,6 +7,7 @@ import {
   searchFreeWebinarFilter,
   searchLiveClassFilter,
   searchPranaRambhFilter,
+  twoHunTTCModel,
 } from "../models/dashboard";
 
 @Injectable({
@@ -295,5 +296,8 @@ export class ServiceService {
   }
   sendBulkMail200TTC() {
     return this.data.get(this.url + "api/v1/sendBulkMail200TTC");
+  }
+  giveAccessToUser(data: twoHunTTCModel) {
+    return this.data.post(this.url + "api/v1/giveAccessToUser", data);
   }
 }
