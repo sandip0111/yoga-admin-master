@@ -1,4 +1,121 @@
+<div *ngIf="isUploading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
 <div class="page-header">
   <h3 class="page-title">200 TTC Online video upload</h3>
-
 </div>
+<div
+  class="drop-zone"
+  (dragover)="onDragOver($event)"
+  (drop)="onDrop($event)"
+  [class.has-file]="selectedFile"
+>
+  <div *ngIf="!selectedFile" class="drop-zone-content">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="64"
+      height="64"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+      <polyline points="17 8 12 3 7 8"></polyline>
+      <line x1="12" y1="3" x2="12" y2="15"></line>
+    </svg>
+    <p>Drag and drop your video here</p>
+    <p class="or-text">or</p>
+    <label for="fileInput" class="browse-btn">Browse Files</label>
+    <input
+      type="file"
+      id="fileInput"
+      accept="video/*"
+      (change)="onFileSelected($event)"
+      style="display: none"
+    />
+    <p class="file-info">Supported formats: MP4, MPEG, MOV, AVI (Max 100MB)</p>
+  </div>
+
+  <div *ngIf="selectedFile" class="selected-file">
+    <div class="file-preview"></div>
+    <div class="file-details">
+      <p class="file-name">{{ selectedFile.name }}</p>
+      <p class="file-size">{{ getFileSize() }}</p>
+    </div>
+    <button
+      *ngIf="!isUploading && !uploadComplete"
+      class="change-file-btn"
+      (click)="reset()"
+    >
+      Change File
+    </button>
+  </div>
+</div>
+
+<div *ngIf="uploadError" class="error-message">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <circle cx="12" cy="12" r="10"></circle>
+    <line x1="12" y1="8" x2="12" y2="12"></line>
+    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+  </svg>
+  {{ uploadError }}
+</div>
+
+<!-- <div *ngIf="isUploading" class="progress-section">
+  <p>Uploading... {{ uploadProgress }}%</p>
+  <div class="progress-bar">
+    <div class="progress-fill" [style.width.%]="uploadProgress"></div>
+  </div>
+</div> -->
+
+<div *ngIf="uploadComplete" class="success-message">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+  </svg>
+  Upload successful!
+  <div *ngIf="videoUrl" class="video-url">
+    <p>Video URL:</p>
+    <a [href]="videoUrl" target="_blank">{{ videoUrl }}</a>
+  </div>
+</div>
+
+<div class="button-group">
+  <input
+    type="text"
+    placeholder="Enter Course Name"
+    [(ngModel)]="courseName"
+    class="search-input form-control"
+  />
+  <button
+    *ngIf="selectedFile && !isUploading && !uploadComplete"
+    class="upload-btn secondary"
+    (click)="uploadVideoThroughBackend()"
+  >
+    Upload course video
+  </button>
+</div>
+
+<button *ngIf="uploadComplete" class="reset-btn" (click)="reset()">
+  Upload Another Video
+</button>
