@@ -19,11 +19,7 @@ export class PranaArambhComponent implements OnInit {
   pranayamStudentTotal: number;
   p: number = 1;
 
-  paymentOption: { value: string; name: string }[] = [
-    { value: "", name: "All" },
-    { value: "paid", name: "Paid" },
-    { value: "due", name: "Due" },
-  ];
+  @Input() paymentOption: string[];
   @Input() paymentTypeOption: string[];
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;

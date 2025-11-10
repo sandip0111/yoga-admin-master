@@ -77,7 +77,12 @@
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
-            <td>
+            <td
+              [ngClass]="{
+                'text-success': student?.paymentStatus == 'paid',
+                'text-warning': student?.paymentStatus == 'pending'
+              }"
+            >
               <ng-container *ngIf="student.paymentStatus; else noPayment">
                 {{ student.paymentStatus }}
               </ng-container>
