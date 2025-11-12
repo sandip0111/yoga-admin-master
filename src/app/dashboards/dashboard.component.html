@@ -130,6 +130,15 @@
               </div>
             </ng-template>
           </ngb-tab>
+          <ngb-tab [title]="dashboardShared.rishikeshTitle">
+            <ng-template ngbTabContent>
+              <app-rishikesh
+                [paymentOption]="paymentOption"
+                [paymentTypeOption]="paymentTypeOption"
+                [monthOption]="monthOption"
+              ></app-rishikesh>
+            </ng-template>
+          </ngb-tab>
         </ngb-tabset>
       </div>
     </div>

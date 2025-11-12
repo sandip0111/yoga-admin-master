@@ -13,5 +13,6 @@ export class DashboardSharedService {
   pendingPaymentTitle: string = "All Pending Payment List";
   pranicPurificationTitle: string = "Pranic Purification";
   foundationSpiritualityTitle: string = "Foundation of Spirituality";
+  rishikeshTitle: string = "Rishikesh";
   constructor() {}
 }

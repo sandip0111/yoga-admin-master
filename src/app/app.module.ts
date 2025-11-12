@@ -60,6 +60,7 @@ import { PendingPaymentComponent } from './dashboards/pending-payment/pending-pa
 import { PranicPurificationComponent } from './dashboards/pranic-purification/pranic-purification.component';
 import { FunctionalSpiritualityComponent } from './dashboards/functional-spirituality/functional-spirituality.component';
 import { AddCourseVideoComponent } from './courses/add-course-video/add-course-video.component';
+import { RishikeshComponent } from './dashboards/rishikesh/rishikesh.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,8 @@ import { AddCourseVideoComponent } from './courses/add-course-video/add-course-v
     PendingPaymentComponent,
     PranicPurificationComponent,
     FunctionalSpiritualityComponent,
-    AddCourseVideoComponent
+    AddCourseVideoComponent,
+    RishikeshComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
