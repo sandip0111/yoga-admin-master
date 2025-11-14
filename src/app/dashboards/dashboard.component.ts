@@ -13,6 +13,8 @@ import {
   createPranicPurification,
   swarSadhnaDataModel,
   swarSadhnaStudentModel,
+  createFreeWebinar,
+  createBreathDetox,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 import { DashboardSharedService } from "./dashboard-shared.service";
@@ -42,7 +44,10 @@ export class DashboardComponent implements OnInit {
   selectedOption: number = 0;
   options = [
     { value: 8, label: "Prana Arambh" },
-    { value: 1, label: "Swar Sadhana" },
+    { value: 10, label: "Breath Detox" },
+    { value: 11, label: "Foundation of Spirituality" },
+    { value: 1, label: "Swara Sadhana" },
+    { value: 9, label: "Free Webinar" },
     { value: 2, label: "Pranic Purification" },
     { value: 3, label: "200 Online TTC" },
     { value: 4, label: "Online Live Class" },
@@ -154,6 +159,27 @@ export class DashboardComponent implements OnInit {
         this.onlineRishikeshSave(data, this.selectedOption);
       } else if (this.selectedOption == 8) {
         this.pranaArambhSave(data);
+      } else if (this.selectedOption == 9) {
+        this.loading = true;
+        const freeWebinr: createFreeWebinar = {
+          name: data.name,
+          email: data.email,
+        };
+        this.freeWebinrSave(freeWebinr);
+      } else if (this.selectedOption == 10) {
+        this.loading = true;
+        const breathDetox: createBreathDetox = {
+          firstName: data.name,
+          lastName: "",
+          email: data.email,
+          course: ["63c3f26c461e531f3c3452e1"],
+          isActive: true,
+          isBreatDox: true,
+          password: data.password || generatePassword(),
+          paymentCourseId: "63c3f26c461e531f3c3452e1",
+          source: "web",
+        };
+        this.breathDetoxSave(breathDetox);
       } else {
         alert("Please select a course.");
       }
@@ -289,6 +315,26 @@ export class DashboardComponent implements OnInit {
         alert(res.message);
       } else {
         alert("Registration failed: " + res.message);
+      }
+    });
+  }
+  freeWebinrSave(data: createFreeWebinar) {
+    this.service.createFreeWebinrCustomer(data).subscribe((res: any) => {
+      if (res.status == "ok") {
+        this.loading = false;
+        alert(res.message);
+      } else {
+        alert("Registration failed: " + res.message);
+      }
+    });
+  }
+  breathDetoxSave(data: createBreathDetox) {
+    this.service.createStudent(data).subscribe((res: any) => {
+      if (res.status == "ok") {
+        this.loading = false;
+        alert(res.msg);
+      } else {
+        alert("Registration failed: " + res.msg);
       }
     });
   }
