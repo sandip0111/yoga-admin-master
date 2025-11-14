@@ -6,26 +6,17 @@
 
 <div class="header-container">
   <h4>Rishikesh</h4>
-  <a class="export-link">Export to Excel</a>
-  <a class="export-link" (click)="sendBulkMail()">Send Bulk Mail</a>
+  <a (click)="rishikeshExportToExcel('rishikesh_list')" class="export-link"
+    >Export to Excel</a
+  >
 </div>
 <div class="container_search">
   <input
     type="text"
     placeholder="Search by Name or Email or phone"
     class="search-input form-control"
+    [(ngModel)]="rishikeshFilter.searchText"
   />
-  <div style="display: flex; align-items: center">
-    <label for="toDate" style="margin-right: 8px">Month</label>
-    <select
-      (change)="onMonthChange($event.target.value)"
-      class="search-input form-control"
-    >
-      <option *ngFor="let option of monthOption" [value]="option">
-        {{ option }}
-      </option>
-    </select>
-  </div>
   <div style="display: flex; align-items: center">
     <label for="toDate" style="margin-inline-end: 8px">Payment status</label>
     <select
@@ -38,71 +29,61 @@
     </select>
   </div>
   <div style="display: flex; align-items: center">
-    <label for="toDate" style="margin-inline-end: 8px">Payment Type</label>
+    <label for="courseType" style="margin-inline-end: 8px">Course Type</label>
     <select
-      [(ngModel)]="twoHunTTCPayType"
-      (change)="onPayTypeValueChange($event.target.value)"
+      (change)="onCourseTypeChange($event.target.value)"
       class="search-input form-control"
     >
-      <option [value]="0" selected hidden>Select a type</option>
-      <option *ngFor="let option of paymentTypeOption" [value]="option.value">
-        {{ option }}
+      <option *ngFor="let option of courseTypeOption" [value]="option.value">
+        {{ option.label }}
       </option>
     </select>
   </div>
-  <button (click)="getAll200TTCStudent(twoHunTTCFilter, true)">Search</button>
+  <button (click)="getRishikeshData(rishikeshFilter, true)">Search</button>
 </div>
 <div class="pranarambh-table-responsive">
-  <table id="two_hun_ttc" class="table table-bordered table-striped">
+  <table id="rishikesh_list" class="table table-bordered table-striped">
     <thead class="table-secondary">
       <th style="inline-size: 10% !important">Sl No.</th>
       <th>Student Name</th>
+      <th>Course Type</th>
       <th>Email</th>
       <th>Phone</th>
       <th>Price</th>
       <th>Payment Status</th>
       <th>Payment Type</th>
-      <th>Month</th>
       <th>Payment Date</th>
     </thead>
     <tbody>
       <tr
         *ngFor="
-          let obj of twoHunTTCList
+          let obj of rishikeshList
             | paginate
               : {
                   itemsPerPage: 10,
-                  currentPage: twoHunTTCPage,
-                  totalItems: twoHunTTCTotal
+                  currentPage: rishikeshPage,
+                  totalItems: rishikeshTotal
                 };
           let i = index
         "
       >
-        <td>{{ i + 1 + (twoHunTTCPage - 1) * 10 }}</td>
+        <td>{{ i + 1 + (rishikeshPage - 1) * 10 }}</td>
         <td>
           {{ obj.name }}
         </td>
+        <td>{{ obj.hour }} hour</td>
         <td>{{ obj.email }}</td>
         <td>{{ obj.phoneNumber }}</td>
         <td>{{ obj.price | currency : obj.currency }}</td>
         <td
           [ngClass]="{
             'text-success': obj?.paymentStatus == 'paid',
-            'text-warning': obj?.paymentStatus == 'pending',
-            'text-danger': obj?.paymentStatus == 'failed'
+            'text-danger': obj?.paymentStatus == 'pending'
           }"
         >
           {{ obj.paymentStatus }}
-          <button
-            class="give-access-warning"
-            *ngIf="obj?.paymentStatus == 'pending'"
-            (click)="giveAccessFn(obj)"
-          >
-            Give Access
-          </button>
         </td>
         <td>{{ obj.paymentType }}</td>
-        <td>{{ obj.month }}</td>
         <td>
           <ng-container *ngIf="obj.created; else noPayment">
             {{ obj.created | date : "dd-MM-yyyy" }}
@@ -115,6 +96,6 @@
 </div>
 <div class="pagination">
   <pagination-controls
-    (pageChange)="onTwoHunTTCTableDataChange($event)"
+    (pageChange)="onRishikeshTableDataChange($event)"
   ></pagination-controls>
 </div>

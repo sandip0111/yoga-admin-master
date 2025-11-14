@@ -136,6 +136,7 @@
                 [paymentOption]="paymentOption"
                 [paymentTypeOption]="paymentTypeOption"
                 [monthOption]="monthOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-rishikesh>
             </ng-template>
           </ngb-tab>

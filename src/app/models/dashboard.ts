@@ -9,6 +9,7 @@ export class searchPranaRambhFilter {
   course?: string;
   isGetAll?: boolean;
   month?: string;
+  courseType?: string;
 }
 
 export class searchFreeWebinarFilter {

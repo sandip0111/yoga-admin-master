@@ -273,6 +273,9 @@ export class ServiceService {
   getAll200ttcStudent(data: searchPranaRambhFilter) {
     return this.http.post(this.url + "api/v1/get200ttcData", data);
   }
+  getRishikeshData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getRishikeshData", data);
+  }
   sendMailToPrashantJi(data: { name: string; email: string }) {
     console.log("mdamk");
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
