@@ -204,3 +204,18 @@ export interface createPranicPurification {
   hour?: number;
   password?: string;
 }
+export interface createFreeWebinar {
+  name: string;
+  email: string;
+}
+export interface createBreathDetox {
+  firstName: string;
+  lastName: string;
+  email: string;
+  course: string[];
+  isActive: boolean;
+  isBreatDox: boolean;
+  password: string;
+  paymentCourseId: string;
+  source: string;
+}

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import {
+  createFreeWebinar,
   createPranicPurification,
   createSwaraSadhna,
   searchFreeWebinarFilter,
@@ -288,6 +289,9 @@ export class ServiceService {
   }
   createPranaArambhCustomer(data: createPranicPurification) {
     return this.http.post(this.url + "api/v1/createPranaArambhCustomer", data);
+  }
+  createFreeWebinrCustomer(data: createFreeWebinar) {
+    return this.http.post(this.url + "api/v1/createFreeWebinarCustomer", data);
   }
   sendBulkMailFreeWebiner() {
     return this.http.get(this.url + "api/v1/sendBulkMailFreeWebiner");
