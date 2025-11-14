@@ -6,7 +6,9 @@
 
 <div class="header-container">
   <h4>Pranic Purification</h4>
-  <a (click)="exportToExcel('Pranic_Purification')" class="export-link">Export to Excel</a>
+  <a (click)="exportToExcel('Pranic_Purification')" class="export-link"
+    >Export to Excel</a
+  >
 </div>
 <div class="container_search">
   <input
@@ -17,30 +19,18 @@
   />
 
   <div style="display: flex; align-items: center">
-    <label for="fromDate" style="margin-inline-end: 8px"> From Date: </label>
-    <input
-      type="date"
-      id="fromDate"
-      [(ngModel)]="filter.fromDate"
-      class="date-input form-control"
-    />
+    <label for="toDate" style="margin-right: 8px">Payment status</label>
+    <select
+      (change)="onPayStatusValueChange($event.target.value)"
+      class="search-input form-control"
+    >
+      <option *ngFor="let option of paymentOption" [value]="option.value">
+        {{ option.name }}
+      </option>
+    </select>
   </div>
 
-  <div style="display: flex; align-items: center">
-    <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
-    <input
-      type="date"
-      id="toDate"
-      [(ngModel)]="filter.toDate"
-      class="date-input form-control"
-      [min]="filter.fromDate"
-      [disabled]="!filter.fromDate"
-    />
-  </div>
-
-  <button (click)="getAllData(filter, true)">
-    Search
-  </button>
+  <button (click)="getAllData(filter, true)">Search</button>
 </div>
 <div class="pranarambh-table-responsive">
   <table id="Pranic_Purification" class="table table-bordered table-striped">

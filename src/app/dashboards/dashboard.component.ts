@@ -53,6 +53,7 @@ export class DashboardComponent implements OnInit {
   paymentOption = [
     { value: "all", name: "All" },
     { value: "paid", name: "Paid" },
+    { value: "unpaid", name: "Unpaid" },
     { value: "pending", name: "Pending" },
   ];
   onlineTeacherOption = [

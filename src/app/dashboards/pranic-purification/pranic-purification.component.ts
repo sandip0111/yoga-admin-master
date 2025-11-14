@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   pranicPurificationModel,
   pranicPurificationResultModel,
@@ -18,6 +18,8 @@ export class PranicPurificationComponent implements OnInit {
   pranicPurificationList: pranicPurificationModel[] = [];
   pranicPurificationTotal: number = 0;
   pranicPurificationPage: number = 1;
+
+  @Input() paymentOption: string[];
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;
     tableId: string;
@@ -100,5 +102,10 @@ export class PranicPurificationComponent implements OnInit {
         this.downloadCsv.emit({ csvContent, tableId });
         this.loading = false;
       });
+  }
+  onPayStatusValueChange(status: string) {
+    status = status == "all" ? "" : status;
+    this.filter.paymentStatus = status;
+    this.getAllData(this.filter, true);
   }
 }

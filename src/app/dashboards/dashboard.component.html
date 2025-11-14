@@ -49,6 +49,7 @@
           <ngb-tab [title]="dashboardShared.pranicPurificationTitle">
             <ng-template ngbTabContent>
               <app-pranic-purification
+                [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-pranic-purification>
             </ng-template>
