@@ -40,7 +40,6 @@
           <th>Email</th>
           <th>Password</th>
           <th>Payment Amount</th>
-          <th>Currency</th>
           <th>Payment Status</th>
           <th>Payment Type</th>
           <th>Payment Date</th>
@@ -67,13 +66,7 @@
             <td>{{ student.studentInfo.password }}</td>
             <td>
               <ng-container *ngIf="student.amount; else noPayment">
-                {{ student.amount }}
-              </ng-container>
-              <ng-template #noPayment>N/A</ng-template>
-            </td>
-            <td>
-              <ng-container *ngIf="student.currency; else noPayment">
-                {{ student.currency }}
+                {{ student.amount | currency : student.currency.toUpperCase() }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>

@@ -305,4 +305,10 @@ export class ServiceService {
   giveAccessToUser(data: twoHunTTCModel) {
     return this.http.post(this.url + "api/v1/giveAccessToUser", data);
   }
+  foundationOfSpiritualitySave(data: createFreeWebinar) {
+    return this.http.post(
+      this.url + "api/v1/foundationOfSpiritualitySave",
+      data
+    );
+  }
 }

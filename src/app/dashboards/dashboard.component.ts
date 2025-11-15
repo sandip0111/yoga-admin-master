@@ -179,6 +179,13 @@ export class DashboardComponent implements OnInit {
           source: "web",
         };
         this.breathDetoxSave(breathDetox);
+      } else if (this.selectedOption == 11) {
+        this.loading = true;
+        const fos: createFreeWebinar = {
+          name: data.name,
+          email: data.email,
+        };
+        this.foundationOfSpiritualitySave(fos);
       } else {
         alert("Please select a course.");
       }
@@ -332,6 +339,16 @@ export class DashboardComponent implements OnInit {
       if (res.status == "ok") {
         this.loading = false;
         alert(res.msg);
+      } else {
+        alert("Registration failed: " + res.msg);
+      }
+    });
+  }
+  foundationOfSpiritualitySave(data: createFreeWebinar) {
+    this.service.foundationOfSpiritualitySave(data).subscribe((res: any) => {
+      if (res.status) {
+        this.loading = false;
+        alert(res.message);
       } else {
         alert("Registration failed: " + res.msg);
       }

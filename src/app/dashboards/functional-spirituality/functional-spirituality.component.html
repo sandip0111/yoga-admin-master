@@ -19,7 +19,9 @@
         class="search-input form-control"
       />
       <button
-        (click)="getAllFoundationOfSpiritualityStudent(foundationDetoxfilter, true)"
+        (click)="
+          getAllFoundationOfSpiritualityStudent(foundationDetoxfilter, true)
+        "
       >
         Search
       </button>
@@ -30,7 +32,9 @@
           <th style="inline-size: 4% !important">Sl No.</th>
           <th>Student Name</th>
           <th>Email</th>
-          <th>Is Active</th>
+          <th>Price</th>
+          <th>Payment Status</th>
+          <th>Payment Type</th>
         </thead>
         <tbody>
           <tr
@@ -47,11 +51,34 @@
           >
             <td>{{ k + 1 + (foundationPage - 1) * 10 }}</td>
             <td>
-              {{ spiritualityStdnt.firstName }}
-              {{ spiritualityStdnt.lastName || "" }}
+              {{ spiritualityStdnt.name }}
             </td>
             <td>{{ spiritualityStdnt.email }}</td>
-            <td>{{ spiritualityStdnt.isActive }}</td>
+            <td>
+              <ng-container
+                *ngIf="spiritualityStdnt.price; else noPayment"
+              >
+                {{
+                  spiritualityStdnt?.price
+                    | currency : spiritualityStdnt?.currency.toUpperCase()
+                }}
+              </ng-container>
+              <ng-template #noPayment>N/A</ng-template>
+            </td>
+            <td
+              [ngClass]="{
+                'text-success': spiritualityStdnt?.paymentStatus == 'paid',
+                'text-warning': spiritualityStdnt?.paymentStatus == 'pending'
+              }"
+            >
+              <ng-container
+                *ngIf="spiritualityStdnt.paymentStatus; else noPayment"
+              >
+                {{ spiritualityStdnt.paymentStatus }}
+              </ng-container>
+              <ng-template #noPayment>N/A</ng-template>
+            </td>
+            <td>{{ spiritualityStdnt.paymentType }}</td>
           </tr>
         </tbody>
       </table>
