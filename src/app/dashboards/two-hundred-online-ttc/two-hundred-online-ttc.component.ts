@@ -22,7 +22,12 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
 
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
-  @Input() monthOption: string[];
+  monthOption = [
+    { value: "All Month Data", label: "All Month Data" },
+    { value: "October", label: "October" },
+    { value: "November", label: "November, 2025" },
+    { value: "November, 2026", label: "November, 2026" },
+  ];
 
   constructor(
     private service: ServiceService,
@@ -42,7 +47,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     this.twoHunTTCLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
-    filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
+    filter.month = filter.month === "All Month Data" ? "" : filter.month;
     this.twoHunTTCPage = isSearch ? 1 : this.twoHunTTCPage;
     this.service
       .getAll200ttcStudent(filter)

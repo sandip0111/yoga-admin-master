@@ -22,8 +22,8 @@
       (change)="onMonthChange($event.target.value)"
       class="search-input form-control"
     >
-      <option *ngFor="let option of monthOption" [value]="option">
-        {{ option }}
+      <option *ngFor="let option of monthOption" [value]="option.value">
+        {{ option.label }}
       </option>
     </select>
   </div>
