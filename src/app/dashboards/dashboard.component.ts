@@ -265,7 +265,7 @@ export class DashboardComponent implements OnInit {
         title: item.title,
         shortDescription: item.shortDescription,
       });
-      courseList.push(item.name);
+      courseList.push(item.id);
     });
     const onlineSadhna: createPranicPurification = {
       name: data.name,
