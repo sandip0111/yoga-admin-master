@@ -25,6 +25,12 @@ export class PranicPurificationComponent implements OnInit {
     tableId: string;
   }>();
 
+  monthOption = [
+    { value: '', label: "All Month Data" },
+    { value: "July, 2025", label: "July, 2025" },
+    { value: "January, 2026", label: "January, 2026" },
+  ];
+
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
@@ -106,6 +112,10 @@ export class PranicPurificationComponent implements OnInit {
   onPayStatusValueChange(status: string) {
     status = status == "all" ? "" : status;
     this.filter.paymentStatus = status;
+    this.getAllData(this.filter, true);
+  }
+  onMonthChange(month: string) {
+    this.filter.month = month;
     this.getAllData(this.filter, true);
   }
 }
