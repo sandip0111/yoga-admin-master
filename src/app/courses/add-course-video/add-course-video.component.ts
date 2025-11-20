@@ -15,7 +15,13 @@ export class AddCourseVideoComponent implements OnInit {
   uploadError: string | null = null;
   videoUrl: string | null = null;
   previewUrl: string | null = null;
-  courseName: string='';
+  courseName: string = "";
+  options = [
+    { value: null, label: "Select a option" },
+    { value: "63c4e7e72bce43a907211c78", label: "200 TTC Online Sadhana" },
+    { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
+  ];
+  selectedOption = null;
   constructor(private s3BucketService: S3BucketService) {}
 
   ngOnInit(): void {}
@@ -74,23 +80,24 @@ export class AddCourseVideoComponent implements OnInit {
     this.uploadProgress = 0;
     this.uploadError = null;
     this.uploadComplete = false;
-
-    this.s3BucketService
-      .uploadVideoThroughBackend(this.selectedFile, this.courseName)
-      .subscribe({
-        next: (progress: UploadProgress) => {
-          this.uploadProgress = progress.progress;
-          if (progress.success) {
-            this.uploadComplete = true;
+    if (this.selectedOption) {
+      this.s3BucketService
+        .uploadVideoThroughBackend(this.selectedFile, this.courseName, this.selectedOption)
+        .subscribe({
+          next: (progress: UploadProgress) => {
+            this.uploadProgress = progress.progress;
+            if (progress.success) {
+              this.uploadComplete = true;
+              this.isUploading = false;
+            }
+          },
+          error: (error) => {
+            this.uploadError = "Upload failed. Please try again.";
             this.isUploading = false;
-          }
-        },
-        error: (error) => {
-          this.uploadError = "Upload failed. Please try again.";
-          this.isUploading = false;
-          this.uploadProgress = 0;
-        },
-      });
+            this.uploadProgress = 0;
+          },
+        });
+    }
   }
 
   reset(): void {

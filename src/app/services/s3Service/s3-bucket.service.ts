@@ -13,11 +13,13 @@ export class S3BucketService {
   constructor(private http: HttpClient) {}
   uploadVideoThroughBackend(
     file: File,
-    courseName: string
+    courseName: string,
+    selectedCourse: string
   ): Observable<UploadProgress> {
     const formData = new FormData();
     formData.append("video", file, file.name);
     formData.append("courseName", courseName);
+    formData.append("selectedCourse", selectedCourse);
     return this.http
       .post(`${this.url}/upload-video`, formData, {
         reportProgress: true,
