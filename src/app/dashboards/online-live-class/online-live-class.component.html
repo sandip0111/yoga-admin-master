@@ -5,9 +5,20 @@
 </div>
 
 <div class="header-container">
-  <h4>Prashant Jhakmola October Class</h4>
+  <h4>{{ selectedTeacherName }} {{ onlineClassFilter.month }} Class</h4>
 </div>
 <div class="container_search">
+  <div style="display: flex; align-items: center">
+    <select
+      (change)="onTeacherChange()"
+      class="search-input form-control"
+      [(ngModel)]="selectedTeacher"
+    >
+      <option *ngFor="let option of teachersDropdown" [value]="option.id">
+        {{ option.teacher }}
+      </option>
+    </select>
+  </div>
   <input
     type="text"
     placeholder="Search by Name or Email or phone"

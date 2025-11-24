@@ -19,6 +19,8 @@ export class OnlineLiveClassComponent implements OnInit {
   onlineClassTotal: number = 0;
   onlineClassPayType: string = "All";
   selectedGroupId: string;
+  teachersDropdown: teachersDropdownDto[] = [];
+  selectedTeacher: number = 1;
 
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
@@ -41,8 +43,18 @@ export class OnlineLiveClassComponent implements OnInit {
       course: this.selectedGroupId,
       paymentStatus: "all",
       paymentType: "",
+      teacherId: this.selectedTeacher,
     };
-    this.getAllOnlineClassStudent(this.onlineClassFilter, false);
+    this.getTeachersData();
+  }
+  getTeachersData() {
+    this.service
+      .getAllLiveClassTeacher()
+      .subscribe((res: teacherDropdownResponseDto) => {
+        this.teachersDropdown = res.data.teachersData;
+        this.getTeachersName(this.selectedTeacher);
+        this.getAllOnlineClassStudent(this.onlineClassFilter, false);
+      });
   }
   getAllOnlineClassStudent(
     filter: searchLiveClassFilter,
@@ -66,14 +78,17 @@ export class OnlineLiveClassComponent implements OnInit {
         this.onineClassLoading = this.onlineClassList ? false : true;
       });
   }
+  
   onPayStatusValueChange(status: string) {
     this.onlineClassFilter.paymentStatus = status;
     this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
+
   onPayTypeValueChange(type: string) {
     this.onlineClassFilter.paymentType = type;
     this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
+
   onlineClassTableDataChange(page: number) {
     this.onlineClassFilter.pageNo = page;
     this.onlineClassPage = page;
@@ -83,8 +98,34 @@ export class OnlineLiveClassComponent implements OnInit {
       behavior: "smooth",
     });
   }
+
   onMonthChange(month: string) {
     this.onlineClassFilter.month = month;
     this.getAllOnlineClassStudent(this.onlineClassFilter, true);
   }
+
+  selectedTeacherName: string = "";
+  onTeacherChange() {
+    this.getTeachersName(this.selectedTeacher);
+    this.onlineClassFilter.teacherId = this.selectedTeacher;
+    this.getAllOnlineClassStudent(this.onlineClassFilter, true);
+  }
+
+  getTeachersName(selectedTeacherId: number) {
+    this.selectedTeacherName = this.teachersDropdown.find(
+      (t) => t.id == selectedTeacherId
+    ).teacher;
+  }
+}
+class teachersDropdownDto {
+  id: number;
+  teacher: string;
+}
+
+class teacherDropdownResponseDto {
+  status: boolean;
+  data: {
+    _id: string;
+    teachersData: teachersDropdownDto[];
+  };
 }

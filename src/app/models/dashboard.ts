@@ -93,6 +93,7 @@ export interface searchLiveClassFilter {
   month: string;
   paymentStatus: string;
   paymentType?: string;
+  teacherId: number;
 }
 export class liveClassCustomerModel {
   name: string;

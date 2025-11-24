@@ -311,4 +311,7 @@ export class ServiceService {
       data
     );
   }
+  getAllLiveClassTeacher() {
+    return this.http.get(this.url + "api/v1/getAllLiveClassTeacher");
+  }
 }
