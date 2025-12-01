@@ -25,6 +25,7 @@ export class RishikeshComponent implements OnInit {
     { label: "200 hours", value: "200" },
     { label: "300 hours", value: "300" },
   ];
+  monthOption = ["All Month Data", "March, 2026"];
 
   @Input() paymentOption: { value: string; name: string }[];
   @Output() downloadCsv = new EventEmitter<{
@@ -43,6 +44,7 @@ export class RishikeshComponent implements OnInit {
       size: 10,
       searchText: "",
       courseType: "All",
+      month: "",
     };
     this.getRishikeshData(this.rishikeshFilter, false);
   }
@@ -52,6 +54,7 @@ export class RishikeshComponent implements OnInit {
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     filter.courseType = filter.courseType == "All" ? "" : filter.courseType;
+    filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
     this.rishikeshPage = isSearch ? 1 : this.rishikeshPage;
     this.service
       .getRishikeshData(filter)
@@ -129,5 +132,10 @@ export class RishikeshComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+
+  onMonthChange(month: string) {
+    this.rishikeshFilter.month = month;
+    this.getRishikeshData(this.rishikeshFilter, true);
   }
 }

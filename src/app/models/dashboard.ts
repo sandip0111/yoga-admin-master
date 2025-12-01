@@ -16,6 +16,7 @@ export class searchFreeWebinarFilter {
   pageNo: number;
   size: number;
   searchText: string;
+  month: string;
 }
 
 export interface octoberPrashantFilter extends searchLiveClassFilter {
