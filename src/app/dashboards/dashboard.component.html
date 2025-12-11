@@ -137,6 +137,14 @@
               ></app-rishikesh>
             </ng-template>
           </ngb-tab>
+          <ngb-tab [title]="dashboardShared.baliTitle">
+            <ng-template ngbTabContent>
+              <app-bali
+                [paymentOption]="paymentOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-bali>
+            </ng-template>
+          </ngb-tab>
         </ngb-tabset>
       </div>
     </div>

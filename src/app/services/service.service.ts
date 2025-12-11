@@ -277,6 +277,9 @@ export class ServiceService {
   getRishikeshData(data: searchPranaRambhFilter) {
     return this.http.post(this.url + "api/v1/getRishikeshData", data);
   }
+  getBaliData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getBaliData", data);
+  }
   sendMailToPrashantJi(data: { name: string; email: string }) {
     console.log("mdamk");
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
