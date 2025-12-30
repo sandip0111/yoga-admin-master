@@ -25,7 +25,7 @@ export class OnlineLiveClassComponent implements OnInit {
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
   @Input() customerGroups;
-  monthOption = ["All Month Data", "October", "November", "December"];
+  monthOption = ["All Month Data", "October", "November", "December", "January, 2026"];
   constructor(
     private service: ServiceService,
     private dashboardShared: DashboardSharedService

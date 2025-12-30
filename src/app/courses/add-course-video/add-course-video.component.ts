@@ -20,6 +20,7 @@ export class AddCourseVideoComponent implements OnInit {
     { value: null, label: "Select a option" },
     { value: "63c4e7e72bce43a907211c78", label: "200 TTC Online Sadhana" },
     { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
+    { value: "63fc3fdc6d203300eae38625", label: "Online Live class" },
   ];
   selectedOption = null;
   constructor(private s3BucketService: S3BucketService) {}
