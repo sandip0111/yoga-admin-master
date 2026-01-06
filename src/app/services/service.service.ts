@@ -317,4 +317,7 @@ export class ServiceService {
   getAllLiveClassTeacher() {
     return this.http.get(this.url + "api/v1/getAllLiveClassTeacher");
   }
+  getCourseBySlug(data: { slug: string }) {
+    return this.http.post(this.url + "api/v1/getCourseBySlug", data);
+  }
 }

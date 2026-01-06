@@ -205,6 +205,7 @@ export interface createPranicPurification {
   courseList?: string[];
   hour?: number;
   password?: string;
+  month?: string;
 }
 export interface createFreeWebinar {
   name: string;

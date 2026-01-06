@@ -60,34 +60,19 @@ export class DashboardComponent implements OnInit {
     { value: "paid", name: "Paid" },
     { value: "pending", name: "Pending" },
   ];
-  onlineTeacherOption = [
-    {
-      id: 1,
-      priceINR: 2999,
-      priceUSD: 70,
-      quantity: 1,
-      title: "Acharya Prashant Jakhmola - Yoga Sadhana",
-      name: "Yoga Sadhana",
-      shortDescription:
-        "Interactive class combining Hatha asanas and pranayama each morning for holistic physical, mental, and spiritual growth. Suitable for all levels, with focus on correct alignment and routine building.",
-    },
-    {
-      id: 3,
-      priceINR: 1999,
-      priceUSD: 40,
-      quantity: 1,
-      title: "Taniya Verma - Woman Wellness Yoga",
-      name: "Woman Wellness Yoga",
-      shortDescription:
-        "A gentle and supportive practice designed specially for women from menstruation to menopause combining asana, pranayama, nutrition tips and hormone-balancing restorative techniques.",
-    },
-  ];
+  onlineTeacherOption = [];
   paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
   monthOption = ["All Month Data", "October", "November"];
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
   ) {
+    this.service
+      .getCourseBySlug({ slug: "online-yoga-classes" })
+      .subscribe((res: any) => {
+        this.onlineTeacherOption = res.data[0].teachersData;
+        console.log(this.onlineTeacherOption, res.data);
+      });
     this.customerGroups = [
       {
         courseName: "Acharya Prashant Jakhmola online yoga class",
@@ -259,13 +244,8 @@ export class DashboardComponent implements OnInit {
     this.checkedTeacher.map((item) => {
       course.push({
         id: item.id,
-        priceINR: item.priceINR,
-        priceUSD: item.priceUSD,
-        quantity: item.quantity,
-        title: item.title,
-        shortDescription: item.shortDescription,
       });
-      courseList.push(item.id);
+      courseList.push(item);
     });
     const onlineSadhna: createPranicPurification = {
       name: data.name,
@@ -273,6 +253,8 @@ export class DashboardComponent implements OnInit {
       phone: data.phone,
       course: course,
       courseList: courseList,
+      password: generatePassword(),
+      month: "January, 2026",
     };
     this.service
       .createLiveCourseCustomer(onlineSadhna)
