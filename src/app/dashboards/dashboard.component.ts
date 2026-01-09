@@ -63,6 +63,11 @@ export class DashboardComponent implements OnInit {
   onlineTeacherOption = [];
   paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
   monthOption = ["All Month Data", "October", "November"];
+  rishikeshMonthOption = [
+    { label: "Select Month", value: "" },
+    { label: "March, 2026", value: "March, 2026" },
+    { label: "October, 2026", value: "October, 2026" },
+  ];
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
@@ -140,6 +145,11 @@ export class DashboardComponent implements OnInit {
         this.selectedOption == 6 ||
         this.selectedOption == 7
       ) {
+        if (!data.month) {
+          alert("Please select a month.");
+          this.loading = false;
+          return;
+        }
         this.onlineRishikeshSave(data, this.selectedOption);
       } else if (this.selectedOption == 8) {
         this.pranaArambhSave(data);
@@ -280,6 +290,7 @@ export class DashboardComponent implements OnInit {
       email: data.email,
       phone: data.phone,
       hour: hour,
+      month: data.month,
     };
     this.service
       .createRishikeshCustomer(rishikeshData)

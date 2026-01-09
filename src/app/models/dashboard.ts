@@ -32,6 +32,7 @@ export interface createSwaraSadhna {
   webinar: string;
   city: string;
   password: string;
+  month?: string;
 }
 export class swarSadhnaStudentModel {
   _id: string;
