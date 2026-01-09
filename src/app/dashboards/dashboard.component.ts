@@ -103,6 +103,7 @@ export class DashboardComponent implements OnInit {
       city: "",
       password: "",
       webinar: "Swara Sadhana",
+      month: "",
     };
   }
   ngOnInit(): void {}
@@ -201,6 +202,7 @@ export class DashboardComponent implements OnInit {
             city: "",
             password: "",
             webinar: "Swara Sadhana",
+            month: "",
           };
           alert("Registration successful!");
         } else {
