@@ -16,6 +16,7 @@ export class searchFreeWebinarFilter {
   pageNo: number;
   size: number;
   searchText: string;
+  month: string;
 }
 
 export interface octoberPrashantFilter extends searchLiveClassFilter {
@@ -31,6 +32,7 @@ export interface createSwaraSadhna {
   webinar: string;
   city: string;
   password: string;
+  month?: string;
 }
 export class swarSadhnaStudentModel {
   _id: string;
@@ -204,6 +206,7 @@ export interface createPranicPurification {
   courseList?: string[];
   hour?: number;
   password?: string;
+  month?: string;
 }
 export interface createFreeWebinar {
   name: string;

@@ -18,6 +18,8 @@ export class FreeWebinnerComponent implements OnInit {
   freeWebinarPage: number = 1;
   freeWebinarList: freeWebinarStudentModel[] = [];
   freeWebinarTotal: number = 0;
+  monthOption = ["All Month Data", "January, 2026"];
+
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
@@ -28,6 +30,7 @@ export class FreeWebinnerComponent implements OnInit {
       pageNo: 1,
       size: 10,
       searchText: "",
+      month: "",
     };
     this.getAllFreeWebinarData(this.freeWebinarFilter, false);
   }
@@ -38,6 +41,7 @@ export class FreeWebinnerComponent implements OnInit {
     this.freeLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
+    filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
     this.freeWebinarPage = isSearch ? 1 : this.freeWebinarPage;
     this.service
       .getAllFreeWebinarData(filter)
@@ -65,5 +69,10 @@ export class FreeWebinnerComponent implements OnInit {
         this.freeLoading = false;
       }
     });
+  }
+
+  onMonthChange(month: string) {
+    this.freeWebinarFilter.month = month;
+    this.getAllFreeWebinarData(this.freeWebinarFilter, true);
   }
 }

@@ -14,12 +14,20 @@ export class S3BucketService {
   uploadVideoThroughBackend(
     file: File,
     courseName: string,
-    selectedCourse: string
+    selectedCourse: string,
+    selectedMonth?: string,
+    selectedTeacherId?: number
   ): Observable<UploadProgress> {
     const formData = new FormData();
     formData.append("video", file, file.name);
     formData.append("courseName", courseName);
     formData.append("selectedCourse", selectedCourse);
+    if (selectedMonth) {
+      formData.append("month", selectedMonth);
+    }
+    if (selectedTeacherId !== undefined && selectedTeacherId !== null) {
+      formData.append("teacherId", String(selectedTeacherId));
+    }
     return this.http
       .post(`${this.url}/upload-video`, formData, {
         reportProgress: true,

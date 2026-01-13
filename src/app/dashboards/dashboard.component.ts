@@ -54,40 +54,33 @@ export class DashboardComponent implements OnInit {
     { value: 5, label: "Rishikesh 100" },
     { value: 6, label: "Rishikesh 200" },
     { value: 7, label: "Rishikesh 300" },
+    { value: 12, label: "Bali 100" },
+    { value: 13, label: "Bali 200" },
+    { value: 14, label: "Bali 300" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
     { value: "paid", name: "Paid" },
     { value: "pending", name: "Pending" },
   ];
-  onlineTeacherOption = [
-    {
-      id: 1,
-      priceINR: 2999,
-      priceUSD: 70,
-      quantity: 1,
-      title: "Acharya Prashant Jakhmola - Yoga Sadhana",
-      name: "Yoga Sadhana",
-      shortDescription:
-        "Interactive class combining Hatha asanas and pranayama each morning for holistic physical, mental, and spiritual growth. Suitable for all levels, with focus on correct alignment and routine building.",
-    },
-    {
-      id: 3,
-      priceINR: 1999,
-      priceUSD: 40,
-      quantity: 1,
-      title: "Taniya Verma - Woman Wellness Yoga",
-      name: "Woman Wellness Yoga",
-      shortDescription:
-        "A gentle and supportive practice designed specially for women from menstruation to menopause combining asana, pranayama, nutrition tips and hormone-balancing restorative techniques.",
-    },
-  ];
+  onlineTeacherOption = [];
   paymentTypeOption = ["All", "razorpay", "stripe", "paypal"];
   monthOption = ["All Month Data", "October", "November"];
+  rishikeshMonthOption = [
+    { label: "Select Month", value: "" },
+    { label: "March, 2026", value: "March, 2026" },
+    { label: "October, 2026", value: "October, 2026" },
+  ];
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
   ) {
+    this.service
+      .getCourseBySlug({ slug: "online-yoga-classes" })
+      .subscribe((res: any) => {
+        this.onlineTeacherOption = res.data[0].teachersData;
+        console.log(this.onlineTeacherOption, res.data);
+      });
     this.customerGroups = [
       {
         courseName: "Acharya Prashant Jakhmola online yoga class",
@@ -113,6 +106,7 @@ export class DashboardComponent implements OnInit {
       city: "",
       password: "",
       webinar: "Swara Sadhana",
+      month: "",
     };
   }
   ngOnInit(): void {}
@@ -155,6 +149,11 @@ export class DashboardComponent implements OnInit {
         this.selectedOption == 6 ||
         this.selectedOption == 7
       ) {
+        if (!data.month) {
+          alert("Please select a month.");
+          this.loading = false;
+          return;
+        }
         this.onlineRishikeshSave(data, this.selectedOption);
       } else if (this.selectedOption == 8) {
         this.pranaArambhSave(data);
@@ -186,6 +185,12 @@ export class DashboardComponent implements OnInit {
           email: data.email,
         };
         this.foundationOfSpiritualitySave(fos);
+      } else if (
+        this.selectedOption == 12 ||
+        this.selectedOption == 13 ||
+        this.selectedOption == 14
+      ) {
+        this.onlineBaliSave(data, this.selectedOption);
       } else {
         alert("Please select a course.");
       }
@@ -206,6 +211,7 @@ export class DashboardComponent implements OnInit {
             city: "",
             password: "",
             webinar: "Swara Sadhana",
+            month: "",
           };
           alert("Registration successful!");
         } else {
@@ -259,13 +265,8 @@ export class DashboardComponent implements OnInit {
     this.checkedTeacher.map((item) => {
       course.push({
         id: item.id,
-        priceINR: item.priceINR,
-        priceUSD: item.priceUSD,
-        quantity: item.quantity,
-        title: item.title,
-        shortDescription: item.shortDescription,
       });
-      courseList.push(item.id);
+      courseList.push(item);
     });
     const onlineSadhna: createPranicPurification = {
       name: data.name,
@@ -273,6 +274,8 @@ export class DashboardComponent implements OnInit {
       phone: data.phone,
       course: course,
       courseList: courseList,
+      password: generatePassword(),
+      month: "January, 2026",
     };
     this.service
       .createLiveCourseCustomer(onlineSadhna)
@@ -298,9 +301,44 @@ export class DashboardComponent implements OnInit {
       email: data.email,
       phone: data.phone,
       hour: hour,
+      month: data.month,
     };
     this.service
       .createRishikeshCustomer(rishikeshData)
+      .subscribe((res: any) => {
+        if (res.status == "ok") {
+          alert(res.message);
+        } else {
+          alert("Registration failed: " + res.message);
+        }
+      });
+  }
+  onlineBaliSave(data: createSwaraSadhna, selectedHour: number) {
+    let hour: number =
+      selectedHour == 12
+        ? 100
+        : selectedHour == 13
+        ? 200
+        : selectedHour == 14
+        ? 300
+        : 0;
+    let month: string =
+      selectedHour == 12
+        ? "June, 2026"
+        : selectedHour == 13
+        ? "June, 2026"
+        : selectedHour == 14
+        ? "July, 2026"
+        : "";
+    const rishikeshData: createPranicPurification = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      hour: hour,
+      month: month,
+    };
+    this.service
+      .createBaliCustomer(rishikeshData)
       .subscribe((res: any) => {
         if (res.status == "ok") {
           alert(res.message);

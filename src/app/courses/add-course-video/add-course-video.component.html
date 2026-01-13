@@ -5,7 +5,7 @@
 </div>
 
 <div class="page-header">
-  <h3 class="page-title">200 TTC Online video upload</h3>
+  <h3 class="page-title">Online video upload</h3>
 </div>
 <div>
   <select [(ngModel)]="selectedOption" class="search-input form-control">
@@ -81,13 +81,6 @@
   {{ uploadError }}
 </div>
 
-<!-- <div *ngIf="isUploading" class="progress-section">
-  <p>Uploading... {{ uploadProgress }}%</p>
-  <div class="progress-bar">
-    <div class="progress-fill" [style.width.%]="uploadProgress"></div>
-  </div>
-</div> -->
-
 <div *ngIf="uploadComplete" class="success-message">
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -109,6 +102,26 @@
 </div>
 
 <div class="button-group">
+  <select
+    [(ngModel)]="selectedMonth"
+    class="search-input form-control month-select"
+  >
+    <option [value]="" selected hidden>Select month</option>
+    <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+  </select>
+
+  <ng-container *ngIf="selectedOption == '63fc3fdc6d203300eae38625'">
+    <select
+      [(ngModel)]="selectedTeacherId"
+      class="search-input form-control wo-select"
+    >
+      <option [ngValue]="null" selected hidden>Select name</option>
+      <option *ngFor="let teacher of teacherOptions" [ngValue]="teacher.value">
+        {{ teacher.label }}
+      </option>
+    </select>
+  </ng-container>
+
   <input
     type="text"
     placeholder="Enter Course Name"

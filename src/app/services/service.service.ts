@@ -277,6 +277,9 @@ export class ServiceService {
   getRishikeshData(data: searchPranaRambhFilter) {
     return this.http.post(this.url + "api/v1/getRishikeshData", data);
   }
+  getBaliData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getBaliData", data);
+  }
   sendMailToPrashantJi(data: { name: string; email: string }) {
     console.log("mdamk");
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
@@ -313,5 +316,11 @@ export class ServiceService {
   }
   getAllLiveClassTeacher() {
     return this.http.get(this.url + "api/v1/getAllLiveClassTeacher");
+  }
+  getCourseBySlug(data: { slug: string }) {
+    return this.http.post(this.url + "api/v1/getCourseBySlug", data);
+  }
+  createBaliCustomer(data: createPranicPurification) {
+    return this.http.post(this.url + "api/v1/createBaliCustomer", data);
   }
 }

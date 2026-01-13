@@ -107,6 +107,22 @@
                   [(ngModel)]="createSwaraSadhnaFrom.city"
                   class="search-input form-control"
                 />
+                <select
+                  *ngIf="
+                    selectedOption == 5 ||
+                    selectedOption == 6 ||
+                    selectedOption == 7
+                  "
+                  [(ngModel)]="createSwaraSadhnaFrom.month"
+                  class="search-input form-control"
+                >
+                  <option
+                    *ngFor="let m of rishikeshMonthOption"
+                    [value]="m.value"
+                  >
+                    {{ m.label }}
+                  </option>
+                </select>
                 <ng-container *ngIf="selectedOption == 4">
                   <label
                     class="line"
@@ -116,7 +132,7 @@
                       type="checkbox"
                       (change)="onCheckboxChange(option)"
                     />&nbsp;
-                    <span>{{ option.title }}</span>
+                    <span>{{ option.coursetitle }}</span>
                   </label>
                 </ng-container>
                 <button
@@ -135,6 +151,14 @@
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-rishikesh>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="dashboardShared.baliTitle">
+            <ng-template ngbTabContent>
+              <app-bali
+                [paymentOption]="paymentOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-bali>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

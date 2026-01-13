@@ -8,24 +8,24 @@ import { DashboardSharedService } from "../dashboard-shared.service";
 import { ServiceService } from "src/app/services/service.service";
 
 @Component({
-  selector: "app-rishikesh",
-  templateUrl: "./rishikesh.component.html",
-  styleUrls: ["./rishikesh.component.scss"],
+  selector: "app-bali",
+  templateUrl: "./bali.component.html",
+  styleUrls: ["./bali.component.scss"],
 })
-export class RishikeshComponent implements OnInit {
-  rishikeshFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
+export class BaliComponent implements OnInit {
+  baliFilter: searchPranaRambhFilter = new searchPranaRambhFilter();
   loading: boolean = false;
-  rishikeshPage: number = 1;
-  rishikeshList: twoHunTTCModel[] = [];
-  rishikeshTotal: number = 0;
-  rishikeshPayType: string = "All";
+  baliPage: number = 1;
+  baliList: twoHunTTCModel[] = [];
+  baliTotal: number = 0;
+  baliPayType: string = "All";
   courseTypeOption = [
     { label: "All", value: "All" },
     { label: "100 hours", value: "100" },
     { label: "200 hours", value: "200" },
     { label: "300 hours", value: "300" },
   ];
-  monthOption = ["All Month Data", "March, 2026", "October, 2026"];
+  monthOption = ["All Month Data", "June, 2026", "July, 2026"];
 
   @Input() paymentOption: { value: string; name: string }[];
   @Output() downloadCsv = new EventEmitter<{
@@ -39,46 +39,46 @@ export class RishikeshComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.rishikeshFilter = {
+    this.baliFilter = {
       pageNo: 1,
       size: 10,
       searchText: "",
       courseType: "All",
       month: "",
     };
-    this.getRishikeshData(this.rishikeshFilter, false);
+    this.getBaliData(this.baliFilter, false);
   }
 
-  getRishikeshData(filter: searchPranaRambhFilter, isSearch: boolean): void {
+  getBaliData(filter: searchPranaRambhFilter, isSearch: boolean): void {
     this.loading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     filter.courseType = filter.courseType == "All" ? "" : filter.courseType;
     filter.month = filter.month == this.monthOption[0] ? "" : filter.month;
-    this.rishikeshPage = isSearch ? 1 : this.rishikeshPage;
+    this.baliPage = isSearch ? 1 : this.baliPage;
     this.service
-      .getRishikeshData(filter)
+      .getBaliData(filter)
       .subscribe((res: twoHunTTCModelResultModel) => {
-        this.rishikeshList = res.data || [];
-        this.rishikeshTotal = res.total ?? 0;
-        this.dashboardShared.rishikeshTitle = `Rishikesh (${this.rishikeshTotal})`;
-        this.loading = this.rishikeshList ? false : true;
+        this.baliList = res.data || [];
+        this.baliTotal = res.total ?? 0;
+        this.dashboardShared.baliTitle = `Bali (${this.baliTotal})`;
+        this.loading = this.baliList ? false : true;
       });
   }
 
   onPayStatusValueChange(status: string): void {
     status = status == "all" ? "" : status;
-    this.rishikeshFilter.paymentStatus = status;
-    this.getRishikeshData(this.rishikeshFilter, true);
+    this.baliFilter.paymentStatus = status;
+    this.getBaliData(this.baliFilter, true);
   }
 
-  rishikeshExportToExcel(tableId: string): void {
+  baliExportToExcel(tableId: string): void {
     this.loading = true;
-    let filter = { ...this.rishikeshFilter };
+    let filter = { ...this.baliFilter };
     filter.size = 100000;
     filter.pageNo = 1;
     this.service
-      .getRishikeshData(filter)
+      .getBaliData(filter)
       .subscribe((res: twoHunTTCModelResultModel) => {
         if (!res.data || res.data.length === 0) {
           console.error("No data available for export.");
@@ -120,14 +120,14 @@ export class RishikeshComponent implements OnInit {
   }
 
   onCourseTypeChange(courseType: string): void {
-    this.rishikeshFilter.courseType = courseType;
-    this.getRishikeshData(this.rishikeshFilter, true);
+    this.baliFilter.courseType = courseType;
+    this.getBaliData(this.baliFilter, true);
   }
 
-  onRishikeshTableDataChange(event: number): void {
-    this.rishikeshFilter.pageNo = event;
-    this.rishikeshPage = event;
-    this.getRishikeshData(this.rishikeshFilter, false);
+  onBaliTableDataChange(event: number): void {
+    this.baliFilter.pageNo = event;
+    this.baliPage = event;
+    this.getBaliData(this.baliFilter, false);
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -135,7 +135,7 @@ export class RishikeshComponent implements OnInit {
   }
 
   onMonthChange(month: string) {
-    this.rishikeshFilter.month = month;
-    this.getRishikeshData(this.rishikeshFilter, true);
+    this.baliFilter.month = month;
+    this.getBaliData(this.baliFilter, true);
   }
 }

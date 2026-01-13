@@ -20,11 +20,38 @@ export class AddCourseVideoComponent implements OnInit {
     { value: null, label: "Select a option" },
     { value: "63c4e7e72bce43a907211c78", label: "200 TTC Online Sadhana" },
     { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
+    { value: "63fc3fdc6d203300eae38625", label: "Online Live class" },
   ];
   selectedOption = null;
+  months: { value: string; label: string }[] = [];
+  selectedMonth: string | null = null;
+
+  // Additional dropdown with two names (values 1 and 3)
+  teacherOptions: { value: number; label: string }[] = [
+    { value: 1, label: 'Prashant Ji' },
+    { value: 3, label: 'Taniya Ji' },
+  ];
+  selectedTeacherId: number | null = null;
+
   constructor(private s3BucketService: S3BucketService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.months = this.generateMonthOptions();
+    this.selectedMonth = this.months.length ? this.months[0].value : null;
+
+    // Default WO selection
+    this.selectedTeacherId = this.teacherOptions.length ? this.teacherOptions[0].value : null;
+  }
+
+  private generateMonthOptions() {
+    const months: { value: string; label: string }[] = [
+      {
+        value: "January, 2026",
+        label: "January, 2026",
+      },
+    ];
+    return months;
+  }
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -54,16 +81,12 @@ export class AddCourseVideoComponent implements OnInit {
 
     if (event.dataTransfer?.files && event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0];
-
-      // Validate file
       const validation = this.s3BucketService.validateVideoFile(file);
-
       if (!validation.valid) {
         this.uploadError = validation.error || "Invalid file";
         this.selectedFile = null;
         return;
       }
-
       this.selectedFile = file;
       this.uploadError = null;
       this.uploadComplete = false;
@@ -75,14 +98,19 @@ export class AddCourseVideoComponent implements OnInit {
     if (!this.selectedFile) {
       return;
     }
-
     this.isUploading = true;
     this.uploadProgress = 0;
     this.uploadError = null;
     this.uploadComplete = false;
     if (this.selectedOption) {
       this.s3BucketService
-        .uploadVideoThroughBackend(this.selectedFile, this.courseName, this.selectedOption)
+        .uploadVideoThroughBackend(
+          this.selectedFile,
+          this.courseName,
+          this.selectedOption,
+          this.selectedMonth,
+          this.selectedTeacherId
+        )
         .subscribe({
           next: (progress: UploadProgress) => {
             this.uploadProgress = progress.progress;
