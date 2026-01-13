@@ -320,4 +320,7 @@ export class ServiceService {
   getCourseBySlug(data: { slug: string }) {
     return this.http.post(this.url + "api/v1/getCourseBySlug", data);
   }
+  createBaliCustomer(data: createPranicPurification) {
+    return this.http.post(this.url + "api/v1/createBaliCustomer", data);
+  }
 }
