@@ -53,6 +53,7 @@
       <th>Phone</th>
       <th class="wrap-field">Address</th>
       <th>Price</th>
+      <th>Password</th>
       <th>Payment Status</th>
       <th>Payment Type</th>
       <th>Month</th>
@@ -80,6 +81,7 @@
         <td>{{ obj.phoneNumber }}</td>
         <td class="address">{{ obj.address }}</td>
         <td>{{ obj.price | currency : obj.currency }}</td>
+        <td>{{ obj.password }}</td>
         <td
           [ngClass]="{
             'text-success': obj?.paymentStatus == 'paid',
