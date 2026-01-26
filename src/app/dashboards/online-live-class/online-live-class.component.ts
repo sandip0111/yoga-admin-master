@@ -25,10 +25,17 @@ export class OnlineLiveClassComponent implements OnInit {
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
   @Input() customerGroups;
-  monthOption = ["All Month Data", "October", "November", "December", "January, 2026"];
+  monthOption = [
+    "All Month Data",
+    "October",
+    "November",
+    "December",
+    "January, 2026",
+    "February, 2026",
+  ];
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -58,7 +65,7 @@ export class OnlineLiveClassComponent implements OnInit {
   }
   getAllOnlineClassStudent(
     filter: searchLiveClassFilter,
-    isSearch: boolean
+    isSearch: boolean,
   ): void {
     this.onineClassLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
@@ -78,7 +85,7 @@ export class OnlineLiveClassComponent implements OnInit {
         this.onineClassLoading = this.onlineClassList ? false : true;
       });
   }
-  
+
   onPayStatusValueChange(status: string) {
     this.onlineClassFilter.paymentStatus = status;
     this.getAllOnlineClassStudent(this.onlineClassFilter, true);
@@ -113,7 +120,7 @@ export class OnlineLiveClassComponent implements OnInit {
 
   getTeachersName(selectedTeacherId: number) {
     this.selectedTeacherName = this.teachersDropdown.find(
-      (t) => t.id == selectedTeacherId
+      (t) => t.id == selectedTeacherId,
     ).teacher;
   }
 }
