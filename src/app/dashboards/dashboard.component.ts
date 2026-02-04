@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
   ];
   constructor(
     private service: ServiceService,
-    public dashboardShared: DashboardSharedService
+    public dashboardShared: DashboardSharedService,
   ) {
     this.service
       .getCourseBySlug({ slug: "online-yoga-classes" })
@@ -136,6 +136,7 @@ export class DashboardComponent implements OnInit {
           name: data.name,
           email: data.email,
           phone: data.phone,
+          password: generatePassword(),
         };
         this.twoHunTTCSave(ttcData);
       } else if (this.selectedOption == 4) {
@@ -222,7 +223,7 @@ export class DashboardComponent implements OnInit {
       (error) => {
         this.loading = false;
         alert("An error occurred while registering. Please try again.");
-      }
+      },
     );
   }
   pranicPurificationSave(data: createPranicPurification) {
@@ -239,7 +240,7 @@ export class DashboardComponent implements OnInit {
       (error) => {
         this.loading = false;
         alert("An error occurred while registering. Please try again.");
-      }
+      },
     );
   }
   twoHunTTCSave(data: createPranicPurification) {
@@ -256,7 +257,7 @@ export class DashboardComponent implements OnInit {
       (error) => {
         this.loading = false;
         alert("An error occurred while registering. Please try again.");
-      }
+      },
     );
   }
   onlineSadhanaSave(data: createSwaraSadhna) {
@@ -275,7 +276,7 @@ export class DashboardComponent implements OnInit {
       course: course,
       courseList: courseList,
       password: generatePassword(),
-      month: "January, 2026",
+      month: "February, 2026",
     };
     this.service
       .createLiveCourseCustomer(onlineSadhna)
@@ -292,10 +293,10 @@ export class DashboardComponent implements OnInit {
       selectedHour == 5
         ? 100
         : selectedHour == 6
-        ? 200
-        : selectedHour == 7
-        ? 300
-        : 0;
+          ? 200
+          : selectedHour == 7
+            ? 300
+            : 0;
     const rishikeshData: createPranicPurification = {
       name: data.name,
       email: data.email,
@@ -318,18 +319,18 @@ export class DashboardComponent implements OnInit {
       selectedHour == 12
         ? 100
         : selectedHour == 13
-        ? 200
-        : selectedHour == 14
-        ? 300
-        : 0;
+          ? 200
+          : selectedHour == 14
+            ? 300
+            : 0;
     let month: string =
       selectedHour == 12
         ? "June, 2026"
         : selectedHour == 13
-        ? "June, 2026"
-        : selectedHour == 14
-        ? "July, 2026"
-        : "";
+          ? "June, 2026"
+          : selectedHour == 14
+            ? "July, 2026"
+            : "";
     const rishikeshData: createPranicPurification = {
       name: data.name,
       email: data.email,
@@ -337,15 +338,13 @@ export class DashboardComponent implements OnInit {
       hour: hour,
       month: month,
     };
-    this.service
-      .createBaliCustomer(rishikeshData)
-      .subscribe((res: any) => {
-        if (res.status == "ok") {
-          alert(res.message);
-        } else {
-          alert("Registration failed: " + res.message);
-        }
-      });
+    this.service.createBaliCustomer(rishikeshData).subscribe((res: any) => {
+      if (res.status == "ok") {
+        alert(res.message);
+      } else {
+        alert("Registration failed: " + res.message);
+      }
+    });
   }
   pranaArambhSave(data: createSwaraSadhna) {
     const pranaData: createPranicPurification = {
