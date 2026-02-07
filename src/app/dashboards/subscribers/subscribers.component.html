@@ -7,16 +7,17 @@
 <div class="media">
   <div class="media-body">
     <div class="header-container">
-      <h4>Subscribers</h4>
+      <h4>Subscribers ({{ total }})</h4>
       <a class="export-link">Export to Excel</a>
     </div>
     <div class="container_search">
       <input
         type="text"
         placeholder="Search by Name or Email"
+        [(ngModel)]="filter.searchText"
         class="search-input form-control"
       />
-      <button>Search</button>
+      <button (click)="onSearch()">Search</button>
     </div>
     <div class="subscribers-table-responsive">
       <table id="Subscribers" class="table table-bordered table-striped">
@@ -33,11 +34,7 @@
             *ngFor="
               let subscriber of subscribers
                 | paginate
-                  : {
-                      itemsPerPage: 10,
-                      currentPage: p,
-                      totalItems: total,
-                    };
+                  : { itemsPerPage: 10, currentPage: p, totalItems: total };
               let i = index
             "
           >
@@ -46,7 +43,7 @@
               {{ subscriber.name || "-" }}
             </td>
             <td>{{ subscriber.email }}</td>
-            <td>{{ subscriber.emailStage }}</td>
+            <td>{{ subscriber.emailStage || "--" }}</td>
             <td>
               <ng-container *ngIf="subscriber.nextEmailDate; else noDate">
                 {{ subscriber.nextEmailDate | date: "dd-MM-yyyy" }}
@@ -67,7 +64,9 @@
       </table>
     </div>
     <div class="pagination">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls
+        (pageChange)="onTableDataChange($event)"
+      ></pagination-controls>
     </div>
   </div>
 </div>

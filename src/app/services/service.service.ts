@@ -46,8 +46,8 @@ export class ServiceService {
     return this.http.get(this.url + "api/v1/getAllMentor");
   }
 
-  getAllSubscribers() {
-    return this.http.get(this.url + "api/v1/getAllSubscribers");
+  getAllSubscribers(data: any) {
+    return this.http.post(this.url + "api/v1/getAllSubscribers", data);
   }
 
   getMentorById(id: any) {

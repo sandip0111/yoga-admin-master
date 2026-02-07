@@ -11,6 +11,11 @@ export class SubscribersComponent implements OnInit {
   total: number = 0;
   loading: boolean = false;
   p: number = 1;
+  filter: any = {
+    pageNo: 1,
+    size: 10,
+    searchText: "",
+  };
 
   constructor(private service: ServiceService) {}
 
@@ -20,7 +25,7 @@ export class SubscribersComponent implements OnInit {
 
   getAllSubscribers() {
     this.loading = true;
-    this.service.getAllSubscribers().subscribe(
+    this.service.getAllSubscribers(this.filter).subscribe(
       (res: any) => {
         this.subscribers = res.data;
         this.total = res.total;
@@ -31,5 +36,21 @@ export class SubscribersComponent implements OnInit {
         this.loading = false;
       },
     );
+  }
+
+  onTableDataChange(event: number) {
+    this.p = event;
+    this.filter.pageNo = event;
+    this.getAllSubscribers();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
+  onSearch() {
+    this.filter.pageNo = 1;
+    this.p = 1;
+    this.getAllSubscribers();
   }
 }
