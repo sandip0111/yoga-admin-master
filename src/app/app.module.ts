@@ -62,6 +62,7 @@ import { FunctionalSpiritualityComponent } from "./dashboards/functional-spiritu
 import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-video.component";
 import { RishikeshComponent } from "./dashboards/rishikesh/rishikesh.component";
 import { BaliComponent } from "./dashboards/bali/bali.component";
+import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
 
 @NgModule({
   declarations: [
@@ -117,6 +118,7 @@ import { BaliComponent } from "./dashboards/bali/bali.component";
     AddCourseVideoComponent,
     RishikeshComponent,
     BaliComponent,
+    SubscribersComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),

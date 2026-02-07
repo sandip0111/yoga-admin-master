@@ -45,6 +45,11 @@ export class ServiceService {
   getAllMentor(id = "") {
     return this.http.get(this.url + "api/v1/getAllMentor");
   }
+
+  getAllSubscribers() {
+    return this.http.get(this.url + "api/v1/getAllSubscribers");
+  }
+
   getMentorById(id: any) {
     return this.http.get(this.url + "api/v1/getMentorById/" + id);
   }
@@ -237,7 +242,7 @@ export class ServiceService {
   getAllFoundationOfSpiritualityStudent(data: any) {
     return this.http.post(
       this.url + "api/v1/getAllFoundationOfSpiritualityStudent",
-      data
+      data,
     );
   }
   getAllBreathDetoxStudent(data: searchPranaRambhFilter) {
@@ -253,13 +258,13 @@ export class ServiceService {
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     return this.http.post(
       this.url + "api/v1/registerSwarSadhanaWebinarUser",
-      data
+      data,
     );
   }
   registerPranicPurificationUser(data: createPranicPurification) {
     return this.http.post(
       this.url + "api/v1/registerPranicPurificationUser",
-      data
+      data,
     );
   }
   register200TTCUser(data: createPranicPurification) {
@@ -268,7 +273,7 @@ export class ServiceService {
   getAllPranicPurificationStudent(data: searchPranaRambhFilter) {
     return this.http.post(
       this.url + "api/v1/getAllPranicPurificationStudent",
-      data
+      data,
     );
   }
   getAll200ttcStudent(data: searchPranaRambhFilter) {
@@ -311,7 +316,7 @@ export class ServiceService {
   foundationOfSpiritualitySave(data: createFreeWebinar) {
     return this.http.post(
       this.url + "api/v1/foundationOfSpiritualitySave",
-      data
+      data,
     );
   }
   getAllLiveClassTeacher() {

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Email Stage</th>
+            <th>Next Email Date</th>
+            <th>Created Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let subscriber of subscribers
+                | paginate: { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <td>{{ subscriber.email }}</td>
+            <td>{{ subscriber.name || "-" }}</td>
+            <!-- Added Name column as seen in response data -->
+            <td>{{ subscriber.emailStage }}</td>
+            <td>
+              {{
+                subscriber.nextEmailDate
+                  ? (subscriber.nextEmailDate | date: "dd-MM-yyyy")
+                  : "-"
+              }}
+            </td>
+            <td>{{ subscriber.created | date: "dd-MM-yyyy HH:mm" }}</td>
+          </tr>
+          <tr *ngIf="subscribers.length === 0">
+            <td colspan="5" class="text-center">No subscribers found</td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
