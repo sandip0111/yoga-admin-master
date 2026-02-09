@@ -137,6 +137,7 @@ export class DashboardComponent implements OnInit {
           email: data.email,
           phone: data.phone,
           password: generatePassword(),
+          installment: "2nd"
         };
         this.twoHunTTCSave(ttcData);
       } else if (this.selectedOption == 4) {
