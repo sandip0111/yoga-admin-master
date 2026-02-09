@@ -1,0 +1,72 @@
+<div *ngIf="loading" class="loader-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="media">
+  <div class="media-body">
+    <div class="header-container">
+      <h4>Subscribers ({{ total }})</h4>
+      <a class="export-link">Export to Excel</a>
+    </div>
+    <div class="container_search">
+      <input
+        type="text"
+        placeholder="Search by Name or Email"
+        [(ngModel)]="filter.searchText"
+        class="search-input form-control"
+      />
+      <button (click)="onSearch()">Search</button>
+    </div>
+    <div class="subscribers-table-responsive">
+      <table id="Subscribers" class="table table-bordered table-striped">
+        <thead class="table-secondary">
+          <th style="width: 10% !important">Sl No.</th>
+          <th>Student Name</th>
+          <th>Email</th>
+          <th>Email Stage</th>
+          <th>Next Email Date</th>
+          <th>Created Date</th>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let subscriber of subscribers
+                | paginate
+                  : { itemsPerPage: 10, currentPage: p, totalItems: total };
+              let i = index
+            "
+          >
+            <td>{{ i + 1 + (p - 1) * 10 }}</td>
+            <td>
+              {{ subscriber.name || "-" }}
+            </td>
+            <td>{{ subscriber.email }}</td>
+            <td>{{ subscriber.emailStage || "--" }}</td>
+            <td>
+              <ng-container *ngIf="subscriber.nextEmailDate; else noDate">
+                {{ subscriber.nextEmailDate | date: "dd-MM-yyyy" }}
+              </ng-container>
+              <ng-template #noDate>-</ng-template>
+            </td>
+            <td>
+              <ng-container *ngIf="subscriber.created; else noCreated">
+                {{ subscriber.created | date: "dd-MM-yyyy HH:mm" }}
+              </ng-container>
+              <ng-template #noCreated>-</ng-template>
+            </td>
+          </tr>
+          <tr *ngIf="subscribers.length === 0">
+            <td colspan="6" class="text-center">No subscribers found</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination">
+      <pagination-controls
+        (pageChange)="onTableDataChange($event)"
+      ></pagination-controls>
+    </div>
+  </div>
+</div>

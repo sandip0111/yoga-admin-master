@@ -76,6 +76,27 @@
               <app-pending-payment></app-pending-payment>
             </ng-template>
           </ngb-tab>
+          <ngb-tab [title]="dashboardShared.rishikeshTitle">
+            <ng-template ngbTabContent>
+              <app-rishikesh
+                [paymentOption]="paymentOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-rishikesh>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="dashboardShared.baliTitle">
+            <ng-template ngbTabContent>
+              <app-bali
+                [paymentOption]="paymentOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-bali>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="dashboardShared.subscribersTitle">
+            <ng-template ngbTabContent>
+              <app-subscribers></app-subscribers>
+            </ng-template>
+          </ngb-tab>
           <ngb-tab [title]="createSwaraSadhnaTitle">
             <ng-template ngbTabContent>
               <div class="container_search">
@@ -143,22 +164,6 @@
                   Register
                 </button>
               </div>
-            </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.rishikeshTitle">
-            <ng-template ngbTabContent>
-              <app-rishikesh
-                [paymentOption]="paymentOption"
-                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
-              ></app-rishikesh>
-            </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.baliTitle">
-            <ng-template ngbTabContent>
-              <app-bali
-                [paymentOption]="paymentOption"
-                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
-              ></app-bali>
             </ng-template>
           </ngb-tab>
         </ngb-tabset>

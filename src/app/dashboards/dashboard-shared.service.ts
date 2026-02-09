@@ -15,5 +15,6 @@ export class DashboardSharedService {
   foundationSpiritualityTitle: string = "Foundation of Spirituality";
   rishikeshTitle: string = "Rishikesh";
   baliTitle: string = "Bali";
+  subscribersTitle: string = "Subscribers";
   constructor() {}
 }
