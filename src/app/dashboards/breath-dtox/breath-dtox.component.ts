@@ -21,7 +21,7 @@ export class BreathDtoxComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +36,7 @@ export class BreathDtoxComponent implements OnInit {
   }
   getAllBreathDetoxStudent(
     filter: searchPranaRambhFilter,
-    isSearch: boolean
+    isSearch: boolean,
   ): void {
     this.bDtoxLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
@@ -51,7 +51,7 @@ export class BreathDtoxComponent implements OnInit {
       },
       (error) => {
         console.error("Error fetching breathDetox data:", error);
-      }
+      },
     );
   }
 
@@ -83,6 +83,7 @@ export class BreathDtoxComponent implements OnInit {
           student.email,
           student.phoneNumber,
           student.city,
+          student.created ? new Date(student.created).toLocaleDateString() : "",
           student.isActive,
         ]);
       });
