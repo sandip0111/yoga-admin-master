@@ -37,6 +37,7 @@
       <th>Student Name</th>
       <th>Email</th>
       <th>Month</th>
+      <th>Joining Date</th>
     </thead>
     <tbody>
       <tr
@@ -57,6 +58,7 @@
         </td>
         <td>{{ obj.email }}</td>
         <td>{{ obj.month }}</td>
+        <td>{{ obj.created | date: "mediumDate" }}</td>
       </tr>
     </tbody>
   </table>

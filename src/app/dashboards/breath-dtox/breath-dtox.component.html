@@ -59,7 +59,18 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let breath of breathDetox | paginate : { itemsPerPage: 10, currentPage: breathP, totalItems: breathDetoxTotal }; let j = index">
+          <tr
+            *ngFor="
+              let breath of breathDetox
+                | paginate
+                  : {
+                      itemsPerPage: 10,
+                      currentPage: breathP,
+                      totalItems: breathDetoxTotal
+                    };
+              let j = index
+            "
+          >
             <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
             <td>{{ breath.firstName }} {{ breath.lastName || "" }}</td>
             <td>{{ breath.email }}</td>
