@@ -21,7 +21,7 @@ export class FunctionalSpiritualityComponent implements OnInit {
   }>();
   constructor(
     private service: ServiceService,
-    public dashboardShared: DashboardSharedService
+    public dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -33,12 +33,12 @@ export class FunctionalSpiritualityComponent implements OnInit {
     };
     this.getAllFoundationOfSpiritualityStudent(
       this.foundationDetoxfilter,
-      false
+      false,
     );
   }
   getAllFoundationOfSpiritualityStudent(
     filter: fosFilterModel,
-    isSearch: boolean
+    isSearch: boolean,
   ) {
     this.fosLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
@@ -54,7 +54,7 @@ export class FunctionalSpiritualityComponent implements OnInit {
       },
       (error) => {
         console.error("Error fetching breathDetox data:", error);
-      }
+      },
     );
   }
   foundationExportToExcel(tableId: string): void {
@@ -83,6 +83,9 @@ export class FunctionalSpiritualityComponent implements OnInit {
             index + 1,
             student.firstName,
             student.email,
+            student.created
+              ? new Date(student.created).toLocaleDateString()
+              : "",
             student.isActive,
           ]);
         });
@@ -97,7 +100,7 @@ export class FunctionalSpiritualityComponent implements OnInit {
     this.foundationDetoxfilter.pageNo = event;
     this.getAllFoundationOfSpiritualityStudent(
       this.foundationDetoxfilter,
-      false
+      false,
     );
     this.foundationPage = event;
     window.scrollTo({
