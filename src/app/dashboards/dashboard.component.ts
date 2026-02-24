@@ -277,7 +277,7 @@ export class DashboardComponent implements OnInit {
       course: course,
       courseList: courseList,
       password: generatePassword(),
-      month: "February, 2026",
+      month: "March, 2026",
     };
     this.service
       .createLiveCourseCustomer(onlineSadhna)

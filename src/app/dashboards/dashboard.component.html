@@ -151,9 +151,10 @@
                   >
                     <input
                       type="checkbox"
+                      *ngIf="option.isActive"
                       (change)="onCheckboxChange(option)"
                     />&nbsp;
-                    <span>{{ option.coursetitle }}</span>
+                    <span *ngIf="option.isActive">{{ option.coursetitle }}</span>
                   </label>
                 </ng-container>
                 <button
