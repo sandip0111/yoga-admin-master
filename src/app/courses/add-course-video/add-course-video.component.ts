@@ -57,6 +57,10 @@ export class AddCourseVideoComponent implements OnInit {
         value: "March, 2026",
         label: "March, 2026",
       },
+      {
+        value: "April, 2026",
+        label: "April, 2026",
+      },
     ];
     return months;
   }
