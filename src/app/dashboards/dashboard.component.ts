@@ -15,6 +15,7 @@ import {
   swarSadhnaStudentModel,
   createFreeWebinar,
   createBreathDetox,
+  createFoundationOfSpirituality,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 import { DashboardSharedService } from "./dashboard-shared.service";
@@ -137,7 +138,7 @@ export class DashboardComponent implements OnInit {
           email: data.email,
           phone: data.phone,
           password: generatePassword(),
-          installment: "2nd"
+          installment: "2nd",
         };
         this.twoHunTTCSave(ttcData);
       } else if (this.selectedOption == 4) {
@@ -182,9 +183,13 @@ export class DashboardComponent implements OnInit {
         this.breathDetoxSave(breathDetox);
       } else if (this.selectedOption == 11) {
         this.loading = true;
-        const fos: createFreeWebinar = {
+        const fos: createFoundationOfSpirituality = {
           name: data.name,
           email: data.email,
+          password: data.password || generatePassword(),
+          isActive: true,
+          paymentCourseId: "63c4de4a2bce43a907211c74",
+          source: "admin",
         };
         this.foundationOfSpiritualitySave(fos);
       } else if (
@@ -381,7 +386,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
-  foundationOfSpiritualitySave(data: createFreeWebinar) {
+  foundationOfSpiritualitySave(data: createFoundationOfSpirituality) {
     this.service.foundationOfSpiritualitySave(data).subscribe((res: any) => {
       if (res.status) {
         this.loading = false;

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import {
+  createFoundationOfSpirituality,
   createFreeWebinar,
   createPranicPurification,
   createSwaraSadhna,
@@ -313,7 +314,7 @@ export class ServiceService {
   giveAccessToUser(data: twoHunTTCModel) {
     return this.http.post(this.url + "api/v1/giveAccessToUser", data);
   }
-  foundationOfSpiritualitySave(data: createFreeWebinar) {
+  foundationOfSpiritualitySave(data: createFoundationOfSpirituality) {
     return this.http.post(
       this.url + "api/v1/foundationOfSpiritualitySave",
       data,
