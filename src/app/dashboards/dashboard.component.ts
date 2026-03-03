@@ -186,10 +186,7 @@ export class DashboardComponent implements OnInit {
         const fos: createFoundationOfSpirituality = {
           name: data.name,
           email: data.email,
-          password: data.password || generatePassword(),
-          isActive: true,
-          paymentCourseId: "63c4de4a2bce43a907211c74",
-          source: "admin",
+          password: data.password || generatePassword()
         };
         this.foundationOfSpiritualitySave(fos);
       } else if (

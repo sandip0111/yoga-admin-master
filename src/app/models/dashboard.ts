@@ -228,7 +228,4 @@ export interface createFoundationOfSpirituality {
   name: string;
   email: string;
   password: string;
-  isActive: boolean;
-  paymentCourseId: string;
-  source: string;
 }
