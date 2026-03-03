@@ -52,13 +52,13 @@
           >
             <td>{{ k + 1 + (foundationPage - 1) * 10 }}</td>
             <td>
-              {{ spiritualityStdnt.name }}
+              {{ spiritualityStdnt.firstName }} {{ spiritualityStdnt.lastName }}
             </td>
             <td>{{ spiritualityStdnt.email }}</td>
             <td>
-              <ng-container *ngIf="spiritualityStdnt.price; else noPayment">
+              <ng-container *ngIf="spiritualityStdnt.amount; else noPayment">
                 {{
-                  spiritualityStdnt?.price
+                  spiritualityStdnt?.amount
                     | currency: spiritualityStdnt?.currency.toUpperCase()
                 }}
               </ng-container>
@@ -77,7 +77,7 @@
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
-            <td>{{ spiritualityStdnt.paymentType }}</td>
+            <td>{{ spiritualityStdnt.paymentBy }}</td>
             <td>{{ spiritualityStdnt.created | date: "mediumDate" }}</td>
           </tr>
         </tbody>
