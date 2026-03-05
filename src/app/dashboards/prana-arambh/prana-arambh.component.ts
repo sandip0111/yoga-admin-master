@@ -27,7 +27,7 @@ export class PranaArambhComponent implements OnInit {
   }>();
   constructor(
     private service: ServiceService,
-    public dashboardShared: DashboardSharedService
+    public dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +35,8 @@ export class PranaArambhComponent implements OnInit {
       pageNo: 1,
       size: 10,
       searchText: "",
+      fromDate: "",
+      toDate: "",
       paymentType: "",
       paymentStatus: "",
       isGetAll: false,
@@ -43,13 +45,13 @@ export class PranaArambhComponent implements OnInit {
   }
   getAllParayanamStudent(
     filter: searchPranaRambhFilter,
-    isSearch: boolean
+    isSearch: boolean,
   ): void {
     this.isLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     this.p = isSearch ? 1 : this.p;
-     this.filter.isGetAll = false;
+    this.filter.isGetAll = false;
     this.service
       .getAllParayanamStudent(filter)
       .subscribe((res: PranArambhModel) => {

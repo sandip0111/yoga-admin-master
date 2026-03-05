@@ -19,6 +19,29 @@
         [(ngModel)]="filter.searchText"
         class="search-input form-control"
       />
+
+      <div style="display: flex; align-items: center">
+        <label for="fromDate" style="margin-inline-end: 8px">From Date:</label>
+        <input
+          type="date"
+          id="pranaArambhFromDate"
+          [(ngModel)]="filter.fromDate"
+          class="date-input form-control"
+        />
+      </div>
+
+      <div style="display: flex; align-items: center">
+        <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+        <input
+          type="date"
+          id="pranaArambhToDate"
+          [(ngModel)]="filter.toDate"
+          class="date-input form-control"
+          [min]="filter.fromDate"
+          [disabled]="!filter.fromDate"
+        />
+      </div>
+
       <div style="display: flex; align-items: center">
         <label for="toDate" style="margin-right: 8px">Payment status</label>
         <select
@@ -66,7 +89,7 @@
             <td>{{ student.studentInfo.password }}</td>
             <td>
               <ng-container *ngIf="student.amount; else noPayment">
-                {{ student.amount | currency : student.currency.toUpperCase() }}
+                {{ student.amount | currency: student.currency.toUpperCase() }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
@@ -89,7 +112,7 @@
             </td>
             <td>
               <ng-container *ngIf="student.created; else noPayment">
-                {{ student.created | date : "dd-MM-yyyy" }}
+                {{ student.created | date: "dd-MM-yyyy" }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
