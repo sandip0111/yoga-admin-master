@@ -126,6 +126,8 @@ export interface fosFilterModel {
   size: number;
   searchText: string;
   isGetAll: boolean;
+  fromDate?: string;
+  toDate?: string;
 }
 
 export const generatePassword = () => {

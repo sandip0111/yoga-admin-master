@@ -29,6 +29,8 @@ export class FunctionalSpiritualityComponent implements OnInit {
       pageNo: 1,
       size: 10,
       searchText: "",
+      fromDate: "",
+      toDate: "",
       isGetAll: false,
     };
     this.getAllFoundationOfSpiritualityStudent(

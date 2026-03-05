@@ -18,6 +18,31 @@
         [(ngModel)]="foundationDetoxfilter.searchText"
         class="search-input form-control"
       />
+
+      <div style="display: flex; align-items: center">
+        <label for="fosFromDate" style="margin-inline-end: 8px"
+          >From Date:</label
+        >
+        <input
+          type="date"
+          id="fosFromDate"
+          [(ngModel)]="foundationDetoxfilter.fromDate"
+          class="date-input form-control"
+        />
+      </div>
+
+      <div style="display: flex; align-items: center">
+        <label for="fosToDate" style="margin-inline-end: 8px">To Date:</label>
+        <input
+          type="date"
+          id="fosToDate"
+          [(ngModel)]="foundationDetoxfilter.toDate"
+          class="date-input form-control"
+          [min]="foundationDetoxfilter.fromDate"
+          [disabled]="!foundationDetoxfilter.fromDate"
+        />
+      </div>
+
       <button
         (click)="
           getAllFoundationOfSpiritualityStudent(foundationDetoxfilter, true)
