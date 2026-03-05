@@ -15,6 +15,33 @@
     [(ngModel)]="freeWebinarFilter.searchText"
     class="search-input form-control"
   />
+
+  <div style="display: flex; align-items: center">
+    <label for="freeWebinarFromDate" style="margin-inline-end: 8px"
+      >From Date:</label
+    >
+    <input
+      type="date"
+      id="freeWebinarFromDate"
+      [(ngModel)]="freeWebinarFilter.fromDate"
+      class="date-input form-control"
+    />
+  </div>
+
+  <div style="display: flex; align-items: center">
+    <label for="freeWebinarToDate" style="margin-inline-end: 8px"
+      >To Date:</label
+    >
+    <input
+      type="date"
+      id="freeWebinarToDate"
+      [(ngModel)]="freeWebinarFilter.toDate"
+      class="date-input form-control"
+      [min]="freeWebinarFilter.fromDate"
+      [disabled]="!freeWebinarFilter.fromDate"
+    />
+  </div>
+
   <div style="display: flex; align-items: center">
     <label for="toDate" style="margin-right: 8px">Month</label>
     <select

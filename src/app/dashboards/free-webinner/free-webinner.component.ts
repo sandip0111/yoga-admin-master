@@ -22,7 +22,7 @@ export class FreeWebinnerComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    public dashboardShared: DashboardSharedService
+    public dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -31,12 +31,14 @@ export class FreeWebinnerComponent implements OnInit {
       size: 10,
       searchText: "",
       month: "",
+      fromDate: "",
+      toDate: "",
     };
     this.getAllFreeWebinarData(this.freeWebinarFilter, false);
   }
   getAllFreeWebinarData(
     filter: searchFreeWebinarFilter,
-    isSearch: boolean
+    isSearch: boolean,
   ): void {
     this.freeLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
