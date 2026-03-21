@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { fosFilterModel } from "src/app/models/dashboard";
 import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
@@ -15,6 +15,7 @@ export class FunctionalSpiritualityComponent implements OnInit {
   foundationPage: number = 1;
   spiritualityStudent: any[] = [];
 
+  @Input() paymentOption: { value: string; name: string }[];
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;
     tableId: string;
@@ -109,5 +110,14 @@ export class FunctionalSpiritualityComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+
+  onPayStatusValueChange(event: string) {
+    event = event == "all" ? "" : event;
+    this.foundationDetoxfilter.paymentStatus = event;
+    this.getAllFoundationOfSpiritualityStudent(
+      this.foundationDetoxfilter,
+      true,
+    );
   }
 }

@@ -29,6 +29,7 @@
             <ng-template ngbTabContent
               ><app-functional-spirituality
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+                [paymentOption]="paymentOption"
               ></app-functional-spirituality>
             </ng-template>
           </ngb-tab>

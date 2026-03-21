@@ -130,6 +130,7 @@ export interface fosFilterModel {
   isGetAll: boolean;
   fromDate?: string;
   toDate?: string;
+  paymentStatus?: string;
 }
 
 export const generatePassword = () => {
