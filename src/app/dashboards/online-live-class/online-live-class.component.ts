@@ -12,13 +12,13 @@ import { DashboardSharedService } from "../dashboard-shared.service";
   styleUrls: ["./online-live-class.component.scss"],
 })
 export class OnlineLiveClassComponent implements OnInit {
-  onlineClassFilter: searchLiveClassFilter;
+  onlineClassFilter: searchLiveClassFilter | undefined;
   onineClassLoading: boolean = false;
   onlineClassPage: number = 1;
   onlineClassList: any;
   onlineClassTotal: number = 0;
   onlineClassPayType: string = "All";
-  selectedGroupId: string;
+  selectedGroupId!: string;
   teachersDropdown: teachersDropdownDto[] = [];
   selectedTeacher: number = 1;
 
@@ -34,6 +34,7 @@ export class OnlineLiveClassComponent implements OnInit {
     "February, 2026",
     "March, 2026",
     "April, 2026",
+    "May, 2026",
   ];
   constructor(
     private service: ServiceService,

@@ -61,6 +61,10 @@ export class AddCourseVideoComponent implements OnInit {
         value: "April, 2026",
         label: "April, 2026",
       },
+      {
+        value: "May, 2026",
+        label: "May, 2026",
+      }
     ];
     return months;
   }
@@ -120,8 +124,8 @@ export class AddCourseVideoComponent implements OnInit {
           this.selectedFile,
           this.courseName,
           this.selectedOption,
-          this.selectedMonth,
-          this.selectedTeacherId
+          this.selectedMonth ? this.selectedMonth : '',
+          this.selectedTeacherId ? this.selectedTeacherId : 0
         )
         .subscribe({
           next: (progress: UploadProgress) => {
