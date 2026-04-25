@@ -68,7 +68,7 @@
               : {
                   itemsPerPage: 10,
                   currentPage: pranicPurificationPage,
-                  totalItems: pranicPurificationTotal,
+                  totalItems: pranicPurificationTotal
                 };
           let i = index
         "
@@ -86,7 +86,7 @@
           [ngClass]="{
             'text-success': obj?.paymentStatus == 'paid',
             'text-warning': obj?.paymentStatus == 'pending',
-            'text-danger': obj?.paymentStatus == 'failed',
+            'text-danger': obj?.paymentStatus == 'failed'
           }"
         >
           {{ obj.paymentStatus }}
@@ -102,7 +102,7 @@
         <td
           [ngClass]="{
             'text-success': !obj?.couponUsed,
-            'text-danger': obj?.couponUsed,
+            'text-danger': obj?.couponUsed
           }"
         >
           {{ obj.couponcode }}
