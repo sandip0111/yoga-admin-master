@@ -61,6 +61,7 @@
               <app-pranic-purification
                 [isPranic]="false"
                 [paymentOption]="paymentOption"
+                (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-pranic-purification>
             </ng-template>
           </ngb-tab>

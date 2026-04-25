@@ -142,9 +142,12 @@ export class PranicPurificationComponent implements OnInit {
               student.phoneNumber,
               student.address || "N/A",
               `${student.price} ${student.currency}` || "N/A",
-              student.couponcode || "N/A",
+              student.password || "N/A",
               student.paymentStatus,
+              student.paymentType || "N/A",
+              student.month || "N/A",
               student.created || "N/A",
+              student.couponcode || "N/A",
             ]);
           });
           rowsData.forEach((row) => {

@@ -10,6 +10,7 @@ export class searchPranaRambhFilter {
   isGetAll?: boolean;
   month?: string;
   courseType?: string;
+  password?: string;
 }
 
 export class searchFreeWebinarFilter {
@@ -166,6 +167,9 @@ export interface PranArambhModel {
   total: number;
 }
 export interface pranicPurificationModel {
+  month: string;
+  paymentType: string;
+  password: string;
   _id: string;
   name: string;
   email: string;
