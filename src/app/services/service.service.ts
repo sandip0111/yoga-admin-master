@@ -18,7 +18,7 @@ export class ServiceService {
   private url = environment.apiUrl;
   public imageUrl = environment.imageUrl;
   public videoUrl = "https://yogavidyaschool.com:3000/public/video/";
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   isLogedIn() {
     return sessionStorage.getItem("token");
@@ -274,6 +274,12 @@ export class ServiceService {
   getAllPranicPurificationStudent(data: searchPranaRambhFilter) {
     return this.http.post(
       this.url + "api/v1/getAllPranicPurificationStudent",
+      data,
+    );
+  }
+  getAllPranicPurificationIIStudent(data: searchPranaRambhFilter) {
+    return this.http.post(
+      this.url + "api/v1/getAllPranicPurificationIIStudent",
       data,
     );
   }

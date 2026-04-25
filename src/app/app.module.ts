@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppRoutingModule } from "./app-routing.module";
-import { HashLocationStrategy, LocationStrategy } from "@angular/common";
+import { CommonModule, HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ChartsModule, ThemeService } from "ng2-charts";
@@ -63,7 +63,6 @@ import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-v
 import { RishikeshComponent } from "./dashboards/rishikesh/rishikesh.component";
 import { BaliComponent } from "./dashboards/bali/bali.component";
 import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,6 +124,7 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     ChartsModule,
@@ -136,4 +136,4 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
   providers: [ThemeService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,6 +12,7 @@ export class DashboardSharedService {
   breathDtoxTitle: string = "Breath Detox";
   pendingPaymentTitle: string = "All Pending Payment List";
   pranicPurificationTitle: string = "Pranic Purification";
+  pranicPurificationIITitle: string = "Pranic Purification II";
   foundationSpiritualityTitle: string = "Foundation of Spirituality";
   rishikeshTitle: string = "Rishikesh";
   baliTitle: string = "Bali";

@@ -18,25 +18,35 @@ export class PranicPurificationComponent implements OnInit {
   pranicPurificationList: pranicPurificationModel[] = [];
   pranicPurificationTotal: number = 0;
   pranicPurificationPage: number = 1;
-
+  @Input() isPranic: boolean = false;
   @Input() paymentOption: string[];
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;
     tableId: string;
   }>();
-
-  monthOption = [
-    { value: '', label: "All Month Data" },
-    { value: "July, 2025", label: "July, 2025" },
-    { value: "January, 2026", label: "January, 2026" },
-  ];
+  monthOption = [];
+  title: string = "";
 
   constructor(
     private service: ServiceService,
     public dashboardShared: DashboardSharedService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+    if (this.isPranic) {
+      this.title = "Pranic Purification";
+      this.monthOption = [
+        { value: '', label: "All Time" },
+        { value: "July, 2025", label: "July, 2025" },
+        { value: "January, 2026", label: "January, 2026" },
+      ]
+    } else {
+      this.title = "Pranic Purification IIT";
+      this.monthOption = [
+        { value: '', label: "All Month Data" },
+        { value: "May, 2026", label: "May, 2026" },
+      ]
+    }
     this.filter = {
       pageNo: 1,
       size: 10,
@@ -54,14 +64,25 @@ export class PranicPurificationComponent implements OnInit {
     filter.size = isSearch ? 10 : filter.size;
     this.pranicPurificationPage = isSearch ? 1 : this.pranicPurificationPage;
     filter.isGetAll = false;
-    this.service
-      .getAllPranicPurificationStudent(filter)
-      .subscribe((res: pranicPurificationResultModel) => {
-        this.pranicPurificationList = res.data;
-        this.pranicPurificationTotal = res.total;
-        this.dashboardShared.pranicPurificationTitle = `Pranic Purification (${this.pranicPurificationTotal})`;
-        this.loading = this.pranicPurificationList ? false : true;
-      });
+    if (this.isPranic) {
+      this.service
+        .getAllPranicPurificationStudent(filter)
+        .subscribe((res: pranicPurificationResultModel) => {
+          this.pranicPurificationList = res.data;
+          this.pranicPurificationTotal = res.total;
+          this.dashboardShared.pranicPurificationTitle = `Pranic Purification (${this.pranicPurificationTotal})`;
+          this.loading = this.pranicPurificationList ? false : true;
+        });
+    } else {
+      this.service
+        .getAllPranicPurificationIIStudent(filter)
+        .subscribe((res: pranicPurificationResultModel) => {
+          this.pranicPurificationList = res.data;
+          this.pranicPurificationTotal = res.total;
+          this.dashboardShared.pranicPurificationIITitle = `Pranic Purification II (${this.pranicPurificationTotal})`;
+          this.loading = this.pranicPurificationList ? false : true;
+        });
+    }
   }
   onPranicPurificationTableDataChange(event: number) {
     this.filter.pageNo = event;
@@ -86,28 +107,53 @@ export class PranicPurificationComponent implements OnInit {
     csvContent += headers + "\n";
     const rowsData = [];
     this.filter.isGetAll = true;
-    this.service
-      .getAllPranicPurificationStudent(this.filter)
-      .subscribe((res: pranicPurificationResultModel) => {
-        res.data.forEach((student, index) => {
-          rowsData.push([
-            index + 1,
-            student.name,
-            student.email,
-            student.phoneNumber,
-            student.address || "N/A",
-            `${student.price} ${student.currency}` || "N/A",
-            student.couponcode || "N/A",
-            student.paymentStatus,
-            student.created || "N/A",
-          ]);
+    if (this.isPranic) {
+      this.service
+        .getAllPranicPurificationStudent(this.filter)
+        .subscribe((res: pranicPurificationResultModel) => {
+          res.data.forEach((student, index) => {
+            rowsData.push([
+              index + 1,
+              student.name,
+              student.email,
+              student.phoneNumber,
+              student.address || "N/A",
+              `${student.price} ${student.currency}` || "N/A",
+              student.couponcode || "N/A",
+              student.paymentStatus,
+              student.created || "N/A",
+            ]);
+          });
+          rowsData.forEach((row) => {
+            csvContent += row.join(",") + "\n";
+          });
+          this.downloadCsv.emit({ csvContent, tableId });
+          this.loading = false;
         });
-        rowsData.forEach((row) => {
-          csvContent += row.join(",") + "\n";
+    } else {
+      this.service
+        .getAllPranicPurificationIIStudent(this.filter)
+        .subscribe((res: pranicPurificationResultModel) => {
+          res.data.forEach((student, index) => {
+            rowsData.push([
+              index + 1,
+              student.name,
+              student.email,
+              student.phoneNumber,
+              student.address || "N/A",
+              `${student.price} ${student.currency}` || "N/A",
+              student.couponcode || "N/A",
+              student.paymentStatus,
+              student.created || "N/A",
+            ]);
+          });
+          rowsData.forEach((row) => {
+            csvContent += row.join(",") + "\n";
+          });
+          this.downloadCsv.emit({ csvContent, tableId });
+          this.loading = false;
         });
-        this.downloadCsv.emit({ csvContent, tableId });
-        this.loading = false;
-      });
+    }
   }
   onPayStatusValueChange(status: string) {
     status = status == "all" ? "" : status;

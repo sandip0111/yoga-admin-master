@@ -50,8 +50,17 @@
           <ngb-tab [title]="dashboardShared.pranicPurificationTitle">
             <ng-template ngbTabContent>
               <app-pranic-purification
+                [isPranic]="true"
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+              ></app-pranic-purification>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab [title]="dashboardShared.pranicPurificationIITitle">
+            <ng-template ngbTabContent>
+              <app-pranic-purification
+                [isPranic]="false"
+                [paymentOption]="paymentOption"
               ></app-pranic-purification>
             </ng-template>
           </ngb-tab>
@@ -155,7 +164,9 @@
                       *ngIf="option.isActive"
                       (change)="onCheckboxChange(option)"
                     />&nbsp;
-                    <span *ngIf="option.isActive">{{ option.coursetitle }}</span>
+                    <span *ngIf="option.isActive">{{
+                      option.coursetitle
+                    }}</span>
                   </label>
                 </ng-container>
                 <button

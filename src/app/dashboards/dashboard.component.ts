@@ -1,17 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ServiceService } from "src/app/services/service.service";
 import {
-  fosFilterModel,
-  liveClassCustomerModel,
-  liveClassDataModel,
   liveClassTeacherModel,
   searchPranaRambhFilter,
   createSwaraSadhna,
   generatePassword,
-  pranicPurificationResultModel,
-  pranicPurificationModel,
   createPranicPurification,
-  swarSadhnaDataModel,
   swarSadhnaStudentModel,
   createFreeWebinar,
   createBreathDetox,
@@ -80,7 +74,6 @@ export class DashboardComponent implements OnInit {
       .getCourseBySlug({ slug: "online-yoga-classes" })
       .subscribe((res: any) => {
         this.onlineTeacherOption = res.data[0].teachersData;
-        console.log(this.onlineTeacherOption, res.data);
       });
     this.customerGroups = [
       {
@@ -110,7 +103,7 @@ export class DashboardComponent implements OnInit {
       month: "",
     };
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
