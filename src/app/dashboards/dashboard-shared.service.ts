@@ -17,5 +17,12 @@ export class DashboardSharedService {
   rishikeshTitle: string = "Rishikesh";
   baliTitle: string = "Bali";
   subscribersTitle: string = "Subscribers";
-  constructor() {}
+  constructor() { }
+  escapeCSV(value: any): string {
+    const str = value === null || value === undefined ? "" : String(value);
+    if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+      return `"${str.replace(/"/g, '""')}"`;
+    }
+    return str;
+  }
 }

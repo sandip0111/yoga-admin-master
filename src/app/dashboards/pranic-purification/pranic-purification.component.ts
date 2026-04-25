@@ -151,7 +151,7 @@ export class PranicPurificationComponent implements OnInit {
             ]);
           });
           rowsData.forEach((row) => {
-            csvContent += row.join(",") + "\n";
+            csvContent += row.map(this.dashboardShared.escapeCSV).join(",") + "\n";
           });
           this.downloadCsv.emit({ csvContent, tableId });
           this.loading = false;
