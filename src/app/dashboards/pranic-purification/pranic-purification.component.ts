@@ -41,7 +41,7 @@ export class PranicPurificationComponent implements OnInit {
         { value: "January, 2026", label: "January, 2026" },
       ]
     } else {
-      this.title = "Pranic Purification IIT";
+      this.title = "Pranic Purification II";
       this.monthOption = [
         { value: '', label: "All Month Data" },
         { value: "May, 2026", label: "May, 2026" },
