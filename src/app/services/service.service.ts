@@ -268,6 +268,12 @@ export class ServiceService {
       data,
     );
   }
+  registerPranicPurificationIIUser(data: createPranicPurification) {
+    return this.http.post(
+      this.url + "api/v1/registerPranicPurificationIIUser",
+      data,
+    );
+  }
   register200TTCUser(data: createPranicPurification) {
     return this.http.post(this.url + "api/v1/register200TTCUser", data);
   }

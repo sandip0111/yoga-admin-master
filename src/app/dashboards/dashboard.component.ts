@@ -44,6 +44,7 @@ export class DashboardComponent implements OnInit {
     { value: 1, label: "Swara Sadhana" },
     { value: 9, label: "Free Webinar" },
     { value: 2, label: "Pranic Purification" },
+    { value: 15, label: "Pranic Purification II" },
     { value: 3, label: "200 Online TTC" },
     { value: 4, label: "Online Live Class" },
     { value: 5, label: "Rishikesh 100" },
@@ -188,6 +189,15 @@ export class DashboardComponent implements OnInit {
         this.selectedOption == 14
       ) {
         this.onlineBaliSave(data, this.selectedOption);
+      } else if (this.selectedOption == 15) {
+        this.loading = true;
+        const pranicData: createPranicPurification = {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          address: "N/A",
+        };
+        this.pranicPurificationIISave(pranicData);
       } else {
         alert("Please select a course.");
       }
@@ -224,6 +234,23 @@ export class DashboardComponent implements OnInit {
   }
   pranicPurificationSave(data: createPranicPurification) {
     this.service.registerPranicPurificationUser(data).subscribe(
+      (res: any) => {
+        if (res.status == "ok") {
+          this.loading = false;
+          alert("Registration successful!");
+        } else {
+          this.loading = false;
+          alert("Registration failed: " + res.message);
+        }
+      },
+      (error) => {
+        this.loading = false;
+        alert("An error occurred while registering. Please try again.");
+      },
+    );
+  }
+  pranicPurificationIISave(data: createPranicPurification) {
+    this.service.registerPranicPurificationIIUser(data).subscribe(
       (res: any) => {
         if (res.status == "ok") {
           this.loading = false;
