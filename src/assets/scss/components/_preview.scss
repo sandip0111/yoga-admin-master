@@ -2,9 +2,9 @@
 
 .preview-list {
   .preview-item {
-    @include display-flex;
-    @include flex-direction(row);
-    @include align-items(flex-start);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
     padding: .75rem 1.5rem;
     font-size: .875rem;
     &:last-child {
@@ -29,9 +29,9 @@
       .preview-icon {
         padding: 6px;
         text-align: center;
-        @include display-flex;
-        @include align-items(center);
-        @include justify-content(center);
+        display: flex;
+        align-items: center;
+        justify-content: center;
         i {
           font-size: 1.125rem;
           margin: 0;
@@ -84,8 +84,8 @@
       }
     }
     .preview-actions {
-      @include display-flex;
-      @include flex-direction(row);
+      display: flex;
+      flex-direction: row;
       i {
         width: 29px;
         color: color(gray-lightest);

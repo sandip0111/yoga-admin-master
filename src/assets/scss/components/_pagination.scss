@@ -6,7 +6,7 @@
       border-color: $border-color;
       color: color(black);
       font-size: .875rem;
-      @include transition-duration(0.3s);
+      transition-duration: 0.3s;
       &:focus{
         background: inherit;
       }
@@ -33,7 +33,7 @@
     .page-item{
       .page-link{
         border: none;
-        @include border-radius(2px);
+        border-radius: 2px;
       }
     }
   }
@@ -48,7 +48,7 @@
         margin-right: 0;
       }
       .page-link{
-        @include border-radius(2px);
+        border-radius: 2px;
       }
     }
   }
@@ -57,12 +57,12 @@
       .page-link{}
       &:first-child{
         .page-link{
-          @include border-radius(25px 0 0 25px);
+          border-radius: 25px 0 0 25px;
         }
       }
       &:last-child{
         .page-link{
-          @include border-radius(0 25px 25px 0);
+          border-radius: 0 25px 25px 0;
         }
       }
     }
@@ -73,7 +73,7 @@
       margin-left: 3px;
       .page-link{
         border: none;
-        @include border-radius(50px);
+        border-radius: 50px;
 
       }
     }
@@ -85,17 +85,17 @@
       &:first-child{
         margin-left: 0;
         .page-link{
-          @include border-radius(10px 0 0 10px);
+          border-radius: 10px 0 0 10px;
         }
       }
       &:last-child{
         margin-right: 0;
         .page-link{
-          @include border-radius(0 10px 10px 0);
+          border-radius: 0 10px 10px 0;
         }
       }
       .page-link{
-        @include border-radius(2px);
+        border-radius: 2px;
       }
     }
   }

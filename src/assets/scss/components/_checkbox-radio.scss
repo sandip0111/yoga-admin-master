@@ -52,14 +52,14 @@
           border-radius: 2px;
           border: solid theme-color(primary);
           border-width: 2px;
-          @include transition(all);
+          transition: all;
           transition-duration: 0s;
           -webkit-transition-duration: 250ms;
           transition-duration: 250ms;
         }
   
         &:after {
-          @include transition(all);
+          transition: all;
           transition-duration: 0s;
           -webkit-transition-duration: 250ms;
           transition-duration: 250ms;
@@ -128,7 +128,7 @@
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          @include transition(all);
+          transition: all;
           transition-duration: 0s;
           -webkit-transition-duration: 250ms;
           transition-duration: 250ms;

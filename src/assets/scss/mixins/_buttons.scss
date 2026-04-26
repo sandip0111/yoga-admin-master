@@ -77,5 +77,5 @@ color: $color;
       color: $white;
     }
   }
-  @include transition(opacity .3s ease);
+  transition: opacity .3s ease;
 }
