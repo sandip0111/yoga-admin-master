@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ServiceService} from '../../services/service.service';
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -17,9 +18,9 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin(data:any){
-  //  console.log(data);
+
    this.webapiservice.doLogin(data).subscribe((res:any)=>{
-    console.log(res);
+
     if(res.status == "ok"){
       sessionStorage.setItem('token',res.token);
       sessionStorage.setItem('loginId',res.user._id);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { ActivatedRoute } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss']
@@ -41,7 +42,7 @@ export class AddCategoryComponent implements OnInit {
  getCategoryById(id) {
     this.http.getCategoryById(id).subscribe((res:any) => {
        this.categoryDetails = res.Data;
-     console.log(res.Data,'-----------------------------');
+
     });
   }
   deleteCategory(id:any){

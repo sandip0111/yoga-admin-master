@@ -8,6 +8,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-free-webinner",
   templateUrl: "./free-webinner.component.html",
   styleUrls: ["./free-webinner.component.scss"],

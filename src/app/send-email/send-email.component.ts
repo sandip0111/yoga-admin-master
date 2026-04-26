@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceService } from "../services/service.service";
 
 @Component({
+  standalone: false,
   selector: "app-send-email",
   templateUrl: "./send-email.component.html",
   styleUrls: ["./send-email.component.scss"],
@@ -21,7 +22,7 @@ export class SendEmailComponent implements OnInit {
           alert("Email sent successfully!");
         },
         (err) => {
-          console.log(err);
+
           alert("Error sending email.");
         }
       );

@@ -3,7 +3,7 @@
 .template-demo {
   > .btn {
     @extend .mt-3;
-    @extend .mr-3;
+    @extend .me-3;
   }
 
   .slider-wrap {
@@ -12,13 +12,13 @@
 
   > .btn-toolbar {
     @extend .mt-3;
-    @extend .mr-3;
+    @extend .me-3;
   }
 
   > .btn-group,
   >  .btn-group-vertical {
     @extend .mt-2;
-    @extend .mr-2;
+    @extend .me-2;
   }
 
   .progress {
@@ -51,7 +51,7 @@
 
   > .dropdown {
     display: inline-block;
-    @extend .mr-2;
+    @extend .me-2;
     margin-bottom: 0.5rem;
   }
 

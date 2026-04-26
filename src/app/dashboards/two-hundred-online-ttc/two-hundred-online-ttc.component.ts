@@ -8,6 +8,7 @@ import { DashboardSharedService } from "../dashboard-shared.service";
 import { ServiceService } from "src/app/services/service.service";
 
 @Component({
+  standalone: false,
   selector: "app-two-hundred-online-ttc",
   templateUrl: "./two-hundred-online-ttc.component.html",
   styleUrls: ["./two-hundred-online-ttc.component.scss"],

@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-contact-inquiry',
   templateUrl: './contact-inquiry.component.html',
   styleUrls: ['./contact-inquiry.component.scss']
@@ -49,7 +50,7 @@ export class ContactInquiryComponent implements OnInit {
  exportExcelData(){
 this.isLoading  =true;
   this.service.exportFile().subscribe((res: any) => {
-    // console.log(res);
+
     if(res){
       this.isLoading = false;
       const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

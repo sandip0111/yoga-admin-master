@@ -118,8 +118,8 @@
         }
       }
       .rtl & {
-        @extend .ml-0;
-        @extend .mr-4;
+        @extend .ms-0;
+        @extend .me-4;
       }
     }
 
@@ -215,7 +215,7 @@
                 }
                 .rtl & {
                   i{
-                    @extend .mr-0;
+                    @extend .me-0;
                     margin-left: 10px;
                   }
                 }

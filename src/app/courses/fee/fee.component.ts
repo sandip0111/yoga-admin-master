@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
+  standalone: false,
   selector: 'app-fee',
   templateUrl: './fee.component.html',
   styleUrls: ['./fee.component.scss']
@@ -33,7 +34,7 @@ export class FeeComponent implements OnInit {
       "_id":this.id,
       "feeInfo":data
     }
-    console.log(val);
+
     this.service.createCourse(val).subscribe((res:any)=>{
       if(res.status == 'ok'){
        alert(res.msg);

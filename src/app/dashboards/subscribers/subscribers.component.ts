@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ServiceService } from "../../services/service.service";
 
 @Component({
+  standalone: false,
   selector: "app-subscribers",
   templateUrl: "./subscribers.component.html",
   styleUrls: ["./subscribers.component.scss"],

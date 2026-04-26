@@ -9,6 +9,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-swara-sadhana",
   templateUrl: "./swara-sadhana.component.html",
   styleUrls: ["./swara-sadhana.component.scss"],

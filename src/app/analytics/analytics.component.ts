@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { Router,ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.scss']

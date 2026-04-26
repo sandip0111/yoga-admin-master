@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../../services/service.service';
-import { ActivatedRoute,Router } from '@angular/router';
-import { toJSDate } from '@ng-bootstrap/ng-bootstrap/datepicker/ngb-calendar';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-addstudent',
   templateUrl: './addstudent.component.html',
   styleUrls: ['./addstudent.component.scss']
@@ -21,14 +21,14 @@ export class AddstudentComponent implements OnInit {
     });
 
     if(this.routeSub){
-      console.log(this.routeSub);
+
       this.getstudentByid(this.routeSub)
     }
     this.getAllCourseV2();
   }
   studentData(data:any){
        this.studentdetails = data;
-       console.log(this.studentdetails);
+
     }
 
     checkEmail(e:any){
@@ -56,7 +56,7 @@ export class AddstudentComponent implements OnInit {
    data.course = data.selected;
    data.isActive = true;
    data.source = 'admin';
-//    console.log(data);
+
 // return
     this.service.createStudent(data).subscribe((res:any)=>{
      if(res.status == "ok"){
@@ -79,7 +79,7 @@ export class AddstudentComponent implements OnInit {
   }
   getAllCourseV2() {
     this.service.getAllCourseV2().subscribe((res:any) => {
-      //  console.log(res);
+
        this.courseList = res.data;
 
     });

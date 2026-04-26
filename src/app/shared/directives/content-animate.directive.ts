@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
  *
  */
 @Directive({
+  standalone: false,
 	selector: '[contentAnimate]'
 })
 export class ContentAnimateDirective implements OnInit, OnDestroy {

@@ -8,179 +8,145 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Dashboard</h4>
-        <ngb-tabset>
-          <ngb-tab [title]="dashboardShared.pranaArambhTitle">
-            <ng-template ngbTabContent>
+        <ul ngbNav #nav="ngbNav" class="nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink>{{ dashboardShared.pranaArambhTitle }}</a>
+            <ng-template ngbNavContent>
               <app-prana-arambh
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
                 [paymentTypeOption]="paymentTypeOption"
                 [paymentOption]="paymentOption"
               ></app-prana-arambh>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.breathDtoxTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink>{{ dashboardShared.breathDtoxTitle }}</a>
+            <ng-template ngbNavContent>
               <app-breath-dtox
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-breath-dtox>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.foundationSpiritualityTitle">
-            <ng-template ngbTabContent
-              ><app-functional-spirituality
+          </li>
+          <li [ngbNavItem]="3">
+            <a ngbNavLink>{{ dashboardShared.foundationSpiritualityTitle }}</a>
+            <ng-template ngbNavContent>
+              <app-functional-spirituality
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
                 [paymentOption]="paymentOption"
               ></app-functional-spirituality>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.swarSadhnaTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="4">
+            <a ngbNavLink>{{ dashboardShared.swarSadhnaTitle }}</a>
+            <ng-template ngbNavContent>
               <app-swara-sadhana
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
                 [paymentOption]="paymentOption"
                 [paymentTypeOption]="paymentTypeOption"
               ></app-swara-sadhana>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.freeWebinarTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="5">
+            <a ngbNavLink>{{ dashboardShared.freeWebinarTitle }}</a>
+            <ng-template ngbNavContent>
               <app-free-webinner></app-free-webinner>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.pranicPurificationTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="6">
+            <a ngbNavLink>{{ dashboardShared.pranicPurificationTitle }}</a>
+            <ng-template ngbNavContent>
               <app-pranic-purification
                 [isPranic]="true"
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-pranic-purification>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.pranicPurificationIITitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="7">
+            <a ngbNavLink>{{ dashboardShared.pranicPurificationIITitle }}</a>
+            <ng-template ngbNavContent>
               <app-pranic-purification
                 [isPranic]="false"
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-pranic-purification>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.twoHunTTCTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="8">
+            <a ngbNavLink>{{ dashboardShared.twoHunTTCTitle }}</a>
+            <ng-template ngbNavContent>
               <app-two-hundred-online-ttc
                 [paymentOption]="paymentOption"
                 [paymentTypeOption]="paymentTypeOption"
               ></app-two-hundred-online-ttc>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.onlineClassTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="9">
+            <a ngbNavLink>{{ dashboardShared.onlineClassTitle }}</a>
+            <ng-template ngbNavContent>
               <app-online-live-class
                 [paymentOption]="paymentOption"
                 [paymentTypeOption]="paymentTypeOption"
                 [customerGroups]="customerGroups"
               ></app-online-live-class>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.pendingPaymentTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="10">
+            <a ngbNavLink>{{ dashboardShared.pendingPaymentTitle }}</a>
+            <ng-template ngbNavContent>
               <app-pending-payment></app-pending-payment>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.rishikeshTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="11">
+            <a ngbNavLink>{{ dashboardShared.rishikeshTitle }}</a>
+            <ng-template ngbNavContent>
               <app-rishikesh
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-rishikesh>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.baliTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="12">
+            <a ngbNavLink>{{ dashboardShared.baliTitle }}</a>
+            <ng-template ngbNavContent>
               <app-bali
                 [paymentOption]="paymentOption"
                 (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
               ></app-bali>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="dashboardShared.subscribersTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="13">
+            <a ngbNavLink>{{ dashboardShared.subscribersTitle }}</a>
+            <ng-template ngbNavContent>
               <app-subscribers></app-subscribers>
             </ng-template>
-          </ngb-tab>
-          <ngb-tab [title]="createSwaraSadhnaTitle">
-            <ng-template ngbTabContent>
+          </li>
+          <li [ngbNavItem]="14">
+            <a ngbNavLink>{{ createSwaraSadhnaTitle }}</a>
+            <ng-template ngbNavContent>
               <div class="container_search">
-                <select
-                  [(ngModel)]="selectedOption"
-                  class="search-input form-control"
-                >
+                <select [(ngModel)]="selectedOption" class="search-input form-control">
                   <option [value]="0" selected hidden>Select a course</option>
-                  <option *ngFor="let option of options" [value]="option.value">
-                    {{ option.label }}
-                  </option>
+                  <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
                 </select>
-                <input
-                  type="text"
-                  placeholder="Email"
-                  [(ngModel)]="createSwaraSadhnaFrom.email"
-                  class="search-input form-control"
-                />
-                <input
-                  type="text"
-                  placeholder="name"
-                  [(ngModel)]="createSwaraSadhnaFrom.name"
-                  class="search-input form-control"
-                />
-                <input
-                  *ngIf="selectedOption == 1"
-                  type="text"
-                  placeholder="City"
-                  [(ngModel)]="createSwaraSadhnaFrom.city"
-                  class="search-input form-control"
-                />
-                <select
-                  *ngIf="
-                    selectedOption == 5 ||
-                    selectedOption == 6 ||
-                    selectedOption == 7
-                  "
-                  [(ngModel)]="createSwaraSadhnaFrom.month"
-                  class="search-input form-control"
-                >
-                  <option
-                    *ngFor="let m of rishikeshMonthOption"
-                    [value]="m.value"
-                  >
-                    {{ m.label }}
-                  </option>
+                <input type="text" placeholder="Email" [(ngModel)]="createSwaraSadhnaFrom.email" class="search-input form-control" />
+                <input type="text" placeholder="name" [(ngModel)]="createSwaraSadhnaFrom.name" class="search-input form-control" />
+                <input *ngIf="selectedOption == 1" type="text" placeholder="City" [(ngModel)]="createSwaraSadhnaFrom.city" class="search-input form-control" />
+                <select *ngIf="selectedOption == 5 || selectedOption == 6 || selectedOption == 7" [(ngModel)]="createSwaraSadhnaFrom.month" class="search-input form-control">
+                  <option *ngFor="let m of rishikeshMonthOption" [value]="m.value">{{ m.label }}</option>
                 </select>
                 <ng-container *ngIf="selectedOption == 4">
-                  <label
-                    class="line"
-                    *ngFor="let option of onlineTeacherOption; let i = index"
-                  >
-                    <input
-                      type="checkbox"
-                      *ngIf="option.isActive"
-                      (change)="onCheckboxChange(option)"
-                    />&nbsp;
-                    <span *ngIf="option.isActive">{{
-                      option.coursetitle
-                    }}</span>
+                  <label class="line" *ngFor="let option of onlineTeacherOption; let i = index">
+                    <input type="checkbox" *ngIf="option.isActive" (change)="onCheckboxChange(option)" />&nbsp;
+                    <span *ngIf="option.isActive">{{ option.coursetitle }}</span>
                   </label>
                 </ng-container>
-                <button
-                  (click)="
-                    registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)
-                  "
-                >
-                  Register
-                </button>
+                <button (click)="registerSwarSadhanaWebinarUser(createSwaraSadhnaFrom)">Register</button>
               </div>
             </ng-template>
-          </ngb-tab>
-        </ngb-tabset>
+          </li>
+        </ul>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </div>
     </div>
   </div>

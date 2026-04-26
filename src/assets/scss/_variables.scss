@@ -68,7 +68,7 @@ $theme-gradient-colors: (
 ////////// COLOR VARIABLES //////////
 $content-bg: #f2edf3;
 $footer-bg: $content-bg;
-$footer-color: color(dark);
+$footer-color: #3e4b5b;
 $border-color: #ebedf2;
 
 ////////// COLOR VARIABLES //////////
@@ -91,6 +91,35 @@ $social-colors: (
 );
 
 ////////// SOCIAL COLORS //////////
+
+////////// BOOTSTRAP 4 → 5 COMPATIBILITY FUNCTIONS //////////
+// Bootstrap 5 removed these helper functions. Re-declare them
+// to avoid changing every SCSS file in the project.
+
+@function color($key) {
+  @return map-get($colors, $key);
+}
+
+@function theme-color($key: "primary") {
+  @return map-get($theme-colors, $key);
+}
+
+@function theme-gradient-color($key: "primary") {
+  @return map-get($theme-gradient-colors, $key);
+}
+
+@function social-color($key: "twitter") {
+  @return map-get($social-colors, $key);
+}
+
+@function theme-color-level($color-name: "primary", $level: 0) {
+  $color: theme-color($color-name);
+  $color-base: if($level > 0, black, white);
+  $level: abs($level);
+  @return mix($color-base, $color, $level * 8%);
+}
+////////// END COMPATIBILITY FUNCTIONS //////////
+
 
 ////////// FONTS//
 
@@ -115,7 +144,7 @@ $sidebar-bg: $white;
 $sidebar-menu-color: #3e4b5b;
 $sidebar-submenu-color: #888;
 $sidebar-menu-active-bg: $white;
-$sidebar-menu-active-color: theme-color(primary);
+$sidebar-menu-active-color: #b66dff;
 $sidebar-menu-hover-bg: darken($sidebar-bg, 1%);
 $sidebar-menu-hover-color: darken($sidebar-menu-color, 10%);
 $sidebar-submenu-hover-color: darken($sidebar-submenu-color, 20%);
@@ -200,7 +229,7 @@ $tooltip-border-radius: .375rem;
 
 /////////  FORMS /////////
 
-$input-bg:                color(white);
+$input-bg:                $white;
 $input-border-radius:     2px;
 $input-placeholder-color: #c9c8c8;
 $input-font-size: .8125rem;
@@ -236,7 +265,7 @@ $table-cell-padding: .9375rem;
 $table-border-color: $border-color;
 
 $table-inverse-bg: #2a2b32;
-$table-inverse-color: color(white);
+$table-inverse-color: $white;
 
 //////// TABLES ////////
 
@@ -333,4 +362,4 @@ $nav-pills-custom-bg:               #fcfcfd;
 
 
 ////////// Vendor file asset path //////////
-$mdi-font-path:        "~@mdi/font/fonts";
+$mdi-font-path:        "@mdi/font/fonts";

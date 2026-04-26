@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart, RouteConfigLoadStart, RouteConfigLoadEnd } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -19,8 +20,8 @@ export class AppComponent implements OnInit{
     // Removing Sidebar, Navbar, Footer for Documentation, Error and Auth pages
     router.events.forEach((event) => {
       if(event instanceof NavigationStart) {
-        //  console.log(event);
-        if( (event['url'] == '/') && !this.userLogin ||(event['url'] == '/login') || (event['url'] == '/user-pages/register') || (event['url'] == '/error-pages/404') || (event['url'] == '/error-pages/500') ) {
+
+        if( (event['url'] == '/') && !this.userLogin || (event['url'] == '/login') ) {
           this.showSidebar = false;
           this.showNavbar = false;
           this.showFooter = false;

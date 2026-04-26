@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServiceService } from '../services/service.service';
 
 @Component({
+  standalone: false,
   selector: 'app-pages',
   templateUrl: './pages.component.html',
   styleUrls: ['./pages.component.scss']

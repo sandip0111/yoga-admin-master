@@ -95,17 +95,6 @@ export class ServiceService {
   getCourseByid(id) {
     return this.http.get(this.url + "api/v1/getCourseById/" + id);
   }
-  createEmploye(data: any) {
-    return this.http.post(this.url + "api/v1/createEmploye", data);
-  }
-
-  getEmploye(id = "") {
-    return this.http.get(this.url + "api/v1/getEmploye");
-  }
-
-  getEmployeById(id) {
-    return this.http.get(this.url + "api/v1/getEmployeById/" + id);
-  }
 
   uploadImage(dam: any) {
     return this.http.post(this.url + "api/v1/uploadImage", dam);
@@ -299,7 +288,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/getBaliData", data);
   }
   sendMailToPrashantJi(data: { name: string; email: string }) {
-    console.log("mdamk");
+
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
   }
   createLiveCourseCustomer(data: createPranicPurification) {

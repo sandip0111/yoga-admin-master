@@ -4,6 +4,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-breath-dtox",
   templateUrl: "./breath-dtox.component.html",
   styleUrls: ["./breath-dtox.component.scss"],

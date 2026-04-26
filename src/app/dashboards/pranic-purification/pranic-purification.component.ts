@@ -8,6 +8,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-pranic-purification",
   templateUrl: "./pranic-purification.component.html",
   styleUrls: ["./pranic-purification.component.scss"],

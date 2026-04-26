@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import * as FileSaver from 'file-saver';
 
 @Component({
+  standalone: false,
   selector: 'app-payment-details',
   templateUrl: './payment-details.component.html',
   styleUrls: ['./payment-details.component.scss']
@@ -30,7 +31,7 @@ export class PaymentDetailsComponent implements OnInit {
   getPayment(filter:any) {
     this.isLoading =true;
     this.service.getAllPayment(filter).subscribe((res:any) => {
-      console.log(res);
+
 
        this.payList = res.data;
        this.total = res.total;
@@ -51,7 +52,7 @@ export class PaymentDetailsComponent implements OnInit {
 //  exportExcelData(){
 // this.isLoading  =true;
 //   this.service.exportFile().subscribe((res: any) => {
-//     // console.log(res);
+
 //     if(res){
 //       this.isLoading = false;
 //       const blob = new Blob([res], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });

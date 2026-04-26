@@ -3,6 +3,7 @@ import { UploadProgress } from "src/app/models/uploadCourse";
 import { S3BucketService } from "src/app/services/s3Service/s3-bucket.service";
 
 @Component({
+  standalone: false,
   selector: "app-add-course-video",
   templateUrl: "./add-course-video.component.html",
   styleUrls: ["./add-course-video.component.scss"],
