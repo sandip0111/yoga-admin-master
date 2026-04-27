@@ -4,12 +4,12 @@
 
   &:hover,
   &:focus {
-    background: darken($color, 10%);
+    background: mix(black, $color, 10%);
     color: $white;
   }
   &.btn-social-icon-text {
     padding: 0 1.5rem 0 0;
-    background: lighten($color, 10%);
+    background: mix(white, $color, 10%);
     i {
       background: $color;
       padding: .75rem;

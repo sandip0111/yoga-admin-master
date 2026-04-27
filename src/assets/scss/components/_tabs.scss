@@ -117,7 +117,7 @@
 		.nav-link {
 			background: transparent;
 			border-color: rgba($white, .2);
-			color: darken(theme-color(primary), 30%);
+			color: #5900cc; /* darken(#b66dff primary, 30%) */
 			font-family: $type1-bold;
 			padding: 1.75rem;
 			&.active {

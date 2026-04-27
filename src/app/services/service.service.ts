@@ -17,7 +17,7 @@ import {
 export class ServiceService {
   private url = environment.apiUrl;
   public imageUrl = environment.imageUrl;
-  public videoUrl = "https://yogavidyaschool.com:3000/public/video/";
+  public videoUrl = environment.apiUrl + 'public/video/';
   constructor(private http: HttpClient) { }
 
   isLogedIn() {
@@ -43,7 +43,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/createMentor", data);
   }
 
-  getAllMentor(id = "") {
+  getAllMentor() {
     return this.http.get(this.url + "api/v1/getAllMentor");
   }
 
@@ -89,7 +89,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/getAllWebinarRegistration", data);
   }
 
-  getAllCourseV2(id = "") {
+  getAllCourseV2() {
     return this.http.get(this.url + "api/v1/getAllCourseV2");
   }
   getCourseByid(id) {
@@ -113,15 +113,15 @@ export class ServiceService {
   createMedia(data: any) {
     return this.http.post(this.url + "api/v1/createMedia", data);
   }
-  getAllMedia(id = "") {
-    return this.http.get(this.url + "api/v1/getAllMedia" + id);
+  getAllMedia() {
+    return this.http.get(this.url + "api/v1/getAllMedia");
   }
 
   createPage(data: any) {
     return this.http.post(this.url + "api/v1/createPage", data);
   }
 
-  getAllPages(id = "") {
+  getAllPages() {
     return this.http.get(this.url + "api/v1/getAllPages");
   }
   getPageById(id: any) {
@@ -132,7 +132,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/createTestimonial", data);
   }
 
-  getAllTestimonial(id = "") {
+  getAllTestimonial() {
     return this.http.get(this.url + "api/v1/getAllTestimonial");
   }
   getTestimonialById(id: any) {
@@ -180,7 +180,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/getAllPayment", data);
   }
 
-  exportFile(id: any = "") {
+  exportFile() {
     return this.http.get(this.url + "api/v1/exportInquiry", {
       responseType: "arraybuffer",
     });
@@ -207,7 +207,7 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/createVideo", data);
   }
 
-  getAllCourseAdmin(id = "") {
+  getAllCourseAdmin() {
     return this.http.get(this.url + "api/v1/getAllCourseAdmin");
   }
 

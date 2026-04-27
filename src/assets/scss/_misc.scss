@@ -138,7 +138,7 @@ code {
     vertical-align: middle;
     line-height: 1;
     margin: auto 0;
-    color: darken(#e4e4e4,20%);
+    color: mix(black, #e4e4e4, 20%);
   }
 }
 .removeProbanner {

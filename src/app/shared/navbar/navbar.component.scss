@@ -1,6 +1,6 @@
 /* Navbar */
 
-@import '../../../styles.scss';
+@import '../../../assets/scss/component-imports';
 
 /* Navbar */
 
@@ -102,7 +102,7 @@
         input {
           font-size: $default-font-size;
           padding: .5rem;
-          @include input-placeholder {
+          @include placeholder {
             font-size: $navbar-font-size;
             color: $navbar-menu-color;
             font-family: $type1-light;
@@ -118,8 +118,8 @@
         }
       }
       .rtl & {
-        @extend .ms-0;
-        @extend .me-4;
+        margin-left: 0 !important;
+        margin-right: 1.5rem !important;
       }
     }
 
@@ -161,8 +161,8 @@
           margin-left: 1.5rem;
           margin-right: 1.5rem;
           height: $navbar-height;
-          @include display-flex;
-          @include align-items(center);
+          display: flex;
+          align-items: center;
           cursor: pointer;
           @media (max-width: 767px) {
             margin-left: .8rem;
@@ -198,8 +198,8 @@
               padding: 0;
 
               .dropdown-item {
-                @extend .d-flex;
-                @extend .align-items-center;
+                display: flex;
+                align-items: center;
                 margin-bottom: 0;
                 padding: 11px 13px;
                 cursor: pointer;
@@ -215,7 +215,7 @@
                 }
                 .rtl & {
                   i{
-                    @extend .me-0;
+                    margin-right: 0 !important;
                     margin-left: 10px;
                   }
                 }
@@ -246,7 +246,7 @@
         }
         &.nav-profile {
           .nav-link {
-            @extend .d-flex;
+            display: flex;
             .nav-profile-img {
               position: relative;
               width: 32px;
@@ -350,13 +350,13 @@
         color: $white;
         .nav-profile-text {
           p {
-            @extend .text-white;         
+            color: $white !important;
           }
         }
         .search-field {
           .input-group {
             input {
-              @include input-placeholder {
+              @include placeholder {
                 color: $white;
               }
             }
