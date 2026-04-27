@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:color';
 
 ////////// COLOR SYSTEM //////////
 
@@ -97,26 +99,26 @@ $social-colors: (
 // to avoid changing every SCSS file in the project.
 
 @function color($key) {
-  @return map-get($colors, $key);
+  @return map.get($colors, $key);
 }
 
 @function theme-color($key: "primary") {
-  @return map-get($theme-colors, $key);
+  @return map.get($theme-colors, $key);
 }
 
 @function theme-gradient-color($key: "primary") {
-  @return map-get($theme-gradient-colors, $key);
+  @return map.get($theme-gradient-colors, $key);
 }
 
 @function social-color($key: "twitter") {
-  @return map-get($social-colors, $key);
+  @return map.get($social-colors, $key);
 }
 
 @function theme-color-level($color-name: "primary", $level: 0) {
   $color: theme-color($color-name);
   $color-base: if($level > 0, black, white);
   $level: abs($level);
-  @return mix($color-base, $color, $level * 8%);
+  @return color.mix($color-base, $color, $level * 8%);
 }
 ////////// END COMPATIBILITY FUNCTIONS //////////
 
