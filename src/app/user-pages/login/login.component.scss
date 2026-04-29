@@ -51,8 +51,8 @@
 }
 
 .submit-btn {
-  background-color: #0d6efd; /* Bootstrap primary blue */
-  border-color: #0d6efd;
+  background-color: var(--primary);
+  border-color: var(--primary);
   color: white;
   padding: 0.6rem;
   font-size: 1rem;
@@ -61,7 +61,7 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
   }
 }

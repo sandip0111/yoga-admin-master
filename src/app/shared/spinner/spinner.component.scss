@@ -1,36 +1,28 @@
 @import "../../../assets/scss/component-imports";
 
 .spinner-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: calc(100vh - #{$navbar-height} - 5.5rem);
-  position: fixed;
-  width: calc(100% - #{$sidebar-width-lg} - 4rem);
-  @media (max-width: 991px) {
-    width: 100%;
-  }
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+
   .donut {
     width: 4rem;
     height: 4rem;
     border-radius: 50%;
-    border: 0.3rem solid rgba(#979fd0, 0.3);
-    border-top-color: #979fd0;
+    border: 0.3rem solid rgba(182, 109, 255, 0.3); /* Purple base */
+    border-top-color: #b66dff; /* Purple as seen in user's Image 2 */
     animation: 1.5s spin infinite linear;
   }
 }
 
-:host-context(.sidebar-icon-only) {
-  .spinner-wrapper {
-    width: calc(100% - #{$sidebar-width-icon} - 4rem);    
-  }
-}
 
-:host-context(.sidebar-mini) {
-  .spinner-wrapper {
-    width: calc(100% - #{$sidebar-width-mini} - 4rem);    
-  }
-}
 
 @keyframes spin {
   to {

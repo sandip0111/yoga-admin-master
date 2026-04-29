@@ -1,6 +1,21 @@
 @use 'sass:map';
 @use 'sass:color';
 
+:root {
+  --primary: #0d6efd;
+  --primary-hover: #0b5ed7;
+  --primary-active: #0a58ca;
+  --secondary: #d8d8d8;
+  --success: #1bcfb4;
+  --info: #198ae3;
+  --warning: #fed713;
+  --danger: #fe7c96;
+  --light: #f8f9fa;
+  --dark: #3e4b5b;
+  --content-bg: #f2edf3;
+  --sidebar-bg: #ffffff;
+}
+
 ////////// COLOR SYSTEM //////////
 
 $blue:              #5E50F9;
@@ -43,7 +58,7 @@ $colors: (
 
 
 $theme-colors: (
-  primary:         #b66dff,
+  primary:         #0d6efd,
   secondary:       #d8d8d8,
   success:         #1bcfb4,
   info:            #198ae3,
@@ -54,7 +69,7 @@ $theme-colors: (
 );
 
 $theme-gradient-colors: (
-  primary:         linear-gradient(to right, #da8cff, #9a55ff),
+  primary:         linear-gradient(to right, #4facfe, #00f2fe),
   secondary:       linear-gradient(to right, #e7ebf0, #868e96),
   success:         linear-gradient(to right, #84d9d2, #07cdae),
   info:            linear-gradient(to right, #90caf9, #047edf 99%),
@@ -150,7 +165,7 @@ $sidebar-menu-active-color: #b66dff;
 $sidebar-menu-hover-bg: #fafafa;
 $sidebar-menu-hover-color: #28323d;
 $sidebar-submenu-hover-color: #545454;
-$sidebar-menu-icon-color: #bba8bff5;
+$sidebar-menu-icon-color: #8c8c8c;
 $sidebar-menu-arrow-color: #9e9da0;
 $sidebar-menu-border-color: #f2edf3;
 
