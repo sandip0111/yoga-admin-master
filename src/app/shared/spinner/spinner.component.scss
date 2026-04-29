@@ -1,31 +1,44 @@
 @import "../../../assets/scss/component-imports";
 
-.spinner-wrapper {
+// Extremely aggressive centering using fixed positioning for both the overlay and the spinner itself.
+// This bypasses any containing block issues created by parent transforms or layout nesting.
+
+.loader-overlay {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background: rgba(255, 255, 255, 0.7) !important;
-  z-index: 99999 !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-
-  .donut {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    border: 0.3rem solid rgba(182, 109, 255, 0.3); /* Purple base */
-    border-top-color: #b66dff; /* Purple as seen in user's Image 2 */
-    animation: 1.5s spin infinite linear;
-  }
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 10000 !important;
+  pointer-events: all !important;
 }
 
+.spinner-border {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  margin-top: -1.75rem !important; // Half of height (3.5rem)
+  margin-left: -1.75rem !important; // Half of width (3.5rem)
+  width: 3.5rem !important;
+  height: 3.5rem !important;
+  border-width: 0.3em !important;
+  z-index: 10001 !important;
+  color: #5E50F9 !important; // Explicitly use primary color
+}
 
+.sr-only {
+  display: none !important;
+}
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+:host {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  z-index: 10000;
 }
