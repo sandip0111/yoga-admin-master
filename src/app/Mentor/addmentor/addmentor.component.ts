@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { Router,ActivatedRoute } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-addmentor',
   templateUrl: './addmentor.component.html',
   styleUrls: ['./addmentor.component.scss']
@@ -71,7 +72,7 @@ export class AddmentorComponent implements OnInit {
 
   getMentorById(id:any){
     this.service.getMentorById(id).subscribe((res:any)=>{
-    console.log(res);
+
    this.formData = res.data
    this.pictureFetch = res.data.picture;
    this.thumbFetch = res.data.thumb;

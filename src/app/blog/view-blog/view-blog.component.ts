@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-view-blog',
   templateUrl: './view-blog.component.html',
   styleUrls: ['./view-blog.component.scss']

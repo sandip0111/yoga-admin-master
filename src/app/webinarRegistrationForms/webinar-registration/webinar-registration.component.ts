@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
+  standalone: false,
   selector: 'app-webinar-registration',
   templateUrl: './webinar-registration.component.html',
   styleUrls: ['./webinar-registration.component.scss']

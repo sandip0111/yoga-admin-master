@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
+  standalone: false,
   selector: 'app-video-review',
   templateUrl: './video-review.component.html',
   styleUrls: ['./video-review.component.scss']

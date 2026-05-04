@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { ActivatedRoute , Router} from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-upcoming-event',
   templateUrl: './upcoming-event.component.html',
   styleUrls: ['./upcoming-event.component.scss']
@@ -54,7 +55,7 @@ export class UpcomingEventComponent implements OnInit {
         "upcomingEventInfo":[data]
       }
     }
-    // console.log(val);
+
 
     this.service.createCourse(val).subscribe((res:any)=>{
       if(res.status === 'ok'){
@@ -76,7 +77,7 @@ export class UpcomingEventComponent implements OnInit {
 
   }
   deleteContent(data:any,index:any){
-  console.log(data,index);
+
 
   }
 

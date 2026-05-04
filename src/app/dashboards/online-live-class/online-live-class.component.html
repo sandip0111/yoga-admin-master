@@ -1,8 +1,4 @@
-<div *ngIf="onineClassLoading" class="loader-overlay">
-  <div class="spinner-border text-primary" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
+<app-spinner *ngIf="onineClassLoading"></app-spinner>
 
 <div class="header-container">
   <h4>{{ selectedTeacherName }} {{ onlineClassFilter.month }} Class</h4>

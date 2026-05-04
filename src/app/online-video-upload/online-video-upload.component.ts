@@ -3,6 +3,7 @@ import { ServiceService } from '../../app/services/service.service';
 import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-online-video-upload',
   templateUrl: './online-video-upload.component.html',
   styleUrls: ['./online-video-upload.component.scss']
@@ -20,7 +21,7 @@ export class OnlineVideoUploadComponent implements OnInit {
 
   InsertData(data:any){
   this.service.insertVideo(data).subscribe((res: any) => {
-   console.log(res,'---');
+
    if(res == "ok"){
     alert(res.msg);
     this.router.navigate([`/course-video/${data.courseId}`]);
@@ -35,7 +36,7 @@ export class OnlineVideoUploadComponent implements OnInit {
 
   getAllCourseAdmin(){
     this.service.getAllCourseAdmin().subscribe((res:any)=>{
-      // console.log(res);
+
       this.courseList = res.data;
     })
   }
@@ -47,7 +48,7 @@ export class OnlineVideoUploadComponent implements OnInit {
       formData.append('video', e.target.files[0]);
       formData.append('type', 'return');
       this.service.uploadVideo(formData).subscribe((res: any) => {
-        console.log(res);
+
         if (res.status == "ok") {
           alert('upload success');
           this.formData.videoName = res.videoName

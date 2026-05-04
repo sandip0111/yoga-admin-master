@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-imageslider',
   templateUrl: './imageslider.component.html',
   styleUrls: ['./imageslider.component.scss']
@@ -57,7 +58,7 @@ export class ImagesliderComponent implements OnInit {
 
   getSliderById(id:any){
     this.service. getSliderById(id).subscribe((res:any)=>{
-      // console.log(res.data.image);
+
       this.formData = res.data;
       this.imageFetch = res.data.image;
     })

@@ -4,6 +4,7 @@ import { Router,ActivatedRoute } from '@angular/router';
 
 
 @Component({
+  standalone: false,
   selector: 'app-blog',
   templateUrl: './blog.component.html',
   styleUrls: ['./blog.component.scss']
@@ -41,7 +42,7 @@ export class BlogComponent implements OnInit {
      data.isActive = true;
    }
    this.service.createBlog(data).subscribe((res: any) => {
-    console.log(res);
+
     if(res.status == "ok"){
       alert(res.msg);
       this.router.navigate(['/view-blog']);
@@ -55,7 +56,7 @@ export class BlogComponent implements OnInit {
 
   selectBlogImage(e:any){
     this.isLoading =true;
-    console.log(e.target.files);
+
     if(e.target.files[0].size > 500000){
       alert('File Size should be less than 500kb');
       e.target.value = '';

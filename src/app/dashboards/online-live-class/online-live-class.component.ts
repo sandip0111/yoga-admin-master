@@ -7,6 +7,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-online-live-class",
   templateUrl: "./online-live-class.component.html",
   styleUrls: ["./online-live-class.component.scss"],

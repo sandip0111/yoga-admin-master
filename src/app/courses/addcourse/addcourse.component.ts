@@ -3,6 +3,7 @@ import { ActivatedRoute , Router} from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
+  standalone: false,
   selector: 'app-addcourse',
   templateUrl: './addcourse.component.html',
   styleUrls: ['./addcourse.component.scss']

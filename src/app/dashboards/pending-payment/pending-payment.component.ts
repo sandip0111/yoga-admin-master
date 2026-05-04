@@ -7,6 +7,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-pending-payment",
   templateUrl: "./pending-payment.component.html",
   styleUrls: ["./pending-payment.component.scss"],
@@ -56,7 +57,7 @@ export class PendingPaymentComponent implements OnInit {
     this.page = isSearch ? 1 : this.page;
     this.service.getAllPendingPaymentList(filter).subscribe((res: any) => {
       const result = res.data[0];
-      console.log("mdntsskas", result);
+
       this.list = result.data;
       this.total = result.metadata[0].total ?? 0;
       this.dashboardShared.pendingPaymentTitle = `All Pending Payment List (${this.total})`;

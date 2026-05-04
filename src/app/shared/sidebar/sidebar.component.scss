@@ -1,6 +1,6 @@
 /* Sidebar */
 
-@import '../../../styles.scss';
+@import '../../../assets/scss/component-imports';
 .sidebar {
   min-height: calc(100vh - #{$navbar-height});
   background: $sidebar-bg;
@@ -24,7 +24,7 @@
 
     .nav-item {
       padding:0 $sidebar-menu-padding-x;
-      @include transition-duration(0.25s);
+      transition-duration: 0.25s;
       transition-property: background;
       -webkit-transition-property: background;
       .collapse {
@@ -32,12 +32,12 @@
       }
 
       .nav-link {
-        @include display-flex;
-        @include align-items(center);
+        display: flex;
+        align-items: center;
         white-space: nowrap;
         padding:$sidebar-menu-padding-y 0 $sidebar-menu-padding-y 0;
         color: $sidebar-menu-color;
-        @include transition-duration(0.45s);
+        transition-duration: 0.45s;
         transition-property: color;
         -webkit-transition-property: color;
         cursor: pointer;
@@ -114,7 +114,7 @@
             font-family: $type1-medium;            
           }
           i {
-            color: theme-color(primary);
+            color: $sidebar-menu-active-color;
           }
         }
       }
@@ -278,8 +278,8 @@
           &.hover-open {
             .nav-link {
               .menu-title {
-                @include display-flex;
-                @include align-items(center);
+                display: flex;
+                align-items: center;
                 background: $sidebar-menu-hover-bg;
                 padding: 0.5rem 1.4rem;
                 left: $sidebar-width-icon;

@@ -42,7 +42,7 @@ ngb-datepicker {
       ngb-datepicker-month-view {
         .ngb-dp-week {
           display: flex;
-          @include justify-content(space-around);
+          justify-content: space-around;
           &:last-child {
             padding-bottom: 35px;
             margin-bottom: 0;

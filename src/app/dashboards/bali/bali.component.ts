@@ -8,6 +8,7 @@ import { DashboardSharedService } from "../dashboard-shared.service";
 import { ServiceService } from "src/app/services/service.service";
 
 @Component({
+  standalone: false,
   selector: "app-bali",
   templateUrl: "./bali.component.html",
   styleUrls: ["./bali.component.scss"],

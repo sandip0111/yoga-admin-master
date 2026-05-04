@@ -1,9 +1,11 @@
+@use 'sass:map';
+
 // Functions
 
 @function social-color($key: "twitter") {
-  @return map-get($social-colors, $key);
+  @return map.get($social-colors, $key);
 }
 
 @function theme-gradient-color($key: "primary") {
-  @return map-get($theme-gradient-colors, $key);
+  @return map.get($theme-gradient-colors, $key);
 }

@@ -3,6 +3,7 @@ import { ServiceService } from '../services/service.service';
 import {Router,ActivatedRoute} from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-testimonial',
   templateUrl: './testimonial.component.html',
   styleUrls: ['./testimonial.component.scss']
@@ -39,14 +40,14 @@ export class TestimonialComponent implements OnInit {
 
   getAllTestimonial(){
     this.service.getAllTestimonial().subscribe((res: any) => {
-    console.log(res);
+
     this.testList = res.data
 
     });
   }
 
   saveTestimonial(data:any){
-    // console.log(data);
+
     // return
 
     if(!this.testId){

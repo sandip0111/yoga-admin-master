@@ -8,6 +8,7 @@ import { DashboardSharedService } from "../dashboard-shared.service";
 import { ServiceService } from "src/app/services/service.service";
 
 @Component({
+  standalone: false,
   selector: "app-rishikesh",
   templateUrl: "./rishikesh.component.html",
   styleUrls: ["./rishikesh.component.scss"],

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "./auth.guard";
+import { authGuard } from "./auth.guard";
 import { AddstudentComponent } from "./student/addstudent/addstudent.component";
 import { ViewStudentComponent } from "./student/view-student/view-student.component";
 import { CourseComponent } from "./courses/course/course.component";
@@ -34,236 +34,174 @@ import { DashboardComponent } from "./dashboards/dashboard.component";
 import { SendEmailComponent } from "./send-email/send-email.component";
 import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-video.component";
 const routes: Routes = [
-  // { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  // { path: 'dashboard', component: DashboardComponent,canActivate:[AuthGuard]},
-  // { path: 'client', component: ClientComponent },
-  // // { path: 'client/:id', component: ClientComponent },
   { path: "", redirectTo: "/login", pathMatch: "full" },
-  // { path: 'employee', component: EmployeeComponent,canActivate:[AuthGuard]},
-  // { path: 'employee/:id', component: EmployeeComponent,canActivate:[AuthGuard]},
-  // // { path: 'team', component: TeamComponent },
-  // // { path: 'team/:id', component: TeamComponent },
-  // // { path: 'profile', component: ProfileComponent },
-  // // { path: 'setting', component: SettingsComponent },
-  // // { path: 'export', component: ExportComponent },
-  // // { path: 'new-application', component: NewApplicationComponent },
-  // // { path: 'application', component: ApplicationComponent },
-  // // { path: 'checks', component: ChecksComponent },
-  // { path: 'bulk-application', component: BulkApplicationComponent },
-  {
-    path: "basic-ui",
-    loadChildren: () =>
-      import("./basic-ui/basic-ui.module").then((m) => m.BasicUiModule),
-  },
-  {
-    path: "charts",
-    loadChildren: () =>
-      import("./charts/charts.module").then((m) => m.ChartsDemoModule),
-  },
-  {
-    path: "forms",
-    loadChildren: () => import("./forms/form.module").then((m) => m.FormModule),
-  },
-  {
-    path: "tables",
-    loadChildren: () =>
-      import("./tables/tables.module").then((m) => m.TablesModule),
-  },
-  {
-    path: "icons",
-    loadChildren: () =>
-      import("./icons/icons.module").then((m) => m.IconsModule),
-  },
-  {
-    path: "general-pages",
-    loadChildren: () =>
-      import("./general-pages/general-pages.module").then(
-        (m) => m.GeneralPagesModule
-      ),
-  },
-  {
-    path: "apps",
-    loadChildren: () => import("./apps/apps.module").then((m) => m.AppsModule),
-  },
-  {
-    path: "user-pages",
-    loadChildren: () =>
-      import("./user-pages/user-pages.module").then((m) => m.UserPagesModule),
-  },
-  {
-    path: "error-pages",
-    loadChildren: () =>
-      import("./error-pages/error-pages.module").then(
-        (m) => m.ErrorPagesModule
-      ),
-  },
   {
     path: "addstudent",
     component: AddstudentComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   { path: "login", component: LoginComponent },
   {
     path: "addstudent/:id",
     component: AddstudentComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "view-student",
     component: ViewStudentComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: "course", component: CourseComponent, canActivate: [AuthGuard] },
-  { path: "addCourseVideo", component: AddCourseVideoComponent, canActivate: [AuthGuard] },
+  { path: "course", component: CourseComponent, canActivate: [authGuard] },
+  { path: "addCourseVideo", component: AddCourseVideoComponent, canActivate: [authGuard] },
   {
     path: "addcourse",
     component: AddcourseComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "addcourse/:id",
     component: AddcourseComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: "mentors", component: MentorsComponent, canActivate: [AuthGuard] },
+  { path: "mentors", component: MentorsComponent, canActivate: [authGuard] },
   {
     path: "addmentor",
     component: AddmentorComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "addmentor/:id",
     component: AddmentorComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "imageslider",
     component: ImagesliderComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "imageslider/:id",
     component: ImagesliderComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "view-images",
     component: ViewImagesComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "add-category",
     component: AddCategoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "view-categories",
     component: ViewCategoriesComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "subcategory",
     component: SubcategoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "subcategory/:id",
     component: SubcategoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "subcategorycourse",
     component: SubCourseComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "subcategorycourse/:id",
     component: SubCourseComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "add-category/:id",
     component: AddCategoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: "content", component: ContentComponent, canActivate: [AuthGuard] },
+  { path: "content", component: ContentComponent, canActivate: [authGuard] },
   {
     path: "content/:id",
     component: ContentComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: "blog", component: BlogComponent, canActivate: [AuthGuard] },
-  { path: "blog/:id", component: BlogComponent, canActivate: [AuthGuard] },
-  { path: "view-blog", component: ViewBlogComponent, canActivate: [AuthGuard] },
-  { path: "media", component: MediaComponent, canActivate: [AuthGuard] },
-  { path: "fee/:id", component: FeeComponent, canActivate: [AuthGuard] },
-  { path: "pages", component: PagesComponent, canActivate: [AuthGuard] },
-  { path: "pages/:id", component: PagesComponent, canActivate: [AuthGuard] },
+  { path: "blog", component: BlogComponent, canActivate: [authGuard] },
+  { path: "blog/:id", component: BlogComponent, canActivate: [authGuard] },
+  { path: "view-blog", component: ViewBlogComponent, canActivate: [authGuard] },
+  { path: "media", component: MediaComponent, canActivate: [authGuard] },
+  { path: "fee/:id", component: FeeComponent, canActivate: [authGuard] },
+  { path: "pages", component: PagesComponent, canActivate: [authGuard] },
+  { path: "pages/:id", component: PagesComponent, canActivate: [authGuard] },
   {
     path: "testimonial",
     component: TestimonialComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "testimonial/:id",
     component: TestimonialComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "upEvent",
     component: UpcomingEventComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "upEvent/:id",
     component: UpcomingEventComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "video-review",
     component: VideoReviewComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "inquiry",
     component: ContactInquiryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "payment-details",
     component: PaymentDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "course-video/:id",
     component: UploadedVideosComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
-  { path: "edit/:id", component: VideoEditComponent, canActivate: [AuthGuard] },
+  { path: "edit/:id", component: VideoEditComponent, canActivate: [authGuard] },
   {
     path: "video-upload",
     component: OnlineVideoUploadComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "analytics",
     component: AnalyticsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "webinar",
     component: WebinarRegistrationComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "dashboard",
     component: DashboardComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
   {
     path: "send-email",
     component: SendEmailComponent,
-    canActivate: [AuthGuard],
+    canActivate: [authGuard],
   },
 ];
 

@@ -15,6 +15,7 @@ import { paymentStatus } from "../enums/payment";
 import { DashboardSharedService } from "./dashboard-shared.service";
 
 @Component({
+  standalone: false,
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],

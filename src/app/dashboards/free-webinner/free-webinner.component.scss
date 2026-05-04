@@ -21,7 +21,7 @@ td {
 }
 
 .media-body {
-  width: 60%;
+  width: 100%;
 }
 
 .search-input {
@@ -34,14 +34,14 @@ td {
 
 button {
   padding: 8px 15px;
-  background-color: blue;
+  background-color: var(--primary);
   color: white;
   border: none;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: darkblue;
+  background-color: var(--primary-hover);
 }
 
 .pagination {
@@ -61,7 +61,7 @@ button:hover {
 
 .export-link {
   text-decoration: none;
-  color: blue; /* Change color as needed */
+  color: var(--primary); /* Change color as needed */
   font-weight: bold;
   cursor: pointer;
 }

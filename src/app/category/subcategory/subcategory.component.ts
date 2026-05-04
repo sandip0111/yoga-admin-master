@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-subcategory',
   templateUrl: './subcategory.component.html',
   styleUrls: ['./subcategory.component.scss']

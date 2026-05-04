@@ -18,8 +18,8 @@ body {
 .page-body-wrapper {
   min-height: calc(100vh - #{$navbar-height});
   padding-top: $navbar-height;
-  @include display-flex();
-  @include flex-direction(row);
+  display: flex;
+  flex-direction: row;
   padding-left: 0;
   padding-right: 0;
 
@@ -34,8 +34,8 @@ body {
   transition: width $action-transition-duration $action-transition-timing-function, margin $action-transition-duration $action-transition-timing-function;
   width: calc(100% - #{$sidebar-width-lg});
   min-height: calc(100vh - #{$navbar-height});
-  @include display-flex();
-  @include flex-direction(column);
+  display: flex;
+  flex-direction: column;
   @media (max-width: 991px) {
     margin-left: 0;
     width: 100%;
@@ -49,7 +49,7 @@ body {
   background: $content-bg;
   padding: 2.75rem 2.25rem;
   width: 100%;
-  @include flex-grow(1);
+  flex-grow: 1;
 }
 
 .container-scroller {
@@ -138,7 +138,7 @@ code {
     vertical-align: middle;
     line-height: 1;
     margin: auto 0;
-    color: darken(#e4e4e4,20%);
+    color: mix(black, #e4e4e4, 20%);
   }
 }
 .removeProbanner {

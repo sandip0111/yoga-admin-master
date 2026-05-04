@@ -3,6 +3,7 @@ import { ServiceService } from "src/app/services/service.service";
 import { Router } from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: "app-view-student",
   templateUrl: "./view-student.component.html",
   styleUrls: ["./view-student.component.scss"],
@@ -33,7 +34,7 @@ export class ViewStudentComponent implements OnInit {
        this.isLoading =false;
 
        for (const it of this.userList) {
-        console.log(it.course.length);
+
         it.pranCounter = false;
         it.fCounter = false;
         it.BCounter = false;
@@ -54,7 +55,7 @@ export class ViewStudentComponent implements OnInit {
         //   it.BCounter = false;
         // }      
       }
-      // console.log(this.userList,'-------');
+
     });
   }
 
@@ -100,13 +101,13 @@ export class ViewStudentComponent implements OnInit {
       "studentId":id,
      }
      this.service.setAccessPran(val).subscribe((res:any)=>{
-       console.log(res,'---');
+
        if(res.status == "ok"){
         alert("Access has been granted and emailed.");
         this.getstudent(this.filter);
        }
        else{
-        console.log('sowething went wrong..');
+
 
        }
    })
@@ -120,13 +121,13 @@ export class ViewStudentComponent implements OnInit {
       "studentId":id,
      }
      this.service.setAccessFoundation(val).subscribe((res:any)=>{
-       console.log(res,'---');
+
        if(res.status == "ok"){
         alert("Access has been granted and emailed.");
         this.getstudent(this.filter);
        }
        else{
-        console.log('sowething went wrong..');
+
 
        }
    })
@@ -139,13 +140,13 @@ export class ViewStudentComponent implements OnInit {
       "studentId":id,
      }
      this.service.setAccessBreath(val).subscribe((res:any)=>{
-       console.log(res,'---');
+
        if(res.status == "ok"){
         alert("Access has been granted and emailed.");
         this.getstudent(this.filter);
        }
        else{
-        console.log('sowething went wrong..');
+
 
        }
    })

@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { ActivatedRoute , Router} from '@angular/router';
 
 @Component({
+  standalone: false,
   selector: 'app-uploaded-videos',
   templateUrl: './uploaded-videos.component.html',
   styleUrls: ['./uploaded-videos.component.scss']
@@ -29,7 +30,7 @@ export class UploadedVideosComponent implements OnInit {
     "courseId":id
    }
    this.service.getCourseVideoV2(val).subscribe((res:any) => {
-    // console.log(res,'--');
+
     this.videoList = res.slice().sort((a,b) =>a.sortBy - b.sortBy);
 
   });
@@ -37,7 +38,7 @@ export class UploadedVideosComponent implements OnInit {
 
   getCourseByIdV2(id:any){
     this.service.getCourseByid(id).subscribe((res:any) => {
-    //  console.log(res,'--');
+
      this.title = res.data.coursetitle;
    });
    }

@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-view-categories',
   templateUrl: './view-categories.component.html',
   styleUrls: ['./view-categories.component.scss']
@@ -22,7 +23,7 @@ export class ViewCategoriesComponent implements OnInit {
 }
   getAllCategory(){
     this.http.getAllCategory().subscribe((res:any)=>{
-      console.log(res);
+
    this.categoryData = res.data;
     })
   }
@@ -38,7 +39,7 @@ export class ViewCategoriesComponent implements OnInit {
   createCategory(){
     this.http.createCategory(this.categoryDetails).subscribe((res)=>{
       // this.response = res;
-      // console.log(this.response,'---------')
+
     })
  }
 

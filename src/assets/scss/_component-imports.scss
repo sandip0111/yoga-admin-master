@@ -1,0 +1,25 @@
+// ============================================================
+// Component-level shared imports — variables & mixins ONLY.
+// This file produces NO CSS output.
+//
+// Use this in component SCSS files instead of styles.scss.
+// The full stylesheet (Bootstrap, fonts, etc.) is loaded
+// globally once via angular.json → styles: ["src/styles.scss"]
+// ============================================================
+
+// Bootstrap functions, variables & mixins (no CSS output)
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+
+// Custom project variables and mixins
+@import "variables";
+@import "mixins/animation";
+@import "mixins/badges";
+@import "mixins/buttons";
+@import "mixins/misc";
+@import "mixins/color-functions";
+@import "mixins/cards";
+@import "mixins/blockqoute";
+@import "mixins/popovers";
+@import "mixins/tooltips";

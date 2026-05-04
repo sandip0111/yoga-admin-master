@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceService } from 'src/app/services/service.service';
 import { ActivatedRoute , Router} from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
@@ -52,7 +53,7 @@ export class ContentComponent implements OnInit {
         "content":[data]
       }
     }
-    console.log(val);
+
 
     this.service.createCourse(val).subscribe((res:any)=>{
       if(res.status === 'ok'){
@@ -74,7 +75,7 @@ export class ContentComponent implements OnInit {
 
   }
   deleteContent(data:any,index:any){
-  console.log(data,index);
+
 
   }
 

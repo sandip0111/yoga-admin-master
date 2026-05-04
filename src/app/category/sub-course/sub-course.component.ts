@@ -3,6 +3,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 @Component({
+  standalone: false,
   selector: 'app-sub-course',
   templateUrl: './sub-course.component.html',
   styleUrls: ['./sub-course.component.scss']

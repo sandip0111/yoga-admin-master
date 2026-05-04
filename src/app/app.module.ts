@@ -4,17 +4,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CommonModule, HashLocationStrategy, LocationStrategy } from "@angular/common";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ChartsModule, ThemeService } from "ng2-charts";
-import { HttpClientModule } from "@angular/common/http";
+import { BaseChartDirective, provideCharts, withDefaultRegisterables } from "ng2-charts";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./shared/navbar/navbar.component";
 import { SidebarComponent } from "./shared/sidebar/sidebar.component";
 import { FooterComponent } from "./shared/footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TodoComponent } from "./apps/todo-list/todo/todo.component";
 import { SpinnerComponent } from "./shared/spinner/spinner.component";
 import { ContentAnimateDirective } from "./shared/directives/content-animate.directive";
-import { TodoListComponent } from "./apps/todo-list/todo-list.component";
 import { AddstudentComponent } from "./student/addstudent/addstudent.component";
 import { ViewStudentComponent } from "./student/view-student/view-student.component";
 import { CourseComponent } from "./courses/course/course.component";
@@ -33,13 +31,12 @@ import { ViewBlogComponent } from "./blog/view-blog/view-blog.component";
 import { MediaComponent } from "./media/media.component";
 import { NgxPaginationModule } from "ngx-pagination";
 import { FeeComponent } from "./courses/fee/fee.component";
-import { FaqComponent } from "./courses/faq/faq.component";
 import { UpcomingEventComponent } from "./courses/upcoming-event/upcoming-event.component";
 import { PagesComponent } from "./pages/pages.component";
 import { TestimonialComponent } from "./testimonial/testimonial.component";
 import { SubCourseComponent } from "./category/sub-course/sub-course.component";
 import { LoginComponent } from "./user-pages/login/login.component";
-import { CKEditorModule } from "ngx-ckeditor";
+import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { VideoReviewComponent } from "./video-review/video-review.component";
 import { ContactInquiryComponent } from "./contact-inquiry/contact-inquiry.component";
 import { PaymentDetailsComponent } from "./payment-details/payment-details.component";
@@ -63,14 +60,13 @@ import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-v
 import { RishikeshComponent } from "./dashboards/rishikesh/rishikesh.component";
 import { BaliComponent } from "./dashboards/bali/bali.component";
 import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
+
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
-    TodoListComponent,
-    TodoComponent,
     SpinnerComponent,
     ContentAnimateDirective,
     AddstudentComponent,
@@ -89,7 +85,6 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
     ViewBlogComponent,
     MediaComponent,
     FeeComponent,
-    FaqComponent,
     UpcomingEventComponent,
     PagesComponent,
     TestimonialComponent,
@@ -120,20 +115,23 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
     SubscribersComponent,
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: "serverApp" }),
+    BrowserModule,
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule,
-    HttpClientModule,
+    BaseChartDirective,
     EditorModule,
     NgxPaginationModule,
     CKEditorModule,
   ],
-  providers: [ThemeService],
+  providers: [
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    provideHttpClient(withInterceptorsFromDi()),
+    provideCharts(withDefaultRegisterables()),
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

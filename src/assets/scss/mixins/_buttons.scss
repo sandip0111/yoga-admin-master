@@ -4,12 +4,12 @@
 
   &:hover,
   &:focus {
-    background: darken($color, 10%);
+    background: mix(black, $color, 10%);
     color: $white;
   }
   &.btn-social-icon-text {
     padding: 0 1.5rem 0 0;
-    background: lighten($color, 10%);
+    background: mix(white, $color, 10%);
     i {
       background: $color;
       padding: .75rem;
@@ -33,7 +33,7 @@ color: $color;
   &:not(.btn-inverse-light) {
     color: $color;      
   }
-  @include hover {
+  &:hover {
     color: $color-hover;
     background-color: $color;
     border-color: $color;
@@ -77,5 +77,5 @@ color: $color;
       color: $white;
     }
   }
-  @include transition(opacity .3s ease);
+  transition: opacity .3s ease;
 }
