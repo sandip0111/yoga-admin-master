@@ -21,7 +21,7 @@ export class PendingPaymentComponent implements OnInit {
   options: { value: string; label: string }[] = [];
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -44,7 +44,7 @@ export class PendingPaymentComponent implements OnInit {
       { value: "690262b474c8cdacdb607204", label: "Swar Sadhana" },
       { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
       { value: "63c4e7e72bce43a907211c78", label: "200 Online TTC" },
-      { value: "63fc3fdc6d203300eae38625", label: "Online Live Class" },
+      { value: "69ff6a520cd7ed2296fbbddb", label: "Online Live Class" },
       { value: "63b817ec3362bfaf05d7cf3b", label: "100 hour Rishikesh" },
       { value: "63bd41f275bff3365e233ab9", label: "200 hour Rishikesh" },
       { value: "63c3d9caaa1fce47a3fa6f41", label: "300 hour Rishikesh" },

@@ -21,7 +21,7 @@ export class AddCourseVideoComponent implements OnInit {
     { value: null, label: "Select a option" },
     { value: "63c4e7e72bce43a907211c78", label: "200 TTC Online Sadhana" },
     { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
-    { value: "63fc3fdc6d203300eae38625", label: "Online Live class" },
+    { value: "69ff6a520cd7ed2296fbbddb", label: "Online Live class" },
   ];
   selectedOption = null;
   months: { value: string; label: string }[] = [];
@@ -29,8 +29,8 @@ export class AddCourseVideoComponent implements OnInit {
 
   // Additional dropdown with two names (values 1 and 3)
   teacherOptions: { value: number; label: string }[] = [
-    { value: 1, label: 'Prashant Ji' },
-    { value: 3, label: 'Taniya Ji' },
+    { value: 1, label: "Prashant Ji" },
+    { value: 3, label: "Taniya Ji" },
   ];
   selectedTeacherId: number | null = null;
 
@@ -41,7 +41,9 @@ export class AddCourseVideoComponent implements OnInit {
     this.selectedMonth = this.months.length ? this.months[0].value : null;
 
     // Default WO selection
-    this.selectedTeacherId = this.teacherOptions.length ? this.teacherOptions[0].value : null;
+    this.selectedTeacherId = this.teacherOptions.length
+      ? this.teacherOptions[0].value
+      : null;
   }
 
   private generateMonthOptions() {
@@ -65,7 +67,7 @@ export class AddCourseVideoComponent implements OnInit {
       {
         value: "May, 2026",
         label: "May, 2026",
-      }
+      },
     ];
     return months;
   }
@@ -125,8 +127,8 @@ export class AddCourseVideoComponent implements OnInit {
           this.selectedFile,
           this.courseName,
           this.selectedOption,
-          this.selectedMonth ? this.selectedMonth : '',
-          this.selectedTeacherId ? this.selectedTeacherId : 0
+          this.selectedMonth ? this.selectedMonth : "",
+          this.selectedTeacherId ? this.selectedTeacherId : 0,
         )
         .subscribe({
           next: (progress: UploadProgress) => {
