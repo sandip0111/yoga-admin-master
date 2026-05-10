@@ -39,13 +39,13 @@ export class ViewStudentComponent implements OnInit {
         it.fCounter = false;
         it.BCounter = false;
         if(it.course.length > 0) {
-          if(it.course.includes("644f9dfc499ffcfb45df35cd")){
+          if(it.course.includes("6a00abfc9a6ce5ba990f5e6f")){
             it.pranCounter = true;
           }
-          if(it.course.includes("63c4de4a2bce43a907211c74")){
+          if(it.course.includes("6a00b0e4f994cf05f7c07786")){
             it.fCounter = true;
           }
-         if(it.course.includes("63c3f26c461e531f3c3452e1")){
+         if(it.course.includes("6a00ae5a73d17e5a08d3f6ce")){
             it.BCounter = true;
           }
         }

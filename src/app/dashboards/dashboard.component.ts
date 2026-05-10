@@ -168,11 +168,11 @@ export class DashboardComponent implements OnInit {
           firstName: data.name,
           lastName: "",
           email: data.email,
-          course: ["63c3f26c461e531f3c3452e1"],
+          course: ["6a00ae5a73d17e5a08d3f6ce"],
           isActive: true,
           isBreatDox: true,
           password: data.password || generatePassword(),
-          paymentCourseId: "63c3f26c461e531f3c3452e1",
+          paymentCourseId: "6a00ae5a73d17e5a08d3f6ce",
           source: "web",
         };
         this.breathDetoxSave(breathDetox);

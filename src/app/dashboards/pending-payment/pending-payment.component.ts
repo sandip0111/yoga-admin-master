@@ -40,14 +40,14 @@ export class PendingPaymentComponent implements OnInit {
   getCourseOption() {
     this.options = [
       { value: "", label: "All Courses" },
-      { value: "644f9dfc499ffcfb45df35cd", label: "Prana Arambh" },
-      { value: "690262b474c8cdacdb607204", label: "Swar Sadhana" },
-      { value: "63c51f6ba3082d9dd0100e4d", label: "Pranic Purification" },
-      { value: "63c4e7e72bce43a907211c78", label: "200 Online TTC" },
+      { value: "6a00abfc9a6ce5ba990f5e6f", label: "Prana Arambh" },
+      { value: "6a00af947bc6b36f3ef0ac2c", label: "Swar Sadhana" },
+      { value: "6a00b1ed9c892f5064e34739", label: "Pranic Purification" },
+      { value: "6a00b33b220856ac7775c2bf", label: "200 Online TTC" },
       { value: "69ff6a520cd7ed2296fbbddb", label: "Online Live Class" },
-      { value: "63b817ec3362bfaf05d7cf3b", label: "100 hour Rishikesh" },
-      { value: "63bd41f275bff3365e233ab9", label: "200 hour Rishikesh" },
-      { value: "63c3d9caaa1fce47a3fa6f41", label: "300 hour Rishikesh" },
+      { value: "6a00b48fcd2d329aa196508d", label: "100 hour Rishikesh" },
+      { value: "6a00b5e5be6d5aa0d803b71f", label: "200 hour Rishikesh" },
+      { value: "6a00b998eefefe86dfedb27e", label: "300 hour Rishikesh" },
     ];
   }
   getAllData(filter: searchPranaRambhFilter, isSearch: boolean): void {
