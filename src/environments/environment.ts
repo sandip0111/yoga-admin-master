@@ -4,5 +4,5 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/',
-  imageUrl: 'https://yogavidyaschool.com:3000/public/images/',
+  imageUrl: 'https://65.2.4.69/public/images/',
 };
