@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://65.2.4.69/',
-  imageUrl: "https://65.2.4.69/public/images/"
+  apiUrl: 'https://api.yogavidyaschool.com/',
+  imageUrl: "https://api.yogavidyaschool.com/public/images/"
 };
