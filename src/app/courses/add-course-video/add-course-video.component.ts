@@ -20,7 +20,7 @@ export class AddCourseVideoComponent implements OnInit {
   options = [
     { value: null, label: "Select a option" },
     { value: "6a00b33b220856ac7775c2bf", label: "200 TTC Online Sadhana" },
-    { value: "6a00b1ed9c892f5064e34739", label: "Pranic Purification" },
+    { value: "69ff20a10cd7ed2296fbbdcd", label: "Pranic Purification II" },
     { value: "69ff6a520cd7ed2296fbbddb", label: "Online Live class" },
   ];
   selectedOption = null;
