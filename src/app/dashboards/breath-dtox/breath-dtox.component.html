@@ -52,6 +52,7 @@
             <th style="inline-size: 4% !important">Sl No.</th>
             <th>StudentName</th>
             <th>Email</th>
+            <th>Password</th>
             <th>Mobile</th>
             <th>City</th>
             <th>Joining Date</th>
@@ -74,6 +75,7 @@
             <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
             <td>{{ breath.firstName }} {{ breath.lastName || "" }}</td>
             <td>{{ breath.email }}</td>
+            <td>{{ breath.password }}</td>
             <td>{{ breath.phoneNumber }}</td>
             <td>{{ breath.city }}</td>
             <td>{{ breath.created | date: "mediumDate" }}</td>
