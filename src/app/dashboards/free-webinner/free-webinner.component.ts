@@ -19,7 +19,7 @@ export class FreeWebinnerComponent implements OnInit {
   freeWebinarPage: number = 1;
   freeWebinarList: freeWebinarStudentModel[] = [];
   freeWebinarTotal: number = 0;
-  monthOption = ["All Month Data", "January, 2026"];
+  monthOption = ["All Month Data", "January, 2026", "June, 2026"];
 
   constructor(
     private service: ServiceService,
