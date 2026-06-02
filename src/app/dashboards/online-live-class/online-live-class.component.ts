@@ -36,6 +36,7 @@ export class OnlineLiveClassComponent implements OnInit {
     "March, 2026",
     "April, 2026",
     "May, 2026",
+    "June, 2026"
   ];
   constructor(
     private service: ServiceService,
