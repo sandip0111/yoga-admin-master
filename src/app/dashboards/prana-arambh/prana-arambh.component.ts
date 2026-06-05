@@ -113,4 +113,14 @@ export class PranaArambhComponent implements OnInit {
       behavior: "smooth",
     });
   }
+  deleteRow(student: PaymentDetailsModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removePranaArambhData(student.studentInfo._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllParayanamStudent(this.filter, false);
+        },
+      });
+    }
+  }
 }

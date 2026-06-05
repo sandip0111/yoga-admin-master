@@ -74,6 +74,7 @@
           <th>Payment Status</th>
           <th>Payment Type</th>
           <th>Joining Date</th>
+          <th></th>
         </thead>
         <tbody>
           <tr
@@ -117,6 +118,11 @@
             </td>
             <td>{{ spiritualityStdnt.paymentBy }}</td>
             <td>{{ spiritualityStdnt.created | date: "mediumDate" }}</td>
+            <td>
+              <button mat-icon-button color="warn" (click)="deleteRow(spiritualityStdnt)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

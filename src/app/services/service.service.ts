@@ -330,4 +330,10 @@ export class ServiceService {
   createBaliCustomer(data: createPranicPurification) {
     return this.http.post(this.url + "api/v1/createBaliCustomer", data);
   }
+  removePranaArambhData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removePranaArambhData", { studentId });
+  }
+  removeSwaraSadhanaData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeSwaraSadhanaData", { studentId });
+  }
 }

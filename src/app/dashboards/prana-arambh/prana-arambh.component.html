@@ -62,6 +62,7 @@
           <th>Payment Status</th>
           <th>Payment Type</th>
           <th>Payment Date</th>
+          <th></th>
         </thead>
         <tbody>
           <tr
@@ -71,7 +72,7 @@
                   : {
                       itemsPerPage: 10,
                       currentPage: p,
-                      totalItems: pranayamStudentTotal
+                      totalItems: pranayamStudentTotal,
                     };
               let i = index
             "
@@ -92,7 +93,7 @@
             <td
               [ngClass]="{
                 'text-success': student?.paymentStatus == 'paid',
-                'text-warning': student?.paymentStatus == 'pending'
+                'text-warning': student?.paymentStatus == 'pending',
               }"
             >
               <ng-container *ngIf="student.paymentStatus; else noPayment">
@@ -111,6 +112,11 @@
                 {{ student.created | date: "dd-MM-yyyy" }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
+            </td>
+            <td>
+              <button mat-icon-button color="warn" (click)="deleteRow(student)">
+                <mat-icon>delete</mat-icon>
+              </button>
             </td>
           </tr>
         </tbody>

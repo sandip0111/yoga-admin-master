@@ -30,7 +30,7 @@ export class SwaraSadhanaComponent implements OnInit {
   }>();
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
   ngOnInit(): void {
     this.swaraSadhnaFilter = {
@@ -44,7 +44,7 @@ export class SwaraSadhanaComponent implements OnInit {
   }
   getAllSwaraSadhnaStudent(
     filter: searchPranaRambhFilter,
-    isSearch: boolean
+    isSearch: boolean,
   ): void {
     this.swaraLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
@@ -121,5 +121,15 @@ export class SwaraSadhanaComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+  deleteRow(student: swarSadhnaStudentModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeSwaraSadhanaData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, false);
+        },
+      });
+    }
   }
 }

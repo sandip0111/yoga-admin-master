@@ -57,6 +57,7 @@
             <th>City</th>
             <th>Joining Date</th>
             <th>Is Active</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +68,7 @@
                   : {
                       itemsPerPage: 10,
                       currentPage: breathP,
-                      totalItems: breathDetoxTotal
+                      totalItems: breathDetoxTotal,
                     };
               let j = index
             "
@@ -80,6 +81,11 @@
             <td>{{ breath.city }}</td>
             <td>{{ breath.created | date: "mediumDate" }}</td>
             <td>{{ breath.isActive }}</td>
+            <td>
+              <button mat-icon-button color="warn" (click)="deleteRow(breath)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

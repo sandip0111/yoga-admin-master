@@ -1,3 +1,5 @@
+import { getBorderWidths } from "ckeditor5";
+
 export class searchPranaRambhFilter {
   pageNo: number;
   size: number;
@@ -237,4 +239,20 @@ export interface createFoundationOfSpirituality {
   name: string;
   email: string;
   password: string;
+}
+export interface BreathDtoxModel {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phoneNumber: number;
+  city: string;
+  source: string;
+  course: string[];
+  paymentCourseId: string;
+  paymentDetails: any[];
+  isActive: boolean;
+  isDeleted: boolean;
+  created: string;
 }

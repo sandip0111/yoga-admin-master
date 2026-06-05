@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { searchPranaRambhFilter } from "src/app/models/dashboard";
+import { BreathDtoxModel, searchPranaRambhFilter } from "src/app/models/dashboard";
 import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
 
@@ -13,7 +13,7 @@ export class BreathDtoxComponent implements OnInit {
   bDtoxLoading: boolean = false;
   breathDetoxfilter: searchPranaRambhFilter;
   breathDetoxTotal: number;
-  breathDetox: any[] = [];
+  breathDetox: BreathDtoxModel[] = [];
   breathP: number = 1;
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;
@@ -103,5 +103,15 @@ export class BreathDtoxComponent implements OnInit {
       top: 0,
       behavior: "smooth",
     });
+  }
+  deleteRow(student: BreathDtoxModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removePranaArambhData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllBreathDetoxStudent(this.breathDetoxfilter, false);
+        },
+      });
+    }
   }
 }
