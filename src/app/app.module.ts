@@ -60,6 +60,7 @@ import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-v
 import { RishikeshComponent } from "./dashboards/rishikesh/rishikesh.component";
 import { BaliComponent } from "./dashboards/bali/bali.component";
 import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
+import { PranayamaCertificationDashboardComponent } from "./dashboards/pranayama-certification-dashboard/pranayama-certification-dashboard.component";
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
     RishikeshComponent,
     BaliComponent,
     SubscribersComponent,
+    PranayamaCertificationDashboardComponent,
   ],
   imports: [
     BrowserModule,

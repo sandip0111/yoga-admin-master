@@ -54,6 +54,7 @@ export class DashboardComponent implements OnInit {
     { value: 12, label: "Bali 100" },
     { value: 13, label: "Bali 200" },
     { value: 14, label: "Bali 300" },
+    { value: 16, label: "Pranayama Certification" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -199,6 +200,15 @@ export class DashboardComponent implements OnInit {
           address: "N/A",
         };
         this.pranicPurificationIISave(pranicData);
+      } else if (this.selectedOption == 16) {
+        this.loading = true;
+        const pranayamaData: createPranicPurification = {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          password: generatePassword(),
+        };
+        this.pranayamaCertificationSave(pranayamaData);
       } else {
         alert("Please select a course.");
       }
@@ -411,6 +421,17 @@ export class DashboardComponent implements OnInit {
         alert(res.message);
       } else {
         alert("Registration failed: " + res.msg);
+      }
+    });
+  }
+  pranayamaCertificationSave(data: createPranicPurification) {
+    this.service.registerPranayamaCertificationUser(data).subscribe((res: any) => {
+      if (res.status == "ok") {
+        this.loading = false;
+        alert(res.message);
+      } else {
+        this.loading = false;
+        alert("Registration failed: " + res.message);
       }
     });
   }
