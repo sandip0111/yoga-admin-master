@@ -118,6 +118,15 @@
             </ng-template>
           </li>
           <li [ngbNavItem]="14">
+            <a ngbNavLink>{{ dashboardShared.pranayamaCertificationTitle }}</a>
+            <ng-template ngbNavContent>
+              <app-pranayama-certification-dashboard
+                [paymentOption]="paymentOption"
+                [paymentTypeOption]="paymentTypeOption"
+              ></app-pranayama-certification-dashboard>
+            </ng-template>
+          </li>
+          <li [ngbNavItem]="15">
             <a ngbNavLink>{{ createSwaraSadhnaTitle }}</a>
             <ng-template ngbNavContent>
               <div class="container_search">

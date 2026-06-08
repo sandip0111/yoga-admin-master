@@ -330,4 +330,10 @@ export class ServiceService {
   createBaliCustomer(data: createPranicPurification) {
     return this.http.post(this.url + "api/v1/createBaliCustomer", data);
   }
+  registerPranayamaCertificationUser(data: createPranicPurification) {
+    return this.http.post(this.url + "api/v1/registerPranayamaCertificationUser", data);
+  }
+  getAllPranayamaCertificationStudent(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getPranayamaCertificationData", data);
+  }
 }
