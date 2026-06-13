@@ -65,6 +65,7 @@
       <th>Email</th>
       <th>Month</th>
       <th>Joining Date</th>
+      <th></th>
     </thead>
     <tbody>
       <tr
@@ -74,7 +75,7 @@
               : {
                   itemsPerPage: 10,
                   currentPage: freeWebinarPage,
-                  totalItems: freeWebinarTotal
+                  totalItems: freeWebinarTotal,
                 };
           let i = index
         "
@@ -86,6 +87,11 @@
         <td>{{ obj.email }}</td>
         <td>{{ obj.month }}</td>
         <td>{{ obj.created | date: "mediumDate" }}</td>
+        <td>
+          <button class="delete-button" (click)="deleteRow(obj)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

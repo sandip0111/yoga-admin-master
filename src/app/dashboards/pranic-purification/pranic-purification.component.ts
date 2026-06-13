@@ -30,23 +30,23 @@ export class PranicPurificationComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    public dashboardShared: DashboardSharedService
-  ) { }
+    public dashboardShared: DashboardSharedService,
+  ) {}
 
   ngOnInit(): void {
     if (this.isPranic) {
       this.title = "Pranic Purification";
       this.monthOption = [
-        { value: '', label: "All Time" },
+        { value: "", label: "All Time" },
         { value: "July, 2025", label: "July, 2025" },
         { value: "January, 2026", label: "January, 2026" },
-      ]
+      ];
     } else {
       this.title = "Pranic Purification II";
       this.monthOption = [
-        { value: '', label: "All Month Data" },
+        { value: "", label: "All Month Data" },
         { value: "May, 2026", label: "May, 2026" },
-      ]
+      ];
     }
     this.filter = {
       pageNo: 1,
@@ -152,7 +152,8 @@ export class PranicPurificationComponent implements OnInit {
             ]);
           });
           rowsData.forEach((row) => {
-            csvContent += row.map(this.dashboardShared.escapeCSV).join(",") + "\n";
+            csvContent +=
+              row.map(this.dashboardShared.escapeCSV).join(",") + "\n";
           });
           this.downloadCsv.emit({ csvContent, tableId });
           this.loading = false;
@@ -167,5 +168,24 @@ export class PranicPurificationComponent implements OnInit {
   onMonthChange(month: string) {
     this.filter.month = month;
     this.getAllData(this.filter, true);
+  }
+  deleteRow(student: pranicPurificationModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      if (this.isPranic) {
+        this.service.removePranicPurificationData(student._id).subscribe({
+          next: () => {
+            alert("Record deleted successfully");
+            this.getAllData(this.filter, false);
+          },
+        });
+      } else {
+        this.service.removePranicPurificationIIData(student._id).subscribe({
+          next: () => {
+            alert("Record deleted successfully");
+            this.getAllData(this.filter, false);
+          },
+        });
+      }
+    }
   }
 }

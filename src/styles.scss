@@ -53,7 +53,7 @@
 @import "./assets/scss/components/pagination";
 @import "./assets/scss/components/portfolio";
 @import "./assets/scss/components/landing-screens/auth";
-
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 /* === Layout === */
 @import "./assets/scss/layout";
 
@@ -85,7 +85,9 @@
   width: 170px;
 }
 .main-panel {
-  transition: width 0.25s ease, margin 0.25s ease;
+  transition:
+    width 0.25s ease,
+    margin 0.25s ease;
   width: calc(100% - 260px);
   min-height: calc(100vh - 50px);
   display: flex;
@@ -183,4 +185,12 @@
   clip: rect(0, 0, 0, 0) !important;
   white-space: nowrap !important;
   border: 0 !important;
+}
+button.delete-button {
+  color: #fff;
+  background-color: #fa170b !important;
+  border: none;
+  padding: 7px 8px;
+  border-radius: 13px;
+  cursor: pointer;
 }

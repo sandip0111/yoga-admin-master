@@ -82,8 +82,8 @@
             <td>{{ breath.created | date: "mediumDate" }}</td>
             <td>{{ breath.isActive }}</td>
             <td>
-              <button mat-icon-button color="warn" (click)="deleteRow(breath)">
-                <mat-icon>delete</mat-icon>
+              <button class="delete-button" (click)="deleteRow(breath)">
+                <i class="bi bi-trash"></i>
               </button>
             </td>
           </tr>

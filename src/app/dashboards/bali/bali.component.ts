@@ -36,7 +36,7 @@ export class BaliComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -138,5 +138,16 @@ export class BaliComponent implements OnInit {
   onMonthChange(month: string) {
     this.baliFilter.month = month;
     this.getBaliData(this.baliFilter, true);
+  }
+
+  deleteRow(student: twoHunTTCModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeBaliData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getBaliData(this.baliFilter, true);
+        },
+      });
+    }
   }
 }
