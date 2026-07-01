@@ -49,12 +49,12 @@ export class AddCourseVideoComponent implements OnInit {
   private generateMonthOptions() {
     const months: { value: string; label: string }[] = [
       {
-        value: "May, 2026",
-        label: "May, 2026",
-      },
-      {
         value: "June, 2026",
         label: "June, 2026",
+      },
+      {
+        value: "July, 2026",
+        label: "July, 2026",
       },
     ];
     return months;
