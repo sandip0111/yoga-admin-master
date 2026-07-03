@@ -69,6 +69,7 @@
       <th>Payment Status</th>
       <th>Payment Type</th>
       <th>Payment Date</th>
+      <th></th>
     </thead>
     <tbody>
       <tr
@@ -78,7 +79,7 @@
               : {
                   itemsPerPage: 10,
                   currentPage: baliPage,
-                  totalItems: baliTotal
+                  totalItems: baliTotal,
                 };
           let i = index
         "
@@ -98,7 +99,7 @@
         <td
           [ngClass]="{
             'text-success': obj?.paymentStatus == 'paid',
-            'text-danger': obj?.paymentStatus == 'pending'
+            'text-danger': obj?.paymentStatus == 'pending',
           }"
         >
           {{ obj.paymentStatus }}
@@ -106,9 +107,14 @@
         <td>{{ obj.paymentType }}</td>
         <td>
           <ng-container *ngIf="obj.created; else noPayment">
-            {{ obj.created | date : "dd-MM-yyyy" }}
+            {{ obj.created | date: "dd-MM-yyyy" }}
           </ng-container>
           <ng-template #noPayment>N/A</ng-template>
+        </td>
+        <td>
+          <button class="delete-button" (click)="deleteRow(obj)">
+            <i class="bi bi-trash"></i>
+          </button>
         </td>
       </tr>
     </tbody>

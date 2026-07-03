@@ -36,7 +36,7 @@ export class RishikeshComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -138,5 +138,16 @@ export class RishikeshComponent implements OnInit {
   onMonthChange(month: string) {
     this.rishikeshFilter.month = month;
     this.getRishikeshData(this.rishikeshFilter, true);
+  }
+
+  deleteRow(student: twoHunTTCModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeRishikeshData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getRishikeshData(this.rishikeshFilter, false);
+        },
+      });
+    }
   }
 }

@@ -78,4 +78,14 @@ export class FreeWebinnerComponent implements OnInit {
     this.freeWebinarFilter.month = month;
     this.getAllFreeWebinarData(this.freeWebinarFilter, true);
   }
+  deleteRow(student: freeWebinarStudentModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeFreeWebinarData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllFreeWebinarData(this.freeWebinarFilter, false);
+        },
+      });
+    }
+  }
 }

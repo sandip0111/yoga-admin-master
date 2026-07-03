@@ -54,4 +54,15 @@ export class SubscribersComponent implements OnInit {
     this.p = 1;
     this.getAllSubscribers();
   }
+
+  deleteRow(student: any): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeSubscribeData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllSubscribers();
+        },
+      });
+    }
+  }
 }

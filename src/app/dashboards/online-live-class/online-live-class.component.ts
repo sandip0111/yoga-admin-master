@@ -36,7 +36,8 @@ export class OnlineLiveClassComponent implements OnInit {
     "March, 2026",
     "April, 2026",
     "May, 2026",
-    "June, 2026"
+    "June, 2026",
+    "July, 2026"
   ];
   constructor(
     private service: ServiceService,
@@ -126,12 +127,23 @@ export class OnlineLiveClassComponent implements OnInit {
   getTeachersName(selectedTeacherId: number) {
     this.selectedTeacherName = this.teachersDropdown.find(
       (t) => t.id == selectedTeacherId,
-    ).teacher;
+    ).name;
+  }
+
+  deleteRow(student: any): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.removeOnlineLiveClassData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAllOnlineClassStudent(this.onlineClassFilter, false);
+        },
+      });
+    }
   }
 }
 class teachersDropdownDto {
   id: number;
-  teacher: string;
+  name: string;
 }
 
 class teacherDropdownResponseDto {

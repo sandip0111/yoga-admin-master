@@ -28,6 +28,7 @@
           <th>Email Stage</th>
           <th>Next Email Date</th>
           <th>Created Date</th>
+          <th></th>
         </thead>
         <tbody>
           <tr
@@ -56,9 +57,14 @@
               </ng-container>
               <ng-template #noCreated>-</ng-template>
             </td>
+            <td>
+              <button class="delete-button" (click)="deleteRow(subscriber)">
+                <i class="bi bi-trash"></i>
+              </button>
+            </td>
           </tr>
           <tr *ngIf="subscribers.length === 0">
-            <td colspan="6" class="text-center">No subscribers found</td>
+            <td colspan="7" class="text-center">No subscribers found</td>
           </tr>
         </tbody>
       </table>

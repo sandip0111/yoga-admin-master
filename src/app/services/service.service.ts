@@ -17,8 +17,8 @@ import {
 export class ServiceService {
   private url = environment.apiUrl;
   public imageUrl = environment.imageUrl;
-  public videoUrl = environment.apiUrl + 'public/video/';
-  constructor(private http: HttpClient) { }
+  public videoUrl = environment.apiUrl + "public/video/";
+  constructor(private http: HttpClient) {}
 
   isLogedIn() {
     return sessionStorage.getItem("token");
@@ -288,7 +288,6 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/getBaliData", data);
   }
   sendMailToPrashantJi(data: { name: string; email: string }) {
-
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
   }
   createLiveCourseCustomer(data: createPranicPurification) {
@@ -337,9 +336,51 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/getPranayamaCertificationData", data);
   }
   removePranaArambhData(studentId: string) {
-    return this.http.post(this.url + "api/v1/removePranaArambhData", { studentId });
+    return this.http.post(this.url + "api/v1/removePranaArambhData", {
+      studentId,
+    });
   }
   removeSwaraSadhanaData(studentId: string) {
-    return this.http.post(this.url + "api/v1/removeSwaraSadhanaData", { studentId });
+    return this.http.post(this.url + "api/v1/removeSwaraSadhanaData", {
+      studentId,
+    });
+  }
+  removeFreeWebinarData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeFreeWebinarData", {
+      studentId,
+    });
+  }
+  removePranicPurificationData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removePranicPurificationData", {
+      studentId,
+    });
+  }
+  removePranicPurificationIIData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removePranicPurificationIIData", {
+      studentId,
+    });
+  }
+  remove200TTCData(studentId: string) {
+    return this.http.post(this.url + "api/v1/remove200TTCData", { studentId });
+  }
+  removeOnlineLiveClassData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeOnlineLiveClassData", {
+      studentId,
+    });
+  }
+  removeRishikeshData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeRishikeshData", {
+      studentId,
+    });
+  }
+  removeBaliData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeBaliData", {
+      studentId,
+    });
+  }
+  removeSubscribeData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeSubscribeData", {
+      studentId,
+    });
   }
 }

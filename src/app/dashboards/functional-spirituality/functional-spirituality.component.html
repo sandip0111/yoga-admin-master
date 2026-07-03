@@ -44,7 +44,9 @@
       </div>
 
       <div style="display: flex; align-items: center">
-        <label for="paymentStatus" style="margin-inline-end: 8px">Payment status</label>
+        <label for="paymentStatus" style="margin-inline-end: 8px"
+          >Payment status</label
+        >
         <select
           id="paymentStatus"
           (change)="onPayStatusValueChange($event.target.value)"
@@ -84,7 +86,7 @@
                   : {
                       itemsPerPage: 10,
                       currentPage: foundationPage,
-                      totalItems: foundationTotal
+                      totalItems: foundationTotal,
                     };
               let k = index
             "
@@ -106,7 +108,7 @@
             <td
               [ngClass]="{
                 'text-success': spiritualityStdnt?.paymentStatus == 'paid',
-                'text-warning': spiritualityStdnt?.paymentStatus == 'pending'
+                'text-warning': spiritualityStdnt?.paymentStatus == 'pending',
               }"
             >
               <ng-container
@@ -119,8 +121,11 @@
             <td>{{ spiritualityStdnt.paymentBy }}</td>
             <td>{{ spiritualityStdnt.created | date: "mediumDate" }}</td>
             <td>
-              <button mat-icon-button color="warn" (click)="deleteRow(spiritualityStdnt)">
-                <mat-icon>delete</mat-icon>
+              <button
+                class="delete-button"
+                (click)="deleteRow(spiritualityStdnt)"
+              >
+                <i class="bi bi-trash"></i>
               </button>
             </td>
           </tr>

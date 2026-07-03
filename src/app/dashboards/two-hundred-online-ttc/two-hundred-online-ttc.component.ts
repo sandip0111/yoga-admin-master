@@ -32,7 +32,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
 
   constructor(
     private service: ServiceService,
-    private dashboardShared: DashboardSharedService
+    private dashboardShared: DashboardSharedService,
   ) {}
 
   ngOnInit(): void {
@@ -99,5 +99,15 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
         this.twoHunTTCLoading = false;
       }
     });
+  }
+  deleteRow(student: twoHunTTCModel): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      this.service.remove200TTCData(student._id).subscribe({
+        next: () => {
+          alert("Record deleted successfully");
+          this.getAll200TTCStudent(this.twoHunTTCFilter, false);
+        },
+      });
+    }
   }
 }

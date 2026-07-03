@@ -59,6 +59,7 @@
       <th>Month</th>
       <th>Payment Date</th>
       <th>Coupon code</th>
+      <th></th>
     </thead>
     <tbody>
       <tr
@@ -106,6 +107,11 @@
           }"
         >
           {{ obj.couponcode }}
+        </td>
+        <td>
+          <button class="delete-button" (click)="deleteRow(obj)">
+            <i class="bi bi-trash"></i>
+          </button>
         </td>
       </tr>
     </tbody>
