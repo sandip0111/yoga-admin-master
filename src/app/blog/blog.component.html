@@ -1,138 +1,207 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
 
-<div class="page-header">
-  <span>
-    <h3 class="page-title">Blog</h3>
-    <br />
-    <h6>Add and Update Blog</h6>
-  </span>
-  <button type="button" class="btn btn-outline-primary" routerLink="/view-blog">
-    Show All Blogs
-  </button>
-</div>
-
-<div class="col-md-10 grid-margin stretch-card">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Enter Mentor's Information</h4>
-      <hr>
-      <form
-        class="forms-sample"
-        #empForm="ngForm"
-        enctype="multipart/form-data"
-      >
-        <div class="col-md-50 p-0">
-          <div class="form-group col-lg-12">
-            <label>Blog title</label>
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="mentorsname"
-              [(ngModel)]="formData.title"
-              placeholder="Blog title"
-              (change)="getSlug($event)"
-              size="70"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Blog Slug</label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="slug"
-              [(ngModel)]="formData.slug"
-              placeholder="slug"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Blog Author</label>
-            <select class="form-control" name="authorId" [(ngModel)]="formData.authorId">
-              <!-- <option value="undefined">Select Author</option> -->
-              <option *ngFor="let mentor of mentorList" value="{{mentor._id}}">{{mentor.name}}</option>
-            </select>
-          </div>
-          <div class="form-group col-lg-12">
-            <label>Blog Short Desc</label>
-
-            <input
-              type="text"
-              class="form-control"
-              name="shortDesc"
-              [(ngModel)]="formData.shortDesc"
-              placeholder="Blog short desc"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label for="">Content</label>
-            <editor
-              apiKey="myfzbxcl0pid6mhk2jomde4f52khnth6rd2veo4zhtr788vv"
-              name="content"
-              [(ngModel)]="formData.content"
-              [init]="{
-                height: 400,
-                menubar: true,
-                plugins: 'lists link image code',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
-                branding: false
-              }">
-            </editor>
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Blog Seo Keywords</label>
-
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="seokeywords"
-              [(ngModel)]="formData.seokeywords"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Blog Seo Description</label>
-
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="seodescription"
-              [(ngModel)]="formData.seodescription"
-              class="form-control"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-           <p>Blog Image *(size should be less than 500kb)</p>
-           <input type="file" name="blogImage" (change)="selectBlogImage($event)">
-
-           <!-- <div class="thumb-image mt-3" *ngIf="thumbFetch">
-            <img class="image-show" src="{{url}}{{thumbFetch}}">
-           </div> -->
-          </div>
-
-           <div class="form-group col-lg-12 float-left">
-             <span>
-              <a href="#">cancel</a>
-             </span>
-             <span style="float: right;">
-              <button type="submit" class="btn btn-outline-primary"
-              (click)="createBlog(formData)">
-               Save Blog Information
-              </button>
-             </span>
-            </div>
-        </div>
-      </form>
+<div class="blog-composer-page">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <h3 class="page-title">{{ blogId ? 'Edit Blog Post' : 'Create Blog Post' }}</h3>
+      <span class="status-badge" [class.edit-mode]="blogId">
+        {{ blogId ? 'Draft Mode' : 'New Post' }}
+      </span>
     </div>
+    <button type="button" class="btn-view-all" routerLink="/view-blog">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+      </svg>
+      Back to Blogs
+    </button>
   </div>
+
+  <form class="blog-form" #empForm="ngForm" enctype="multipart/form-data">
+    <div class="composer-grid">
+      <!-- Main Content Area (Left) -->
+      <div class="composer-main">
+        <div class="editor-card">
+          <div class="card-header-custom">
+            <h4 class="card-title-custom">Write your Story</h4>
+            <p class="card-subtitle-custom">Create engaging content for your audience</p>
+          </div>
+          <div class="card-body-custom">
+            <!-- Blog Title -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">Blog Title</label>
+              <input
+                type="text"
+                class="form-control-custom"
+                name="mentorsname"
+                [(ngModel)]="formData.title"
+                placeholder="e.g. 10 Health Benefits of Kundalini Yoga Practice"
+                (change)="getSlug($event)"
+                required
+              />
+            </div>
+
+            <!-- Short Description -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">Short Description</label>
+              <textarea
+                class="form-control-custom textarea-custom"
+                name="shortDesc"
+                [(ngModel)]="formData.shortDesc"
+                placeholder="Brief summary to hook readers on your feed..."
+                rows="3"
+              ></textarea>
+            </div>
+
+            <!-- Content Editor -->
+            <div class="form-group-custom editor-container">
+              <label class="form-label-custom">Body Content</label>
+              <div class="tinymce-wrapper">
+                <editor
+                  apiKey="myfzbxcl0pid6mhk2jomde4f52khnth6rd2veo4zhtr788vv"
+                  name="content"
+                  [(ngModel)]="formData.content"
+                  [init]="{
+                    height: 450,
+                    menubar: true,
+                    plugins: 'lists link image code table media lists',
+                    toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | table code',
+                    branding: false,
+                    content_style: 'body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:15px }',
+                    skin: 'oxide',
+                    preview_styles: true
+                  }">
+                </editor>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Settings Area (Right) -->
+      <div class="composer-sidebar">
+        <!-- Publish settings card -->
+        <div class="editor-card sidebar-card">
+          <div class="card-header-custom">
+            <h4 class="card-title-custom">Publish Settings</h4>
+          </div>
+          <div class="card-body-custom">
+            <!-- Blog Author -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">Select Author</label>
+              <div class="select-wrapper">
+                <select class="form-control-custom select-custom" name="authorId" [(ngModel)]="formData.authorId">
+                  <option value="" disabled selected>Choose a mentor...</option>
+                  <option *ngFor="let mentor of mentorList" [value]="mentor._id">{{mentor.name}}</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Blog Slug -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">
+                URL Slug
+                <span class="helper-badge">Auto-generated</span>
+              </label>
+              <input
+                type="text"
+                class="form-control-custom slug-input"
+                name="slug"
+                [(ngModel)]="formData.slug"
+                placeholder="url-slug-format"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Image card -->
+        <div class="editor-card sidebar-card">
+          <div class="card-header-custom">
+            <h4 class="card-title-custom">Featured Image</h4>
+          </div>
+          <div class="card-body-custom">
+            <!-- Upload widget / preview -->
+            <div class="image-upload-wrapper">
+              <div class="image-preview-container" *ngIf="formData.image">
+                <img class="img-uploaded-preview" [src]="url + formData.image" alt="Featured Image Preview" />
+                <button type="button" class="btn-remove-image" (click)="removeImage()" title="Remove Image">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                  </svg>
+                  Remove Image
+                </button>
+              </div>
+
+              <div class="upload-dropzone" *ngIf="!formData.image">
+                <input
+                  type="file"
+                  id="featured-image-upload"
+                  class="hidden-file-input"
+                  (change)="selectBlogImage($event)"
+                  accept="image/*"
+                />
+                <label for="featured-image-upload" class="dropzone-label">
+                  <span class="upload-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </span>
+                  <span class="upload-text">Upload Post Image</span>
+                  <span class="upload-limits">JPG, PNG up to 500KB</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO Card -->
+        <div class="editor-card sidebar-card">
+          <div class="card-header-custom">
+            <h4 class="card-title-custom">SEO Settings</h4>
+          </div>
+          <div class="card-body-custom">
+            <!-- Blog Seo Keywords -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">SEO Keywords</label>
+              <input
+                type="text"
+                class="form-control-custom"
+                name="seokeywords"
+                [(ngModel)]="formData.seokeywords"
+                placeholder="yoga, fitness, wellness"
+              />
+            </div>
+
+            <!-- Blog Seo Description -->
+            <div class="form-group-custom">
+              <label class="form-label-custom">SEO Description</label>
+              <textarea
+                class="form-control-custom textarea-custom"
+                name="seodescription"
+                [(ngModel)]="formData.seodescription"
+                placeholder="Meta description for search engines..."
+                rows="3"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Footer Bar -->
+    <div class="composer-footer-actions">
+      <button type="button" class="btn-action-custom cancel" routerLink="/view-blog">
+        Cancel Changes
+      </button>
+      <button type="submit" class="btn-action-custom save" (click)="createBlog(formData)">
+        <span class="save-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M12.736 14H3.264a.5.5 0 0 1-.499-.446L2.11 3.567a.5.5 0 0 1 .499-.553h10.782a.5.5 0 0 1 .499.553l-.655 9.987a.5.5 0 0 1-.499.446zm-9.01-1h8.548l.524-8H3.202l.524 8z"/>
+            <path d="M8 4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5A.5.5 0 0 1 8 4zm2.5.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5zm-5 0a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5z"/>
+          </svg>
+        </span>
+        Save Blog Information
+      </button>
+    </div>
+  </form>
 </div>
