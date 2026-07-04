@@ -31,9 +31,15 @@
           <th scope="row" class="blog-title">{{ item.title }}</th>
           <td class="blog-slug">{{ item.slug }}</td>
           <td>
-            <span class="status-badge" [class.active]="item.isActive" [class.inactive]="!item.isActive">
+            <button
+              class="status-toggle-btn"
+              [class.active]="item.isActive"
+              [class.inactive]="!item.isActive"
+              (click)="openStatusModal(item)"
+              title="Click to toggle status">
+              <span class="status-dot"></span>
               {{ item.isActive ? 'Active' : 'Inactive' }}
-            </span>
+            </button>
           </td>
           <td class="action-cell">
             <a routerLink="/blog/{{ item._id }}" class="btn-action btn-edit">
@@ -42,7 +48,7 @@
               </svg>
               Edit
             </a>
-            <a href="javascript:void(0)" (click)="deleteBlog(item._id)" class="btn-action btn-delete">
+            <a href="javascript:void(0)" (click)="openDeleteModal(item._id, item.title)" class="btn-action btn-delete">
               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -51,6 +57,7 @@
             </a>
           </td>
         </tr>
+
       </tbody>
     </table>
     <div class="pagination-wrapper">
@@ -111,4 +118,84 @@
       </div>
     </div>
   </ng-template>
+</div>
+
+<!-- ===== Delete Confirmation Modal ===== -->
+<div class="modal-backdrop" *ngIf="showDeleteModal" (click)="closeDeleteModal()"></div>
+
+<div class="confirm-modal" [class.show]="showDeleteModal" role="dialog" aria-modal="true">
+  <div class="confirm-modal-content">
+    <!-- Icon -->
+    <div class="modal-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+      </svg>
+    </div>
+
+    <!-- Text -->
+    <h3 class="modal-title">Delete Blog?</h3>
+    <p class="modal-desc">
+      You are about to delete<br>
+      <strong>"{{ blogToDeleteTitle }}"</strong><br>
+      This action cannot be undone.
+    </p>
+
+    <!-- Actions -->
+    <div class="modal-actions">
+      <button class="modal-btn cancel" (click)="closeDeleteModal()">Cancel</button>
+      <button class="modal-btn confirm" (click)="confirmDelete()" [disabled]="isDeleting">
+        <span *ngIf="!isDeleting">Yes, Delete</span>
+        <span *ngIf="isDeleting" class="spinner-dots">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Status Confirmation Modal ===== -->
+<div class="modal-backdrop" *ngIf="showStatusModal" (click)="closeStatusModal()"></div>
+
+<div class="confirm-modal status-modal" [class.show]="showStatusModal" role="dialog" aria-modal="true">
+  <div class="confirm-modal-content" *ngIf="statusTargetItem">
+    <!-- Icon -->
+    <div class="modal-icon" [class.icon-activate]="statusTargetNew" [class.icon-deactivate]="!statusTargetNew">
+      <svg *ngIf="statusTargetNew" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+      </svg>
+      <svg *ngIf="!statusTargetNew" xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg>
+    </div>
+
+    <!-- Text -->
+    <h3 class="modal-title">{{ statusTargetNew ? 'Activate' : 'Deactivate' }} Blog?</h3>
+    <p class="modal-desc">
+      <strong>"{{ statusTargetItem.title }}"</strong><br>
+      will be set to
+      <span class="status-pill" [class.pill-active]="statusTargetNew" [class.pill-inactive]="!statusTargetNew">
+        {{ statusTargetNew ? 'Active' : 'Inactive' }}
+      </span><br>
+      <small>{{ statusTargetNew ? 'It will become visible on the public site.' : 'It will be hidden from the public site.' }}</small>
+    </p>
+
+    <!-- Actions -->
+    <div class="modal-actions">
+      <button class="modal-btn cancel" (click)="closeStatusModal()">Cancel</button>
+      <button
+        class="modal-btn"
+        [class.confirm-activate]="statusTargetNew"
+        [class.confirm-deactivate]="!statusTargetNew"
+        (click)="confirmToggleStatus()"
+        [disabled]="isUpdatingStatus">
+        <span *ngIf="!isUpdatingStatus">Yes, {{ statusTargetNew ? 'Activate' : 'Deactivate' }}</span>
+        <span *ngIf="isUpdatingStatus" class="spinner-dots">
+          <span></span><span></span><span></span>
+        </span>
+      </button>
+    </div>
+  </div>
 </div>
