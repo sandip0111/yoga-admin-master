@@ -82,6 +82,10 @@ export class BlogComponent implements OnInit {
 
   }
 
+  removeImage() {
+    this.formData.image = '';
+  }
+
   getBlogById(id:any){
     this.service.getBlogById(id).subscribe((res:any)=>{
      this.formData = res.data
