@@ -109,6 +109,12 @@ export class ServiceService {
   getBlogById(id) {
     return this.http.get(this.url + "api/v1/getBlogById/" + id);
   }
+  deleteBlog(data: any) {
+    return this.http.post(this.url + "api/v1/deleteBlog", data);
+  }
+  updateBlogStatus(data: any) {
+    return this.http.post(this.url + "api/v1/updateBlogStatus", data);
+  }
 
   createMedia(data: any) {
     return this.http.post(this.url + "api/v1/createMedia", data);
