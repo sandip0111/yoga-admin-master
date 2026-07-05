@@ -57,29 +57,19 @@ export class BlogComponent implements OnInit {
   selectBlogImage(e:any){
     this.isLoading =true;
 
-    if(e.target.files[0].size > 500000){
-      alert('File Size should be less than 500kb');
-      e.target.value = '';
-    this.isLoading =false;
-
-    }
-    else{
-      const formData = new FormData();
-      formData.append('image',e.target.files[0]);
-      formData.append('type','return');
-      this.service.uploadImage(formData).subscribe((res: any) => {
-         if(res.status == "ok"){
-    this.isLoading =false;
-
-          this.formData.image = res.imageName
-          alert('Uploaded');
-         }
-         else{
-          alert("something went wrong")
-         }
-       });
-    }
-
+    const formData = new FormData();
+    formData.append('image',e.target.files[0]);
+    formData.append('type','return');
+    this.service.uploadImage(formData).subscribe((res: any) => {
+       if(res.status == "ok"){
+         this.isLoading =false;
+         this.formData.image = res.imageName
+         alert('Uploaded');
+       }
+       else{
+         alert("something went wrong")
+       }
+     });
   }
 
   removeImage() {
