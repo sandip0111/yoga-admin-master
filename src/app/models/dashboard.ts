@@ -256,3 +256,7 @@ export interface BreathDtoxModel {
   isDeleted: boolean;
   created: string;
 }
+export interface createRetreatYoga {
+  name: string;
+  email: string;
+}

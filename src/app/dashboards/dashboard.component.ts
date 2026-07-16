@@ -10,6 +10,7 @@ import {
   createFreeWebinar,
   createBreathDetox,
   createFoundationOfSpirituality,
+  createRetreatYoga,
 } from "../models/dashboard";
 import { paymentStatus } from "../enums/payment";
 import { DashboardSharedService } from "./dashboard-shared.service";
@@ -55,6 +56,7 @@ export class DashboardComponent implements OnInit {
     { value: 13, label: "Bali 200" },
     { value: 14, label: "Bali 300" },
     { value: 16, label: "Pranayama Certification" },
+    { value: 17, label: "Mysore Retreat 2026" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -106,8 +108,8 @@ export class DashboardComponent implements OnInit {
       month: "",
     };
   }
-  ngOnInit(): void { }
-  registerSwarSadhanaWebinarUser(data: createSwaraSadhna) {
+  ngOnInit(): void {}
+  registerStudent(data: createSwaraSadhna) {
     data.name = data.name == "" ? "Guest" : data.name;
     data.phone = data.phone || "N/A";
     data.email = String(data.email).toLowerCase();
@@ -182,7 +184,7 @@ export class DashboardComponent implements OnInit {
         const fos: createFoundationOfSpirituality = {
           name: data.name,
           email: data.email,
-          password: data.password || generatePassword()
+          password: data.password || generatePassword(),
         };
         this.foundationOfSpiritualitySave(fos);
       } else if (
@@ -209,6 +211,13 @@ export class DashboardComponent implements OnInit {
           password: generatePassword(),
         };
         this.pranayamaCertificationSave(pranayamaData);
+      } else if (this.selectedOption == 17) {
+        this.loading = true;
+        const retreatData: createRetreatYoga = {
+          name: data.name,
+          email: data.email,
+        };
+        this.retreatYogaSave(retreatData);
       } else {
         alert("Please select a course.");
       }
@@ -425,15 +434,30 @@ export class DashboardComponent implements OnInit {
     });
   }
   pranayamaCertificationSave(data: createPranicPurification) {
-    this.service.registerPranayamaCertificationUser(data).subscribe((res: any) => {
-      if (res.status == "ok") {
-        this.loading = false;
-        alert(res.message);
-      } else {
-        this.loading = false;
-        alert("Registration failed: " + res.message);
-      }
-    });
+    this.service
+      .registerPranayamaCertificationUser(data)
+      .subscribe((res: any) => {
+        if (res.status == "ok") {
+          this.loading = false;
+          alert(res.message);
+        } else {
+          this.loading = false;
+          alert("Registration failed: " + res.message);
+        }
+      });
+  }
+  retreatYogaSave(data: createRetreatYoga) {
+    this.service
+      .registerRetreatYogaUser(data)
+      .subscribe((res: any) => {
+        if (res.status == "ok") {
+          this.loading = false;
+          alert(res.message);
+        } else {
+          this.loading = false;
+          alert("Registration failed: " + res.message);
+        }
+      });
   }
   downloadCsv(csvContent: string, tableId: string) {
     const blob = new Blob([csvContent], {

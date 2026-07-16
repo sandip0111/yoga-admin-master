@@ -5,6 +5,7 @@ import {
   createFoundationOfSpirituality,
   createFreeWebinar,
   createPranicPurification,
+  createRetreatYoga,
   createSwaraSadhna,
   searchFreeWebinarFilter,
   searchLiveClassFilter,
@@ -388,5 +389,8 @@ export class ServiceService {
     return this.http.post(this.url + "api/v1/removeSubscribeData", {
       studentId,
     });
+  }
+  registerRetreatYogaUser(data: createRetreatYoga) {
+    return this.http.post(this.url + "api/v1/registerRetreatYogaUser", data);
   }
 }
