@@ -126,27 +126,81 @@
               ></app-pranayama-certification-dashboard>
             </ng-template>
           </li>
+          <li [ngbNavItem]="16">
+            <a ngbNavLink>{{ dashboardShared.retreatTitle }}</a>
+            <ng-template ngbNavContent>
+              <app-retreat
+                [paymentOption]="paymentOption"
+                [paymentTypeOption]="paymentTypeOption"
+              ></app-retreat>
+            </ng-template>
+          </li>
           <li [ngbNavItem]="15">
             <a ngbNavLink>{{ createSwaraSadhnaTitle }}</a>
             <ng-template ngbNavContent>
               <div class="container_search">
-                <select [(ngModel)]="selectedOption" class="search-input form-control">
+                <select
+                  [(ngModel)]="selectedOption"
+                  class="search-input form-control"
+                >
                   <option [value]="0" selected hidden>Select a course</option>
-                  <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+                  <option *ngFor="let option of options" [value]="option.value">
+                    {{ option.label }}
+                  </option>
                 </select>
-                <input type="text" placeholder="Email" [(ngModel)]="createSwaraSadhnaFrom.email" class="search-input form-control" />
-                <input type="text" placeholder="name" [(ngModel)]="createSwaraSadhnaFrom.name" class="search-input form-control" />
-                <input *ngIf="selectedOption == 1" type="text" placeholder="City" [(ngModel)]="createSwaraSadhnaFrom.city" class="search-input form-control" />
-                <select *ngIf="selectedOption == 5 || selectedOption == 6 || selectedOption == 7" [(ngModel)]="createSwaraSadhnaFrom.month" class="search-input form-control">
-                  <option *ngFor="let m of rishikeshMonthOption" [value]="m.value">{{ m.label }}</option>
+                <input
+                  type="text"
+                  placeholder="Email"
+                  [(ngModel)]="createSwaraSadhnaFrom.email"
+                  class="search-input form-control"
+                />
+                <input
+                  type="text"
+                  placeholder="name"
+                  [(ngModel)]="createSwaraSadhnaFrom.name"
+                  class="search-input form-control"
+                />
+                <input
+                  *ngIf="selectedOption == 1"
+                  type="text"
+                  placeholder="City"
+                  [(ngModel)]="createSwaraSadhnaFrom.city"
+                  class="search-input form-control"
+                />
+                <select
+                  *ngIf="
+                    selectedOption == 5 ||
+                    selectedOption == 6 ||
+                    selectedOption == 7
+                  "
+                  [(ngModel)]="createSwaraSadhnaFrom.month"
+                  class="search-input form-control"
+                >
+                  <option
+                    *ngFor="let m of rishikeshMonthOption"
+                    [value]="m.value"
+                  >
+                    {{ m.label }}
+                  </option>
                 </select>
                 <ng-container *ngIf="selectedOption == 4">
-                  <label class="line" *ngFor="let option of onlineTeacherOption; let i = index">
-                    <input type="checkbox" *ngIf="option.isActive" (change)="onCheckboxChange(option)" />&nbsp;
-                    <span *ngIf="option.isActive">{{ option.coursetitle }}</span>
+                  <label
+                    class="line"
+                    *ngFor="let option of onlineTeacherOption; let i = index"
+                  >
+                    <input
+                      type="checkbox"
+                      *ngIf="option.isActive"
+                      (change)="onCheckboxChange(option)"
+                    />&nbsp;
+                    <span *ngIf="option.isActive">{{
+                      option.coursetitle
+                    }}</span>
                   </label>
                 </ng-container>
-                <button (click)="registerStudent(createSwaraSadhnaFrom)">Register</button>
+                <button (click)="registerStudent(createSwaraSadhnaFrom)">
+                  Register
+                </button>
               </div>
             </ng-template>
           </li>

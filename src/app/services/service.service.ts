@@ -393,4 +393,12 @@ export class ServiceService {
   registerRetreatYogaUser(data: createRetreatYoga) {
     return this.http.post(this.url + "api/v1/registerRetreatYogaUser", data);
   }
+  getRetreatData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getRetreatData", data);
+  }
+  removeRetreatData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeRetreatData", {
+      studentId,
+    });
+  }
 }
