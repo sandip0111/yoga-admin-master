@@ -105,9 +105,9 @@
               obj?.paymentStatus == 'failed' || obj?.paymentStatus == 'unpaid',
           }"
         >
-          {{ obj.paymentStatus }}
+          {{ obj.paymentStatus | titlecase }}
         </td>
-        <td>{{ obj.paymentType }}</td>
+        <td>{{ obj.paymentType | titlecase }}</td>
         <td>
           <ng-container *ngIf="obj.created; else noPayment">
             {{ obj.created | date: "dd-MM-yyyy" }}

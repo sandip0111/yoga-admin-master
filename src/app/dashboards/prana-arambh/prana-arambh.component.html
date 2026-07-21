@@ -97,13 +97,13 @@
               }"
             >
               <ng-container *ngIf="student.paymentStatus; else noPayment">
-                {{ student.paymentStatus }}
+                {{ student.paymentStatus | titlecase }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
             <td>
               <ng-container *ngIf="student.paymentBy; else noPayment">
-                {{ student.paymentBy }}
+                {{ student.paymentBy | titlecase }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>

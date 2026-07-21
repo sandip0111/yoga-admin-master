@@ -114,11 +114,11 @@
               <ng-container
                 *ngIf="spiritualityStdnt.paymentStatus; else noPayment"
               >
-                {{ spiritualityStdnt.paymentStatus }}
+                {{ spiritualityStdnt.paymentStatus | titlecase }}
               </ng-container>
               <ng-template #noPayment>N/A</ng-template>
             </td>
-            <td>{{ spiritualityStdnt.paymentBy }}</td>
+            <td>{{ spiritualityStdnt.paymentBy | titlecase }}</td>
             <td>{{ spiritualityStdnt.created | date: "mediumDate" }}</td>
             <td>
               <button

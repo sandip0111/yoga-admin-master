@@ -90,7 +90,7 @@
             'text-danger': obj?.paymentStatus == 'failed',
           }"
         >
-          {{ obj.paymentStatus }}
+          {{ obj.paymentStatus | titlecase }}
           <button
             class="give-access-warning"
             *ngIf="obj?.paymentStatus == 'pending'"
@@ -99,7 +99,7 @@
             Give Access
           </button>
         </td>
-        <td>{{ obj.paymentType }}</td>
+        <td>{{ obj.paymentType | titlecase }}</td>
         <td>{{ obj.month }}</td>
         <td>
           <ng-container *ngIf="obj.created; else noPayment">
