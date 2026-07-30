@@ -44,12 +44,12 @@
           (drop)="onDrop($event)"
           [class.has-file]="selectedFile"
         >
-          <div *ngIf="!selectedFile" class="drop-zone-content py-4 text-center">
+          <div *ngIf="!selectedFile" class="drop-zone-content py-3 py-md-4 text-center">
             <div class="icon-circle mb-3 mx-auto d-flex align-items-center justify-content-center">
               <i class="bi bi-cloud-upload fs-1" style="color: #f47019;"></i>
             </div>
             <h5 class="fw-bold text-slate-900 mb-1 fs-5">Drag and drop your video file here</h5>
-            <p class="text-slate-500 mb-3 fs-7">or choose a file from your computer</p>
+            <p class="text-slate-500 mb-3 fs-7 d-none d-md-block">or choose a file from your computer</p>
 
             <label for="fileInput" class="browse-btn-fancy mb-3">
               <i class="bi bi-folder2-open me-2"></i> Browse Files
@@ -62,9 +62,9 @@
               style="display: none"
             />
 
-            <div class="mt-2">
+            <div class="mt-2 px-2">
               <span class="info-badge-pill">
-                <i class="bi bi-info-circle-fill me-1.5" style="color: #f47019;"></i> Supported formats: MP4, MPEG, MOV, AVI (Max 100MB)
+                <i class="bi bi-info-circle-fill me-1" style="color: #f47019;"></i> Supported formats: MP4, MPEG, MOV, AVI (Max 100MB)
               </span>
             </div>
           </div>
@@ -113,8 +113,8 @@
           <h6 class="fw-bold text-slate-800 mb-3 d-flex align-items-center gap-2 fs-6">
             <i class="bi bi-sliders" style="color: #f47019;"></i> Course Details & Publication
           </h6>
-          <div class="row g-4 align-items-end">
-            <div class="col-md-3">
+          <div class="row g-3">
+            <div class="col-12 col-md-3">
               <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Select Month</label>
               <select [(ngModel)]="selectedMonth" name="selectedMonth" class="form-select form-control custom-select-styled fw-medium text-slate-800">
                 <option [value]="null" selected hidden>Select month</option>
@@ -122,7 +122,7 @@
               </select>
             </div>
 
-            <div *ngIf="selectedOption == '69ff6a520cd7ed2296fbbddb'" class="col-md-3">
+            <div *ngIf="selectedOption == '69ff6a520cd7ed2296fbbddb'" class="col-12 col-md-3">
               <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Select Mentor Name</label>
               <select [(ngModel)]="selectedTeacherId" name="selectedTeacherId" class="form-select form-control custom-select-styled fw-medium text-slate-800">
                 <option [ngValue]="null" selected hidden>Select name</option>
@@ -132,7 +132,7 @@
               </select>
             </div>
 
-            <div [class]="selectedOption == '69ff6a520cd7ed2296fbbddb' ? 'col-md-6' : 'col-md-9'">
+            <div [class]="selectedOption == '69ff6a520cd7ed2296fbbddb' ? 'col-12 col-md-6' : 'col-12 col-md-9'">
               <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Course Video Title</label>
               <input
                 type="text"
@@ -143,17 +143,17 @@
               />
             </div>
 
-            <div class="col-12 text-end mt-2">
+            <div class="col-12 mt-3 d-flex justify-content-end justify-content-md-end">
               <button
                 type="button"
-                class="btn-upload-submit"
+                class="btn-upload-submit w-100"
                 [disabled]="!selectedFile || isUploading || uploadComplete"
                 (click)="uploadVideoThroughBackend()"
               >
                 <i class="bi bi-cloud-upload-fill me-2"></i> Upload Course Video
               </button>
 
-              <button *ngIf="uploadComplete" type="button" class="btn-upload-submit ms-2" (click)="reset()">
+              <button *ngIf="uploadComplete" type="button" class="btn-upload-submit ms-2 w-100" (click)="reset()">
                 <i class="bi bi-plus-circle me-2"></i> Upload Another Video
               </button>
             </div>

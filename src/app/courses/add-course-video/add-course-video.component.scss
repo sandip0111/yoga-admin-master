@@ -67,7 +67,7 @@
   border-radius: 12px;
   padding: 1.5rem !important;
 
-  .col-md-3, .col-md-6, .col-md-9 {
+  .col-12, .col-md-3, .col-md-6, .col-md-9 {
     padding-left: 12px !important;
     padding-right: 12px !important;
   }
@@ -122,5 +122,57 @@
     box-shadow: none !important;
     cursor: not-allowed;
     opacity: 0.7;
+  }
+}
+
+/* ---- Mobile Responsive ---- */
+@media (max-width: 767.98px) {
+  .drop-zone-executive {
+    padding: 1.5rem 1rem;
+
+    .icon-circle {
+      width: 52px;
+      height: 52px;
+    }
+  }
+
+  .info-badge-pill {
+    white-space: normal;
+    text-align: center;
+    border-radius: 12px;
+    padding: 8px 14px;
+    line-height: 1.5;
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;
+  }
+
+  .details-section-box {
+    padding: 1rem !important;
+
+    .col-12, .col-md-3, .col-md-6, .col-md-9 {
+      padding-left: 8px !important;
+      padding-right: 8px !important;
+    }
+  }
+
+  .col-12.text-end {
+    text-align: left !important;
+
+    .btn-upload-submit {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+  }
+
+  .selected-file-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+
+    button {
+      width: 100% !important;
+      justify-content: center !important;
+    }
   }
 }
