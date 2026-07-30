@@ -61,6 +61,16 @@ export class FunctionalSpiritualityComponent implements OnInit {
       },
     );
   }
+  clearFilter(): void {
+    this.foundationDetoxfilter.searchText = "";
+    this.foundationDetoxfilter.fromDate = "";
+    this.foundationDetoxfilter.toDate = "";
+    this.foundationDetoxfilter.paymentStatus = "";
+    this.getAllFoundationOfSpiritualityStudent(
+      this.foundationDetoxfilter,
+      true,
+    );
+  }
   foundationExportToExcel(tableId: string): void {
     this.fosLoading = true;
     this.foundationDetoxfilter.isGetAll = true;

@@ -1,11 +1,11 @@
 <app-spinner *ngIf="loading"></app-spinner>
 <div class="w-full max-w-full">
   <div class="w-full max-w-full">
-    <div class="dashboard-card-wrapper w-full max-w-full bg-white rounded-2xl shadow-sm border border-slate-200 p-4 md:p-6 overflow-hidden">
+    <div class="dashboard-card-wrapper w-full max-w-full">
       <h3 class="dashboard-main-title text-xl md:text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2.5">
         <i class="bi bi-speedometer2 text-brand-500"></i> Dashboard Overview
       </h3>
-      <ul ngbNav #nav="ngbNav" class="nav-tabs custom-dashboard-tabs flex flex-wrap gap-2 p-3 bg-slate-50/80 rounded-xl border border-slate-200 mb-6 w-full max-w-full box-border">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs custom-dashboard-tabs flex flex-wrap gap-2 p-3 bg-slate-50/80 rounded-xl border border-slate-200 mb-0 w-full max-w-full box-border">
         <li [ngbNavItem]="1">
           <a ngbNavLink><i class="bi bi-wind me-1"></i>{{ dashboardShared.pranaArambhTitle }}</a>
           <ng-template ngbNavContent>
@@ -46,11 +46,13 @@
         <li [ngbNavItem]="5">
           <a ngbNavLink><i class="bi bi-camera-video me-1"></i>{{ dashboardShared.freeWebinarTitle }}</a>
           <ng-template ngbNavContent>
-            <app-free-webinner></app-free-webinner>
+            <app-free-webinner
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+            ></app-free-webinner>
           </ng-template>
         </li>
         <li [ngbNavItem]="6">
-          <a ngbNavLink><i class="bi bi-sparkles me-1"></i>{{ dashboardShared.pranicPurificationTitle }}</a>
+          <a ngbNavLink><i class="bi bi-flower1 me-1"></i>{{ dashboardShared.pranicPurificationTitle }}</a>
           <ng-template ngbNavContent>
             <app-pranic-purification
               [isPranic]="true"
@@ -75,6 +77,7 @@
             <app-two-hundred-online-ttc
               [paymentOption]="paymentOption"
               [paymentTypeOption]="paymentTypeOption"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
             ></app-two-hundred-online-ttc>
           </ng-template>
         </li>
@@ -85,13 +88,16 @@
               [paymentOption]="paymentOption"
               [paymentTypeOption]="paymentTypeOption"
               [customerGroups]="customerGroups"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
             ></app-online-live-class>
           </ng-template>
         </li>
         <li [ngbNavItem]="10">
           <a ngbNavLink><i class="bi bi-hourglass-split me-1"></i>{{ dashboardShared.pendingPaymentTitle }}</a>
           <ng-template ngbNavContent>
-            <app-pending-payment></app-pending-payment>
+            <app-pending-payment
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+            ></app-pending-payment>
           </ng-template>
         </li>
         <li [ngbNavItem]="11">
@@ -115,7 +121,9 @@
         <li [ngbNavItem]="13">
           <a ngbNavLink><i class="bi bi-people me-1"></i>{{ dashboardShared.subscribersTitle }}</a>
           <ng-template ngbNavContent>
-            <app-subscribers></app-subscribers>
+            <app-subscribers
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+            ></app-subscribers>
           </ng-template>
         </li>
         <li [ngbNavItem]="14">
@@ -124,6 +132,7 @@
             <app-pranayama-certification-dashboard
               [paymentOption]="paymentOption"
               [paymentTypeOption]="paymentTypeOption"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
             ></app-pranayama-certification-dashboard>
           </ng-template>
         </li>
@@ -133,6 +142,7 @@
             <app-retreat
               [paymentOption]="paymentOption"
               [paymentTypeOption]="paymentTypeOption"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
             ></app-retreat>
           </ng-template>
         </li>
@@ -142,6 +152,7 @@
             <app-personal-guidance
               [paymentOption]="paymentOption"
               [paymentTypeOption]="paymentTypeOption"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
             ></app-personal-guidance>
           </ng-template>
         </li>
@@ -162,10 +173,10 @@
 
                 <div class="container_search">
                   <div class="filter-group">
-                    <label><i class="bi bi-journal-bookmark me-1"></i> Select Course</label>
+                    <label><i class="bi bi-journal-bookmark me-1" style="color: #f47019;"></i> Select Course</label>
                     <select
                       [(ngModel)]="selectedOption"
-                      class="filter-select form-select"
+                      class="filter-select"
                     >
                       <option [value]="0" selected hidden>Select a course</option>
                       <option *ngFor="let option of options" [value]="option.value">
@@ -175,34 +186,34 @@
                   </div>
 
                   <div class="filter-group">
-                    <label><i class="bi bi-envelope me-1"></i> Email</label>
+                    <label><i class="bi bi-envelope me-1" style="color: #f47019;"></i> Email</label>
                     <input
-                      type="text"
+                      type="email"
                       placeholder="Student Email..."
                       [(ngModel)]="createSwaraSadhnaFrom.email"
-                      class="search-input form-control"
+                      class="filter-select"
                       style="min-width: 220px;"
                     />
                   </div>
 
                   <div class="filter-group">
-                    <label><i class="bi bi-person me-1"></i> Name</label>
+                    <label><i class="bi bi-person me-1" style="color: #f47019;"></i> Name</label>
                     <input
                       type="text"
                       placeholder="Student Name..."
                       [(ngModel)]="createSwaraSadhnaFrom.name"
-                      class="search-input form-control"
+                      class="filter-select"
                       style="min-width: 200px;"
                     />
                   </div>
 
                   <div class="filter-group" *ngIf="selectedOption == 1">
-                    <label><i class="bi bi-geo-alt me-1"></i> City</label>
+                    <label><i class="bi bi-geo-alt me-1" style="color: #f47019;"></i> City</label>
                     <input
                       type="text"
                       placeholder="City..."
                       [(ngModel)]="createSwaraSadhnaFrom.city"
-                      class="search-input form-control"
+                      class="filter-select"
                       style="min-width: 180px;"
                     />
                   </div>
@@ -257,7 +268,7 @@
           </ng-template>
         </li>
         </ul>
-        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+        <div [ngbNavOutlet]="nav" class="mt-0"></div>
       </div>
     </div>
   </div>

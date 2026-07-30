@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import {
   freeWebinarDataModel,
   freeWebinarStudentModel,
@@ -20,6 +20,11 @@ export class FreeWebinnerComponent implements OnInit {
   freeWebinarList: freeWebinarStudentModel[] = [];
   freeWebinarTotal: number = 0;
   monthOption = ["All Month Data", "January, 2026", "June, 2026"];
+
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
 
   constructor(
     private service: ServiceService,
@@ -54,6 +59,27 @@ export class FreeWebinnerComponent implements OnInit {
         this.dashboardShared.freeWebinarTitle = `Free Webinar (${this.freeWebinarTotal})`;
         this.freeLoading = this.freeWebinarList ? false : true;
       });
+  }
+
+  clearFilter(): void {
+    this.freeWebinarFilter.searchText = "";
+    this.freeWebinarFilter.fromDate = "";
+    this.freeWebinarFilter.toDate = "";
+    this.freeWebinarFilter.month = "";
+    this.getAllFreeWebinarData(this.freeWebinarFilter, true);
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
   onFreeTableDataChange(event: number) {
     this.freeWebinarFilter.pageNo = event;

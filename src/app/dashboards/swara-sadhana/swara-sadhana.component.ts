@@ -61,6 +61,14 @@ export class SwaraSadhanaComponent implements OnInit {
         this.swaraLoading = this.swaraSadhanaList ? false : true;
       });
   }
+  clearFilter(): void {
+    this.swaraSadhnaFilter.searchText = "";
+    this.swaraSadhnaFilter.fromDate = "";
+    this.swaraSadhnaFilter.toDate = "";
+    this.swaraSadhnaFilter.paymentStatus = "";
+    this.swaraSadhnaFilter.paymentType = "";
+    this.getAllSwaraSadhnaStudent(this.swaraSadhnaFilter, true);
+  }
   swaraExportToExcel() {
     this.swaraLoading = true;
     const tableId = "Swara_Sadhana";

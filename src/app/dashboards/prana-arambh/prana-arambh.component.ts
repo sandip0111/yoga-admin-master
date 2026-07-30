@@ -62,6 +62,14 @@ export class PranaArambhComponent implements OnInit {
         this.isLoading = this.students ? false : true;
       });
   }
+  clearFilter(): void {
+    this.filter.searchText = "";
+    this.filter.fromDate = "";
+    this.filter.toDate = "";
+    this.filter.paymentStatus = "";
+    this.filter.paymentType = "";
+    this.getAllParayanamStudent(this.filter, true);
+  }
   pranayamExportToExcel(tableId: string): void {
     this.isLoading = true;
     let csvContent = "";

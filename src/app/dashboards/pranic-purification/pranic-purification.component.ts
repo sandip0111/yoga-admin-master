@@ -85,6 +85,14 @@ export class PranicPurificationComponent implements OnInit {
         });
     }
   }
+  clearFilter(): void {
+    this.filter.searchText = "";
+    this.filter.fromDate = "";
+    this.filter.toDate = "";
+    this.filter.paymentStatus = "";
+    this.filter.month = "";
+    this.getAllData(this.filter, true);
+  }
   onPranicPurificationTableDataChange(event: number) {
     this.filter.pageNo = event;
     this.pranicPurificationPage = event;

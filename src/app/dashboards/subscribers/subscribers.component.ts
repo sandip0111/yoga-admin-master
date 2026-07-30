@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ServiceService } from "../../services/service.service";
+import { DashboardSharedService } from "../dashboard-shared.service";
 
 @Component({
   standalone: false,
@@ -18,7 +19,15 @@ export class SubscribersComponent implements OnInit {
     searchText: "",
   };
 
-  constructor(private service: ServiceService) {}
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
+
+  constructor(
+    private service: ServiceService,
+    public dashboardShared: DashboardSharedService
+  ) {}
 
   ngOnInit(): void {
     this.getAllSubscribers();
@@ -30,6 +39,7 @@ export class SubscribersComponent implements OnInit {
       (res: any) => {
         this.subscribers = res.data;
         this.total = res.total;
+        this.dashboardShared.subscribersTitle = `Subscribers (${this.total})`;
         this.loading = false;
       },
       (err) => {
@@ -53,6 +63,24 @@ export class SubscribersComponent implements OnInit {
     this.filter.pageNo = 1;
     this.p = 1;
     this.getAllSubscribers();
+  }
+
+  clearFilter(): void {
+    this.filter.searchText = "";
+    this.onSearch();
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
 
   deleteRow(student: any): void {

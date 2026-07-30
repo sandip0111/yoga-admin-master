@@ -8,7 +8,7 @@
   <div class="pg-card">
     <div class="pg-card-header">
       <div class="header-title">
-        <i class="bi bi-sparkles header-icon"></i>
+        <i class="bi header-icon" [ngClass]="isPranic ? 'bi-flower1' : 'bi-stars'"></i>
         <div>
           <h4>{{ title }}</h4>
           <span class="subtitle">View and manage Pranic Purification student registrations and payments</span>
@@ -23,6 +23,7 @@
 
     <div class="container_search">
       <div class="search-box">
+        <label><i class="bi bi-search me-1"></i> Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
@@ -59,6 +60,9 @@
 
       <button class="btn-search" (click)="getAllData(filter, true)">
         <i class="bi bi-search"></i> Search
+      </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
       </button>
     </div>
 

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { searchPranaRambhFilter } from "src/app/models/dashboard";
 import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
@@ -18,6 +18,10 @@ export class Retreat {
   retreatTotal: number = 0;
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
   monthOption = [
     { value: "All Month Data", label: "All Month Data" },
     { value: "September, 2026", label: "September, 2026" },
@@ -50,6 +54,29 @@ export class Retreat {
       this.dashboardShared.retreatTitle = `Retreat (${this.retreatTotal})`;
       this.retreatLoading = this.retreatList ? false : true;
     });
+  }
+
+  clearFilter(): void {
+    this.retreatFilter.searchText = "";
+    this.retreatFilter.fromDate = "";
+    this.retreatFilter.toDate = "";
+    this.retreatFilter.paymentStatus = "";
+    this.retreatFilter.paymentType = "";
+    this.retreatFilter.month = "";
+    this.getAllRetreatStudent(this.retreatFilter, true);
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
   onMonthChange(month: string) {
     this.retreatFilter.month = month;

@@ -1,72 +1,93 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
 
-<div class="blog-composer-page">
-  <!-- Header -->
-  <div class="page-header">
-    <div class="header-left">
-      <h3 class="page-title">{{ blogId ? 'Edit Blog Post' : 'Create Blog Post' }}</h3>
-      <span class="status-badge" [class.edit-mode]="blogId">
-        {{ blogId ? 'Draft Mode' : 'New Post' }}
-      </span>
-    </div>
-    <button type="button" class="btn-view-all" routerLink="/view-blog">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
-      </svg>
-      Back to Blogs
-    </button>
-  </div>
-
-  <form class="blog-form" #empForm="ngForm" enctype="multipart/form-data">
-    <div class="composer-grid">
-      <!-- Main Content Area (Left) -->
-      <div class="composer-main">
-        <div class="editor-card">
-          <div class="card-header-custom">
-            <h4 class="card-title-custom">Write your Story</h4>
-            <p class="card-subtitle-custom">Create engaging content for your audience</p>
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <div class="w-full max-w-full space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #f47019, #d95305);">
+          <i class="bi bi-pen-fill text-white text-xl"></i>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">{{ blogId ? 'Edit Blog Post' : 'Create Blog Post' }}</h1>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold"
+              [ngClass]="blogId ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'">
+              {{ blogId ? 'Draft Mode' : 'New Post' }}
+            </span>
           </div>
-          <div class="card-body-custom">
+          <p class="text-xs text-slate-500 mt-0.5">Write engaging articles, set authors, upload featured cover images, and optimize SEO metadata</p>
+        </div>
+      </div>
+      <button type="button" routerLink="/view-blog"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all duration-200">
+        <i class="bi bi-arrow-left" style="color: #f47019;"></i> Back to Blogs
+      </button>
+    </div>
+
+    <!-- Main Grid Form -->
+    <form #empForm="ngForm" enctype="multipart/form-data">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- Main Content Area (Left 2 Columns) -->
+        <div class="lg:col-span-2 space-y-6">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8 space-y-6">
+            <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i class="bi bi-file-earmark-text-fill text-base" style="color: #f47019;"></i>
+              <h2 class="text-base font-bold text-slate-800">Article Content & Details</h2>
+            </div>
+
             <!-- Blog Title -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">Blog Title</label>
-              <input
-                type="text"
-                class="form-control-custom"
-                name="mentorsname"
-                [(ngModel)]="formData.title"
-                placeholder="e.g. 10 Health Benefits of Kundalini Yoga Practice"
-                (change)="getSlug($event)"
-                required
-              />
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Blog Title <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-type-h1 absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="mentorsname"
+                  placeholder="e.g. 10 Health Benefits of Kundalini Yoga Practice"
+                  [(ngModel)]="formData.title"
+                  (change)="getSlug($event)"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
 
             <!-- Short Description -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">Short Description</label>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Short Description / Excerpt
+              </label>
               <textarea
-                class="form-control-custom textarea-custom"
                 name="shortDesc"
-                [(ngModel)]="formData.shortDesc"
-                placeholder="Brief summary to hook readers on your feed..."
                 rows="3"
+                placeholder="Brief summary to hook readers on your feed..."
+                [(ngModel)]="formData.shortDesc"
+                class="w-full p-4 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50 resize-y"
               ></textarea>
             </div>
 
             <!-- Content Editor -->
-            <div class="form-group-custom editor-container">
-              <label class="form-label-custom">Body Content</label>
-              <div class="tinymce-wrapper">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Body Content
+              </label>
+              <div class="rounded-xl overflow-hidden border border-slate-200">
                 <editor
                   apiKey="myfzbxcl0pid6mhk2jomde4f52khnth6rd2veo4zhtr788vv"
                   name="content"
                   [(ngModel)]="formData.content"
                   [init]="{
-                    height: 450,
+                    height: 480,
                     menubar: true,
                     plugins: 'lists link image code table media lists',
                     toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | table code',
                     branding: false,
+                    elementpath: false,
+                    statusbar: false,
                     content_style: 'body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:15px }',
                     skin: 'oxide',
                     preview_styles: true
@@ -76,132 +97,154 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Sidebar Settings Area (Right) -->
-      <div class="composer-sidebar">
-        <!-- Publish settings card -->
-        <div class="editor-card sidebar-card">
-          <div class="card-header-custom">
-            <h4 class="card-title-custom">Publish Settings</h4>
-          </div>
-          <div class="card-body-custom">
+        <!-- Sidebar Settings Area (Right 1 Column) -->
+        <div class="lg:col-span-1 space-y-6">
+          
+          <!-- Publish Settings Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-5">
+            <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i class="bi bi-gear-fill text-base" style="color: #f47019;"></i>
+              <h2 class="text-base font-bold text-slate-800">Publish Settings</h2>
+            </div>
+
             <!-- Blog Author -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">Select Author</label>
-              <div class="select-wrapper">
-                <select class="form-control-custom select-custom" name="authorId" [(ngModel)]="formData.authorId">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Select Author
+              </label>
+              <div class="relative">
+                <i class="bi bi-person-badge absolute left-3.5 top-3 text-slate-400 z-10 pointer-events-none"></i>
+                <select
+                  name="authorId"
+                  [(ngModel)]="formData.authorId"
+                  class="w-full pl-10 pr-8 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50 appearance-none cursor-pointer"
+                >
                   <option value="" disabled selected>Choose a mentor...</option>
-                  <option *ngFor="let mentor of mentorList" [value]="mentor._id">{{mentor.name}}</option>
+                  <option *ngFor="let mentor of mentorList" [value]="mentor._id">{{ mentor.name }}</option>
                 </select>
+                <i class="bi bi-chevron-down absolute right-3.5 top-3 text-slate-400 pointer-events-none text-xs"></i>
               </div>
             </div>
 
             <!-- Blog Slug -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">
-                URL Slug
-                <span class="helper-badge">Auto-generated</span>
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                URL Slug <span class="text-slate-400 font-normal lowercase">(auto-generated)</span>
               </label>
-              <input
-                type="text"
-                class="form-control-custom slug-input"
-                name="slug"
-                [(ngModel)]="formData.slug"
-                placeholder="url-slug-format"
-              />
+              <div class="relative">
+                <i class="bi bi-link-45deg absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="slug"
+                  placeholder="url-slug-format"
+                  [(ngModel)]="formData.slug"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-mono text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Featured Image card -->
-        <div class="editor-card sidebar-card">
-          <div class="card-header-custom">
-            <h4 class="card-title-custom">Featured Image</h4>
-          </div>
-          <div class="card-body-custom">
-            <!-- Upload widget / preview -->
-            <div class="image-upload-wrapper">
-              <div class="image-preview-container" *ngIf="formData.image">
-                <img class="img-uploaded-preview" [src]="url + formData.image" alt="Featured Image Preview" />
-                <button type="button" class="btn-remove-image" (click)="removeImage()" title="Remove Image">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-                  </svg>
-                  Remove Image
+          <!-- Featured Image Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-4">
+            <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i class="bi bi-image-fill text-base" style="color: #f47019;"></i>
+              <h2 class="text-base font-bold text-slate-800">Featured Image</h2>
+            </div>
+
+            <!-- Upload Widget / Preview -->
+            <div *ngIf="formData.image" class="relative group rounded-xl overflow-hidden border border-slate-200">
+              <img [src]="url + formData.image" alt="Featured Image Preview" class="w-full h-44 object-cover" />
+              <div class="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <button
+                  type="button"
+                  (click)="removeImage()"
+                  class="px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 shadow-md transition-all">
+                  <i class="bi bi-trash3-fill"></i> Remove Cover
                 </button>
               </div>
+            </div>
 
-              <div class="upload-dropzone" *ngIf="!formData.image">
+            <div *ngIf="!formData.image">
+              <label for="featured-image-upload" class="p-6 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 flex flex-col items-center justify-center gap-2 cursor-pointer hover:border-orange-300 hover:bg-orange-50/30 transition-all text-center">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-500">
+                  <i class="bi bi-cloud-arrow-up text-xl"></i>
+                </div>
+                <span class="text-xs font-bold text-slate-700">Upload Cover Image</span>
+                <span class="text-xs text-slate-400">PNG, JPG or WebP</span>
                 <input
                   type="file"
                   id="featured-image-upload"
-                  class="hidden-file-input"
+                  class="hidden"
                   (change)="selectBlogImage($event)"
                   accept="image/*"
                 />
-                <label for="featured-image-upload" class="dropzone-label">
-                  <span class="upload-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </span>
-                  <span class="upload-text">Upload Post Image</span>
-                  <span class="upload-limits">JPG, PNG</span>
-                </label>
+              </label>
+            </div>
+          </div>
+
+          <!-- SEO Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-4">
+            <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+              <i class="bi bi-search text-base" style="color: #f47019;"></i>
+              <h2 class="text-base font-bold text-slate-800">SEO Settings</h2>
+            </div>
+
+            <!-- SEO Keywords -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                SEO Keywords
+              </label>
+              <div class="relative">
+                <i class="bi bi-tags absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="seokeywords"
+                  placeholder="yoga, fitness, wellness"
+                  [(ngModel)]="formData.seokeywords"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+
+            <!-- SEO Description -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                SEO Meta Description
+              </label>
+              <div class="relative">
+                <i class="bi bi-card-text absolute left-3.5 top-3 text-slate-400"></i>
+                <textarea
+                  name="seodescription"
+                  rows="3"
+                  placeholder="Meta description for search engines..."
+                  [(ngModel)]="formData.seodescription"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50 resize-y"
+                ></textarea>
               </div>
             </div>
           </div>
+
         </div>
 
-        <!-- SEO Card -->
-        <div class="editor-card sidebar-card">
-          <div class="card-header-custom">
-            <h4 class="card-title-custom">SEO Settings</h4>
-          </div>
-          <div class="card-body-custom">
-            <!-- Blog Seo Keywords -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">SEO Keywords</label>
-              <input
-                type="text"
-                class="form-control-custom"
-                name="seokeywords"
-                [(ngModel)]="formData.seokeywords"
-                placeholder="yoga, fitness, wellness"
-              />
-            </div>
-
-            <!-- Blog Seo Description -->
-            <div class="form-group-custom">
-              <label class="form-label-custom">SEO Description</label>
-              <textarea
-                class="form-control-custom textarea-custom"
-                name="seodescription"
-                [(ngModel)]="formData.seodescription"
-                placeholder="Meta description for search engines..."
-                rows="3"
-              ></textarea>
-            </div>
-          </div>
+        <!-- Full-Width Bottom Action Footer -->
+        <div class="lg:col-span-3 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col sm:flex-row items-center justify-end gap-3">
+          <button
+            type="button"
+            routerLink="/view-blog"
+            class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-all text-center">
+            Cancel Changes
+          </button>
+          <button
+            type="submit"
+            (click)="createBlog(formData)"
+            class="w-full sm:w-auto px-8 py-3 rounded-xl text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-check-circle-fill"></i> Save Blog Post
+          </button>
         </div>
+
       </div>
-    </div>
-
-    <!-- Actions Footer Bar -->
-    <div class="composer-footer-actions">
-      <button type="button" class="btn-action-custom cancel" routerLink="/view-blog">
-        Cancel Changes
-      </button>
-      <button type="submit" class="btn-action-custom save" (click)="createBlog(formData)">
-        <span class="save-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M12.736 14H3.264a.5.5 0 0 1-.499-.446L2.11 3.567a.5.5 0 0 1 .499-.553h10.782a.5.5 0 0 1 .499.553l-.655 9.987a.5.5 0 0 1-.499.446zm-9.01-1h8.548l.524-8H3.202l.524 8z"/>
-            <path d="M8 4a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-5A.5.5 0 0 1 8 4zm2.5.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5zm-5 0a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0v-5z"/>
-          </svg>
-        </span>
-        Save Blog Information
-      </button>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

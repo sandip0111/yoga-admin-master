@@ -14,9 +14,26 @@
           <span class="subtitle">View and filter pending payment records across all courses</span>
         </div>
       </div>
+      <div class="header-actions">
+        <a (click)="exportToExcel('PendingPayment')" class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
+      </div>
     </div>
 
     <div class="container_search">
+      <div class="search-box">
+        <label><i class="bi bi-search me-1"></i> Search</label>
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search by Name or Email..."
+          [(ngModel)]="filter.searchText"
+          class="search-input form-control"
+          (keyup.enter)="getAllData(filter, true)"
+        />
+      </div>
+
       <div class="filter-group">
         <label><i class="bi bi-journal-bookmark me-1"></i> Course</label>
         <select
@@ -29,10 +46,17 @@
           </option>
         </select>
       </div>
+
+      <button class="btn-search" (click)="getAllData(filter, true)">
+        <i class="bi bi-search"></i> Search
+      </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
+      </button>
     </div>
 
     <div class="pranarambh-table-responsive">
-      <table id="Swara_Sadhana" class="fancy-table">
+      <table id="PendingPayment" class="fancy-table">
         <thead>
           <tr>
             <th class="text-center" style="width: 60px">Sl No.</th>

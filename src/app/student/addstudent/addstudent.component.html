@@ -1,124 +1,186 @@
-<div class="page-header">
-  <h3 class="page-title">Student</h3>
-  <br />
-  <button
-    type="button"
-    class="btn btn-outline-primary"
-    routerLink="/view-student"
-  >
-    Show All Student
-  </button>
-</div>
-<div class="row">
-  <div class="col-md-16 grid-margin stretch-card">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">New Student information</h4>
-        <form
-          class="forms-sample"
-          #empForm="ngForm"
-        >
-          <div class="col-md-50 p-0">
-            <div class="form-group col-lg-6 float-left">
-              <label>First Name</label>
-              <input
-                type="text"
-                value=""
-                class="form-control"
-                name="firstName"
-                [(ngModel)]="userdetails.firstName"
-                placeholder="Enter firstname"
-                class="form-control"
-              />
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <div class="w-full max-w-full space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center shadow-md" style="background: linear-gradient(135deg, #f47019, #d95305);">
+          <i class="bi bi-person-plus-fill text-white text-xl"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-bold text-slate-800 tracking-tight">{{ routeSub ? 'Edit Student' : 'New Student Information' }}</h1>
+          <p class="text-xs text-slate-500 mt-0.5">Register student accounts, manage passwords, enrollment dates, and course access</p>
+        </div>
+      </div>
+      <button type="button" routerLink="/view-student"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all duration-200">
+        <i class="bi bi-arrow-left" style="color: #f47019;"></i> Show All Students
+      </button>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <form #empForm="ngForm" class="p-6 md:p-8 space-y-8">
+        
+        <!-- Section 1: Student Credentials -->
+        <div class="space-y-5">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <i class="bi bi-person-badge-fill text-base" style="color: #f47019;"></i>
+            <h2 class="text-base font-bold text-slate-800">Student Account & Contact Details</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <!-- First Name -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                First Name <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-person absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="Enter first name..."
+                  [(ngModel)]="userdetails.firstName"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
 
-            <div class="form-group col-lg-6 float-left">
-              <label>last Name</label>
-
-              <input
-                type="text"
-                value=""
-                class="form-control"
-                name="lastName"
-                [(ngModel)]="userdetails.lastName"
-                placeholder="Enter lastname"
-                class="form-control"
-              />
+            <!-- Last Name -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Last Name <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-person absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Enter last name..."
+                  [(ngModel)]="userdetails.lastName"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
 
-            <div class="form-group col-lg-6 float-left">
-              <label>Email Address</label>
-              <input
-                type="text"
-                class="form-control"
-                name="email"
-                [(ngModel)]="userdetails.email"
-                placeholder="Enter email"
-                class="form-control"
-                (change)="checkEmail($event)"
-              />
-            </div>
-            <div class="form-group col-lg-6 float-left">
-              <label>Password</label>
-
-              <input
-                type="password"
-                value=""
-                name="password"
-                [(ngModel)]="userdetails.password"
-                placeholder="password"
-                class="form-control"
-              />
-
-            </div>
-            <div class="form-group col-lg-6 float-left">
-              <label>Phone Number</label>
-              <input
-                type="text"
-                value=""
-                name="phoneNumber"
-                [(ngModel)]="userdetails.phoneNumber"
-                placeholder="Phone Number"
-                class="form-control"
-
-              />
-            </div>
-            <div class="form-group col-lg-6 float-left">
-              <label>Enrollment Date</label>
-
-              <input
-                type="date"
-                name="enrollmentDate"
-                [(ngModel)]="userdetails.enrollmentDate"
-                placeholder=""
-                class="form-control"
-              />
-            </div>
-            <div class="form-group col-lg-6 float-left">
-              <label>SELECT COURSE</label>
-              <select name="mySelect" multiple class="form-control" [(ngModel)]="userdetails.selected">
-                <option *ngFor="let option of courseList" [value]="option._id">{{ option.coursetitle }}</option>
-            </select>
+            <!-- Email Address -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Email Address <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-envelope absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email address..."
+                  [(ngModel)]="userdetails.email"
+                  (change)="checkEmail($event)"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
 
-            <div class="form-group col-lg-12 text-center float-left">
-              <button
-                mat-raised-button
-                type="submit"
-                class="btn btn-info btn-sm mx-2 filter-toggle"
-                style="padding: 0.45rem 0.25rem"
-                data-toggle="collapse"
-                data-target="#collapseExample"
-                aria-expanded="false"
-                aria-controls="collapseExample"
-                (click)="createStudent(userdetails);"
-              >
-                Save Student information
-              </button>
+            <!-- Password -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Password <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-key absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Enter account password..."
+                  [(ngModel)]="userdetails.password"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Phone Number
+              </label>
+              <div class="relative">
+                <i class="bi bi-telephone absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  placeholder="Enter phone number..."
+                  [(ngModel)]="userdetails.phoneNumber"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+
+            <!-- Enrollment Date -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Enrollment Date
+              </label>
+              <div class="relative">
+                <i class="bi bi-calendar-event absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="date"
+                  name="enrollmentDate"
+                  [(ngModel)]="userdetails.enrollmentDate"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <!-- Section 2: Course Access Selection -->
+        <div class="space-y-5">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <i class="bi bi-journal-bookmark-fill text-base" style="color: #f47019;"></i>
+            <h2 class="text-base font-bold text-slate-800">Select Enrolled Courses</h2>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+              Course Enrollment List <span class="text-slate-400 font-normal lowercase">(Hold Ctrl/Cmd to select multiple)</span>
+            </label>
+            <div class="relative">
+              <select
+                name="mySelect"
+                multiple
+                [(ngModel)]="userdetails.selected"
+                class="w-full p-3 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50 min-h-[160px]"
+              >
+                <option *ngFor="let option of courseList" [value]="option._id" class="py-1.5 px-2 rounded hover:bg-orange-50 cursor-pointer">
+                  {{ option.coursetitle }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button Section -->
+        <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
+          <button
+            type="button"
+            routerLink="/view-student"
+            class="w-full sm:w-auto px-5 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-all text-center">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="createStudent(userdetails)"
+            class="w-full sm:w-auto px-8 py-3 rounded-xl text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-check-circle-fill"></i> Save Student Information
+          </button>
+        </div>
+
+      </form>
     </div>
   </div>
 </div>

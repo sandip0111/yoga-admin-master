@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute , Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceService } from 'src/app/services/service.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 @Component({
   standalone: false,
   selector: 'app-addcourse',
@@ -9,66 +9,68 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./addcourse.component.scss']
 })
 export class AddcourseComponent implements OnInit {
- details:any;
- coursedetails:any={};
-  constructor(private service:ServiceService, private route: ActivatedRoute,private router:Router) {
+  details: any;
+  coursedetails: any = {};
+  courseId: any;
 
-}
+  constructor(
+    private service: ServiceService,
+    public route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      return  this.route  = params['id']
+    this.route.params.subscribe((params) => {
+      this.courseId = params['id'];
+      if (this.courseId) {
+        this.getCourseById(this.courseId);
+      }
     });
+  }
 
-    if(this.route){
-      this.getCourseById(this.route)
-    }
-  }
-  uploadMedia(e:any){
+  uploadMedia(e: any) {
     const formData = new FormData();
-    formData.append('image',e.target.files[0]);
-    formData.append('type','return');
+    formData.append('image', e.target.files[0]);
+    formData.append('type', 'return');
     this.service.uploadImage(formData).subscribe((res: any) => {
-       if(res.status == "ok"){
+      if (res.status == 'ok') {
         alert('Upload successful');
-        this.coursedetails.sliderImage = res.imageName
-       }
-       else{
-        alert("something went wrong")
-       }
-     });
+        this.coursedetails.sliderImage = res.imageName;
+      } else {
+        alert('Something went wrong');
+      }
+    });
   }
-  createCourse(data:any){
-    if(!this.route){
+
+  createCourse(data: any) {
+    if (!this.courseId) {
       data.isActive = true;
     }
-   this.service.createCourse(data).subscribe((res:any)=>{
-     if(res.status === 'ok'){
-   alert(res.msg);
-   this.router.navigate(['/course']);
-     }
-     else{
-       alert('something went wrong');
-     }
-     })
-   }
-   getCourseById(id:any) {
-    this.service.getCourseByid(id).subscribe((res:any) => {
-      this.coursedetails =  res.data;
+    this.service.createCourse(data).subscribe((res: any) => {
+      if (res.status === 'ok') {
+        alert(res.msg);
+        this.router.navigate(['/course']);
+      } else {
+        alert('Something went wrong');
+      }
     });
   }
 
-  getSlug(e:any){
+  getCourseById(id: any) {
+    this.service.getCourseByid(id).subscribe((res: any) => {
+      this.coursedetails = res.data;
+    });
+  }
 
-    let str = e.target.value
+  getSlug(e: any) {
+    let str = e.target.value;
     let s = str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
 
-   this.coursedetails.slug = s;
+    this.coursedetails.slug = s;
   }
-  }
-
+}

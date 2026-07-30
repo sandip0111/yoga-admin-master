@@ -1,123 +1,91 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
 
-<div class="blogs-page">
-  <!-- Header -->
-  <div class="page-header">
-    <div class="header-left">
-      <h3 class="page-title">Blogs</h3>
-      <span class="blog-count-badge">{{ total || 0 }} Post{{ total !== 1 ? 's' : '' }}</span>
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #f47019, #d95305);">
+        <i class="bi bi-pen-fill text-white text-lg"></i>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold text-slate-800 leading-tight">Blogs</h1>
+        <p class="text-sm text-slate-500 mt-0.5"><span class="font-semibold" style="color:#f47019;">{{ total || 0 }}</span> Post{{ total !== 1 ? 's' : '' }}</p>
+      </div>
     </div>
-    <button type="button" class="btn-add-blog" routerLink="/blog">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
-      </svg>
-      Add New Blog
+    <button type="button" routerLink="/blog"
+      class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-white text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto justify-center"
+      style="background: linear-gradient(135deg, #f47019, #d95305);">
+      <i class="bi bi-plus-circle-fill"></i> Add New Blog
     </button>
   </div>
 
-  <!-- Table (shown when blogs exist) -->
-  <div class="table-card" *ngIf="blogList && blogList.length > 0; else emptyState">
-    <div class="table-responsive">
-    <table class="blogs-table">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Slug</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of blogList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }">
-          <th scope="row" class="blog-title">{{ item.title }}</th>
-          <td class="blog-slug">{{ item.slug }}</td>
-          <td>
-            <button
-              class="status-toggle-btn"
-              [class.active]="item.isActive"
-              [class.inactive]="!item.isActive"
-              (click)="openStatusModal(item)"
-              title="Click to toggle status">
-              <span class="status-dot"></span>
-              {{ item.isActive ? 'Active' : 'Inactive' }}
-            </button>
-          </td>
-          <td class="action-cell">
-            <a routerLink="/blog/{{ item._id }}" class="btn-action btn-edit">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-              Edit
-            </a>
-            <a href="javascript:void(0)" (click)="openDeleteModal(item._id, item.title)" class="btn-action btn-delete">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-              </svg>
-              Delete
-            </a>
-          </td>
-        </tr>
-
-      </tbody>
-    </table>
-    </div><!-- /.table-responsive -->
-    <div class="pagination-wrapper">
+  <!-- Table Card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden" *ngIf="blogList && blogList.length > 0; else emptyState">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Title</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Slug</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Status</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of blogList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let odd = odd"
+            class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+            [class.bg-slate-50/40]="odd">
+            <td class="px-5 py-4">
+              <span class="font-semibold text-slate-800 line-clamp-2">{{ item.title }}</span>
+            </td>
+            <td class="px-5 py-4">
+              <span class="text-slate-500 font-mono text-xs">{{ item.slug }}</span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <button
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border transition-all cursor-pointer hover:shadow-sm"
+                [ngClass]="item.isActive ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-red-50 text-red-700 border-red-200 hover:bg-red-100'"
+                (click)="openStatusModal(item)">
+                <span class="w-1.5 h-1.5 rounded-full" [ngClass]="item.isActive ? 'bg-emerald-500' : 'bg-red-500'"></span>
+                {{ item.isActive ? 'Active' : 'Inactive' }}
+              </button>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-2 justify-center">
+                <a routerLink="/blog/{{ item._id }}"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:shadow-md hover:-translate-y-0.5"
+                  style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                <a href="javascript:void(0)" (click)="openDeleteModal(item._id, item.title)"
+                  class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-red-600 border border-red-200 hover:bg-red-500 hover:text-white transition-all hover:-translate-y-0.5">
+                  <i class="bi bi-trash3"></i> Delete
+                </a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Footer Pagination -->
+    <div class="px-5 py-4 border-t border-slate-100 flex justify-end bg-white">
       <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
     </div>
   </div>
 
   <!-- Empty State -->
   <ng-template #emptyState>
-    <div class="empty-state" *ngIf="!isLoading">
-      <div class="empty-illustration">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-          <circle cx="100" cy="100" r="80" fill="url(#grad1)" opacity="0.12"/>
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6c63ff"/>
-              <stop offset="100%" style="stop-color:#3ecfcf"/>
-            </linearGradient>
-          </defs>
-          <!-- Document base -->
-          <rect x="58" y="50" width="84" height="108" rx="8" fill="url(#grad1)" opacity="0.18"/>
-          <rect x="62" y="54" width="76" height="100" rx="6" fill="white" stroke="#6c63ff" stroke-width="1.5" opacity="0.9"/>
-          <!-- Lines -->
-          <rect x="74" y="70" width="52" height="5" rx="2.5" fill="#6c63ff" opacity="0.5"/>
-          <rect x="74" y="82" width="40" height="4" rx="2" fill="#3ecfcf" opacity="0.4"/>
-          <rect x="74" y="93" width="48" height="4" rx="2" fill="#6c63ff" opacity="0.3"/>
-          <rect x="74" y="104" width="36" height="4" rx="2" fill="#3ecfcf" opacity="0.3"/>
-          <rect x="74" y="115" width="44" height="4" rx="2" fill="#6c63ff" opacity="0.2"/>
-          <!-- Plus badge -->
-          <circle cx="140" cy="60" r="18" fill="url(#grad1)"/>
-          <line x1="133" y1="60" x2="147" y2="60" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="140" y1="53" x2="140" y2="67" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 text-center py-20" *ngIf="!isLoading">
+      <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5" style="background: linear-gradient(135deg, #fff7ed, #ffedd5);">
+        <i class="bi bi-pen text-4xl" style="color:#f47019;"></i>
       </div>
-      <h2 class="empty-title">No Blogs Yet</h2>
-      <p class="empty-description">
-        Your blog section is empty. Start creating engaging content to connect<br> with your yoga community and share your expertise.
-      </p>
-      <button type="button" class="btn-empty-cta" routerLink="/blog">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2z"/>
-        </svg>
-        Create Your First Blog
+      <h3 class="text-lg font-bold text-slate-700 mb-2">No Blog Posts Yet</h3>
+      <p class="text-slate-400 text-sm mb-6">Start creating engaging blog content for your community.</p>
+      <button type="button" routerLink="/blog"
+        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-white text-sm font-semibold shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5"
+        style="background: linear-gradient(135deg, #f47019, #d95305);">
+        <i class="bi bi-plus-circle-fill"></i> Write Your First Post
       </button>
-      <div class="empty-tips">
-        <div class="tip-item">
-          <span class="tip-icon">✍️</span>
-          <span>Write articles about yoga & wellness</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">🌐</span>
-          <span>Reach your students with valuable content</span>
-        </div>
-        <div class="tip-item">
-          <span class="tip-icon">📈</span>
-          <span>Boost your website's organic traffic</span>
-        </div>
-      </div>
     </div>
   </ng-template>
 </div>

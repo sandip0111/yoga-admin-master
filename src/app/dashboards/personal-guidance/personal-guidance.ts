@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { searchPranaRambhFilter } from "src/app/models/dashboard";
 import { ServiceService } from "src/app/services/service.service";
 import { DashboardSharedService } from "../dashboard-shared.service";
@@ -18,6 +18,10 @@ export class PersonalGuidance {
   pgTotal: number = 0;
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
   constructor(
     private service: ServiceService,
     private dashboardShared: DashboardSharedService,
@@ -42,6 +46,29 @@ export class PersonalGuidance {
       this.dashboardShared.pgTitle = `Personal Guidance (${this.pgTotal})`;
       this.pgLoading = this.pgList ? false : true;
     });
+  }
+
+  clearFilter(): void {
+    this.pgFilter.searchText = "";
+    this.pgFilter.fromDate = "";
+    this.pgFilter.toDate = "";
+    this.pgFilter.paymentStatus = "";
+    this.pgFilter.paymentType = "";
+    this.pgFilter.month = "";
+    this.getAllPgStudent(this.pgFilter, true);
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
   onPayStatusValueChange(status: string) {
     status = status == "all" ? "" : status;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   searchPranaRambhFilter,
   twoHunTTCModel,
@@ -23,6 +23,10 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
 
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
   monthOption = [
     { value: "All Month Data", label: "All Month Data" },
     { value: "October", label: "October" },
@@ -58,6 +62,27 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
         this.dashboardShared.twoHunTTCTitle = `200 Online TTC (${this.twoHunTTCTotal})`;
         this.twoHunTTCLoading = this.twoHunTTCList ? false : true;
       });
+  }
+  clearFilter(): void {
+    this.twoHunTTCFilter.searchText = "";
+    this.twoHunTTCFilter.fromDate = "";
+    this.twoHunTTCFilter.toDate = "";
+    this.twoHunTTCFilter.paymentStatus = "";
+    this.twoHunTTCFilter.paymentType = "";
+    this.twoHunTTCFilter.month = "";
+    this.getAll200TTCStudent(this.twoHunTTCFilter, true);
+  }
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
   onPayStatusValueChange(status: string) {
     status = status == "all" ? "" : status;

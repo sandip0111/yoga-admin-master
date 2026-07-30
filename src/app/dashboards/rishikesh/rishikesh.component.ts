@@ -67,6 +67,16 @@ export class RishikeshComponent implements OnInit {
       });
   }
 
+  clearFilter(): void {
+    this.rishikeshFilter.searchText = "";
+    this.rishikeshFilter.fromDate = "";
+    this.rishikeshFilter.toDate = "";
+    this.rishikeshFilter.paymentStatus = "";
+    this.rishikeshFilter.courseType = "All";
+    this.rishikeshFilter.month = "";
+    this.getRishikeshData(this.rishikeshFilter, true);
+  }
+
   onPayStatusValueChange(status: string): void {
     status = status == "all" ? "" : status;
     this.rishikeshFilter.paymentStatus = status;

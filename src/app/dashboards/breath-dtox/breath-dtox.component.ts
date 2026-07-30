@@ -56,6 +56,13 @@ export class BreathDtoxComponent implements OnInit {
     );
   }
 
+  clearFilter(): void {
+    this.breathDetoxfilter.searchText = "";
+    this.breathDetoxfilter.fromDate = "";
+    this.breathDetoxfilter.toDate = "";
+    this.getAllBreathDetoxStudent(this.breathDetoxfilter, true);
+  }
+
   breathDetoxExportToExcel(tableId: string): void {
     this.bDtoxLoading = true;
     let filter = { ...this.breathDetoxfilter };

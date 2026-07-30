@@ -19,6 +19,7 @@
 
     <div class="container_search">
       <div class="search-box">
+        <label><i class="bi bi-search me-1"></i> Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
@@ -79,6 +80,9 @@
 
       <button class="btn-search" (click)="getAllSwaraSadhnaStudent(swaraSadhnaFilter, true)">
         <i class="bi bi-search"></i> Search
+      </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
       </button>
     </div>
 

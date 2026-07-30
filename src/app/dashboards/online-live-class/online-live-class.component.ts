@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   liveClassDataModel,
   searchLiveClassFilter,
@@ -26,6 +26,10 @@ export class OnlineLiveClassComponent implements OnInit {
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
   @Input() customerGroups;
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
   monthOption = [
     "All Month Data",
     "October",
@@ -91,6 +95,31 @@ export class OnlineLiveClassComponent implements OnInit {
         this.dashboardShared.onlineClassTitle = `Online Live Class (${this.onlineClassTotal})`;
         this.onineClassLoading = this.onlineClassList ? false : true;
       });
+  }
+
+  clearFilter(): void {
+    if (this.onlineClassFilter) {
+      this.onlineClassFilter.searchText = "";
+      this.onlineClassFilter.fromDate = "";
+      this.onlineClassFilter.toDate = "";
+      this.onlineClassFilter.month = "";
+      this.onlineClassFilter.paymentStatus = "all";
+      this.onlineClassFilter.paymentType = "";
+      this.getAllOnlineClassStudent(this.onlineClassFilter, true);
+    }
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
 
   onPayStatusValueChange(status: string) {

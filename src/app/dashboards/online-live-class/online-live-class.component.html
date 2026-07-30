@@ -6,9 +6,14 @@
       <div class="header-title">
         <i class="bi bi-display header-icon"></i>
         <div>
-          <h4>{{ selectedTeacherName }} {{ onlineClassFilter.month }} Class</h4>
+          <h4>{{ selectedTeacherName }} {{ onlineClassFilter?.month }} Class</h4>
           <span class="subtitle">View and manage online live class student registrations and payments</span>
         </div>
+      </div>
+      <div class="header-actions">
+        <a (click)="exportToExcel('OnlineLiveClass')" class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
       </div>
     </div>
 
@@ -27,6 +32,7 @@
       </div>
 
       <div class="search-box">
+        <label><i class="bi bi-search me-1"></i> Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
@@ -78,10 +84,13 @@
       <button class="btn-search" (click)="getAllOnlineClassStudent(onlineClassFilter, true)">
         <i class="bi bi-search"></i> Search
       </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
+      </button>
     </div>
 
     <div class="pranarambh-table-responsive">
-      <table id="two_hun_ttc" class="fancy-table">
+      <table id="OnlineLiveClass" class="fancy-table">
         <thead>
           <tr>
             <th class="text-center" style="width: 60px">Sl No.</th>

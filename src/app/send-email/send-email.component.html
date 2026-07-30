@@ -1,44 +1,81 @@
-<div class="form-container">
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        name="name"
-        [(ngModel)]="name"
-        required
-        #nameInput="ngModel"
-        class="form-control"
-        placeholder="Enter your name"
-      />
-      <div *ngIf="nameInput.invalid && nameInput.touched" class="error-message">
-        Name is required.
+<div class="min-h-screen bg-slate-50 flex items-start justify-center p-4 md:p-8">
+  <div class="w-full max-w-lg">
+    <!-- Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <!-- Card Header -->
+      <div class="px-5 py-3 border-b border-slate-100" style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-lg flex items-center justify-center shadow-sm flex-shrink-0" style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-envelope-fill text-white text-sm"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-800 leading-tight">Send Email</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Send a message to users</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Body -->
+      <div class="p-6">
+        <form (ngSubmit)="onSubmit()" class="space-y-5">
+          <!-- Name Field -->
+          <div>
+            <label for="name" class="block text-sm font-semibold text-slate-700 mb-1.5">
+              <i class="bi bi-person me-1" style="color:#f47019;"></i> Full Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              [(ngModel)]="name"
+              required
+              #nameInput="ngModel"
+              placeholder="Enter recipient name..."
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 bg-slate-50"
+              style="--tw-ring-color: #f47019;"
+            />
+            <p *ngIf="nameInput.invalid && nameInput.touched" class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+              <i class="bi bi-exclamation-circle-fill"></i> Name is required.
+            </p>
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">
+              <i class="bi bi-envelope me-1" style="color:#f47019;"></i> Email Address
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              [(ngModel)]="email"
+              required
+              #emailInput="ngModel"
+              placeholder="Enter recipient email..."
+              class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200 bg-slate-50"
+              style="--tw-ring-color: #f47019;"
+            />
+            <p *ngIf="emailInput.invalid && emailInput.touched" class="mt-1.5 text-xs text-red-500 flex items-center gap-1">
+              <i class="bi bi-exclamation-circle-fill"></i> Valid email is required.
+            </p>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            [disabled]="!name || !email"
+            class="w-full py-3 rounded-xl text-white text-sm font-bold tracking-wide shadow-md transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-send-fill me-2"></i> Send Message
+          </button>
+        </form>
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        [(ngModel)]="email"
-        required
-        #emailInput="ngModel"
-        class="form-control"
-        placeholder="Enter your email"
-      />
-      <div
-        *ngIf="emailInput.invalid && emailInput.touched"
-        class="error-message"
-      >
-        Email is required.
-      </div>
+    <!-- Info Note -->
+    <div class="mt-4 flex items-start gap-2 text-xs text-slate-400 px-1">
+      <i class="bi bi-info-circle-fill mt-0.5 flex-shrink-0" style="color:#f47019;"></i>
+      <span>All emails are sent directly to the registered user's inbox. Ensure the email address is correct before sending.</span>
     </div>
-
-    <button type="submit" [disabled]="!name || !email" class="btn btn-primary">
-      Send
-    </button>
-  </form>
+  </div>
 </div>

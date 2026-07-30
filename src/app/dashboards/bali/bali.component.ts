@@ -67,6 +67,16 @@ export class BaliComponent implements OnInit {
       });
   }
 
+  clearFilter(): void {
+    this.baliFilter.searchText = "";
+    this.baliFilter.fromDate = "";
+    this.baliFilter.toDate = "";
+    this.baliFilter.paymentStatus = "";
+    this.baliFilter.courseType = "All";
+    this.baliFilter.month = "";
+    this.getBaliData(this.baliFilter, true);
+  }
+
   onPayStatusValueChange(status: string): void {
     status = status == "all" ? "" : status;
     this.baliFilter.paymentStatus = status;

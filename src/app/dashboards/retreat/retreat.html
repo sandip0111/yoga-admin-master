@@ -10,10 +10,16 @@
           <span class="subtitle">View and manage Mysore Retreat registrations and room allocations</span>
         </div>
       </div>
+      <div class="header-actions">
+        <a (click)="exportToExcel('Retreat')" class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
+      </div>
     </div>
 
     <div class="container_search">
       <div class="search-box">
+        <label><i class="bi bi-search me-1"></i> Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
@@ -65,10 +71,13 @@
       <button class="btn-search" (click)="getAllRetreatStudent(retreatFilter, true)">
         <i class="bi bi-search"></i> Search
       </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
+      </button>
     </div>
 
     <div class="pranarambh-table-responsive">
-      <table id="pranayama_certification" class="fancy-table">
+      <table id="Retreat" class="fancy-table">
         <thead>
           <tr>
             <th class="text-center" style="width: 60px">Sl No.</th>

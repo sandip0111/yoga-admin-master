@@ -1,33 +1,78 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
-<div class="page-header">
-  <span>
-    <h3 class="page-title">Yoga-Webinar</h3>
-    <br />
-    <h6>Total {{total}} Register User(s)</h6>
-  </span>
- 
-</div>
-<div class="filter-side col-15 px-0">
-  <div class="table-responsive">
-  <table [cellPadding]="10"  class="table">
-    <thead class="table-secondary">
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>City</th>
-      <th>Company</th>
-    </thead>
-    <tbody>
-      <tr class="table-light" *ngFor="let data of registrationData | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
-        <td>{{data.name}}</td>
-        <td>{{data.email}}</td>
-        <td>{{data.phone}}</td>
-        <td>{{data.city}}</td>
-        <td>{{data.company}}</td>
-       
-      </tr>
-    </tbody>
-  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
-  </table>
-  </div><!-- /.table-responsive -->
+
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3">
+      <div class="w-11 h-11 rounded-xl flex items-center justify-center shadow-sm" style="background: linear-gradient(135deg, #f47019, #d95305);">
+        <i class="bi bi-camera-video-fill text-white text-lg"></i>
+      </div>
+      <div>
+        <h1 class="text-xl font-bold text-slate-800 leading-tight">Yoga Webinar</h1>
+        <p class="text-sm text-slate-500 mt-0.5">Total <span class="font-semibold" style="color:#f47019;">{{ total }}</span> Registered User(s)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Name</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Email</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Phone</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">City</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of registrationData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let odd = odd"
+            class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+            [class.bg-slate-50/40]="odd">
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0" style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  {{ data.name?.charAt(0)?.toUpperCase() || 'U' }}
+                </div>
+                <span class="font-semibold text-slate-800">{{ data.name }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-1.5">
+                <i class="bi bi-envelope text-slate-400 text-xs"></i>
+                <span class="text-slate-600 text-xs">{{ data.email }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-1.5">
+                <i class="bi bi-telephone text-slate-400 text-xs"></i>
+                <span class="text-slate-600 text-xs">{{ data.phone }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-1.5">
+                <i class="bi bi-geo-alt text-slate-400 text-xs"></i>
+                <span class="text-slate-600 text-xs">{{ data.city }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <span class="text-slate-600 text-xs">{{ data.company || '—' }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="!registrationData || registrationData.length === 0">
+            <td colspan="5" class="text-center py-16">
+              <i class="bi bi-camera-video-off text-slate-300 text-5xl block mb-3"></i>
+              <p class="text-slate-400 font-medium">No registrations found.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Footer Pagination -->
+    <div class="px-5 py-4 border-t border-slate-100 flex justify-end bg-white">
+      <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+    </div>
+  </div>
 </div>

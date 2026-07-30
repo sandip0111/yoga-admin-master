@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   searchPranaRambhFilter,
   twoHunTTCModelResultModel,
@@ -19,6 +19,11 @@ export class PendingPaymentComponent implements OnInit {
   total: number = 0;
   filter: searchPranaRambhFilter;
   options: { value: string; label: string }[] = [];
+
+  @Output() downloadCsv = new EventEmitter<{
+    csvContent: string;
+    tableId: string;
+  }>();
   constructor(
     private service: ServiceService,
     private dashboardShared: DashboardSharedService,
@@ -63,6 +68,28 @@ export class PendingPaymentComponent implements OnInit {
       this.dashboardShared.pendingPaymentTitle = `All Pending Payment List (${this.total})`;
       this.loading = this.list.length > 0 ? false : true;
     });
+  }
+
+  clearFilter(): void {
+    this.filter.searchText = "";
+    this.filter.fromDate = "";
+    this.filter.toDate = "";
+    this.filter.course = "";
+    this.filter.paymentStatus = "pending";
+    this.getAllData(this.filter, true);
+  }
+
+  exportToExcel(tableId: string): void {
+    const table = document.getElementById(tableId) as HTMLTableElement;
+    if (!table) return;
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+    rows.forEach((row) => {
+      const cols = Array.from(row.querySelectorAll("th, td"));
+      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      csvContent += rowData.join(",") + "\n";
+    });
+    this.downloadCsv.emit({ csvContent, tableId });
   }
   onTableDataChange(pageNo: number) {
     this.filter.pageNo = pageNo;
