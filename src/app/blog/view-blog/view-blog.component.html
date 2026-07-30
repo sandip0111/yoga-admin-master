@@ -17,6 +17,7 @@
 
   <!-- Table (shown when blogs exist) -->
   <div class="table-card" *ngIf="blogList && blogList.length > 0; else emptyState">
+    <div class="table-responsive">
     <table class="blogs-table">
       <thead>
         <tr>
@@ -60,6 +61,7 @@
 
       </tbody>
     </table>
+    </div><!-- /.table-responsive -->
     <div class="pagination-wrapper">
       <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
     </div>

@@ -8,6 +8,7 @@
  
 </div>
 <div class="filter-side col-15 px-0">
+  <div class="table-responsive">
   <table [cellPadding]="10"  class="table">
     <thead class="table-secondary">
       <th>Name</th>
@@ -28,4 +29,5 @@
     </tbody>
   <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
   </table>
+  </div><!-- /.table-responsive -->
 </div>

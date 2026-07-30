@@ -1,142 +1,166 @@
 <div *ngIf="isUploading" class="loader-overlay">
-  <div class="spinner-border text-primary" role="status">
-    <span class="sr-only">Loading...</span>
+  <div class="spinner-border text-warning" role="status" style="width: 3rem; height: 3rem; color: #f47019 !important;">
+    <span class="sr-only">Uploading video...</span>
   </div>
+  <p class="mt-3 fw-semibold text-slate-800 fs-5">Uploading Course Video... {{ uploadProgress }}%</p>
 </div>
 
-<div class="page-header">
-  <h3 class="page-title">Online video upload</h3>
-</div>
-<div>
-  <select [(ngModel)]="selectedOption" class="search-input form-control">
-    <option [value]="0" selected hidden>Select a course</option>
-    <option *ngFor="let option of options" [value]="option.value">
-      {{ option.label }}
-    </option>
-  </select>
-</div>
-<div
-  class="drop-zone"
-  (dragover)="onDragOver($event)"
-  (drop)="onDrop($event)"
-  [class.has-file]="selectedFile"
->
-  <div *ngIf="!selectedFile" class="drop-zone-content">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="64"
-      height="64"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-      <polyline points="17 8 12 3 7 8"></polyline>
-      <line x1="12" y1="3" x2="12" y2="15"></line>
-    </svg>
-    <p>Drag and drop your video here</p>
-    <p class="or-text">or</p>
-    <label for="fileInput" class="browse-btn">Browse Files</label>
-    <input
-      type="file"
-      id="fileInput"
-      accept="video/*"
-      (change)="onFileSelected($event)"
-      style="display: none"
-    />
-    <p class="file-info">Supported formats: MP4, MPEG, MOV, AVI (Max 100MB)</p>
-  </div>
-
-  <div *ngIf="selectedFile" class="selected-file">
-    <div class="file-preview"></div>
-    <div class="file-details">
-      <p class="file-name">{{ selectedFile.name }}</p>
-      <p class="file-size">{{ getFileSize() }}</p>
+<div class="pg-container container-fluid px-0">
+  <!-- Header Card -->
+  <div class="pg-card mb-4">
+    <div class="pg-card-header d-flex align-items-center justify-content-between p-3 px-md-4">
+      <div class="header-title d-flex align-items-center gap-3">
+        <div class="header-icon">
+          <i class="bi bi-cloud-arrow-up-fill"></i>
+        </div>
+        <div>
+          <h4 class="mb-0 fw-bold text-slate-900 fs-4">Online Video Upload</h4>
+          <span class="subtitle text-slate-500 fs-7">Upload & manage course video content with cloud storage</span>
+        </div>
+      </div>
     </div>
-    <button
-      *ngIf="!isUploading && !uploadComplete"
-      class="change-file-btn"
-      (click)="reset()"
-    >
-      Change File
-    </button>
+
+    <!-- Main Card Body -->
+    <div class="card-body p-3 p-md-4">
+      <form #up="ngForm" class="d-flex flex-column gap-4">
+        
+        <!-- Course Selection Field -->
+        <div class="form-group mb-0">
+          <label class="form-label fw-bold text-slate-800 mb-2 d-flex align-items-center gap-2 fs-6">
+            <i class="bi bi-journal-bookmark-fill" style="color: #f47019;"></i> Select Course Category
+          </label>
+          <select [(ngModel)]="selectedOption" name="selectedOption" class="form-select form-control custom-select-styled fw-medium text-slate-800">
+            <option [value]="null" selected hidden>-- Choose a course option --</option>
+            <option *ngFor="let option of options" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Modern Drag and Drop Upload Box -->
+        <div
+          class="drop-zone-executive"
+          (dragover)="onDragOver($event)"
+          (drop)="onDrop($event)"
+          [class.has-file]="selectedFile"
+        >
+          <div *ngIf="!selectedFile" class="drop-zone-content py-4 text-center">
+            <div class="icon-circle mb-3 mx-auto d-flex align-items-center justify-content-center">
+              <i class="bi bi-cloud-upload fs-1" style="color: #f47019;"></i>
+            </div>
+            <h5 class="fw-bold text-slate-900 mb-1 fs-5">Drag and drop your video file here</h5>
+            <p class="text-slate-500 mb-3 fs-7">or choose a file from your computer</p>
+
+            <label for="fileInput" class="browse-btn-fancy mb-3">
+              <i class="bi bi-folder2-open me-2"></i> Browse Files
+            </label>
+            <input
+              type="file"
+              id="fileInput"
+              accept="video/*"
+              (change)="onFileSelected($event)"
+              style="display: none"
+            />
+
+            <div class="mt-2">
+              <span class="info-badge-pill">
+                <i class="bi bi-info-circle-fill me-1.5" style="color: #f47019;"></i> Supported formats: MP4, MPEG, MOV, AVI (Max 100MB)
+              </span>
+            </div>
+          </div>
+
+          <!-- Selected File Card Preview -->
+          <div *ngIf="selectedFile" class="selected-file-card p-3 rounded-3 bg-white border border-orange-200 shadow-sm d-flex align-items-center justify-content-between flex-wrap gap-3">
+            <div class="d-flex align-items-center gap-3">
+              <div class="file-icon-badge rounded-3 p-3 d-flex align-items-center justify-content-center" style="background: #fff7ed; color: #f47019;">
+                <i class="bi bi-file-earmark-play-fill fs-2"></i>
+              </div>
+              <div>
+                <h6 class="fw-bold text-slate-900 mb-1 word-break-all fs-6">{{ selectedFile.name }}</h6>
+                <span class="badge bg-amber-100 text-amber-800 border border-amber-300 fw-semibold px-2.5 py-1">{{ getFileSize() }}</span>
+              </div>
+            </div>
+
+            <button
+              *ngIf="!isUploading && !uploadComplete"
+              type="button"
+              class="btn btn-outline-danger btn-sm rounded-3 px-3 py-2 d-flex align-items-center gap-1.5 fw-semibold"
+              (click)="reset()"
+            >
+              <i class="bi bi-arrow-repeat"></i> Change File
+            </button>
+          </div>
+        </div>
+
+        <!-- Status Alerts -->
+        <div *ngIf="uploadError" class="alert alert-danger d-flex align-items-center gap-2 rounded-3 mb-0 p-3" role="alert">
+          <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+          <div class="fw-semibold">{{ uploadError }}</div>
+        </div>
+
+        <div *ngIf="uploadComplete" class="alert alert-success rounded-3 mb-0 p-3 border border-success" role="alert">
+          <div class="d-flex align-items-center gap-2 fw-bold text-success mb-1 fs-6">
+            <i class="bi bi-check-circle-fill fs-5"></i> Video Upload Successful!
+          </div>
+          <div *ngIf="videoUrl" class="mt-2 text-slate-800 fs-7">
+            <p class="mb-1 fw-semibold">Processed URL:</p>
+            <a [href]="videoUrl" target="_blank" class="text-primary text-break fw-medium">{{ videoUrl }}</a>
+          </div>
+        </div>
+
+        <!-- Form Details Box: Month, Mentor, Course Title & Action -->
+        <div class="details-section-box p-3 p-md-4 rounded-3 border bg-slate-50">
+          <h6 class="fw-bold text-slate-800 mb-3 d-flex align-items-center gap-2 fs-6">
+            <i class="bi bi-sliders" style="color: #f47019;"></i> Course Details & Publication
+          </h6>
+          <div class="row g-4 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Select Month</label>
+              <select [(ngModel)]="selectedMonth" name="selectedMonth" class="form-select form-control custom-select-styled fw-medium text-slate-800">
+                <option [value]="null" selected hidden>Select month</option>
+                <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
+              </select>
+            </div>
+
+            <div *ngIf="selectedOption == '69ff6a520cd7ed2296fbbddb'" class="col-md-3">
+              <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Select Mentor Name</label>
+              <select [(ngModel)]="selectedTeacherId" name="selectedTeacherId" class="form-select form-control custom-select-styled fw-medium text-slate-800">
+                <option [ngValue]="null" selected hidden>Select name</option>
+                <option *ngFor="let teacher of teacherOptions" [ngValue]="teacher.value">
+                  {{ teacher.label }}
+                </option>
+              </select>
+            </div>
+
+            <div [class]="selectedOption == '69ff6a520cd7ed2296fbbddb' ? 'col-md-6' : 'col-md-9'">
+              <label class="form-label fw-bold text-slate-700 mb-2 d-block" style="font-size:0.82rem; letter-spacing: 0.3px;">Course Video Title</label>
+              <input
+                type="text"
+                name="courseName"
+                placeholder="Enter Course Video Title..."
+                [(ngModel)]="courseName"
+                class="form-control custom-input-styled fw-medium text-slate-800"
+              />
+            </div>
+
+            <div class="col-12 text-end mt-2">
+              <button
+                type="button"
+                class="btn-upload-submit"
+                [disabled]="!selectedFile || isUploading || uploadComplete"
+                (click)="uploadVideoThroughBackend()"
+              >
+                <i class="bi bi-cloud-upload-fill me-2"></i> Upload Course Video
+              </button>
+
+              <button *ngIf="uploadComplete" type="button" class="btn-upload-submit ms-2" (click)="reset()">
+                <i class="bi bi-plus-circle me-2"></i> Upload Another Video
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
   </div>
 </div>
-
-<div *ngIf="uploadError" class="error-message">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-  >
-    <circle cx="12" cy="12" r="10"></circle>
-    <line x1="12" y1="8" x2="12" y2="12"></line>
-    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-  </svg>
-  {{ uploadError }}
-</div>
-
-<div *ngIf="uploadComplete" class="success-message">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-  >
-    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-  </svg>
-  Upload successful!
-  <div *ngIf="videoUrl" class="video-url">
-    <p>Video URL:</p>
-    <a [href]="videoUrl" target="_blank">{{ videoUrl }}</a>
-  </div>
-</div>
-
-<div class="button-group">
-  <select
-    [(ngModel)]="selectedMonth"
-    class="search-input form-control month-select"
-  >
-    <option [value]="" selected hidden>Select month</option>
-    <option *ngFor="let m of months" [value]="m.value">{{ m.label }}</option>
-  </select>
-
-  <ng-container *ngIf="selectedOption == '69ff6a520cd7ed2296fbbddb'">
-    <select
-      [(ngModel)]="selectedTeacherId"
-      class="search-input form-control wo-select"
-    >
-      <option [ngValue]="null" selected hidden>Select name</option>
-      <option *ngFor="let teacher of teacherOptions" [ngValue]="teacher.value">
-        {{ teacher.label }}
-      </option>
-    </select>
-  </ng-container>
-
-  <input
-    type="text"
-    placeholder="Enter Course Name"
-    [(ngModel)]="courseName"
-    class="search-input form-control"
-  />
-  <button
-    *ngIf="selectedFile && !isUploading && !uploadComplete"
-    class="upload-btn secondary"
-    (click)="uploadVideoThroughBackend()"
-  >
-    Upload course video
-  </button>
-</div>
-
-<button *ngIf="uploadComplete" class="reset-btn" (click)="reset()">
-  Upload Another Video
-</button>

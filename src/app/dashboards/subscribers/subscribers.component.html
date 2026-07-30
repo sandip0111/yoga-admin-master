@@ -4,31 +4,51 @@
   </div>
 </div>
 
-<div class="media">
-  <div class="media-body">
-    <div class="header-container">
-      <h4>Subscribers ({{ total }})</h4>
-      <a class="export-link">Export to Excel</a>
+<div class="pg-container">
+  <div class="pg-card">
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-people header-icon"></i>
+        <div>
+          <h4>Subscribers ({{ total }})</h4>
+          <span class="subtitle">View and manage email subscribers and automated sequence stages</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
+      </div>
     </div>
+
     <div class="container_search">
-      <input
-        type="text"
-        placeholder="Search by Name or Email"
-        [(ngModel)]="filter.searchText"
-        class="search-input form-control"
-      />
-      <button (click)="onSearch()">Search</button>
+      <div class="search-box">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search by Name or Email..."
+          [(ngModel)]="filter.searchText"
+          class="search-input form-control"
+          (keyup.enter)="onSearch()"
+        />
+      </div>
+      <button class="btn-search" (click)="onSearch()">
+        <i class="bi bi-search"></i> Search
+      </button>
     </div>
+
     <div class="subscribers-table-responsive">
-      <table id="Subscribers" class="table table-bordered table-striped">
-        <thead class="table-secondary">
-          <th style="width: 10% !important">Sl No.</th>
-          <th>Student Name</th>
-          <th>Email</th>
-          <th>Email Stage</th>
-          <th>Next Email Date</th>
-          <th>Created Date</th>
-          <th></th>
+      <table id="Subscribers" class="fancy-table">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 60px">Sl No.</th>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th class="text-center">Email Stage</th>
+            <th>Next Email Date</th>
+            <th>Created Date</th>
+            <th class="text-center" style="width: 70px">Action</th>
+          </tr>
         </thead>
         <tbody>
           <tr
@@ -39,40 +59,55 @@
               let i = index
             "
           >
-            <td>{{ i + 1 + (p - 1) * 10 }}</td>
-            <td>
+            <td class="text-center index-cell">
+              {{ i + 1 + (p - 1) * 10 }}
+            </td>
+            <td class="text-dark font-weight-bold">
               {{ subscriber.name || "-" }}
             </td>
-            <td>{{ subscriber.email }}</td>
-            <td>{{ subscriber.emailStage || "--" }}</td>
+            <td class="text-secondary">
+              <i class="bi bi-envelope me-1 text-muted"></i>{{ subscriber.email }}
+            </td>
+            <td class="text-center">
+              <span class="paytype-badge" *ngIf="subscriber.emailStage">
+                {{ subscriber.emailStage }}
+              </span>
+              <span class="text-muted" *ngIf="!subscriber.emailStage">-</span>
+            </td>
             <td>
               <ng-container *ngIf="subscriber.nextEmailDate; else noDate">
-                {{ subscriber.nextEmailDate | date: "dd-MM-yyyy" }}
+                <i class="bi bi-calendar-event me-1 text-muted"></i>{{ subscriber.nextEmailDate | date: "dd-MM-yyyy" }}
               </ng-container>
-              <ng-template #noDate>-</ng-template>
+              <ng-template #noDate><span class="text-muted">-</span></ng-template>
             </td>
             <td>
               <ng-container *ngIf="subscriber.created; else noCreated">
-                {{ subscriber.created | date: "dd-MM-yyyy HH:mm" }}
+                <i class="bi bi-clock-history me-1 text-muted"></i>{{ subscriber.created | date: "dd-MM-yyyy HH:mm" }}
               </ng-container>
-              <ng-template #noCreated>-</ng-template>
+              <ng-template #noCreated><span class="text-muted">-</span></ng-template>
             </td>
-            <td>
-              <button class="delete-button" (click)="deleteRow(subscriber)">
-                <i class="bi bi-trash"></i>
+            <td class="text-center">
+              <button class="delete-btn-fancy" (click)="deleteRow(subscriber)" title="Delete Record">
+                <i class="bi bi-trash3"></i>
               </button>
             </td>
           </tr>
-          <tr *ngIf="subscribers.length === 0">
-            <td colspan="7" class="text-center">No subscribers found</td>
+          <tr *ngIf="!subscribers || subscribers.length === 0">
+            <td colspan="7" class="empty-state text-center py-5">
+              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
+              <span class="text-muted">No subscribers found.</span>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="pagination">
-      <pagination-controls
-        (pageChange)="onTableDataChange($event)"
-      ></pagination-controls>
+
+    <div class="pg-card-footer">
+      <div class="pagination">
+        <pagination-controls
+          (pageChange)="onTableDataChange($event)"
+        ></pagination-controls>
+      </div>
     </div>
   </div>
 </div>

@@ -4,24 +4,37 @@
   </div>
 </div>
 
-<div class="media">
-  <div class="media-body">
-    <div class="header-container">
-      <h4>Breath Detox</h4>
-      <a (click)="breathDetoxExportToExcel('BreathDetox')" class="export-link"
-        >Export to Excel</a
-      >
+<div class="pg-container">
+  <div class="pg-card">
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-lungs header-icon"></i>
+        <div>
+          <h4>Breath Detox</h4>
+          <span class="subtitle">View and manage Breath Detox registrations and student details</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a (click)="breathDetoxExportToExcel('BreathDetox')" class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
+      </div>
     </div>
-    <div class="container_search">
-      <input
-        type="text"
-        placeholder="Search by Name or Email or City or Phone number"
-        [(ngModel)]="breathDetoxfilter.searchText"
-        class="search-input form-control"
-      />
 
-      <div style="display: flex; align-items: center">
-        <label for="fromDate" style="margin-inline-end: 8px">From Date:</label>
+    <div class="container_search">
+      <div class="search-box">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search by Name, Email, City, or Phone..."
+          [(ngModel)]="breathDetoxfilter.searchText"
+          class="search-input form-control"
+          (keyup.enter)="getAllBreathDetoxStudent(breathDetoxfilter, true)"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="breathDetoxfilterFromDate"><i class="bi bi-calendar-event me-1"></i> From Date</label>
         <input
           type="date"
           id="breathDetoxfilterFromDate"
@@ -30,8 +43,8 @@
         />
       </div>
 
-      <div style="display: flex; align-items: center">
-        <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+      <div class="filter-group">
+        <label for="toDate"><i class="bi bi-calendar-event me-1"></i> To Date</label>
         <input
           type="date"
           id="toDate"
@@ -41,23 +54,25 @@
           [disabled]="!breathDetoxfilter.fromDate"
         />
       </div>
-      <button (click)="getAllBreathDetoxStudent(breathDetoxfilter, true)">
-        Search
+
+      <button class="btn-search" (click)="getAllBreathDetoxStudent(breathDetoxfilter, true)">
+        <i class="bi bi-search"></i> Search
       </button>
     </div>
-    <div class="table-responsive">
-      <table id="BreathDetox" class="table table-bordered table-striped">
-        <thead class="table-secondary">
+
+    <div class="pranarambh-table-responsive">
+      <table id="BreathDetox" class="fancy-table">
+        <thead>
           <tr>
-            <th style="inline-size: 4% !important">Sl No.</th>
-            <th>StudentName</th>
+            <th class="text-center" style="width: 60px">Sl No.</th>
+            <th>Student Name</th>
             <th>Email</th>
             <th>Password</th>
             <th>Mobile</th>
             <th>City</th>
             <th>Joining Date</th>
-            <th>Is Active</th>
-            <th></th>
+            <th class="text-center">Is Active</th>
+            <th class="text-center" style="width: 70px">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -68,32 +83,64 @@
                   : {
                       itemsPerPage: 10,
                       currentPage: breathP,
-                      totalItems: breathDetoxTotal,
+                      totalItems: breathDetoxTotal
                     };
               let j = index
             "
           >
-            <td>{{ j + 1 + (breathP - 1) * 10 }}</td>
-            <td>{{ breath.firstName }} {{ breath.lastName || "" }}</td>
-            <td>{{ breath.email }}</td>
-            <td>{{ breath.password }}</td>
-            <td>{{ breath.phoneNumber }}</td>
-            <td>{{ breath.city }}</td>
-            <td>{{ breath.created | date: "mediumDate" }}</td>
-            <td>{{ breath.isActive }}</td>
+            <td class="text-center index-cell">
+              {{ j + 1 + (breathP - 1) * 10 }}
+            </td>
+            <td class="text-dark font-weight-bold">
+              {{ breath.firstName }} {{ breath.lastName || "" }}
+            </td>
+            <td class="text-secondary">
+              <i class="bi bi-envelope me-1 text-muted"></i>{{ breath.email }}
+            </td>
+            <td class="text-secondary">
+              <i class="bi bi-key me-1 text-muted"></i>{{ breath.password }}
+            </td>
+            <td class="text-secondary">
+              <i class="bi bi-telephone me-1 text-muted"></i>{{ breath.phoneNumber || '-' }}
+            </td>
             <td>
-              <button class="delete-button" (click)="deleteRow(breath)">
-                <i class="bi bi-trash"></i>
+              <i class="bi bi-geo-alt me-1 text-muted"></i>{{ breath.city || '-' }}
+            </td>
+            <td>
+              <i class="bi bi-calendar-event me-1 text-muted"></i>{{ breath.created | date: "mediumDate" }}
+            </td>
+            <td class="text-center">
+              <span class="status-badge" [ngClass]="breath.isActive ? 'status-paid' : 'status-failed'">
+                <i class="bi" [ngClass]="breath.isActive ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ breath.isActive ? 'Active' : 'Inactive' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <button
+                class="delete-btn-fancy"
+                (click)="deleteRow(breath)"
+                title="Delete Record"
+              >
+                <i class="bi bi-trash3"></i>
               </button>
+            </td>
+          </tr>
+          <tr *ngIf="!breathDetox || breathDetox.length === 0">
+            <td colspan="9" class="empty-state text-center py-5">
+              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
+              <span class="text-muted">No Breath Detox records found.</span>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="pagination">
-      <pagination-controls
-        (pageChange)="onBreathDetoxTableDataChange($event)"
-      ></pagination-controls>
+
+    <div class="pg-card-footer">
+      <div class="pagination">
+        <pagination-controls
+          (pageChange)="onBreathDetoxTableDataChange($event)"
+        ></pagination-controls>
+      </div>
     </div>
   </div>
 </div>

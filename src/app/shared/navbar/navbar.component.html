@@ -1,43 +1,55 @@
-<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-    <a class="navbar-brand brand-logo" routerLink="/">
-     <img src="assets/images/logo2.png" alt="Yoga vidya school" class="imd-fluid" style="width:30% !important;height:50px !important;">
-    </a>
-    <a class="navbar-brand brand-logo-mini" routerLink="/">
-      <img src="assets/images/logo2.png" alt="Yoga vidya school" class="imd-fluid" style="width:30% !important;height:50px !important;">
+<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row bg-white border-bottom shadow-sm">
+  <!-- Brand logo wrapper -->
+  <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center bg-white px-3 border-end">
+    <a class="navbar-brand brand-logo d-flex align-items-center justify-content-center text-decoration-none" routerLink="/">
+      <img src="assets/images/logo2.png" alt="Yoga Vidya School" style="height: 36px !important; width: auto !important; max-width: 150px !important;">
     </a>
   </div>
-  <div class="navbar-menu-wrapper d-flex align-items-stretch">
-    <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" (click)="toggleSidebar()">
-      <span class="mdi mdi-menu"></span>
-    </button>
 
-    <ul class="navbar-nav navbar-nav-right">
+  <!-- Menu Wrapper -->
+  <div class="navbar-menu-wrapper d-flex align-items-center justify-content-between px-3 px-md-4">
+
+    <!-- Left: Desktop hamburger (icon-only toggle) -->
+    <div class="d-flex align-items-center gap-2">
+      <button class="hamburger-btn d-none d-lg-inline-flex align-self-center" type="button"
+        (click)="toggleSidebar()" title="Toggle Navigation Sidebar">
+        <i class="bi bi-text-left"></i>
+      </button>
+
+      <!-- Mobile hamburger (off-canvas overlay) -->
+      <button class="hamburger-btn d-lg-none align-self-center" type="button"
+        (click)="toggleOffcanvas()" title="Toggle Mobile Menu">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+
+    <!-- Right: Profile Dropdown -->
+    <ul class="navbar-nav navbar-nav-right d-flex align-items-center gap-2 mb-0 ps-0 ms-auto">
       <li class="nav-item nav-profile dropdown" ngbDropdown>
-        <a class="nav-link dropdown-toggle" id="profileDropdown" ngbDropdownToggle>
-
-          <div class="nav-profile-text">
-            <p class="mb-1 text-black">Hello {{userName}}</p>
+        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 cursor-pointer text-decoration-none py-1"
+          id="profileDropdown" ngbDropdownToggle>
+          <div class="avatar-circle text-white rounded-circle d-flex align-items-center justify-content-center fw-bold shadow-sm"
+            style="width: 34px; height: 34px; font-size: 0.85rem; background: linear-gradient(135deg, #f47019 0%, #d95305 100%) !important; flex-shrink: 0;">
+            {{ (userName && userName.length > 0) ? userName.charAt(0).toUpperCase() : 'A' }}
+          </div>
+          <div class="nav-profile-text d-none d-sm-flex align-items-center gap-1">
+            <span class="mb-0 fw-semibold text-slate-800" style="font-size: 0.875rem;">Hello, {{userName}}</span>
           </div>
         </a>
-        <div class="dropdown-menu navbar-dropdown" ngbDropdownMenu aria-labelledby="profileDropdown">
-          <a class="dropdown-item" href="javascript:;">
-            <i class="mdi mdi-cached mr-2 text-success"></i>
-           My Profile
+        <div class="dropdown-menu navbar-dropdown shadow-lg border-0 rounded-3 mt-2" ngbDropdownMenu aria-labelledby="profileDropdown">
+          <div class="dropdown-header text-xs text-uppercase fw-bold text-slate-400 px-3 py-2">Account</div>
+          <a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2 text-slate-700" href="javascript:;">
+            <i class="bi bi-person-circle" style="color: #f47019;"></i> My Profile
           </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)" (click)="logOut()">
-            <i class="mdi mdi-logout mr-2 text-primary"></i>
-            Logout
+          <div class="dropdown-divider my-1"></div>
+          <a class="dropdown-item py-2 px-3 d-flex align-items-center gap-2 text-danger fw-semibold" href="javascript:void(0)" (click)="logOut()">
+            <i class="bi bi-box-arrow-right"></i> Logout
           </a>
         </div>
       </li>
-
-
     </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" (click)="toggleOffcanvas()">
-      <span class="mdi mdi-menu"></span>
-    </button>
   </div>
-
 </nav>
+
+<!-- Mobile Sidebar Overlay Backdrop -->
+<div class="sidebar-mobile-backdrop d-lg-none" (click)="toggleOffcanvas()"></div>

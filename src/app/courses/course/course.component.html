@@ -1,55 +1,80 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
-<div class="page-header d-flex justify-content-between align-items-start mb-4">
-  <div>
-    <h3 class="page-title mb-2">Courses</h3>
-    <h6 class="text-muted">Total {{total}} Courses(s)</h6>
-  </div>
-  <button type="button" class="btn btn-primary add-btn" routerLink="/addcourse">
-    Add new course
-  </button>
-</div>
 
-<div class="card">
-  <div class="card-body p-0">
-    <div class="table-responsive">
-      <table class="table custom-table mb-0">
+<div class="pg-container">
+  <div class="pg-card">
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-journal-bookmark header-icon"></i>
+        <div>
+          <h4>Courses Management</h4>
+          <span class="subtitle">Total {{ total || 0 }} Course(s)</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn-search" routerLink="/addcourse">
+          <i class="bi bi-plus-circle-fill me-1"></i> Add New Course
+        </button>
+      </div>
+    </div>
+
+    <div class="pranarambh-table-responsive">
+      <table class="fancy-table">
         <thead>
           <tr>
-            <th>TITLE</th>
-            <th>LINK SLUG</th>
-            <th>STATUS</th>
-            <th class="text-center">ACTIONS</th>
+            <th>Title</th>
+            <th>Link Slug</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Actions & Content</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let data of courseData | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }">
-            <td class="course-title">
-              <a href="javascript:void(0)">{{data.coursetitle}}</a>
+            <td class="font-weight-bold text-dark">
+              <i class="bi bi-book me-1 text-muted"></i>{{ data.coursetitle }}
             </td>
-            <td class="slug-link">
-              <a href="javascript:void(0)">{{data.slug}}</a>
+            <td class="text-secondary font-monospace">
+              <i class="bi bi-link-45deg me-1 text-muted"></i>{{ data.slug }}
             </td>
-            <td>
-              <span [ngClass]="data.isActive ? 'status-active' : 'status-inactive'">
-                {{data.isActive ? 'Active' : 'InActive'}}
+            <td class="text-center">
+              <span class="status-badge" [ngClass]="data.isActive ? 'status-paid' : 'status-failed'">
+                <i class="bi" [ngClass]="data.isActive ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                {{ data.isActive ? 'Active' : 'Inactive' }}
               </span>
             </td>
-            <td class="text-center action-buttons">
-              <button class="btn btn-primary btn-sm mx-1" routerLink="/addcourse/{{data._id}}">Edit</button>
-              <button class="btn btn-primary btn-sm mx-1" routerLink="/content/{{data._id}}">Content</button>
-              <button class="btn btn-primary btn-sm mx-1" routerLink="/fee/{{data._id}}">Fee</button>
-              <button class="btn btn-primary btn-sm mx-1" routerLink="/upEvent/{{data._id}}">Upcoming Events</button>
-              <button class="btn btn-info btn-sm mx-1 mt-1" *ngIf="data._id == '6a00ae5a73d17e5a08d3f6ce' || data._id == '6a00abfc9a6ce5ba990f5e6f'" routerLink="/course-video/{{data._id}}">
-                Uploaded Videos
-              </button>
+            <td class="text-center">
+              <div class="d-flex flex-wrap gap-1 align-items-center justify-content-center">
+                <button class="btn btn-sm btn-primary" routerLink="/addcourse/{{data._id}}" title="Edit Course">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </button>
+                <button class="btn btn-sm btn-outline-primary" routerLink="/content/{{data._id}}">
+                  <i class="bi bi-file-text"></i> Content
+                </button>
+                <button class="btn btn-sm btn-outline-primary" routerLink="/fee/{{data._id}}">
+                  <i class="bi bi-currency-dollar"></i> Fee
+                </button>
+                <button class="btn btn-sm btn-outline-primary" routerLink="/upEvent/{{data._id}}">
+                  <i class="bi bi-calendar-event"></i> Upcoming Events
+                </button>
+                <button class="btn btn-sm btn-warning" *ngIf="data._id == '6a00ae5a73d17e5a08d3f6ce' || data._id == '6a00abfc9a6ce5ba990f5e6f'" routerLink="/course-video/{{data._id}}">
+                  <i class="bi bi-play-btn-fill"></i> Uploaded Videos
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!courseData || courseData.length === 0">
+            <td colspan="4" class="empty-state text-center py-5">
+              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
+              <span class="text-muted">No courses found.</span>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-  </div>
-</div>
 
-<div class="d-flex justify-content-center mt-4">
-  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+    <div class="pg-card-footer">
+      <div class="pagination">
+        <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
 </div>

@@ -32,9 +32,9 @@
 }
 
 .blog-count-badge {
-  background: linear-gradient(135deg, #6c63ff22, #3ecfcf22);
-  color: #6c63ff;
-  border: 1px solid #6c63ff44;
+  background: #fff7ed;
+  color: #f47019;
+  border: 1px solid #fed7aa;
   border-radius: 20px;
   padding: 3px 12px;
   font-size: 0.78rem;
@@ -46,7 +46,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, #6c63ff, #3ecfcf);
+  background: linear-gradient(135deg, #f47019, #d95305);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -55,13 +55,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 14px rgba(108, 99, 255, 0.35);
+  box-shadow: 0 4px 14px rgba(244, 112, 25, 0.35);
   text-decoration: none;
 
   &:hover {
     opacity: 0.92;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.45);
+    box-shadow: 0 6px 20px rgba(244, 112, 25, 0.45);
   }
 
   &:active {
@@ -206,14 +206,14 @@
   cursor: pointer;
 
   &.btn-edit {
-    background: #eeeeff;
-    color: #6c63ff;
-    border: 1px solid #d4d0ff;
+    background: #fff7ed;
+    color: #f47019;
+    border: 1px solid #fed7aa;
 
     &:hover {
-      background: #6c63ff;
+      background: #f47019;
       color: #fff;
-      border-color: #6c63ff;
+      border-color: #f47019;
     }
   }
 

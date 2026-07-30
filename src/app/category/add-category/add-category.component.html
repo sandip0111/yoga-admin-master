@@ -1,112 +1,147 @@
-<div class="page-header">
-    <h3 class="page-title">Category</h3>
-    <br />
-    <button
-    type="button"
-    class="btn btn-outline-primary"
-    routerLink="/subcategory">
-    subcategory
-  </button>
-
+<div class="pg-container">
+  <div class="pg-card mb-4">
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-folder-plus header-icon"></i>
+        <div>
+          <h4>Categories Management</h4>
+          <span class="subtitle">Create and manage course categories & subcategories</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="export-link" routerLink="/subcategory">
+          <i class="bi bi-diagram-3 me-1"></i> Manage Subcategories
+        </button>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-md-6 grid-margin stretch-card">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="card-title">Add Category</h4>
+
+  <div class="row g-4">
+    <!-- Left Column: Add/Edit Category Form -->
+    <div class="col-lg-5">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <div class="header-title">
+            <h4 class="fs-6">Add New Category</h4>
+          </div>
+        </div>
+        <div class="p-4">
           <form class="forms-sample" #empForm="ngForm">
-            <div class="col-md-50 p-0">
-
-                <div class="form-group col-lg-10 float-left">
-                    <label>Category name</label>
-                    <input
-                      type="text"
-                      value=""
-                      name="categoryname"
-                      placeholder="Category Name"
-                      class="form-control"
-                       [(ngModel)]="categoryDetails.categoryname"
-                    />
-                  </div>
-                  <div class="form-group col-lg-10 float-left">
-                    <label>Slug</label>
-                    <input
-                      type="text"
-                      value=""
-                      name="slug"
-                      placeholder="Slug"
-                      class="form-control"
-                       [(ngModel)]="categoryDetails.slug"
-                    />
-                  </div>
-                <div class="form-group col-lg-10 float-left">
-                <label>Meta Title</label>
-                <input
-                  type="text"
-                  value=""
-                  name="metatitle"
-                  placeholder="Meta title"
-                  class="form-control"
-                  [(ngModel)]="categoryDetails.metatitle"
-                />
-              </div>
-
-              <div class="form-group col-lg-10 float-left">
-                <label>Meta discription</label>
-                <input
-                  type="text"
-                  value=""
-                  name="metadesc"
-                  placeholder="Meta discription"
-                  class="form-control"
-                  [(ngModel)]="categoryDetails.metadescription"
-                    />
-              </div>
-              <div class="form-group col-lg-10 float-left">
-                <label>Meta Keyword</label>
-                <input
-                  type="text"
-                  value=""
-                  name="metakeyword"
-                  placeholder="Meta Keyword"
-                  class="form-control"
-                  [(ngModel)]="categoryDetails.metakeyword"
-                />
-              </div>
-
-              <div class="form-group col-lg-12 float-left">
-              <button
-        type="submit"
-        class="btn btn-outline-primary"
-        (click)="createCategory(categoryDetails)"
-      >
-       Submit
-      </button>
-              </div>
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Category Name</label>
+              <input
+                type="text"
+                name="categoryname"
+                placeholder="e.g. Yoga Philosophy"
+                class="form-control"
+                [(ngModel)]="categoryDetails.categoryname"
+              />
             </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Slug</label>
+              <input
+                type="text"
+                name="slug"
+                placeholder="e.g. yoga-philosophy"
+                class="form-control"
+                [(ngModel)]="categoryDetails.slug"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Meta Title</label>
+              <input
+                type="text"
+                name="metatitle"
+                placeholder="Meta title for SEO"
+                class="form-control"
+                [(ngModel)]="categoryDetails.metatitle"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Meta Description</label>
+              <input
+                type="text"
+                name="metadesc"
+                placeholder="Meta description for SEO"
+                class="form-control"
+                [(ngModel)]="categoryDetails.metadescription"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label font-weight-bold">Meta Keyword</label>
+              <input
+                type="text"
+                name="metakeyword"
+                placeholder="Meta keywords"
+                class="form-control"
+                [(ngModel)]="categoryDetails.metakeyword"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn-search w-100 justify-content-center"
+              (click)="createCategory(categoryDetails)"
+            >
+              <i class="bi bi-check-circle-fill me-1"></i> Submit Category
+            </button>
           </form>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Category Name</th>
-            <th scope="col">Status</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of categoryData">
-            <th scope="row">{{ data.categoryname }}</th>
-            <td>{{ data.isActive ? 'Active' : 'Inactive' }}</td>
-            <td>
-              <button class="btn btn-primary btn-sm"  routerLink="/add-category/{{data._id}}">Edit</button>
-              <button class="btn btn-danger btn-sm"  (click)="deleteCategory(data._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- Right Column: Category Table -->
+    <div class="col-lg-7">
+      <div class="pg-card">
+        <div class="pg-card-header">
+          <div class="header-title">
+            <h4 class="fs-6">Existing Categories</h4>
+          </div>
+        </div>
+        <div class="pranarambh-table-responsive">
+          <table class="fancy-table">
+            <thead>
+              <tr>
+                <th>Category Name</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of categoryData">
+                <td class="font-weight-bold text-dark">
+                  <i class="bi bi-folder2-open me-1 text-muted"></i>{{ data.categoryname }}
+                </td>
+                <td class="text-center">
+                  <span class="status-badge" [ngClass]="data.isActive ? 'status-paid' : 'status-failed'">
+                    <i class="bi" [ngClass]="data.isActive ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                    {{ data.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td class="text-center">
+                  <div class="d-flex align-items-center justify-content-center gap-1">
+                    <button class="btn btn-sm btn-primary" routerLink="/add-category/{{data._id}}" title="Edit Category">
+                      <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button class="delete-btn-fancy" (click)="deleteCategory(data._id)" title="Delete Category">
+                      <i class="bi bi-trash3"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!categoryData || categoryData.length === 0">
+                <td colspan="3" class="empty-state text-center py-4">
+                  <span class="text-muted">No categories added yet.</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
+</div>

@@ -18,12 +18,15 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userName = sessionStorage.getItem('name');
+    this.userName = sessionStorage.getItem('name') || 'Admin';
   }
 
-  // toggle sidebar in small devices
+  // toggle sidebar in small devices (off-canvas)
   toggleOffcanvas() {
-    document.querySelector('.sidebar-offcanvas').classList.toggle('active');
+    const sidebar = document.querySelector('.sidebar-offcanvas');
+    const backdrop = document.querySelector('.sidebar-mobile-backdrop');
+    if (sidebar) sidebar.classList.toggle('active');
+    if (backdrop) backdrop.classList.toggle('active');
   }
 
   // toggle sidebar

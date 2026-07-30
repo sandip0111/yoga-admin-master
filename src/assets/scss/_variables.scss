@@ -2,38 +2,38 @@
 @use 'sass:color';
 
 :root {
-  --primary: #0d6efd;
-  --primary-hover: #0b5ed7;
-  --primary-active: #0a58ca;
-  --secondary: #d8d8d8;
-  --success: #1bcfb4;
-  --info: #198ae3;
-  --warning: #fed713;
-  --danger: #fe7c96;
-  --light: #f8f9fa;
-  --dark: #3e4b5b;
-  --content-bg: #f2edf3;
+  --primary: #f47019;
+  --primary-hover: #e05e09;
+  --primary-active: #c44700;
+  --secondary: #64748b;
+  --success: #10b981;
+  --info: #0284c7;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --light: #f8fafc;
+  --dark: #1e293b;
+  --content-bg: #f8fafc;
   --sidebar-bg: #ffffff;
 }
 
 ////////// COLOR SYSTEM //////////
 
-$blue:              #5E50F9;
-$indigo:            #6610f2;
-$purple:            #6a008a;
-$pink:              #E91E63;
-$red:               #f96868;
-$orange:            #f2a654;
-$yellow:            #f6e84e;
-$green:             #46c35f;
-$teal:              #58d8a3;
-$cyan:              #57c7d4;
+$blue:              #0284c7;
+$indigo:            #f47019;
+$purple:            #d95305;
+$pink:              #e11d48;
+$red:               #ef4444;
+$orange:            #f47019;
+$yellow:            #f59e0b;
+$green:             #10b981;
+$teal:              #14b8a6;
+$cyan:              #06b6d4;
 $black:             #000;
 $white:             #ffffff;
-$white-smoke:       #f2f7f8;
-$violet:            #41478a;
-$darkslategray :    #2e383e;
-$dodger-blue :      #3498db;
+$white-smoke:       #f8fafc;
+$violet:            #c44700;
+$darkslategray :    #1e293b;
+$dodger-blue :      #0284c7;
 
 
 $colors: (
@@ -48,35 +48,35 @@ $colors: (
   teal:             $teal,
   cyan:             $cyan,
   white:            $white,
-  gray:             #434a54,
-  gray-light:       #aab2bd,
-  gray-lighter:     #e8eff4,
-  gray-lightest:    #e6e9ed,
-  gray-dark:        #0f1531,
+  gray:             #475569,
+  gray-light:       #94a3b8,
+  gray-lighter:     #e2e8f0,
+  gray-lightest:    #f1f5f9,
+  gray-dark:        #0f172a,
   black:            #000000
 );
 
 
 $theme-colors: (
-  primary:         #0d6efd,
-  secondary:       #d8d8d8,
-  success:         #1bcfb4,
-  info:            #198ae3,
-  warning:         #fed713,
-  danger:          #fe7c96,
-  light:           #f8f9fa,
-  dark:            #3e4b5b
+  primary:         #f47019,
+  secondary:       #64748b,
+  success:         #10b981,
+  info:            #0284c7,
+  warning:         #f59e0b,
+  danger:          #ef4444,
+  light:           #f8fafc,
+  dark:            #1e293b
 );
 
 $theme-gradient-colors: (
-  primary:         linear-gradient(to right, #4facfe, #00f2fe),
-  secondary:       linear-gradient(to right, #e7ebf0, #868e96),
-  success:         linear-gradient(to right, #84d9d2, #07cdae),
-  info:            linear-gradient(to right, #90caf9, #047edf 99%),
-  warning:         linear-gradient(to right, #f6e384, #ffd500),
-  danger:          linear-gradient(to right, #ffbf96, #fe7096),
-  light:           linear-gradient(to bottom, #f4f4f4, #e4e4e9),
-  dark:            linear-gradient(89deg, #5e7188, #3e4b5b)
+  primary:         linear-gradient(135deg, #f47019 0%, #d95305 100%),
+  secondary:       linear-gradient(135deg, #64748b 0%, #475569 100%),
+  success:         linear-gradient(135deg, #10b981 0%, #059669 100%),
+  info:            linear-gradient(135deg, #0284c7 0%, #0369a1 100%),
+  warning:         linear-gradient(135deg, #f59e0b 0%, #d97706 100%),
+  danger:          linear-gradient(135deg, #ef4444 0%, #dc2626 100%),
+  light:           linear-gradient(to bottom, #f8fafc, #f1f5f9),
+  dark:            linear-gradient(135deg, #1e293b 0%, #0f172a 100%)
 );
 
 

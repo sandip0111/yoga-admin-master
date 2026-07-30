@@ -1,23 +1,36 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
 
-<div class="media">
-  <div class="media-body">
-    <div class="header-container">
-      <h4>Prana Arambh</h4>
-      <a (click)="pranayamExportToExcel('Pranarambh')" class="export-link"
-        >Export to Excel
-      </a>
+<div class="pg-container">
+  <div class="pg-card">
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-wind header-icon"></i>
+        <div>
+          <h4>Prana Arambh</h4>
+          <span class="subtitle">View and manage Prana Arambh registrations and payments</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a (click)="pranayamExportToExcel('Pranarambh')" class="export-link">
+          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+        </a>
+      </div>
     </div>
-    <div class="container_search">
-      <input
-        type="text"
-        placeholder="Search by Name or Email"
-        [(ngModel)]="filter.searchText"
-        class="search-input form-control"
-      />
 
-      <div style="display: flex; align-items: center">
-        <label for="fromDate" style="margin-inline-end: 8px">From Date:</label>
+    <div class="container_search">
+      <div class="search-box">
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search by Name or Email..."
+          [(ngModel)]="filter.searchText"
+          class="search-input form-control"
+          (keyup.enter)="getAllParayanamStudent(filter, true)"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="pranaArambhFromDate"><i class="bi bi-calendar-event me-1"></i> From Date</label>
         <input
           type="date"
           id="pranaArambhFromDate"
@@ -26,8 +39,8 @@
         />
       </div>
 
-      <div style="display: flex; align-items: center">
-        <label for="toDate" style="margin-inline-end: 8px">To Date:</label>
+      <div class="filter-group">
+        <label for="pranaArambhToDate"><i class="bi bi-calendar-event me-1"></i> To Date</label>
         <input
           type="date"
           id="pranaArambhToDate"
@@ -38,31 +51,37 @@
         />
       </div>
 
-      <div style="display: flex; align-items: center">
-        <label for="toDate" style="margin-right: 8px">Payment status</label>
+      <div class="filter-group">
+        <label><i class="bi bi-funnel me-1"></i> Payment Status</label>
         <select
-          (change)="onPayStatusValueChange($event.target.value)"
-          class="search-input form-control"
+          (change)="onPayStatusValueChange($any($event.target).value)"
+          class="filter-select form-select"
         >
           <option *ngFor="let option of paymentOption" [value]="option.value">
             {{ option.name }}
           </option>
         </select>
       </div>
-      <button (click)="getAllParayanamStudent(filter, true)">Search</button>
+
+      <button class="btn-search" (click)="getAllParayanamStudent(filter, true)">
+        <i class="bi bi-search"></i> Search
+      </button>
     </div>
+
     <div class="pranarambh-table-responsive">
-      <table id="Pranarambh" class="table table-bordered table-striped">
-        <thead class="table-secondary">
-          <th style="width: 10% !important">Sl No.</th>
-          <th>Student Name</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Payment Amount</th>
-          <th>Payment Status</th>
-          <th>Payment Type</th>
-          <th>Payment Date</th>
-          <th></th>
+      <table id="Pranarambh" class="fancy-table">
+        <thead>
+          <tr>
+            <th class="text-center" style="width: 60px">Sl No.</th>
+            <th>Student Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Payment Amount</th>
+            <th class="text-center">Payment Status</th>
+            <th class="text-center">Payment Type</th>
+            <th>Payment Date</th>
+            <th class="text-center" style="width: 70px">Action</th>
+          </tr>
         </thead>
         <tbody>
           <tr
@@ -72,60 +91,91 @@
                   : {
                       itemsPerPage: 10,
                       currentPage: p,
-                      totalItems: pranayamStudentTotal,
+                      totalItems: pranayamStudentTotal
                     };
               let i = index
             "
           >
-            <td>{{ i + 1 + (p - 1) * 10 }}</td>
-            <td>
+            <td class="text-center index-cell">
+              {{ i + 1 + (p - 1) * 10 }}
+            </td>
+            <td class="text-dark font-weight-bold">
               {{ student.studentInfo.firstName }}
               {{ student.studentInfo.lastName || "" }}
             </td>
-            <td>{{ student.studentInfo.email }}</td>
-            <td>{{ student.studentInfo.password }}</td>
-            <td>
+            <td class="text-secondary">
+              <i class="bi bi-envelope me-1 text-muted"></i>{{ student.studentInfo.email }}
+            </td>
+            <td class="text-secondary">
+              <i class="bi bi-key me-1 text-muted"></i>{{ student.studentInfo.password }}
+            </td>
+            <td class="price-cell">
               <ng-container *ngIf="student.amount; else noPayment">
                 {{ student.amount | currency: student.currency.toUpperCase() }}
               </ng-container>
-              <ng-template #noPayment>N/A</ng-template>
+              <ng-template #noPayment><span class="text-muted">N/A</span></ng-template>
             </td>
-            <td
-              [ngClass]="{
-                'text-success': student?.paymentStatus == 'paid',
-                'text-warning': student?.paymentStatus == 'pending',
-              }"
-            >
-              <ng-container *ngIf="student.paymentStatus; else noPayment">
-                {{ student.paymentStatus | titlecase }}
+            <td class="text-center">
+              <ng-container *ngIf="student.paymentStatus; else noStatus">
+                <span
+                  class="status-badge"
+                  [ngClass]="{
+                    'status-paid': student?.paymentStatus == 'paid',
+                    'status-pending': student?.paymentStatus == 'pending',
+                    'status-failed': student?.paymentStatus == 'failed'
+                  }"
+                >
+                  <i
+                    class="bi"
+                    [ngClass]="{
+                      'bi-check-circle-fill': student?.paymentStatus == 'paid',
+                      'bi-clock-history': student?.paymentStatus == 'pending',
+                      'bi-x-circle-fill': student?.paymentStatus == 'failed'
+                    }"
+                  ></i>
+                  {{ student.paymentStatus | titlecase }}
+                </span>
               </ng-container>
-              <ng-template #noPayment>N/A</ng-template>
+              <ng-template #noStatus><span class="text-muted">N/A</span></ng-template>
             </td>
-            <td>
-              <ng-container *ngIf="student.paymentBy; else noPayment">
+            <td class="text-center">
+              <span class="paytype-badge" *ngIf="student.paymentBy">
                 {{ student.paymentBy | titlecase }}
-              </ng-container>
-              <ng-template #noPayment>N/A</ng-template>
+              </span>
+              <span class="text-muted" *ngIf="!student.paymentBy">-</span>
             </td>
             <td>
-              <ng-container *ngIf="student.created; else noPayment">
-                {{ student.created | date: "dd-MM-yyyy" }}
+              <ng-container *ngIf="student.created; else noDate">
+                <i class="bi bi-calendar-event me-1 text-muted"></i>{{ student.created | date: "dd-MM-yyyy" }}
               </ng-container>
-              <ng-template #noPayment>N/A</ng-template>
+              <ng-template #noDate><span class="text-muted">N/A</span></ng-template>
             </td>
-            <td>
-              <button class="delete-button" (click)="deleteRow(student)">
-                <i class="bi bi-trash"></i>
+            <td class="text-center">
+              <button
+                class="delete-btn-fancy"
+                (click)="deleteRow(student)"
+                title="Delete Record"
+              >
+                <i class="bi bi-trash3"></i>
               </button>
+            </td>
+          </tr>
+          <tr *ngIf="!students || students.length === 0">
+            <td colspan="9" class="empty-state text-center py-5">
+              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
+              <span class="text-muted">No Prana Arambh records found.</span>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="pagination">
-      <pagination-controls
-        (pageChange)="onTableDataChange($event)"
-      ></pagination-controls>
+
+    <div class="pg-card-footer">
+      <div class="pagination">
+        <pagination-controls
+          (pageChange)="onTableDataChange($event)"
+        ></pagination-controls>
+      </div>
     </div>
   </div>
 </div>
