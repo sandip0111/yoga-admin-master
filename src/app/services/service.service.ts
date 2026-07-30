@@ -404,4 +404,9 @@ export class ServiceService {
   getPersonalGuidanceData(data: searchPranaRambhFilter) {
     return this.http.post(this.url + "api/v1/getPgData", data);
   }
+  removePgData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removePgData", {
+      studentId,
+    });
+  }
 }

@@ -14,7 +14,7 @@ export class PersonalGuidance {
   pgLoading: boolean = false;
   pgPage: number = 1;
   pgPayType: string = "All";
-  pgList: any[] = []; //abc
+  pgList: pgDetailsDto[] = [];
   pgTotal: number = 0;
   @Input() paymentOption: { value: string; name: string };
   @Input() paymentTypeOption: string[];
@@ -36,7 +36,7 @@ export class PersonalGuidance {
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
     this.pgPage = isSearch ? 1 : this.pgPage;
-    this.service.getPersonalGuidanceData(filter).subscribe((res: any) => {
+    this.service.getPersonalGuidanceData(filter).subscribe((res: pgListDto) => {
       this.pgList = res.data;
       this.pgTotal = res.total ?? 0;
       this.dashboardShared.pgTitle = `Personal Guidance (${this.pgTotal})`;
@@ -53,16 +53,21 @@ export class PersonalGuidance {
     this.pgFilter.paymentType = paymentType;
     this.getAllPgStudent(this.pgFilter, true);
   }
-  // deleteRow(student: retreatDetailsDto): void {
-  //   if (confirm("Are you sure you want to delete this record?")) {
-  //     this.service.removeRetreatData(student._id).subscribe({
-  //       next: () => {
-  //         alert("Record deleted successfully");
-  //         this.getAllPgStudent(this.pgFilter, false);
-  //       },
-  //     });
-  //   }
-  // }
+  deleteRow(student: pgDetailsDto): void {
+    if (confirm("Are you sure you want to delete this record?")) {
+      if (student && student._id) {
+        this.service.removePgData(student._id).subscribe({
+          next: () => {
+            alert("Record deleted successfully");
+            this.getAllPgStudent(this.pgFilter, false);
+          },
+          error: (err: any) => {
+            console.error("Failed to delete record:", err);
+          }
+        });
+      }
+    }
+  }
   onPgTableDataChange(event: number) {
     this.pgFilter.pageNo = event;
     this.pgPage = event;
@@ -71,5 +76,49 @@ export class PersonalGuidance {
       top: 0,
       behavior: "smooth",
     });
+  }
+}
+interface pgListDto {
+  data: pgDetailsDto[];
+  total: number;
+}
+
+class pgDetailsDto {
+  _id: string;
+  courseType: string;
+  created: string;
+  currency: string;
+  email: string;
+  isDeleted: boolean;
+  isPaymentCheck: boolean;
+  month: string;
+  name: string;
+  paymentId: string;
+  paymentStatus: string;
+  paymentType: string;
+  phoneNumber: string;
+  price: string;
+  selectedDate: string;
+  selectedSlot: string;
+  __v: number;
+
+  constructor() {
+    this._id = "";
+    this.courseType = "";
+    this.created = "";
+    this.currency = "";
+    this.email = "";
+    this.isDeleted = false;
+    this.isPaymentCheck = false;
+    this.month = "";
+    this.name = "";
+    this.paymentId = "";
+    this.paymentStatus = "";
+    this.paymentType = "";
+    this.phoneNumber = "";
+    this.price = "";
+    this.selectedDate = "";
+    this.selectedSlot = "";
+    this.__v = 0;
   }
 }
