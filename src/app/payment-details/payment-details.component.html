@@ -1,37 +1,76 @@
 <app-spinner *ngIf="isLoading"></app-spinner>
-<div class="page-header">
-  <span>
-    <h3 class="page-title">Payment Details</h3>
-    <h6>Total {{total}} Payments(s)</h6>
-    <!-- <a href="javascript:void(0)" (click)="exportExcelData()" class="btn btn-primary btn-sm">Export Excel</a> -->
-  </span>
+
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+        <i class="bi bi-credit-card-2-front-fill text-xl" style="color: #f47019;"></i>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">Payment Details</h4>
+        <span class="text-xs text-slate-500 mt-0.5">Total <span class="font-semibold" style="color:#f47019">{{ total || 0 }}</span> Payment(s)</span>
+      </div>
+    </div>
   </div>
 
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Course Name</th>
-        <th scope="col">Student Name</th>
-        <th scope="col">Payment Id</th>
-        <th scope="col">Payment Status</th>
-        <th scope="col">Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of payList | paginate: { itemsPerPage: 10, currentPage: p,totalItems: total }">
-        <td>{{item?.courseId?.coursetitle ? item?.courseId?.coursetitle : '-'}}</td>
-        <td>{{item?.studentId.firstName ? item?.studentId.firstName : '-'}}</td>
-        <td>
-        {{item?.paymentId ? item?.paymentId : '-'}}
-        </td>
-        <td>
-          {{item?.paymentStatus ? item?.paymentStatus : '-'}}
-          </td>
-        <td>
-          {{item?.created ? (item?.created | date:'dd/MM/yyyy'): '-'}}
-          </td>
-    </tbody>
-  <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
-  </table>
-  </div><!-- /.table-responsive -->
+  <!-- Table Card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Course Name</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Student Name</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Payment ID</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Payment Status</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of payList | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total }; let odd = odd"
+            class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+            [class.bg-slate-50/40]="odd">
+            <td class="px-5 py-4 font-semibold text-slate-800">
+              <div class="flex items-center gap-2">
+                <i class="bi bi-book text-slate-400 text-xs"></i>
+                {{ item?.courseId?.coursetitle ? item?.courseId?.coursetitle : '—' }}
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0" style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  {{ item?.studentId?.firstName?.charAt(0)?.toUpperCase() || 'S' }}
+                </div>
+                <span class="text-slate-700 font-medium text-xs">{{ item?.studentId?.firstName ? item?.studentId?.firstName : '—' }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <span class="text-slate-600 font-mono text-xs">{{ item?.paymentId ? item?.paymentId : '—' }}</span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="item?.paymentStatus === 'paid' || item?.paymentStatus === 'Paid' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'">
+                <i class="bi text-xs" [ngClass]="item?.paymentStatus === 'paid' || item?.paymentStatus === 'Paid' ? 'bi-check-circle-fill' : 'bi-clock-history'"></i>
+                {{ item?.paymentStatus ? item?.paymentStatus : '—' }}
+              </span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <span class="text-slate-500 text-xs">{{ item?.created ? (item?.created | date:'dd/MM/yyyy') : '—' }}</span>
+            </td>
+          </tr>
+          <tr *ngIf="!payList || payList.length === 0">
+            <td colspan="5" class="text-center py-16">
+              <i class="bi bi-receipt-cutoff text-slate-300 text-5xl block mb-3"></i>
+              <p class="text-slate-400 font-medium">No payment records found.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- Footer Pagination -->
+    <div class="px-5 py-4 border-t border-slate-100 flex justify-end bg-white">
+      <pagination-controls (pageChange)="onTableDataChange($event)"></pagination-controls>
+    </div>
+  </div>
+</div>
