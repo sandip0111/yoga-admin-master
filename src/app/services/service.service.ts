@@ -401,4 +401,7 @@ export class ServiceService {
       studentId,
     });
   }
+  getPersonalGuidanceData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getPgData", data);
+  }
 }

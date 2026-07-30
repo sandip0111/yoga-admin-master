@@ -19,6 +19,7 @@ export class DashboardSharedService {
   subscribersTitle: string = "Subscribers";
   pranayamaCertificationTitle: string = "Pranayama Certification";
   retreatTitle: string = "Retreat";
+  pgTitle: string = "Personal Guidance";
   constructor() { }
   escapeCSV(value: any): string {
     const str = value === null || value === undefined ? "" : String(value);

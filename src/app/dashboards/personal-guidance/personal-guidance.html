@@ -1,0 +1,107 @@
+<app-spinner *ngIf="pgLoading"></app-spinner>
+
+<div class="header-container">
+  <h4>Personal Guidance</h4>
+  <!-- <a class="export-link">Export to Excel</a> -->
+</div>
+<div class="container_search">
+  <input
+    type="text"
+    placeholder="Search by Name or Email or phone number"
+    [(ngModel)]="pgFilter.searchText"
+    class="search-input form-control"
+  />
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-inline-end: 8px">Payment status</label>
+    <select
+      (change)="onPayStatusValueChange($event.target.value)"
+      class="search-input form-control"
+    >
+      <option *ngFor="let option of paymentOption" [value]="option.value">
+        {{ option.name }}
+      </option>
+    </select>
+  </div>
+  <div style="display: flex; align-items: center">
+    <label for="toDate" style="margin-inline-end: 8px">Payment Type</label>
+    <select
+      [(ngModel)]="pgPayType"
+      (change)="onPayTypeValueChange($event.target.value)"
+      class="search-input form-control"
+    >
+      <option [value]="0" selected hidden>Select a type</option>
+      <option *ngFor="let option of paymentTypeOption" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+  </div>
+  <button (click)="getAllPgStudent(pgFilter, true)">Search</button>
+</div>
+<div class="pranarambh-table-responsive">
+  <table
+    id="pranayama_certification"
+    class="table table-bordered table-striped"
+  >
+    <thead class="table-secondary">
+      <th style="inline-size: 5% !important">Sl No.</th>
+      <th>Student Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Price</th>
+      <th>Course type</th>
+      <th>Payment Status</th>
+      <th>Payment Type</th>
+      <th>Session Time</th>
+      <th>Payment Date</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let obj of pgList
+            | paginate
+              : {
+                  itemsPerPage: 10,
+                  currentPage: pgPage,
+                  totalItems: pgTotal
+                };
+          let i = index
+        "
+      >
+        <td>{{ i + 1 + (pgPage - 1) * 10 }}</td>
+        <td>{{ obj.name }}</td>
+        <td>{{ obj.email }}</td>
+        <td>{{ obj.phoneNumber }}</td>
+        <td>{{ obj.price | currency : obj.currency }}</td>
+        <td>{{ obj.room }}</td>
+        <td
+          [ngClass]="{
+            'text-success': obj?.paymentStatus == 'paid',
+            'text-warning': obj?.paymentStatus == 'pending',
+            'text-danger': obj?.paymentStatus == 'failed'
+          }"
+        >
+          {{ obj.paymentStatus | titlecase }}
+        </td>
+        <td>{{ obj.paymentType | titlecase }}</td>
+        <td>{{ obj.month }}</td>
+        <td>
+          <ng-container *ngIf="obj.created; else noPayment">
+            {{ obj.created | date : "dd-MM-yyyy" }}
+          </ng-container>
+          <ng-template #noPayment>N/A</ng-template>
+        </td>
+        <td>
+          <button class="delete-button" (click)="deleteRow(obj)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="pagination">
+  <pagination-controls
+    (pageChange)="onPgTableDataChange($event)"
+  ></pagination-controls>
+</div>

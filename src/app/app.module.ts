@@ -62,6 +62,7 @@ import { BaliComponent } from "./dashboards/bali/bali.component";
 import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
 import { PranayamaCertificationDashboardComponent } from "./dashboards/pranayama-certification-dashboard/pranayama-certification-dashboard.component";
 import { Retreat } from "./dashboards/retreat/retreat";
+import { PersonalGuidance } from "./dashboards/personal-guidance/personal-guidance";
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import { Retreat } from "./dashboards/retreat/retreat";
     BaliComponent,
     SubscribersComponent,
     PranayamaCertificationDashboardComponent,
-    Retreat
+    Retreat,
+    PersonalGuidance
   ],
   imports: [
     BrowserModule,

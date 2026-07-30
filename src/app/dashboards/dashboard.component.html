@@ -135,6 +135,15 @@
               ></app-retreat>
             </ng-template>
           </li>
+          <li [ngbNavItem]="17">
+            <a ngbNavLink>{{ dashboardShared.pgTitle }}</a>
+            <ng-template ngbNavContent>
+              <app-personal-guidance
+                [paymentOption]="paymentOption"
+                [paymentTypeOption]="paymentTypeOption"
+              ></app-personal-guidance>
+            </ng-template>
+          </li>
           <li [ngbNavItem]="15">
             <a ngbNavLink>{{ createSwaraSadhnaTitle }}</a>
             <ng-template ngbNavContent>
