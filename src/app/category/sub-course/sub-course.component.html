@@ -1,116 +1,206 @@
-<div class="page-header">
-  <h3 class="page-title">Sub-Category Course</h3>
-  <br />
-</div>
-
-<div class="row">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Add Sub-Category Course</h4>
-        <form class="forms-sample" #subcoursecat="ngForm">
-          <div class="col-md-50 p-0">
-
-            <div class="form-group col-lg-10 float-left">
-              <label>Sub-Category</label>
-              <select class="form-control" name="subcategoryId" [(ngModel)]="formData.subcategoryId">
-                <option value="undefined">select Sub Category</option>
-                <option *ngFor="let cat of subcategoryData" value="{{cat._id}}">{{cat.subcategoryname}}</option>
-              </select>
-            </div>
-
-              <div class="form-group col-lg-10 float-left">
-                  <label>Sub-Category Course name</label>
-                  <input
-                    type="text"
-                    name="subcategorycoursename"
-                    placeholder="sub courseCategory Name"
-                    class="form-control"
-                    [(ngModel)]="formData.subcategorycoursename"
-                  />
-                </div>
-                <div class="form-group col-lg-10 float-left">
-                  <label>Slug</label>
-                  <input
-                    type="text"
-                    name="slug"
-                    placeholder="Slug"
-                    class="form-control"
-                     [(ngModel)]="formData.slug"
-                  />
-                </div>
-              <div class="form-group col-lg-10 float-left">
-              <label>Meta Title</label>
-              <input
-                type="text"
-
-                name="metatitle"
-                placeholder="Meta title"
-                class="form-control"
-                [(ngModel)]="formData.metatitle"
-              />
-            </div>
-
-            <div class="form-group col-lg-10 float-left">
-              <label>Meta discription</label>
-              <input
-                type="text"
-                [(ngModel)]="formData.metadescription"
-                name="metadescription"
-                placeholder="Meta discription"
-                class="form-control"
-                  />
-            </div>
-            <div class="form-group col-lg-10 float-left">
-              <label>Meta Keyword</label>
-              <input
-                type="text"
-                [(ngModel)]="formData.metakeyword"
-                name="metakeyword"
-                class="form-control"
-                placeholder="Meta Keyword"
-              />
-            </div>
-
-            <div class="form-group col-lg-12 float-left">
-            <button
-      type="submit"
-      class="btn btn-outline-primary"
-      (click)="createSubCourseCategory(formData)"
-      >
-     Submit
-    </button>
-            </div>
-          </div>
-        </form>
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+        <i class="bi bi-journal-text text-xl" style="color: #f47019;"></i>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">Sub-Category Courses</h4>
+        <span class="text-xs text-slate-500 mt-0.5">Manage sub-category course assignments</span>
       </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Subcategory Course Name</th>
-          <th>sub category name</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-    <tr *ngFor="let c of subcoursecategoryData">
-      <td>{{c.subcategorycoursename}}</td>
-      <td>{{c.subcategoryData.subcategoryname}}</td>
-      <td>{{c.isActive ? 'Active': 'Inactive'}}</td>
-      <td>
-        <button class="btn btn-primary btn-sm"  routerLink="/subcategorycourse/{{c._id}}">Edit</button>
-        <button class="btn btn-danger btn-sm"  (click)="deleteSubCourseCategory(c._id)">Delete</button>
-      </td>
-    </tr>
-      </tbody>
-    </table>
-    </div><!-- /.table-responsive -->
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+    <!-- Left Column: Add Sub-Category Course Form (5 cols) -->
+    <div class="lg:col-span-5">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-5">
+        <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+          <i class="bi bi-plus-circle-fill text-base" style="color: #f47019;"></i>
+          <h2 class="text-base font-bold text-slate-800">Add Sub-Category Course</h2>
+        </div>
+
+        <form class="space-y-4" #subcoursecat="ngForm">
+          <!-- Sub-Category Select -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Sub-Category <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <i class="bi bi-diagram-3 absolute left-3.5 top-3 text-slate-400"></i>
+              <select name="subcategoryId" [(ngModel)]="formData.subcategoryId"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50 appearance-none">
+                <option value="undefined">Select Sub Category</option>
+                <option *ngFor="let cat of subcategoryData" [value]="cat._id">{{cat.subcategoryname}}</option>
+              </select>
+              <i class="bi bi-chevron-down absolute right-3.5 top-3 text-slate-400 pointer-events-none"></i>
+            </div>
+          </div>
+
+          <!-- Sub-Category Course Name -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Sub-Category Course Name <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <i class="bi bi-journal-bookmark absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="subcategorycoursename"
+                placeholder="Enter sub course category name..."
+                [(ngModel)]="formData.subcategorycoursename"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Slug -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Slug
+            </label>
+            <div class="relative">
+              <i class="bi bi-link-45deg absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="slug"
+                placeholder="Enter url slug..."
+                [(ngModel)]="formData.slug"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-mono text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Meta Title -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Meta Title
+            </label>
+            <div class="relative">
+              <i class="bi bi-search absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="metatitle"
+                placeholder="Meta title for SEO"
+                [(ngModel)]="formData.metatitle"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Meta Description -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Meta Description
+            </label>
+            <div class="relative">
+              <i class="bi bi-card-text absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="metadescription"
+                placeholder="Meta description for SEO"
+                [(ngModel)]="formData.metadescription"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Meta Keyword -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1.5">
+              Meta Keyword
+            </label>
+            <div class="relative">
+              <i class="bi bi-tags absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="metakeyword"
+                placeholder="Meta keywords"
+                [(ngModel)]="formData.metakeyword"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            (click)="createSubCourseCategory(formData)"
+            class="w-full py-3 rounded-xl text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-check-circle-fill"></i> Submit Sub-Course
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Right Column: Sub-Category Course Table (7 cols) -->
+    <div class="lg:col-span-7">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+          <h2 class="text-base font-bold text-slate-800">Existing Sub-Category Courses</h2>
+          <span class="text-xs text-slate-400 font-medium">Total {{ subcoursecategoryData?.length || 0 }}</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+                <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Subcategory Course Name</th>
+                <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Sub-Category</th>
+                <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Status</th>
+                <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of subcoursecategoryData; let odd = odd"
+                class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+                [class.bg-slate-50/40]="odd">
+                <td class="px-5 py-4">
+                  <div class="flex items-center gap-2">
+                    <i class="bi bi-book-half text-orange-500 text-sm"></i>
+                    <span class="font-semibold text-slate-800">{{ c.subcategorycoursename }}</span>
+                  </div>
+                </td>
+                <td class="px-5 py-4">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 text-slate-600">
+                    <i class="bi bi-tag text-slate-400"></i>
+                    {{ c.subcategoryData?.subcategoryname || '—' }}
+                  </span>
+                </td>
+                <td class="px-5 py-4 text-center">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+                    [ngClass]="c.isActive ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'">
+                    <i class="bi text-xs" [ngClass]="c.isActive ? 'bi-check-circle-fill' : 'bi-x-circle-fill'"></i>
+                    {{ c.isActive ? 'Active' : 'Inactive' }}
+                  </span>
+                </td>
+                <td class="px-5 py-4">
+                  <div class="flex items-center justify-center gap-2">
+                    <button type="button" routerLink="/subcategorycourse/{{c._id}}"
+                      class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:shadow-md hover:-translate-y-0.5"
+                      style="background: linear-gradient(135deg, #f47019, #d95305);"
+                      title="Edit Sub Course">
+                      <i class="bi bi-pencil-square"></i> Edit
+                    </button>
+                    <button type="button" (click)="deleteSubCourseCategory(c._id)"
+                      class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all hover:-translate-y-0.5"
+                      title="Delete Sub Course">
+                      <i class="bi bi-trash3 text-xs"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="!subcoursecategoryData || subcoursecategoryData.length === 0">
+                <td colspan="4" class="text-center py-16">
+                  <i class="bi bi-journal-x text-slate-300 text-5xl block mb-3"></i>
+                  <p class="text-slate-400 font-medium">No sub-category courses added yet.</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-

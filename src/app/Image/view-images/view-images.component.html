@@ -1,40 +1,70 @@
-
-<div class="page-header">
-  <span>
-    <h3 class="page-title">Images</h3>
-    <h6>Total {{imagedetails.length}} sliders(s)</h6>
-  </span>
-    <button
-      type="button"
-      class="btn btn-outline-primary"
-      routerLink="/imageslider"
-    >
-       Create image slider
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+        <i class="bi bi-easel-fill text-xl" style="color: #f47019;"></i>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">Image Sliders</h4>
+        <span class="text-xs text-slate-500 mt-0.5">Total <span class="font-semibold" style="color:#f47019">{{ imagedetails?.length || 0 }}</span> Slider(s)</span>
+      </div>
+    </div>
+    <button type="button" routerLink="/imageslider"
+      class="inline-flex items-center justify-center gap-2 px-4 h-[42px] rounded-xl text-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
+      style="background: linear-gradient(135deg, #f47019, #d95305);">
+      <i class="bi bi-plus-circle-fill"></i> Create Image Slider
     </button>
   </div>
 
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">title</th>
-        <th scope="col">para</th>
-        <th scope="col">Image</th>
-        <th scope="col">Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of imagedetails">
-        <td>{{item.title}}</td>
-        <td>{{item.para}}</td>
-        <td>
-          <img class="image-show" src="{{url}}{{item.image}}">
-        </td>
-        <td>
-          <a class="btn btn-primary btn-sm" routerLink="/imageslider/{{item._id}}">Edit</a>
-          <a href="javascript:void(0)" (click)="deleteSlider(item._id)" class="btn btn-danger btn-sm">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div><!-- /.table-responsive -->
+  <!-- Table Card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Slider Title</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Paragraph / Subtitle</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Image Preview</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of imagedetails; let odd = odd"
+            class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+            [class.bg-slate-50/40]="odd">
+            <td class="px-5 py-4">
+              <span class="font-semibold text-slate-800">{{ item.title }}</span>
+            </td>
+            <td class="px-5 py-4 max-w-xs">
+              <span class="text-xs text-slate-600 line-clamp-2">{{ item.para }}</span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <img *ngIf="item.image" [src]="url + item.image" alt="{{ item.title }}" class="w-20 h-12 rounded-xl object-cover border border-slate-200 shadow-sm mx-auto" />
+              <span *ngIf="!item.image" class="text-xs text-slate-400 italic">No image</span>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center justify-center gap-2">
+                <button type="button" routerLink="/imageslider/{{ item._id }}"
+                  class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:shadow-md hover:-translate-y-0.5"
+                  style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </button>
+                <button type="button" (click)="deleteSlider(item._id)"
+                  class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all hover:-translate-y-0.5">
+                  <i class="bi bi-trash3 text-xs"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!imagedetails || imagedetails.length === 0">
+            <td colspan="4" class="text-center py-16">
+              <i class="bi bi-easel text-slate-300 text-5xl block mb-3"></i>
+              <p class="text-slate-400 font-medium">No sliders created yet.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

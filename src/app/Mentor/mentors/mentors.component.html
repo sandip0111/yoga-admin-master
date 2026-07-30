@@ -1,44 +1,82 @@
-
-<div class="page-header">
-    <span>
-    <h3 class="page-title">Mentors</h3><br>
-    <h6>Total {{userlist.length}} mentors(s)</h6>
-</span>
-    <button
-      type="button"
-      class="btn btn-outline-primary"
-      routerLink="/addmentor"
-    >
-      Add new Mentors
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+        <i class="bi bi-people-fill text-xl" style="color: #f47019;"></i>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">Mentors Management</h4>
+        <span class="text-xs text-slate-500 mt-0.5">Total <span class="font-semibold" style="color:#f47019">{{ userlist?.length || 0 }}</span> Mentor(s)</span>
+      </div>
+    </div>
+    <button type="button" routerLink="/addmentor"
+      class="inline-flex items-center justify-center gap-2 px-4 h-[42px] rounded-xl text-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 w-full sm:w-auto"
+      style="background: linear-gradient(135deg, #f47019, #d95305);">
+      <i class="bi bi-person-plus-fill"></i> Add New Mentor
     </button>
   </div>
 
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Title</th>
-        <th>Picture</th>
-        <th>Thumbnail</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of userlist">
-        <th scope="row">{{item.name}}</th>
-        <td>{{item.title}}</td>
-        <td>
-          <img src="{{imageUrl}}{{item.picture}}" class="image-show">
-        </td>
-        <td>
-          <img src="{{imageUrl}}{{item.thumb}}" class="image-show">
-        </td>
-        <td>
-          <a routerLink="/addmentor/{{item._id}}" class="btn btn-primary btn-sm">Edit</a>
-          <a href="javascript:void(0)" (click)="deleteMentor(item._id)" class="btn btn-danger btn-sm">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  </div><!-- /.table-responsive -->
+  <!-- Table Card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Mentor Name</th>
+            <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Title / Specialty</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Picture</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Thumbnail</th>
+            <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of userlist; let odd = odd"
+            class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+            [class.bg-slate-50/40]="odd">
+            <td class="px-5 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0" style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  {{ item.name?.charAt(0)?.toUpperCase() || 'M' }}
+                </div>
+                <span class="font-semibold text-slate-800">{{ item.name }}</span>
+              </div>
+            </td>
+            <td class="px-5 py-4">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                {{ item.title || 'Yoga Instructor' }}
+              </span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <img *ngIf="item.picture" [src]="imageUrl + item.picture" alt="{{ item.name }}" class="w-12 h-12 rounded-xl object-cover border border-slate-200 shadow-sm mx-auto" />
+              <span *ngIf="!item.picture" class="text-xs text-slate-400 italic">No image</span>
+            </td>
+            <td class="px-5 py-4 text-center">
+              <img *ngIf="item.thumb" [src]="imageUrl + item.thumb" alt="{{ item.name }}" class="w-10 h-10 rounded-lg object-cover border border-slate-200 shadow-sm mx-auto" />
+              <span *ngIf="!item.thumb" class="text-xs text-slate-400 italic">No thumb</span>
+            </td>
+            <td class="px-5 py-4">
+              <div class="flex items-center justify-center gap-2">
+                <button type="button" routerLink="/addmentor/{{ item._id }}"
+                  class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-all hover:shadow-md hover:-translate-y-0.5"
+                  style="background: linear-gradient(135deg, #f47019, #d95305);">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </button>
+                <button type="button" (click)="deleteMentor(item._id)"
+                  class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all hover:-translate-y-0.5">
+                  <i class="bi bi-trash3 text-xs"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="!userlist || userlist.length === 0">
+            <td colspan="5" class="text-center py-16">
+              <i class="bi bi-people text-slate-300 text-5xl block mb-3"></i>
+              <p class="text-slate-400 font-medium">No mentors found.</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

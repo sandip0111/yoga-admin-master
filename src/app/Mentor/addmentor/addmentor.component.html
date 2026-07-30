@@ -1,102 +1,169 @@
-<div class="page-header">
-  <span>
-    <h3 class="page-title">Mentors</h3>
-    <br />
-    <h6>Add and Update Mentor</h6>
-  </span>
-  <button type="button" class="btn btn-outline-primary" routerLink="/mentors">
-    Show All Mentors
-  </button>
-</div>
-
-<div class="col-md-10 grid-margin stretch-card">
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Enter Mentor's Information</h4>
-      <hr>
-      <form
-        class="forms-sample"
-        #empForm="ngForm"
-        enctype="multipart/form-data"
-      >
-        <div class="col-md-50 p-0">
-          <div class="form-group col-lg-12">
-            <label>Mentor's name</label>
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="mentorsname"
-              [(ngModel)]="formData.name"
-              (change)="getSlug($event)"
-              placeholder="Mentor's Full Name"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Slug</label>
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="slug"
-              [(ngModel)]="formData.slug"
-              (change)="getSlug($event)"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label>Mentor's Title</label>
-
-            <input
-              type="text"
-              value=""
-              class="form-control"
-              name="mentorstitle"
-              [(ngModel)]="formData.title"
-              placeholder="Mentors Title"
-            />
-          </div>
-
-          <div class="form-group col-lg-12">
-            <label for="">Mentor Description</label>
-            <!-- <editor apiKey="test" [init]="{plugins: 'link'}" name="desc" [(ngModel)]="formData.intro"></editor> -->
-            <editor [(ngModel)]="formData.intro" [init]="{height: 400, menubar: true, plugins: 'lists link image code', toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code'}"></editor>
-
-          </div>
-
-          <div class="form-group col-lg-12">
-           <p>Mentor's Photo (Thumbnail) (Upload a square image. Best thumbnail size 480px X 480px)</p>
-           <input type="file" name="thumb" (change)="selectThumb($event)">
-
-           <div class="thumb-image mt-3" *ngIf="thumbFetch">
-            <img class="image-show" src="{{url}}{{thumbFetch}}">
-           </div>
-          </div>
-
-
-          <div class="form-group col-lg-12">
-            <p>Mentor's Photo (Full size) (Upload a wallpaper size image. Image size must be less than 1MB)</p>
-            <input type="file" name="picture" (change)="selectPicture($event)">
-
-            <div class="thumb-image mt-3" *ngIf="pictureFetch">
-              <img class="image-show" src="{{url}}{{pictureFetch}}">
-
-            </div>
-           </div>
-
-           <div class="form-group col-lg-12 float-left">
-             <span>
-              <a href="#">cancel</a>
-             </span>
-             <span style="float: right;">
-              <button type="submit" class="btn btn-outline-primary"
-              (click)="createMentor(formData)">
-               Save mentor Information
-              </button>
-             </span>
-            </div>
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <div class="w-full max-w-full space-y-6">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+          <i class="bi bi-person-lines-fill text-xl" style="color: #f47019;"></i>
         </div>
+        <div class="flex flex-col justify-center">
+          <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">{{ mentorId ? 'Edit Mentor' : 'New Mentor Information' }}</h4>
+          <span class="text-xs text-slate-500 mt-0.5">Manage mentor biography, title, avatar thumbnail, and high-res photos</span>
+        </div>
+      </div>
+      <button type="button" routerLink="/mentors"
+        class="inline-flex items-center justify-center gap-2 px-4 h-[42px] rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 w-full sm:w-auto">
+        <i class="bi bi-arrow-left" style="color: #f47019;"></i> Show All Mentors
+      </button>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <form #empForm="ngForm" enctype="multipart/form-data" class="p-6 md:p-8 space-y-8">
+        
+        <!-- Section 1: Basic Information -->
+        <div class="space-y-5">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <i class="bi bi-info-circle-fill text-base" style="color: #f47019;"></i>
+            <h2 class="text-base font-bold text-slate-800">Mentor Profile & Details</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- Mentor Name -->
+            <div class="md:col-span-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Mentor Name <span class="text-red-500">*</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-person absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="mentorsname"
+                  placeholder="Mentor's Full Name"
+                  [(ngModel)]="formData.name"
+                  (change)="getSlug($event)"
+                  required
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+
+            <!-- Slug -->
+            <div class="md:col-span-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Slug <span class="text-slate-400 font-normal lowercase">(auto-generated)</span>
+              </label>
+              <div class="relative">
+                <i class="bi bi-link-45deg absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="slug"
+                  placeholder="mentor-url-slug"
+                  [(ngModel)]="formData.slug"
+                  (change)="getSlug($event)"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-mono text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+
+            <!-- Mentor Title -->
+            <div class="md:col-span-1">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                Mentor Title / Specialty
+              </label>
+              <div class="relative">
+                <i class="bi bi-award absolute left-3.5 top-3 text-slate-400"></i>
+                <input
+                  type="text"
+                  name="mentorstitle"
+                  placeholder="e.g. Lead Hatha Yoga Master"
+                  [(ngModel)]="formData.title"
+                  class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+              Mentor Biography & Introduction
+            </label>
+            <div class="rounded-xl overflow-hidden border border-slate-200">
+              <editor [(ngModel)]="formData.intro" name="intro" [init]="{height: 350, menubar: true, plugins: 'lists link image code', toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code'}"></editor>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Photos & Media -->
+        <div class="space-y-5">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <i class="bi bi-image-fill text-base" style="color: #f47019;"></i>
+            <h2 class="text-base font-bold text-slate-800">Photos & Media Assets</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Thumbnail Photo -->
+            <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Thumbnail Photo <span class="text-slate-400 font-normal lowercase">(Square 480x480px)</span>
+                </label>
+                <p class="text-xs text-slate-500 mt-0.5">Used for cards and avatar previews</p>
+              </div>
+              
+              <input
+                type="file"
+                name="thumb"
+                (change)="selectThumb($event)"
+                class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 cursor-pointer"
+              />
+
+              <div *ngIf="thumbFetch || formData.thumb" class="pt-2">
+                <img [src]="url + (formData.thumb || thumbFetch)" alt="Thumbnail Preview" class="w-24 h-24 rounded-xl object-cover border border-slate-200 shadow-sm" />
+              </div>
+            </div>
+
+            <!-- Full Size Photo -->
+            <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                  Full-Size Portrait Photo <span class="text-slate-400 font-normal lowercase">(Max 1MB)</span>
+                </label>
+                <p class="text-xs text-slate-500 mt-0.5">Used for mentor detail page wallpaper</p>
+              </div>
+
+              <input
+                type="file"
+                name="picture"
+                (change)="selectPicture($event)"
+                class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 cursor-pointer"
+              />
+
+              <div *ngIf="pictureFetch || formData.picture" class="pt-2">
+                <img [src]="url + (formData.picture || pictureFetch)" alt="Picture Preview" class="w-32 h-24 rounded-xl object-cover border border-slate-200 shadow-sm" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-end gap-3">
+          <button
+            type="button"
+            routerLink="/mentors"
+            class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold text-sm hover:bg-slate-50 transition-all text-center">
+            Cancel
+          </button>
+          <button
+            type="submit"
+            (click)="createMentor(formData)"
+            class="w-full sm:w-auto px-8 py-3 rounded-xl text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-check-circle-fill"></i> Save Mentor Information
+          </button>
+        </div>
+
       </form>
     </div>
   </div>

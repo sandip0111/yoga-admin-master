@@ -1,98 +1,118 @@
-<div class="page-wrapper">
-  <div class="container-xl">
-     <!-- Page title -->
-     <div class="page-header d-print-none">
-        <div class="row align-items-center">
-           <div class="col">
-              <h2 class="page-title">
-                 Media
-              </h2>
-              <div class="text-muted mt-1">Total <strong>111</strong> Media Upload(s)</div>
-           </div>
-           <!-- Page title actions -->
-           <div class="col-auto ms-auto d-print-none">
-              <div class="d-flex">
-                 <div class=" ms-auto mt-2 strong"></div>
-              </div>
-           </div>
-        </div>
+<div class="min-h-screen bg-slate-50 p-4 md:p-6">
+  <!-- Page Header -->
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+    <div class="flex items-center gap-3.5">
+      <div class="w-12 h-12 rounded-2xl flex items-center justify-center border flex-shrink-0" style="background: #fff7ed; border-color: #ffedd5;">
+        <i class="bi bi-images text-xl" style="color: #f47019;"></i>
+      </div>
+      <div class="flex flex-col justify-center">
+        <h4 class="text-xl font-bold text-slate-800 leading-tight mb-0">Media Library</h4>
+        <span class="text-xs text-slate-500 mt-0.5">Total <span class="font-semibold" style="color:#f47019">{{ mediaList?.length || 0 }}</span> Media Upload(s)</span>
+      </div>
+    </div>
+  </div>
 
-     </div>
-  </div>
-  <div class="page-body">
-     <div class="container-xl">
-     <form #upload="ngForm">
-        <div class="row">
-        <div class="col-4">
-                 <div class="card">
-                    <div class="card-body">
-                       <h2 class="page-title mb-2">
-                          Upload New Media
-                       </h2>
-                       <div class="row">
-                          <div class="col-12">
-                             <div class="mb-3">
-                                <label class="form-label">Media Title</label>
-                                <div class="row g-2">
-                                   <div class="col">
-                                      <input type="text" class="form-control" name="title" placeholder="Enter Media Title" [(ngModel)]="formData.title">
-                                   </div>
-                                </div>
-                             </div>
-                          </div>
-                          <div class="col-12">
-                             <div class="mb-3">
-                                <label class="form-label">Upload Media</label>
-                                <div class="row g-2">
-                                   <div class="col">
-                                      <input type="file" (change)="uploadMedia($event)">
-                                   </div>
-                                </div>
-                             </div>
-                          </div>
-                       </div>
-                       <div class="mt-2">
-                          <div class="row">
-                             <div class="col">
-                                <button type="submit" (click)="createMedia(formData)" class="btn btn-primary w-100">
-                                Upload Media
-                                </button>
-                             </div>
-                          </div>
-                       </div>
-                    </div>
-                 </div>
+  <form #upload="ngForm">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Upload New Media Card (Left 4 Columns) -->
+      <div class="lg:col-span-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 space-y-5">
+          <div class="flex items-center gap-2 pb-3 border-b border-slate-100">
+            <i class="bi bi-cloud-arrow-up-fill text-base" style="color: #f47019;"></i>
+            <h2 class="text-base font-bold text-slate-800">Upload New Media</h2>
+          </div>
+
+          <!-- Media Title -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+              Media Title <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <i class="bi bi-tag absolute left-3.5 top-3 text-slate-400"></i>
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter Media Title..."
+                [(ngModel)]="formData.title"
+                required
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
+              />
+            </div>
+          </div>
+
+          <!-- Upload Dropzone -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+              Media File <span class="text-red-500">*</span>
+            </label>
+            <div class="p-4 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 flex flex-col items-center justify-center gap-2 text-center">
+              <div class="w-10 h-10 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-500">
+                <i class="bi bi-file-earmark-arrow-up text-xl"></i>
               </div>
-           <div class="col-8">
-              <div class="card">
-                 <div class="table-responsive">
-                    <table class="table card-table table-vcenter table-striped">
-                       <thead>
-                          <tr>
-                             <th width="20%">Title</th>
-                             <th>URL</th>
-                             <!-- <th width="10%">Type</th>                                        -->
-                             <th width="10%">Actions</th>
-                          </tr>
-                       </thead>
-                       <tbody>
-                                                              <tr *ngFor="let media of mediaList">
-                             <td>
-                                {{media.title}}                                       </td>
-                             <td>
-                                <a href="{{imageUrl}}{{media.image}}" target="_blank">{{imageUrl}}{{media.image}}</a>
-                             </td>
-                             <td class="text-end">
-                                <a href="javascript:void(0);" title="Delete Media" (click)="deleteMedia(media._id)">Delete</a>
-                              </td>
-                          </tr>
-                    </tbody>
-                    </table>
-                 </div>
-              </div>
-           </div>
+              <input
+                type="file"
+                (change)="uploadMedia($event)"
+                class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-600 hover:file:bg-orange-100 cursor-pointer"
+              />
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            (click)="createMedia(formData)"
+            class="w-full py-3 rounded-xl text-white text-sm font-bold shadow-md hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 flex items-center justify-center gap-2"
+            style="background: linear-gradient(135deg, #f47019, #d95305);">
+            <i class="bi bi-cloud-upload-fill"></i> Upload Media
+          </button>
         </div>
-        </form>
-     </div>
-  </div>
+      </div>
+
+      <!-- Media Table List (Right 8 Columns) -->
+      <div class="lg:col-span-8">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr style="background: linear-gradient(135deg, #fff7ed, #fff3e6);">
+                  <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Media Title</th>
+                  <th class="text-left px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">File URL</th>
+                  <th class="text-center px-5 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider border-b border-slate-100">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let media of mediaList; let odd = odd"
+                  class="border-b border-slate-50 hover:bg-orange-50/40 transition-colors duration-150"
+                  [class.bg-slate-50/40]="odd">
+                  <td class="px-5 py-4">
+                    <span class="font-semibold text-slate-800">{{ media.title }}</span>
+                  </td>
+                  <td class="px-5 py-4">
+                    <a [href]="imageUrl + media.image" target="_blank" class="inline-flex items-center gap-1 text-xs font-mono text-orange-600 hover:text-orange-700 hover:underline max-w-xs truncate">
+                      <i class="bi bi-link-45deg"></i> {{ imageUrl }}{{ media.image }}
+                    </a>
+                  </td>
+                  <td class="px-5 py-4 text-center">
+                    <button type="button" (click)="deleteMedia(media._id)"
+                      class="inline-flex items-center justify-center w-8 h-8 rounded-lg border border-red-200 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-all hover:-translate-y-0.5"
+                      title="Delete Media">
+                      <i class="bi bi-trash3 text-xs"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="!mediaList || mediaList.length === 0">
+                  <td colspan="3" class="text-center py-16">
+                    <i class="bi bi-images text-slate-300 text-5xl block mb-3"></i>
+                    <p class="text-slate-400 font-medium">No media items uploaded yet.</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
 </div>
