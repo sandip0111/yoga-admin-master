@@ -1,5 +1,3 @@
-import { getBorderWidths } from "ckeditor5";
-
 export class searchPranaRambhFilter {
   pageNo: number;
   size: number;
