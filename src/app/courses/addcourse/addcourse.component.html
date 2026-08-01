@@ -89,31 +89,55 @@
 
           <!-- Course Description -->
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
-              Full Course Description
-            </label>
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-0">
+                Full Course Description
+              </label>
+              <button type="button" (click)="toggleDescCode()"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all shadow-sm">
+                <i class="bi" [ngClass]="showDescCode ? 'bi-eye-fill text-orange-500' : 'bi-code-slash text-orange-500'"></i>
+                {{ showDescCode ? 'Switch to Visual Editor' : 'Edit HTML Source Code' }}
+              </button>
+            </div>
             <div class="rounded-xl overflow-hidden border border-slate-200">
-              <quill-editor [(ngModel)]="coursedetails.courseDesc" name="courseDesc" [style]="{height: '260px'}"></quill-editor>
+              <quill-editor *ngIf="!showDescCode" [(ngModel)]="coursedetails.courseDesc" name="courseDesc" [style]="{height: '260px'}"></quill-editor>
+              <textarea *ngIf="showDescCode" name="courseDesc_raw" [(ngModel)]="coursedetails.courseDesc" rows="10" class="w-full p-4 font-mono text-xs text-emerald-400 bg-slate-900 focus:outline-none resize-y min-h-[260px]" placeholder="<h1 style='color:red'>TEST</h1>"></textarea>
             </div>
           </div>
 
           <!-- Course Subject Info -->
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
-              Course Subject &amp; Syllabus Info
-            </label>
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-0">
+                Course Subject &amp; Syllabus Info
+              </label>
+              <button type="button" (click)="toggleSubjectCode()"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all shadow-sm">
+                <i class="bi" [ngClass]="showSubjectCode ? 'bi-eye-fill text-orange-500' : 'bi-code-slash text-orange-500'"></i>
+                {{ showSubjectCode ? 'Switch to Visual Editor' : 'Edit HTML Source Code' }}
+              </button>
+            </div>
             <div class="rounded-xl overflow-hidden border border-slate-200">
-              <quill-editor [(ngModel)]="coursedetails.subjectInfo" name="subjectInfo" [style]="{height: '260px'}"></quill-editor>
+              <quill-editor *ngIf="!showSubjectCode" [(ngModel)]="coursedetails.subjectInfo" name="subjectInfo" [style]="{height: '260px'}"></quill-editor>
+              <textarea *ngIf="showSubjectCode" name="subjectInfo_raw" [(ngModel)]="coursedetails.subjectInfo" rows="10" class="w-full p-4 font-mono text-xs text-emerald-400 bg-slate-900 focus:outline-none resize-y min-h-[260px]" placeholder="<h1 style='color:red'>TEST</h1>"></textarea>
             </div>
           </div>
 
           <!-- Includes & Excludes -->
           <div class="space-y-2">
-            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600">
-              Course Inclusions &amp; Exclusions
-            </label>
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-0">
+                Course Inclusions &amp; Exclusions
+              </label>
+              <button type="button" (click)="toggleIECode()"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition-all shadow-sm">
+                <i class="bi" [ngClass]="showIECode ? 'bi-eye-fill text-orange-500' : 'bi-code-slash text-orange-500'"></i>
+                {{ showIECode ? 'Switch to Visual Editor' : 'Edit HTML Source Code' }}
+              </button>
+            </div>
             <div class="rounded-xl overflow-hidden border border-slate-200">
-              <quill-editor [(ngModel)]="coursedetails.iAndEinfo" name="iAndEinfo" [style]="{height: '260px'}"></quill-editor>
+              <quill-editor *ngIf="!showIECode" [(ngModel)]="coursedetails.iAndEinfo" name="iAndEinfo" [style]="{height: '260px'}"></quill-editor>
+              <textarea *ngIf="showIECode" name="iAndEinfo_raw" [(ngModel)]="coursedetails.iAndEinfo" rows="10" class="w-full p-4 font-mono text-xs text-emerald-400 bg-slate-900 focus:outline-none resize-y min-h-[260px]" placeholder="<h1 style='color:red'>TEST</h1>"></textarea>
             </div>
           </div>
         </div>

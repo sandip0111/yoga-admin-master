@@ -9,10 +9,19 @@ import { ServiceService } from '../services/service.service';
   styleUrls: ['./pages.component.scss']
 })
 export class PagesComponent implements OnInit {
-  formData:any={};
-  pageId:any;
-  pageData:any;
-  constructor(private acroute:ActivatedRoute,private service:ServiceService) { }
+  [key: string]: any;
+  public formData: any = {};
+  public pageId: any;
+  public pageData: any;
+  public showCode: boolean = false;
+
+  constructor(private acroute: ActivatedRoute, private service: ServiceService) {
+    this.showCode = false;
+  }
+
+  public toggleCode(): void {
+    this.showCode = !this.showCode;
+  }
 
   ngOnInit(): void {
     this.acroute.params.subscribe(params => {

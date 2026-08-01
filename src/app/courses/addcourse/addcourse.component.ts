@@ -9,15 +9,35 @@ import { ServiceService } from 'src/app/services/service.service';
   styleUrls: ['./addcourse.component.scss']
 })
 export class AddcourseComponent implements OnInit {
-  details: any;
-  coursedetails: any = {};
-  courseId: any;
+  [key: string]: any;
+  public details: any;
+  public coursedetails: any = {};
+  public courseId: any;
+  public showDescCode: boolean = false;
+  public showSubjectCode: boolean = false;
+  public showIECode: boolean = false;
 
   constructor(
     private service: ServiceService,
     public route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    this.showDescCode = false;
+    this.showSubjectCode = false;
+    this.showIECode = false;
+  }
+
+  public toggleDescCode(): void {
+    this.showDescCode = !this.showDescCode;
+  }
+
+  public toggleSubjectCode(): void {
+    this.showSubjectCode = !this.showSubjectCode;
+  }
+
+  public toggleIECode(): void {
+    this.showIECode = !this.showIECode;
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {

@@ -10,13 +10,21 @@ import { Router,ActivatedRoute } from '@angular/router';
   styleUrls: ['./blog.component.scss']
 })
 export class BlogComponent implements OnInit {
+  [key: string]: any;
+  public formData: any = {};
+  public blogId: any;
+  public url: any;
+  public mentorList: any;
+  public isLoading: boolean = false;
+  public showCode: boolean = false;
 
-  formData:any={}
-  blogId: any;
-  url: any;
-  mentorList: any;
-  isLoading: boolean =false;
-  constructor(private service:ServiceService,private router:Router,private acroute:ActivatedRoute) { }
+  constructor(private service: ServiceService, private router: Router, private acroute: ActivatedRoute) {
+    this.showCode = false;
+  }
+
+  public toggleCode(): void {
+    this.showCode = !this.showCode;
+  }
 
   ngOnInit(): void {
     this.url = this.service.imageUrl;
