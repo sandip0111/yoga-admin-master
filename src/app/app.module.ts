@@ -25,7 +25,7 @@ import { AddCategoryComponent } from "./category/add-category/add-category.compo
 import { ViewCategoriesComponent } from "./category/view-categories/view-categories.component";
 import { SubcategoryComponent } from "./category/subcategory/subcategory.component";
 import { ContentComponent } from "./courses/content/content.component";
-import { EditorModule } from "@tinymce/tinymce-angular";
+import { QuillModule } from "ngx-quill";
 import { BlogComponent } from "./blog/blog.component";
 import { ViewBlogComponent } from "./blog/view-blog/view-blog.component";
 import { MediaComponent } from "./media/media.component";
@@ -36,7 +36,6 @@ import { PagesComponent } from "./pages/pages.component";
 import { TestimonialComponent } from "./testimonial/testimonial.component";
 import { SubCourseComponent } from "./category/sub-course/sub-course.component";
 import { LoginComponent } from "./user-pages/login/login.component";
-import { CKEditorModule } from "@ckeditor/ckeditor5-angular";
 import { VideoReviewComponent } from "./video-review/video-review.component";
 import { ContactInquiryComponent } from "./contact-inquiry/contact-inquiry.component";
 import { PaymentDetailsComponent } from "./payment-details/payment-details.component";
@@ -129,9 +128,8 @@ import { PersonalGuidance } from "./dashboards/personal-guidance/personal-guidan
     FormsModule,
     ReactiveFormsModule,
     BaseChartDirective,
-    EditorModule,
     NgxPaginationModule,
-    CKEditorModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

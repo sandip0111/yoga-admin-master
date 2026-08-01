@@ -65,18 +65,12 @@
               Page Content (Rich Text)
             </label>
             <div class="rounded-xl overflow-hidden border border-slate-200">
-              <editor
+              <quill-editor
                 name="editor1"
                 [(ngModel)]="formData.text"
-                [init]="{
-                  height: 360,
-                  menubar: false,
-                  statusbar: false,
-                  elementpath: false,
-                  plugins: 'lists link image code table wordcount',
-                  toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image table | code'
-                }">
-              </editor>
+                [style]="{height: '340px'}"
+                placeholder="Write page content here...">
+              </quill-editor>
             </div>
           </div>
         </div>

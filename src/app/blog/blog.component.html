@@ -75,23 +75,12 @@
                 Body Content
               </label>
               <div class="rounded-xl overflow-hidden border border-slate-200">
-                <editor
-                  apiKey="myfzbxcl0pid6mhk2jomde4f52khnth6rd2veo4zhtr788vv"
+                <quill-editor
                   name="content"
                   [(ngModel)]="formData.content"
-                  [init]="{
-                    height: 480,
-                    menubar: true,
-                    plugins: 'lists link image code table media lists',
-                    toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist | link image media | table code',
-                    branding: false,
-                    elementpath: false,
-                    statusbar: false,
-                    content_style: 'body { font-family:Inter,Helvetica,Arial,sans-serif; font-size:15px }',
-                    skin: 'oxide',
-                    preview_styles: true
-                  }">
-                </editor>
+                  [style]="{height: '380px'}"
+                  placeholder="Write engaging blog content here...">
+                </quill-editor>
               </div>
             </div>
           </div>

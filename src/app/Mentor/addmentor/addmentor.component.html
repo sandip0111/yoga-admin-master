@@ -88,7 +88,7 @@
               Mentor Biography & Introduction
             </label>
             <div class="rounded-xl overflow-hidden border border-slate-200">
-              <editor [(ngModel)]="formData.intro" name="intro" [init]="{height: 350, menubar: true, plugins: 'lists link image code', toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code'}"></editor>
+              <quill-editor [(ngModel)]="formData.intro" name="intro" [style]="{height: '280px'}"></quill-editor>
             </div>
           </div>
         </div>
