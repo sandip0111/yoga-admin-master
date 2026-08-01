@@ -49,7 +49,6 @@
                   name="mentorsname"
                   placeholder="e.g. 10 Health Benefits of Kundalini Yoga Practice"
                   [(ngModel)]="formData.title"
-                  (change)="getSlug($event)"
                   required
                   class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
                 />
@@ -130,7 +129,7 @@
             <!-- Blog Slug -->
             <div>
               <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                URL Slug <span class="text-slate-400 font-normal lowercase">(auto-generated)</span>
+                URL Slug
               </label>
               <div class="relative">
                 <i class="bi bi-link-45deg absolute left-3.5 top-3 text-slate-400"></i>

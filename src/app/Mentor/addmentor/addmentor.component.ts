@@ -78,19 +78,4 @@ export class AddmentorComponent implements OnInit {
    this.thumbFetch = res.data.thumb;
     });
   }
-
-  getSlug(e:any){
-   let str = e.target.value
-    let s = str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
-    this.formData.slug = s;
-  }
-
-
 }
-

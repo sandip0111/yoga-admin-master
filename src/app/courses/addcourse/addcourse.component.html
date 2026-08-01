@@ -11,7 +11,7 @@
           <span class="text-xs text-slate-500 mt-0.5">Manage course content, fees, events, instructors, and SEO metadata</span>
         </div>
       </div>
-      <button type="button" routerLink="/courses"
+      <button type="button" routerLink="/course"
         class="inline-flex items-center justify-center gap-2 px-4 h-[42px] rounded-xl border border-slate-200 bg-white text-slate-700 text-sm font-semibold shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all duration-200 w-full sm:w-auto">
         <i class="bi bi-arrow-left" style="color: #f47019;"></i> Show All Courses
       </button>
@@ -40,7 +40,6 @@
                   type="text"
                   name="coursetitle"
                   placeholder="e.g. 200 Hour Yoga Teacher Training"
-                  (change)="getSlug($event)"
                   [(ngModel)]="coursedetails.coursetitle"
                   required
                   class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all bg-slate-50/50"
@@ -51,7 +50,7 @@
             <!-- Slug -->
             <div class="md:col-span-1">
               <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
-                Link Slug <span class="text-slate-400 font-normal lowercase">(auto-generated)</span>
+                Link Slug
               </label>
               <div class="relative">
                 <i class="bi bi-link-45deg absolute left-3.5 top-3 text-slate-400"></i>
