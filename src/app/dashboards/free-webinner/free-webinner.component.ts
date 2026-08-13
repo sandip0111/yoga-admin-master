@@ -19,7 +19,12 @@ export class FreeWebinnerComponent implements OnInit {
   freeWebinarPage: number = 1;
   freeWebinarList: freeWebinarStudentModel[] = [];
   freeWebinarTotal: number = 0;
-  monthOption = ["All Month Data", "January, 2026", "June, 2026"];
+  monthOption = [
+    "All Month Data",
+    "January, 2026",
+    "June, 2026",
+    "August, 2026",
+  ];
 
   @Output() downloadCsv = new EventEmitter<{
     csvContent: string;
@@ -76,7 +81,10 @@ export class FreeWebinnerComponent implements OnInit {
     const rows = Array.from(table.querySelectorAll("tr"));
     rows.forEach((row) => {
       const cols = Array.from(row.querySelectorAll("th, td"));
-      const rowData = cols.map((col) => `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`);
+      const rowData = cols.map(
+        (col) =>
+          `"${(col as HTMLElement).innerText.trim().replace(/"/g, '""')}"`,
+      );
       csvContent += rowData.join(",") + "\n";
     });
     this.downloadCsv.emit({ csvContent, tableId });
