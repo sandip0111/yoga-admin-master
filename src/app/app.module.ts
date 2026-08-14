@@ -62,6 +62,7 @@ import { SubscribersComponent } from "./dashboards/subscribers/subscribers.compo
 import { PranayamaCertificationDashboardComponent } from "./dashboards/pranayama-certification-dashboard/pranayama-certification-dashboard.component";
 import { Retreat } from "./dashboards/retreat/retreat";
 import { PersonalGuidance } from "./dashboards/personal-guidance/personal-guidance";
+import { ShowAllVideosComponent } from "./show-all-videos/show-all-videos.component";
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { PersonalGuidance } from "./dashboards/personal-guidance/personal-guidan
     SubscribersComponent,
     PranayamaCertificationDashboardComponent,
     Retreat,
-    PersonalGuidance
+    PersonalGuidance,
+    ShowAllVideosComponent
   ],
   imports: [
     BrowserModule,

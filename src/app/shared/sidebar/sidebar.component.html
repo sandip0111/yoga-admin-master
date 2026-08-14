@@ -12,6 +12,12 @@
         <span class="menu-title">Add Course Video</span>
       </a>
     </li>
+    <li class="nav-item rounded-3" [ngClass]="{ active: showAllVideos.isActive }">
+      <a class="nav-link d-flex align-items-center px-3 py-2.5 rounded-3 text-slate-700 text-decoration-none fw-medium transition-all" routerLink="/all-course-videos" routerLinkActive #showAllVideos="routerLinkActive">
+        <i class="bi bi-play-circle-fill me-2.5 fs-5 menu-icon"></i>
+        <span class="menu-title">Show All Videos</span>
+      </a>
+    </li>
     <li class="nav-item rounded-3" [ngClass]="{ active: course.isActive }">
       <a class="nav-link d-flex align-items-center px-3 py-2.5 rounded-3 text-slate-700 text-decoration-none fw-medium transition-all" routerLink="/course" routerLinkActive #course="routerLinkActive">
         <i class="bi bi-journal-bookmark-fill me-2.5 fs-5 menu-icon"></i>

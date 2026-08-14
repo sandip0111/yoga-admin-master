@@ -33,6 +33,7 @@ import { WebinarRegistrationComponent } from "./webinarRegistrationForms/webinar
 import { DashboardComponent } from "./dashboards/dashboard.component";
 import { SendEmailComponent } from "./send-email/send-email.component";
 import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-video.component";
+import { ShowAllVideosComponent } from "./show-all-videos/show-all-videos.component";
 const routes: Routes = [
   { path: "", redirectTo: "/login", pathMatch: "full" },
   {
@@ -175,6 +176,11 @@ const routes: Routes = [
   {
     path: "course-video/:id",
     component: UploadedVideosComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: "all-course-videos",
+    component: ShowAllVideosComponent,
     canActivate: [authGuard],
   },
   { path: "edit/:id", component: VideoEditComponent, canActivate: [authGuard] },
