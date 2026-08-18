@@ -113,6 +113,9 @@ export class ServiceService {
   deleteBlog(data: any) {
     return this.http.post(this.url + "api/v1/deleteBlog", data);
   }
+  deleteVideo(data: any) {
+    return this.http.post(this.url + "api/v1/deleteVideo", data);
+  }
   updateBlogStatus(data: any) {
     return this.http.post(this.url + "api/v1/updateBlogStatus", data);
   }

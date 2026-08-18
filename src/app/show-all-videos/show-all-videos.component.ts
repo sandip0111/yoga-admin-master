@@ -141,6 +141,28 @@ export class ShowAllVideosComponent implements OnInit {
     this.selectedVideo = null;
   }
 
+  deleteVideo(video: any): void {
+    if (confirm(`Are you sure you want to delete "${video.title || 'this video'}"?`)) {
+      this.isLoading = true;
+      this.service.deleteVideo({ _id: video.id }).subscribe({
+        next: (res: any) => {
+          this.isLoading = false;
+          if (res.status === 'ok') {
+            alert(res.msg || "Video deleted successfully");
+            this.loadAllData();
+          } else {
+            alert(res.msg || "Failed to delete video");
+          }
+        },
+        error: (err) => {
+          this.isLoading = false;
+          console.error("Error deleting video:", err);
+          alert("Failed to delete video. Please try again.");
+        }
+      });
+    }
+  }
+
   onTableDataChange(event: any): void {
     this.p = event;
     window.scrollTo({
