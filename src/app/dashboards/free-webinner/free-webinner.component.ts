@@ -24,6 +24,7 @@ export class FreeWebinnerComponent implements OnInit {
     "January, 2026",
     "June, 2026",
     "August, 2026",
+    "September, 2026",
   ];
 
   @Output() downloadCsv = new EventEmitter<{
