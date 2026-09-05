@@ -66,6 +66,18 @@
         </select>
       </div>
 
+      <div class="filter-group">
+        <label><i class="bi bi-door-open me-1"></i> Room Type</label>
+        <select
+          (change)="onRoomTypeChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of roomTypeOption" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
       <button class="btn-search" (click)="getRishikeshData(rishikeshFilter, true)">
         <i class="bi bi-search"></i> Search
       </button>
@@ -84,6 +96,7 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Price</th>
+            <th class="text-center">Room / Payment Plan</th>
             <th class="text-center">Month</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Payment Type</th>
@@ -119,6 +132,12 @@
             </td>
             <td class="price-cell">
               {{ obj.price | currency: obj.currency }}
+            </td>
+            <td class="text-center">
+              <span class="room-badge" *ngIf="obj.room">
+                <i class="bi bi-house-door me-1"></i>{{ obj.room }}
+              </span>
+              <span class="text-muted" *ngIf="!obj.room">-</span>
             </td>
             <td class="text-center">
               <span class="course-badge" *ngIf="obj.month">{{ obj.month }}</span>
@@ -163,7 +182,7 @@
             </td>
           </tr>
           <tr *ngIf="!rishikeshList || rishikeshList.length === 0">
-            <td colspan="11" class="empty-state text-center py-5">
+            <td colspan="12" class="empty-state text-center py-5">
               <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
               <span class="text-muted">No Rishikesh records found.</span>
             </td>

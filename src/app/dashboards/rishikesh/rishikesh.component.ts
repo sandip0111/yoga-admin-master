@@ -27,6 +27,13 @@ export class RishikeshComponent implements OnInit {
     { label: "300 hours", value: "300" },
   ];
   monthOption = ["All Month Data", "March, 2026", "October, 2026"];
+  roomTypeOption = [
+    { label: "All Rooms", value: "" },
+    { label: "Shared room", value: "Shared room" },
+    { label: "Private room", value: "Private room" },
+    { label: "30% deposit – Shared", value: "Reserve your shared room with a 30% deposit" },
+    { label: "30% deposit – Private", value: "Reserve your private room with a 30% deposit" },
+  ];
 
   @Input() paymentOption: { value: string; name: string }[];
   @Output() downloadCsv = new EventEmitter<{
@@ -74,12 +81,18 @@ export class RishikeshComponent implements OnInit {
     this.rishikeshFilter.paymentStatus = "";
     this.rishikeshFilter.courseType = "All";
     this.rishikeshFilter.month = "";
+    (this.rishikeshFilter as any).roomType = "";
     this.getRishikeshData(this.rishikeshFilter, true);
   }
 
   onPayStatusValueChange(status: string): void {
     status = status == "all" ? "" : status;
     this.rishikeshFilter.paymentStatus = status;
+    this.getRishikeshData(this.rishikeshFilter, true);
+  }
+
+  onRoomTypeChange(roomType: string): void {
+    (this.rishikeshFilter as any).roomType = roomType;
     this.getRishikeshData(this.rishikeshFilter, true);
   }
 
@@ -97,32 +110,26 @@ export class RishikeshComponent implements OnInit {
           return;
         }
         let csvContent = "";
-        const table = document.getElementById(tableId) as HTMLTableElement;
-        if (!table) {
-          console.error("Table not found:", tableId);
-          this.loading = false;
-          return;
-        }
-        const headers = Array.from(table.querySelectorAll("thead th"))
-          .map((th) => (th as HTMLElement).innerText)
-          .join(",");
+        const headers = [
+          "Sl No.", "Student Name", "Course Type", "Email", "Phone",
+          "Price", "Room / Payment Plan", "Month", "Payment Status",
+          "Payment Type", "Payment Date"
+        ].join(",");
         csvContent += headers + "\n";
-        const rowsData: any[][] = [];
         res.data.forEach((student, index) => {
-          rowsData.push([
+          const row = [
             index + 1,
             student.name,
-            student.courseTimeDuration || "",
+            student.hour ? `${student.hour} hour` : "",
             student.email,
             student.phoneNumber,
             student.price,
+            student.room || "",
+            student.month || "",
             student.paymentStatus,
-            student.package || "",
-            "",
+            student.paymentType || "",
             student.created,
-          ]);
-        });
-        rowsData.forEach((row) => {
+          ];
           csvContent += row.map((cell) => `"${cell}"`).join(",") + "\n";
         });
         this.downloadCsv.emit({ csvContent, tableId });
