@@ -79,7 +79,6 @@
             <th class="text-center" style="width: 60px">Sl No.</th>
             <th>Student Name</th>
             <th>Email</th>
-            <th>Password</th>
             <th>Payment Amount</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Payment Type</th>
@@ -108,10 +107,7 @@
               {{ student.studentInfo.lastName || "" }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ student.studentInfo.email }}
-            </td>
-            <td class="text-secondary">
-              <i class="bi bi-key me-1 text-muted"></i>{{ student.studentInfo.password }}
+              {{ student.studentInfo.email }}
             </td>
             <td class="price-cell">
               <ng-container *ngIf="student.amount; else noPayment">
@@ -165,7 +161,7 @@
             </td>
           </tr>
           <tr *ngIf="!students || students.length === 0">
-            <td colspan="9" class="empty-state text-center py-5">
+            <td colspan="8" class="empty-state text-center py-5">
               <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
               <span class="text-muted">No Prana Arambh records found.</span>
             </td>

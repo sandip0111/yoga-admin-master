@@ -114,7 +114,7 @@
               {{ spiritualityStdnt.firstName }} {{ spiritualityStdnt.lastName }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ spiritualityStdnt.email }}
+              {{ spiritualityStdnt.email }}
             </td>
             <td class="price-cell">
               <ng-container *ngIf="spiritualityStdnt.amount; else noPayment">

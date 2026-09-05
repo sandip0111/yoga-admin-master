@@ -92,7 +92,6 @@ export class PranaArambhComponent implements OnInit {
             index + 1,
             student.studentInfo.firstName,
             student.studentInfo.email,
-            student.studentInfo.password,
             student.amount || "N/A",
             student.currency || "N/A",
             student.paymentStatus || "N/A",

@@ -70,7 +70,7 @@
               {{ subscriber.name || "-" }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ subscriber.email }}
+              {{ subscriber.email }}
             </td>
             <td class="text-center">
               <span class="paytype-badge" *ngIf="subscriber.emailStage">

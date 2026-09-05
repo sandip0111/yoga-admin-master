@@ -95,7 +95,6 @@
             <th>Email</th>
             <th>Phone</th>
             <th>City</th>
-            <th>Password</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Payment Type</th>
             <th>Payment Date</th>
@@ -120,16 +119,13 @@
             </td>
             <td class="text-dark font-weight-bold">{{ obj.name }}</td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ obj.email }}
+              {{ obj.email }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-telephone me-1 text-muted"></i>{{ obj.phone || '-' }}
+              {{ obj.phone || '-' }}
             </td>
             <td>
               <i class="bi bi-geo-alt me-1 text-muted"></i>{{ obj.city || '-' }}
-            </td>
-            <td class="text-secondary">
-              <i class="bi bi-key me-1 text-muted"></i>{{ obj.password }}
             </td>
             <td class="text-center">
               <span
@@ -170,7 +166,7 @@
             </td>
           </tr>
           <tr *ngIf="!swaraSadhanaList || swaraSadhanaList.length === 0">
-            <td colspan="10" class="empty-state text-center py-5">
+            <td colspan="9" class="empty-state text-center py-5">
               <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
               <span class="text-muted">No Swara Sadhana records found.</span>
             </td>
