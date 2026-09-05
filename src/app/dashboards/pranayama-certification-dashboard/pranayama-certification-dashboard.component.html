@@ -84,6 +84,7 @@
             <th>Student Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Password</th>
             <th>Price</th>
             <th>Due Amount</th>
             <th class="text-center">Payment Status</th>
@@ -114,6 +115,9 @@
             </td>
             <td class="text-secondary">
               {{ obj.phoneNumber || '-' }}
+            </td>
+            <td class="text-secondary">
+              {{ obj.password || '—' }}
             </td>
             <td class="price-cell">
               {{ obj.price | currency : obj.currency }}
@@ -159,7 +163,7 @@
             </td>
           </tr>
           <tr *ngIf="!pranayamaList || pranayamaList.length === 0">
-            <td colspan="10" class="empty-state text-center py-5">
+            <td colspan="11" class="empty-state text-center py-5">
               <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
               <span class="text-muted">No Pranayama Certification records found.</span>
             </td>
