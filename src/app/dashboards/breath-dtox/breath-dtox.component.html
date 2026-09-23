@@ -99,16 +99,16 @@
               {{ breath.firstName }} {{ breath.lastName || "" }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ breath.email }}
+              {{ breath.email }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-key me-1 text-muted"></i>{{ breath.password }}
+              {{ breath.password || '—' }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-telephone me-1 text-muted"></i>{{ breath.phoneNumber || '-' }}
+              {{ breath.phoneNumber || '-' }}
             </td>
             <td>
-              <i class="bi bi-geo-alt me-1 text-muted"></i>{{ breath.city || '-' }}
+              {{ breath.city || '-' }}
             </td>
             <td>
               <i class="bi bi-calendar-event me-1 text-muted"></i>{{ breath.created | date: "mediumDate" }}

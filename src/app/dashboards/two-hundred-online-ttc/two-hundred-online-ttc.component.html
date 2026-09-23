@@ -2,31 +2,35 @@
 
 <div class="pg-container">
   <div class="pg-card">
+
+    <!-- ── Card Header ─────────────────────────────────────── -->
     <div class="pg-card-header">
       <div class="header-title">
         <i class="bi bi-award header-icon"></i>
         <div>
-          <h4>200 TTC</h4>
-          <span class="subtitle">View and manage 200 TTC student registrations, payments, and access</span>
+          <h4>200 Online TTC</h4>
+          <span class="subtitle">Student registrations, room allocations, payments &amp; access management</span>
         </div>
       </div>
       <div class="header-actions">
         <a (click)="exportToExcel('TwoHundredOnlineTTC')" class="export-link me-2">
-          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+          <i class="bi bi-file-earmark-excel"></i> Export to Excel
         </a>
         <a class="export-link" (click)="sendBulkMail()">
-          <i class="bi bi-envelope-paper me-1"></i> Send Bulk Mail
+          <i class="bi bi-envelope-paper"></i> Send Bulk Mail
         </a>
       </div>
     </div>
 
+    <!-- ── Filter Bar ──────────────────────────────────────── -->
     <div class="container_search">
+
       <div class="search-box">
-        <label><i class="bi bi-search me-1"></i> Search</label>
+        <label><i class="bi bi-search me-1"></i>Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
-          placeholder="Search by Name, Email, or Phone..."
+          placeholder="Search by Name, Email, or Phone…"
           [(ngModel)]="twoHunTTCFilter.searchText"
           class="search-input form-control"
           (keyup.enter)="getAll200TTCStudent(twoHunTTCFilter, true)"
@@ -34,7 +38,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-calendar-month me-1"></i> Month</label>
+        <label><i class="bi bi-calendar-month me-1"></i>Month</label>
         <select
           (change)="onMonthChange($any($event.target).value)"
           class="filter-select form-select"
@@ -46,7 +50,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-funnel me-1"></i> Payment Status</label>
+        <label><i class="bi bi-funnel me-1"></i>Payment Status</label>
         <select
           (change)="onPayStatusValueChange($any($event.target).value)"
           class="filter-select form-select"
@@ -58,7 +62,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-credit-card me-1"></i> Payment Type</label>
+        <label><i class="bi bi-credit-card me-1"></i>Gateway</label>
         <select
           [(ngModel)]="twoHunTTCPayType"
           (change)="onPayTypeValueChange($any($event.target).value)"
@@ -71,6 +75,18 @@
         </select>
       </div>
 
+      <div class="filter-group">
+        <label><i class="bi bi-door-open me-1"></i>Room / Plan</label>
+        <select
+          (change)="onRoomTypeChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of roomTypeOption" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
       <button class="btn-search" (click)="getAll200TTCStudent(twoHunTTCFilter, true)">
         <i class="bi bi-search"></i> Search
       </button>
@@ -79,20 +95,22 @@
       </button>
     </div>
 
+    <!-- ── Data Table ──────────────────────────────────────── -->
     <div class="pranarambh-table-responsive">
       <table id="TwoHundredOnlineTTC" class="fancy-table">
         <thead>
           <tr>
-            <th class="text-center" style="width: 60px">Sl No.</th>
+            <th class="text-center" style="width:52px">#</th>
             <th>Student Name</th>
             <th>Email</th>
             <th>Phone</th>
             <th>Price</th>
+            <th class="text-center">Room / Payment Plan</th>
             <th class="text-center">Payment Status</th>
-            <th class="text-center">Payment Type</th>
+            <th class="text-center">Gateway</th>
             <th class="text-center">Month</th>
-            <th>Payment Date</th>
-            <th class="text-center" style="width: 70px">Action</th>
+            <th>Registered On</th>
+            <th class="text-center" style="width:60px">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -108,85 +126,127 @@
               let i = index
             "
           >
+            <!-- # -->
             <td class="text-center index-cell">
               {{ i + 1 + (twoHunTTCPage - 1) * 10 }}
             </td>
-            <td class="text-dark font-weight-bold">{{ obj.name }}</td>
+
+            <!-- Name -->
+            <td class="fw-semibold text-dark">{{ obj.name }}</td>
+
+            <!-- Email -->
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ obj.email }}
+              {{ obj.email }}
             </td>
+
+            <!-- Phone -->
             <td class="text-secondary">
-              <i class="bi bi-telephone me-1 text-muted"></i>{{ obj.phoneNumber || '-' }}
+              {{ obj.phoneNumber || '—' }}
             </td>
+
+            <!-- Price -->
             <td class="price-cell">
               {{ obj.price | currency: obj.currency }}
             </td>
+
+            <!-- Room / Payment Plan -->
+            <td class="text-center">
+              <ng-container *ngIf="obj.room || obj.package; else noRoom">
+                <span
+                  class="room-badge"
+                  [class.deposit-badge]="(obj.room || obj.package)?.includes('30%')"
+                  [title]="obj.room || obj.package"
+                >
+                  <i class="bi" [ngClass]="(obj.room || obj.package)?.includes('30%') ? 'bi-piggy-bank' : 'bi-house-door'"></i>
+                  {{ obj.room || obj.package }}
+                </span>
+              </ng-container>
+              <ng-template #noRoom>
+                <span class="text-muted">—</span>
+              </ng-template>
+            </td>
+
+            <!-- Payment Status + Give Access -->
             <td class="text-center">
               <span
                 class="status-badge"
                 [ngClass]="{
-                  'status-paid': obj?.paymentStatus == 'paid',
-                  'status-pending': obj?.paymentStatus == 'pending',
-                  'status-failed': obj?.paymentStatus == 'failed'
+                  'status-paid':    obj?.paymentStatus === 'paid',
+                  'status-pending': obj?.paymentStatus === 'pending',
+                  'status-failed':  obj?.paymentStatus === 'failed'
                 }"
               >
                 <i
                   class="bi"
                   [ngClass]="{
-                    'bi-check-circle-fill': obj?.paymentStatus == 'paid',
-                    'bi-clock-history': obj?.paymentStatus == 'pending',
-                    'bi-x-circle-fill': obj?.paymentStatus == 'failed'
+                    'bi-check-circle-fill': obj?.paymentStatus === 'paid',
+                    'bi-clock-history':     obj?.paymentStatus === 'pending',
+                    'bi-x-circle-fill':     obj?.paymentStatus === 'failed'
                   }"
                 ></i>
                 {{ (obj.paymentStatus || 'pending') | titlecase }}
               </span>
               <button
                 class="give-access-warning"
-                *ngIf="obj?.paymentStatus == 'pending'"
+                *ngIf="obj?.paymentStatus === 'pending'"
                 (click)="giveAccessFn(obj)"
                 title="Grant access to student"
               >
                 <i class="bi bi-key-fill me-1"></i>Give Access
               </button>
             </td>
+
+            <!-- Gateway -->
             <td class="text-center">
               <span class="paytype-badge" *ngIf="obj.paymentType">
                 {{ obj.paymentType | titlecase }}
               </span>
-              <span class="text-muted" *ngIf="!obj.paymentType">-</span>
+              <span class="text-muted" *ngIf="!obj.paymentType">—</span>
             </td>
+
+            <!-- Month -->
             <td class="text-center">
               <span class="course-badge" *ngIf="obj.month">{{ obj.month }}</span>
-              <span class="text-muted" *ngIf="!obj.month">-</span>
+              <span class="text-muted" *ngIf="!obj.month">—</span>
             </td>
+
+            <!-- Registered On -->
             <td>
-              <ng-container *ngIf="obj.created; else noPayment">
-                <i class="bi bi-calendar-event me-1 text-muted"></i>{{ obj.created | date: "dd-MM-yyyy" }}
+              <ng-container *ngIf="obj.created; else noDate">
+                <i class="bi bi-calendar-event me-1 text-muted"></i>
+                {{ obj.created | date: 'dd MMM yyyy' }}
               </ng-container>
-              <ng-template #noPayment><span class="text-muted">N/A</span></ng-template>
+              <ng-template #noDate>
+                <span class="text-muted">N/A</span>
+              </ng-template>
             </td>
+
+            <!-- Action -->
             <td class="text-center">
               <button class="delete-btn-fancy" (click)="deleteRow(obj)" title="Delete Record">
                 <i class="bi bi-trash3"></i>
               </button>
             </td>
           </tr>
+
+          <!-- Empty state -->
           <tr *ngIf="!twoHunTTCList || twoHunTTCList.length === 0">
-            <td colspan="10" class="empty-state text-center py-5">
-              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
-              <span class="text-muted">No 200 TTC records found.</span>
+            <td colspan="11" class="text-center py-5">
+              <i class="bi bi-inbox text-muted d-block mb-2" style="font-size:2.5rem"></i>
+              <p class="text-muted mb-0 fw-semibold">No 200 Online TTC records found</p>
+              <small class="text-muted">Try adjusting your filters or search term</small>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- ── Pagination ──────────────────────────────────────── -->
     <div class="pg-card-footer">
-      <div class="pagination">
-        <pagination-controls
-          (pageChange)="onTwoHunTTCTableDataChange($event)"
-        ></pagination-controls>
-      </div>
+      <pagination-controls
+        (pageChange)="onTwoHunTTCTableDataChange($event)"
+      ></pagination-controls>
     </div>
+
   </div>
 </div>

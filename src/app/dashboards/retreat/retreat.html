@@ -2,28 +2,32 @@
 
 <div class="pg-container">
   <div class="pg-card">
+
+    <!-- ── Card Header ─────────────────────────────────────── -->
     <div class="pg-card-header">
       <div class="header-title">
         <i class="bi bi-tree header-icon"></i>
         <div>
-          <h4>The Essence of Yoga – Mysore Retreat</h4>
-          <span class="subtitle">View and manage Mysore Retreat registrations and room allocations</span>
+          <h4>Mysore Retreat</h4>
+          <span class="subtitle">Student registrations, room allocations &amp; payment plans</span>
         </div>
       </div>
       <div class="header-actions">
         <a (click)="exportToExcel('Retreat')" class="export-link">
-          <i class="bi bi-file-earmark-excel me-1"></i> Export to Excel
+          <i class="bi bi-file-earmark-excel"></i> Export to Excel
         </a>
       </div>
     </div>
 
+    <!-- ── Filter Bar ──────────────────────────────────────── -->
     <div class="container_search">
+
       <div class="search-box">
-        <label><i class="bi bi-search me-1"></i> Search</label>
+        <label><i class="bi bi-search me-1"></i>Search</label>
         <i class="bi bi-search search-icon"></i>
         <input
           type="text"
-          placeholder="Search by Name, Email, or Phone..."
+          placeholder="Search by Name, Email, or Phone…"
           [(ngModel)]="retreatFilter.searchText"
           class="search-input form-control"
           (keyup.enter)="getAllRetreatStudent(retreatFilter, true)"
@@ -31,7 +35,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-calendar-month me-1"></i> Month</label>
+        <label><i class="bi bi-calendar-month me-1"></i>Month</label>
         <select
           (change)="onMonthChange($any($event.target).value)"
           class="filter-select form-select"
@@ -43,7 +47,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-funnel me-1"></i> Payment Status</label>
+        <label><i class="bi bi-funnel me-1"></i>Payment Status</label>
         <select
           (change)="onPayStatusValueChange($any($event.target).value)"
           class="filter-select form-select"
@@ -55,7 +59,7 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-credit-card me-1"></i> Payment Type</label>
+        <label><i class="bi bi-credit-card me-1"></i>Gateway</label>
         <select
           [(ngModel)]="retreatPayType"
           (change)="onPayTypeValueChange($any($event.target).value)"
@@ -76,21 +80,22 @@
       </button>
     </div>
 
+    <!-- ── Data Table ──────────────────────────────────────── -->
     <div class="pranarambh-table-responsive">
       <table id="Retreat" class="fancy-table">
         <thead>
           <tr>
-            <th class="text-center" style="width: 60px">Sl No.</th>
+            <th class="text-center" style="width:52px">#</th>
             <th>Student Name</th>
             <th>Email</th>
-            <th>Phone Number</th>
+            <th>Phone</th>
             <th>Price</th>
-            <th class="text-center">Room</th>
+            <th class="text-center">Room / Payment Plan</th>
             <th class="text-center">Payment Status</th>
-            <th class="text-center">Payment Type</th>
+            <th class="text-center">Gateway</th>
             <th class="text-center">Month</th>
-            <th>Payment Date</th>
-            <th class="text-center" style="width: 70px">Action</th>
+            <th>Registered On</th>
+            <th class="text-center" style="width:60px">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -106,81 +111,119 @@
               let i = index
             "
           >
+            <!-- # -->
             <td class="text-center index-cell">
               {{ i + 1 + (retreatPage - 1) * 10 }}
             </td>
-            <td class="text-dark font-weight-bold">{{ obj.name }}</td>
+
+            <!-- Name -->
+            <td class="fw-semibold text-dark">{{ obj.name }}</td>
+
+            <!-- Email -->
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ obj.email }}
+              {{ obj.email }}
             </td>
+
+            <!-- Phone -->
             <td class="text-secondary">
-              <i class="bi bi-telephone me-1 text-muted"></i>{{ obj.phoneNumber || '-' }}
+              {{ obj.phoneNumber || '—' }}
             </td>
+
+            <!-- Price -->
             <td class="price-cell">
               {{ obj.price | currency : obj.currency }}
             </td>
+
+            <!-- Room / Payment Plan -->
             <td class="text-center">
-              <span class="paytype-badge" *ngIf="obj.room">{{ obj.room }}</span>
-              <span class="text-muted" *ngIf="!obj.room">-</span>
+              <ng-container *ngIf="obj.room; else noRoom">
+                <span
+                  class="room-badge"
+                  [class.deposit-badge]="obj.room?.includes('30%')"
+                  [title]="obj.room"
+                >
+                  <i class="bi" [ngClass]="obj.room?.includes('30%') ? 'bi-piggy-bank' : 'bi-house-door'"></i>
+                  {{ obj.room }}
+                </span>
+              </ng-container>
+              <ng-template #noRoom>
+                <span class="text-muted">—</span>
+              </ng-template>
             </td>
+
+            <!-- Payment Status -->
             <td class="text-center">
               <span
                 class="status-badge"
                 [ngClass]="{
-                  'status-paid': obj?.paymentStatus == 'paid',
-                  'status-pending': obj?.paymentStatus == 'pending',
-                  'status-failed': obj?.paymentStatus == 'failed'
+                  'status-paid':    obj?.paymentStatus === 'paid',
+                  'status-pending': obj?.paymentStatus === 'pending',
+                  'status-failed':  obj?.paymentStatus === 'failed'
                 }"
               >
                 <i
                   class="bi"
                   [ngClass]="{
-                    'bi-check-circle-fill': obj?.paymentStatus == 'paid',
-                    'bi-clock-history': obj?.paymentStatus == 'pending',
-                    'bi-x-circle-fill': obj?.paymentStatus == 'failed'
+                    'bi-check-circle-fill': obj?.paymentStatus === 'paid',
+                    'bi-clock-history':     obj?.paymentStatus === 'pending',
+                    'bi-x-circle-fill':     obj?.paymentStatus === 'failed'
                   }"
                 ></i>
                 {{ (obj.paymentStatus || 'pending') | titlecase }}
               </span>
             </td>
+
+            <!-- Gateway -->
             <td class="text-center">
               <span class="paytype-badge" *ngIf="obj.paymentType">
                 {{ obj.paymentType | titlecase }}
               </span>
-              <span class="text-muted" *ngIf="!obj.paymentType">-</span>
+              <span class="text-muted" *ngIf="!obj.paymentType">—</span>
             </td>
+
+            <!-- Month -->
             <td class="text-center">
               <span class="course-badge" *ngIf="obj.month">{{ obj.month }}</span>
-              <span class="text-muted" *ngIf="!obj.month">-</span>
+              <span class="text-muted" *ngIf="!obj.month">—</span>
             </td>
+
+            <!-- Registered On -->
             <td>
-              <ng-container *ngIf="obj.created; else noPayment">
-                <i class="bi bi-calendar-event me-1 text-muted"></i>{{ obj.created | date : "dd-MM-yyyy" }}
+              <ng-container *ngIf="obj.created; else noDate">
+                <i class="bi bi-calendar-event me-1 text-muted"></i>
+                {{ obj.created | date : 'dd MMM yyyy' }}
               </ng-container>
-              <ng-template #noPayment><span class="text-muted">N/A</span></ng-template>
+              <ng-template #noDate>
+                <span class="text-muted">N/A</span>
+              </ng-template>
             </td>
+
+            <!-- Action -->
             <td class="text-center">
               <button class="delete-btn-fancy" (click)="deleteRow(obj)" title="Delete Record">
                 <i class="bi bi-trash3"></i>
               </button>
             </td>
           </tr>
+
+          <!-- Empty state -->
           <tr *ngIf="!retreatList || retreatList.length === 0">
-            <td colspan="11" class="empty-state text-center py-5">
-              <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
-              <span class="text-muted">No retreat records found.</span>
+            <td colspan="11" class="text-center py-5">
+              <i class="bi bi-inbox text-muted d-block mb-2" style="font-size:2.5rem"></i>
+              <p class="text-muted mb-0 fw-semibold">No retreat records found</p>
+              <small class="text-muted">Try adjusting your filters or search term</small>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
+    <!-- ── Pagination ──────────────────────────────────────── -->
     <div class="pg-card-footer">
-      <div class="pagination">
-        <pagination-controls
-          (pageChange)="onRetreatTableDataChange($event)"
-        ></pagination-controls>
-      </div>
+      <pagination-controls
+        (pageChange)="onRetreatTableDataChange($event)"
+      ></pagination-controls>
     </div>
+
   </div>
 </div>

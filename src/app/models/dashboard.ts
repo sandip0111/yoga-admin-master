@@ -198,8 +198,12 @@ export interface twoHunTTCModel {
   package: string;
   paymentId: string;
   paymentStatus: string;
+  paymentType: string;
   phoneNumber: string;
   price: string;
+  room: string;
+  hour: number;
+  month: string;
   _id: string;
 }
 export interface twoHunTTCModelResultModel {

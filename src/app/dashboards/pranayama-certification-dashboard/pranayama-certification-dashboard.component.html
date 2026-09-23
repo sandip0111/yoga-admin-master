@@ -111,13 +111,13 @@
             </td>
             <td class="text-dark font-weight-bold">{{ obj.name }}</td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ obj.email }}
+              {{ obj.email }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-telephone me-1 text-muted"></i>{{ obj.phoneNumber || '-' }}
+              {{ obj.phoneNumber || '-' }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-key me-1 text-muted"></i>{{ obj.password || 'N/A' }}
+              {{ obj.password || '—' }}
             </td>
             <td class="price-cell">
               {{ obj.price | currency : obj.currency }}

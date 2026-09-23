@@ -33,6 +33,11 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     { value: "November", label: "November, 2025" },
     { value: "November, 2026", label: "November, 2026" },
   ];
+  roomTypeOption = [
+    { label: "All Plans", value: "" },
+    { label: "Full Amount", value: "Full" },
+    { label: "30% deposit", value: "30%" },
+  ];
 
   constructor(
     private service: ServiceService,
@@ -70,6 +75,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     this.twoHunTTCFilter.paymentStatus = "";
     this.twoHunTTCFilter.paymentType = "";
     this.twoHunTTCFilter.month = "";
+    (this.twoHunTTCFilter as any).roomType = "";
     this.getAll200TTCStudent(this.twoHunTTCFilter, true);
   }
   exportToExcel(tableId: string): void {
@@ -92,6 +98,10 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
   onPayTypeValueChange(paymentType: string) {
     paymentType = paymentType == "All" ? "" : paymentType;
     this.twoHunTTCFilter.paymentType = paymentType;
+    this.getAll200TTCStudent(this.twoHunTTCFilter, true);
+  }
+  onRoomTypeChange(roomType: string) {
+    (this.twoHunTTCFilter as any).roomType = roomType;
     this.getAll200TTCStudent(this.twoHunTTCFilter, true);
   }
   onTwoHunTTCTableDataChange(event: number) {

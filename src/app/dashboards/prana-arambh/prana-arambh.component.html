@@ -108,10 +108,10 @@
               {{ student.studentInfo.lastName || "" }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-envelope me-1 text-muted"></i>{{ student.studentInfo.email }}
+              {{ student.studentInfo.email }}
             </td>
             <td class="text-secondary">
-              <i class="bi bi-key me-1 text-muted"></i>{{ student.studentInfo.password }}
+              {{ student.studentInfo.password || '—' }}
             </td>
             <td class="price-cell">
               <ng-container *ngIf="student.amount; else noPayment">

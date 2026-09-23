@@ -1013,6 +1013,39 @@ div[ngbNavOutlet].tab-content {
   font-weight: 600;
 }
 
+/* --- Room / Payment Plan badge (Rishikesh & Retreat) --- */
+.room-badge {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 5px;
+  background: linear-gradient(135deg, #e0f7f4 0%, #ccf2ee 100%);
+  color: #0b6b65;
+  border: 1px solid #9de3db;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.73rem;
+  font-weight: 600;
+  white-space: normal;
+  max-width: 175px;
+  word-break: break-word;
+  line-height: 1.35;
+  letter-spacing: 0.1px;
+  box-shadow: 0 1px 3px rgba(11, 107, 101, 0.08);
+
+  i {
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 0.8rem;
+  }
+
+  &.deposit-badge {
+    background: linear-gradient(135deg, #fef9ec 0%, #fef3d0 100%);
+    color: #92560a;
+    border-color: #f5d989;
+    box-shadow: 0 1px 3px rgba(146, 86, 10, 0.08);
+  }
+}
+
 /* --- Pagination controls theme override --- */
 .ngx-pagination {
   display: inline-flex !important;

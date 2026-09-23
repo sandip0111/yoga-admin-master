@@ -27,6 +27,11 @@ export class BaliComponent implements OnInit {
     { label: "300 hours", value: "300" },
   ];
   monthOption = ["All Month Data", "June, 2026", "July, 2026"];
+  roomTypeOption = [
+    { label: "All Rooms", value: "" },
+    { label: "Private room", value: "Private room" },
+    { label: "30% deposit – Private", value: "Reserve your private room with a 30% deposit" },
+  ];
 
   @Input() paymentOption: { value: string; name: string }[];
   @Output() downloadCsv = new EventEmitter<{
@@ -74,12 +79,18 @@ export class BaliComponent implements OnInit {
     this.baliFilter.paymentStatus = "";
     this.baliFilter.courseType = "All";
     this.baliFilter.month = "";
+    (this.baliFilter as any).roomType = "";
     this.getBaliData(this.baliFilter, true);
   }
 
   onPayStatusValueChange(status: string): void {
     status = status == "all" ? "" : status;
     this.baliFilter.paymentStatus = status;
+    this.getBaliData(this.baliFilter, true);
+  }
+
+  onRoomTypeChange(roomType: string): void {
+    (this.baliFilter as any).roomType = roomType;
     this.getBaliData(this.baliFilter, true);
   }
 
@@ -97,32 +108,26 @@ export class BaliComponent implements OnInit {
           return;
         }
         let csvContent = "";
-        const table = document.getElementById(tableId) as HTMLTableElement;
-        if (!table) {
-          console.error("Table not found:", tableId);
-          this.loading = false;
-          return;
-        }
-        const headers = Array.from(table.querySelectorAll("thead th"))
-          .map((th) => (th as HTMLElement).innerText)
-          .join(",");
+        const headers = [
+          "Sl No.", "Student Name", "Course Type", "Email", "Phone",
+          "Price", "Room / Payment Plan", "Month", "Payment Status",
+          "Payment Type", "Payment Date"
+        ].join(",");
         csvContent += headers + "\n";
-        const rowsData: any[][] = [];
         res.data.forEach((student, index) => {
-          rowsData.push([
+          const row = [
             index + 1,
             student.name,
-            student.courseTimeDuration || "",
+            student.hour ? `${student.hour} hour` : "",
             student.email,
             student.phoneNumber,
             student.price,
+            student.room || "",
+            student.month || "",
             student.paymentStatus,
-            student.package || "",
-            "",
+            student.paymentType || "",
             student.created,
-          ]);
-        });
-        rowsData.forEach((row) => {
+          ];
           csvContent += row.map((cell) => `"${cell}"`).join(",") + "\n";
         });
         this.downloadCsv.emit({ csvContent, tableId });
