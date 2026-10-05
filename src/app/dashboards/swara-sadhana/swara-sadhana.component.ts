@@ -101,6 +101,10 @@ export class SwaraSadhanaComponent implements OnInit {
             student.phone,
             student.city,
             student.paymentStatus,
+            student.paymentType || '',
+            student.currency && student.price
+              ? `${student.currency.toUpperCase()} ${student.price}`
+              : student.price || '',
             student.created || "N/A",
           ]);
         });

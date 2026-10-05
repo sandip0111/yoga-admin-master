@@ -46,6 +46,9 @@ export class swarSadhnaStudentModel {
   paymentStatus: string;
   created: string;
   password: string;
+  paymentType: string;
+  price: string;
+  currency: string;
   constructor() {
     this._id = "";
     this.name = "";
@@ -54,6 +57,9 @@ export class swarSadhnaStudentModel {
     this.city = "";
     this.paymentStatus = "";
     this.created = "";
+    this.paymentType = "";
+    this.price = "";
+    this.currency = "";
   }
 }
 

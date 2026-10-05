@@ -98,6 +98,7 @@
             <th>Password</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Payment Type</th>
+            <th class="text-center">Amount</th>
             <th>Payment Date</th>
             <th class="text-center" style="width: 70px">Action</th>
           </tr>
@@ -157,6 +158,12 @@
               </span>
               <span class="text-muted" *ngIf="!obj.paymentType">-</span>
             </td>
+            <td class="text-center">
+              <ng-container *ngIf="obj.price; else noAmount">
+                <strong>{{ obj.currency ? obj.currency.toUpperCase() + ' ' : '' }}{{ obj.price }}</strong>
+              </ng-container>
+              <ng-template #noAmount><span class="text-muted">-</span></ng-template>
+            </td>
             <td>
               <ng-container *ngIf="obj.created; else noPayment">
                 <i class="bi bi-calendar-event me-1 text-muted"></i>{{ obj.created | date: "dd-MM-yyyy" }}
@@ -170,7 +177,7 @@
             </td>
           </tr>
           <tr *ngIf="!swaraSadhanaList || swaraSadhanaList.length === 0">
-            <td colspan="10" class="empty-state text-center py-5">
+            <td colspan="11" class="empty-state text-center py-5">
               <i class="bi bi-inbox text-muted display-6 d-block mb-2"></i>
               <span class="text-muted">No Swara Sadhana records found.</span>
             </td>
