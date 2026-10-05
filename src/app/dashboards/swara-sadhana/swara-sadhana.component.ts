@@ -101,10 +101,10 @@ export class SwaraSadhanaComponent implements OnInit {
             student.phone,
             student.city,
             student.paymentStatus,
-            student.paymentType || '',
+            student.paymentType || "",
             student.currency && student.price
               ? `${student.currency.toUpperCase()} ${student.price}`
-              : student.price || '',
+              : student.price || "",
             student.created || "N/A",
           ]);
         });
@@ -143,5 +143,15 @@ export class SwaraSadhanaComponent implements OnInit {
         },
       });
     }
+  }
+
+  getCurrencySymbol(currency: string): string {
+    const symbols: { [key: string]: string } = {
+      INR: "₹",
+      USD: "$",
+    };
+    return (
+      symbols[(currency || "").toUpperCase()] || (currency || "").toUpperCase()
+    );
   }
 }

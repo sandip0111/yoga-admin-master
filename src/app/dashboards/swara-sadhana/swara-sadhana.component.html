@@ -160,7 +160,7 @@
             </td>
             <td class="text-center">
               <ng-container *ngIf="obj.price; else noAmount">
-                <strong>{{ obj.currency ? obj.currency.toUpperCase() + ' ' : '' }}{{ obj.price }}</strong>
+                <strong>{{ getCurrencySymbol(obj.currency) }}{{ obj.price }}</strong>
               </ng-container>
               <ng-template #noAmount><span class="text-muted">-</span></ng-template>
             </td>
