@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit {
     { label: "Select Month", value: "" },
     { label: "March, 2026", value: "March, 2026" },
     { label: "October, 2026", value: "October, 2026" },
+    { label: "October, 2027", value: "October, 2027" },
   ];
   constructor(
     private service: ServiceService,

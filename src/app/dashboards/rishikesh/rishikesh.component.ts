@@ -26,7 +26,7 @@ export class RishikeshComponent implements OnInit {
     { label: "200 hours", value: "200" },
     { label: "300 hours", value: "300" },
   ];
-  monthOption = ["All Month Data", "March, 2026", "October, 2026"];
+  monthOption = ["All Month Data", "March, 2026", "October, 2026", "October, 2027"];
   roomTypeOption = [
     { label: "All Rooms", value: "" },
     { label: "Shared room", value: "Shared room" },
