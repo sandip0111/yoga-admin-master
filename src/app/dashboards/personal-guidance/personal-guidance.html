@@ -95,7 +95,8 @@
               let obj of pgList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'personalGuidance',
+                      itemsPerPage: pgList?.length || 10,
                       currentPage: pgPage,
                       totalItems: pgTotal
                     };
@@ -184,6 +185,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="personalGuidance"
           (pageChange)="onPgTableDataChange($event)"
         ></pagination-controls>
       </div>

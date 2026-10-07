@@ -93,7 +93,8 @@
               let student of students
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'pranaArambh',
+                      itemsPerPage: students?.length || 10,
                       currentPage: p,
                       totalItems: pranayamStudentTotal
                     };
@@ -177,6 +178,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="pranaArambh"
           (pageChange)="onTableDataChange($event)"
         ></pagination-controls>
       </div>

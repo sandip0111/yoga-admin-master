@@ -115,7 +115,8 @@
               let obj of rishikeshList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'rishikesh',
+                      itemsPerPage: rishikeshList?.length || 10,
                       currentPage: rishikeshPage,
                       totalItems: rishikeshTotal
                     };
@@ -240,6 +241,7 @@
     <!-- ── Pagination ──────────────────────────────────────── -->
     <div class="pg-card-footer">
       <pagination-controls
+        id="rishikesh"
         (pageChange)="onRishikeshTableDataChange($event)"
       ></pagination-controls>
     </div>

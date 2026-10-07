@@ -99,7 +99,8 @@
               let obj of pranayamaList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'pranayama',
+                      itemsPerPage: pranayamaList?.length || 10,
                       currentPage: pranayamaPage,
                       totalItems: pranayamaTotal
                     };
@@ -175,6 +176,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="pranayama"
           (pageChange)="onPranayamaTableDataChange($event)"
         ></pagination-controls>
       </div>

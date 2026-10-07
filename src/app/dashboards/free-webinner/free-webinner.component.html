@@ -97,7 +97,8 @@
               let obj of freeWebinarList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'freeWebinar',
+                      itemsPerPage: freeWebinarList?.length || 10,
                       currentPage: freeWebinarPage,
                       totalItems: freeWebinarTotal
                     };
@@ -137,6 +138,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="freeWebinar"
           (pageChange)="onFreeTableDataChange($event)"
         ></pagination-controls>
       </div>
