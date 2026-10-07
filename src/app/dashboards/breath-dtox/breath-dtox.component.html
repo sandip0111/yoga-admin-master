@@ -85,7 +85,8 @@
               let breath of breathDetox
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'breathDetox',
+                      itemsPerPage: breathDetox?.length || 10,
                       currentPage: breathP,
                       totalItems: breathDetoxTotal
                     };
@@ -142,6 +143,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="breathDetox"
           (pageChange)="onBreathDetoxTableDataChange($event)"
         ></pagination-controls>
       </div>

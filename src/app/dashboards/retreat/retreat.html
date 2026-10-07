@@ -104,7 +104,8 @@
               let obj of retreatList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'retreat',
+                      itemsPerPage: retreatList?.length || 10,
                       currentPage: retreatPage,
                       totalItems: retreatTotal
                     };
@@ -221,6 +222,7 @@
     <!-- ── Pagination ──────────────────────────────────────── -->
     <div class="pg-card-footer">
       <pagination-controls
+        id="retreat"
         (pageChange)="onRetreatTableDataChange($event)"
       ></pagination-controls>
     </div>

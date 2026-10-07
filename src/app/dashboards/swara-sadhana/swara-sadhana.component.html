@@ -109,7 +109,8 @@
               let obj of swaraSadhanaList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'swaraSadhana',
+                      itemsPerPage: swaraSadhanaList?.length || 10,
                       currentPage: swarSadhanaPage,
                       totalItems: swarSadhanaTotal
                     };
@@ -189,6 +190,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="swaraSadhana"
           (pageChange)="onswarSadhnaTableDataChange($event)"
         ></pagination-controls>
       </div>

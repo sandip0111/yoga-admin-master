@@ -112,7 +112,8 @@
               let obj of onlineClassList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'onlineClass',
+                      itemsPerPage: onlineClassList?.length || 10,
                       currentPage: onlineClassPage,
                       totalItems: onlineClassTotal
                     };
@@ -190,6 +191,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="onlineClass"
           (pageChange)="onlineClassTableDataChange($event)"
         ></pagination-controls>
       </div>

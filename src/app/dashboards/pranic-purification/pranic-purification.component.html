@@ -91,7 +91,8 @@
               let obj of pranicPurificationList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'pranicPurification',
+                      itemsPerPage: pranicPurificationList?.length || 10,
                       currentPage: pranicPurificationPage,
                       totalItems: pranicPurificationTotal
                     };
@@ -183,6 +184,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="pranicPurification"
           (pageChange)="onPranicPurificationTableDataChange($event)"
         ></pagination-controls>
       </div>

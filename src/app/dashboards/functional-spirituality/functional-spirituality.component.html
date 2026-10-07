@@ -100,7 +100,8 @@
               let spiritualityStdnt of spiritualityStudent
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'foundation',
+                      itemsPerPage: spiritualityStudent?.length || 10,
                       currentPage: foundationPage,
                       totalItems: foundationTotal
                     };
@@ -177,6 +178,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="foundation"
           (pageChange)="onfoundationTableDataChange($event)"
         ></pagination-controls>
       </div>

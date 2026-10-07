@@ -75,7 +75,8 @@
               let obj of list
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'pendingPayment',
+                      itemsPerPage: list?.length || 10,
                       currentPage: page,
                       totalItems: total
                     };
@@ -140,6 +141,7 @@
     <div class="pg-card-footer">
       <div class="pagination">
         <pagination-controls
+          id="pendingPayment"
           (pageChange)="onTableDataChange($event)"
         ></pagination-controls>
       </div>

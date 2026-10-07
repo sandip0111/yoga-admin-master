@@ -115,7 +115,8 @@
               let obj of baliList
                 | paginate
                   : {
-                      itemsPerPage: 10,
+                      id: 'bali',
+                      itemsPerPage: baliList?.length || 10,
                       currentPage: baliPage,
                       totalItems: baliTotal
                     };
@@ -238,6 +239,7 @@
     <!-- ── Pagination ──────────────────────────────────────── -->
     <div class="pg-card-footer">
       <pagination-controls
+        id="bali"
         (pageChange)="onBaliTableDataChange($event)"
       ></pagination-controls>
     </div>
