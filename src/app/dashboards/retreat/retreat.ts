@@ -24,7 +24,8 @@ export class Retreat {
   }>();
   monthOption = [
     { value: "All Month Data", label: "All Month Data" },
-    { value: "September, 2026", label: "September, 2026" },
+    { value: "September, 2026", label: "September, 2026 (Mysore)" },
+    { value: "March, 2027", label: "March, 2027 (Rishikesh)" },
   ];
   constructor(
     private service: ServiceService,
