@@ -57,6 +57,7 @@ export class DashboardComponent implements OnInit {
     { value: 14, label: "Bali 300" },
     { value: 16, label: "Pranayama Certification" },
     { value: 17, label: "Mysore Retreat 2026" },
+    { value: 18, label: "Rishikesh Retreat 2027" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -217,6 +218,19 @@ export class DashboardComponent implements OnInit {
         const retreatData: createRetreatYoga = {
           name: data.name,
           email: data.email,
+          phone: data.phone,
+          courseType: "mysore-retreat",
+          month: "September, 2026",
+        };
+        this.retreatYogaSave(retreatData);
+      } else if (this.selectedOption == 18) {
+        this.loading = true;
+        const retreatData: createRetreatYoga = {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          courseType: "rishikesh-retreat",
+          month: "March, 2027",
         };
         this.retreatYogaSave(retreatData);
       } else {
@@ -450,14 +464,29 @@ export class DashboardComponent implements OnInit {
   retreatYogaSave(data: createRetreatYoga) {
     this.service
       .registerRetreatYogaUser(data)
-      .subscribe((res: any) => {
-        if (res.status == "ok") {
+      .subscribe({
+        next: (res: any) => {
           this.loading = false;
-          alert(res.message);
-        } else {
+          if (res.status == "ok") {
+            this.createSwaraSadhnaFrom = {
+              name: "",
+              email: "",
+              phone: "",
+              city: "",
+              password: "",
+              webinar: "Swara Sadhana",
+              month: "",
+            };
+            this.selectedOption = 0;
+            alert(res.message);
+          } else {
+            alert("Registration failed: " + res.message);
+          }
+        },
+        error: (error: any) => {
           this.loading = false;
-          alert("Registration failed: " + res.message);
-        }
+          alert("Registration failed: " + (error?.error?.err?.message || "An error occurred."));
+        },
       });
   }
   downloadCsv(csvContent: string, tableId: string) {
