@@ -58,6 +58,7 @@ import { FunctionalSpiritualityComponent } from "./dashboards/functional-spiritu
 import { AddCourseVideoComponent } from "./courses/add-course-video/add-course-video.component";
 import { RishikeshComponent } from "./dashboards/rishikesh/rishikesh.component";
 import { BaliComponent } from "./dashboards/bali/bali.component";
+import { MysoreTTCComponent } from "./dashboards/mysore-ttc/mysore-ttc.component";
 import { SubscribersComponent } from "./dashboards/subscribers/subscribers.component";
 import { PranayamaCertificationDashboardComponent } from "./dashboards/pranayama-certification-dashboard/pranayama-certification-dashboard.component";
 import { Retreat } from "./dashboards/retreat/retreat";
@@ -115,6 +116,7 @@ import { ShowAllVideosComponent } from "./show-all-videos/show-all-videos.compon
     AddCourseVideoComponent,
     RishikeshComponent,
     BaliComponent,
+    MysoreTTCComponent,
     SubscribersComponent,
     PranayamaCertificationDashboardComponent,
     Retreat,

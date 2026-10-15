@@ -58,6 +58,8 @@ export class DashboardComponent implements OnInit {
     { value: 16, label: "Pranayama Certification" },
     { value: 17, label: "Mysore Retreat 2026" },
     { value: 18, label: "Rishikesh Retreat 2027" },
+    { value: 19, label: "Mysore 100" },
+    { value: 20, label: "Mysore 200" },
   ];
   paymentOption = [
     { value: "all", name: "All" },
@@ -70,6 +72,11 @@ export class DashboardComponent implements OnInit {
   rishikeshMonthOption = [
     { label: "Select Month", value: "" },
     { label: "March, 2026", value: "March, 2026" },
+    { label: "October, 2026", value: "October, 2026" },
+    { label: "October, 2027", value: "October, 2027" },
+  ];
+  mysoreMonthOption = [
+    { label: "Select Month", value: "" },
     { label: "October, 2026", value: "October, 2026" },
     { label: "October, 2027", value: "October, 2027" },
   ];
@@ -233,6 +240,11 @@ export class DashboardComponent implements OnInit {
           month: "March, 2027",
         };
         this.retreatYogaSave(retreatData);
+      } else if (
+        this.selectedOption == 19 ||
+        this.selectedOption == 20
+      ) {
+        this.onlineMysoreTTCSave(data, this.selectedOption);
       } else {
         alert("Please select a course.");
       }
@@ -401,6 +413,32 @@ export class DashboardComponent implements OnInit {
       } else {
         alert("Registration failed: " + res.message);
       }
+    });
+  }
+  onlineMysoreTTCSave(data: createSwaraSadhna, selectedHour: number) {
+    this.loading = true;
+    let hour: number = selectedHour == 19 ? 100 : selectedHour == 20 ? 200 : 0;
+    let month: string = data.month || "October, 2026";
+    const mysoreData = {
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      hour: hour,
+      month: month,
+    };
+    this.service.createMysoreTTCCustomer(mysoreData).subscribe({
+      next: (res: any) => {
+        this.loading = false;
+        if (res.status == "ok") {
+          alert(res.message);
+        } else {
+          alert("Registration failed: " + res.message);
+        }
+      },
+      error: (err: any) => {
+        this.loading = false;
+        alert("Registration failed: " + (err?.error?.message || err?.message || "Unknown error"));
+      },
     });
   }
   pranaArambhSave(data: createSwaraSadhna) {

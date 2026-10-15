@@ -118,6 +118,15 @@
             ></app-bali>
           </ng-template>
         </li>
+        <li [ngbNavItem]="19">
+          <a ngbNavLink><i class="bi bi-geo-alt-fill me-1"></i>{{ dashboardShared.mysoreTTCTitle }}</a>
+          <ng-template ngbNavContent>
+            <app-mysore-ttc
+              [paymentOption]="paymentOption"
+              (downloadCsv)="downloadCsv($event.csvContent, $event.tableId)"
+            ></app-mysore-ttc>
+          </ng-template>
+        </li>
         <li [ngbNavItem]="13">
           <a ngbNavLink><i class="bi bi-people me-1"></i>{{ dashboardShared.subscribersTitle }}</a>
           <ng-template ngbNavContent>
@@ -223,7 +232,9 @@
                     *ngIf="
                       selectedOption == 5 ||
                       selectedOption == 6 ||
-                      selectedOption == 7
+                      selectedOption == 7 ||
+                      selectedOption == 19 ||
+                      selectedOption == 20
                     "
                   >
                     <label><i class="bi bi-calendar-month me-1"></i> Month</label>
@@ -232,7 +243,7 @@
                       class="filter-select form-select"
                     >
                       <option
-                        *ngFor="let m of rishikeshMonthOption"
+                        *ngFor="let m of (selectedOption == 19 || selectedOption == 20 ? mysoreMonthOption : rishikeshMonthOption)"
                         [value]="m.value"
                       >
                         {{ m.label }}
