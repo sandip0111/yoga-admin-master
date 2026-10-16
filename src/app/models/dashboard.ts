@@ -267,4 +267,8 @@ export interface BreathDtoxModel {
 export interface createRetreatYoga {
   name: string;
   email: string;
+  courseType?: string;
+  month?: string;
+  phone?: string;
+  phoneNumber?: string;
 }

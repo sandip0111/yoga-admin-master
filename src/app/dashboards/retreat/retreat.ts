@@ -22,9 +22,10 @@ export class Retreat {
     csvContent: string;
     tableId: string;
   }>();
-  monthOption = [
-    { value: "All Month Data", label: "All Month Data" },
-    { value: "September, 2026", label: "September, 2026" },
+  retreatTypeOption = [
+    { value: "", label: "All Retreats" },
+    { value: "mysore-retreat", label: "Mysore Retreat" },
+    { value: "rishikesh-retreat", label: "Rishikesh Retreat" },
   ];
   constructor(
     private service: ServiceService,
@@ -35,7 +36,7 @@ export class Retreat {
       pageNo: 1,
       size: 10,
       searchText: "",
-      month: "",
+      courseType: "",
     };
     this.getAllRetreatStudent(this.retreatFilter, false);
   }
@@ -46,7 +47,6 @@ export class Retreat {
     this.retreatLoading = true;
     filter.pageNo = isSearch ? 1 : filter.pageNo;
     filter.size = isSearch ? 10 : filter.size;
-    filter.month = filter.month === "All Month Data" ? "" : filter.month;
     this.retreatPage = isSearch ? 1 : this.retreatPage;
     this.service.getRetreatData(filter).subscribe((res: RetreatListDto) => {
       this.retreatList = res.data;
@@ -62,7 +62,7 @@ export class Retreat {
     this.retreatFilter.toDate = "";
     this.retreatFilter.paymentStatus = "";
     this.retreatFilter.paymentType = "";
-    this.retreatFilter.month = "";
+    this.retreatFilter.courseType = "";
     this.getAllRetreatStudent(this.retreatFilter, true);
   }
 
@@ -78,8 +78,8 @@ export class Retreat {
     });
     this.downloadCsv.emit({ csvContent, tableId });
   }
-  onMonthChange(month: string) {
-    this.retreatFilter.month = month;
+  onRetreatTypeChange(courseType: string) {
+    this.retreatFilter.courseType = courseType;
     this.getAllRetreatStudent(this.retreatFilter, true);
   }
   onPayStatusValueChange(status: string) {
@@ -91,6 +91,10 @@ export class Retreat {
     paymentType = paymentType == "All" ? "" : paymentType;
     this.retreatFilter.paymentType = paymentType;
     this.getAllRetreatStudent(this.retreatFilter, true);
+  }
+  getRetreatTypeLabel(courseType: string): string {
+    const found = this.retreatTypeOption.find(opt => opt.value === courseType);
+    return found && found.value ? found.label : '—';
   }
   deleteRow(student: retreatDetailsDto): void {
     if (confirm("Are you sure you want to delete this record?")) {
@@ -123,6 +127,7 @@ class retreatDetailsDto {
   isDeleted: boolean;
   isPaymentCheck: boolean;
   month: string;
+  courseType: string;
   name: string;
   paymentStatus: string;
   paymentType: string;
@@ -137,6 +142,7 @@ class retreatDetailsDto {
     this.isDeleted = false;
     this.isPaymentCheck = false;
     this.month = "";
+    this.courseType = "";
     this.name = "";
     this.paymentStatus = "";
     this.paymentType = "";

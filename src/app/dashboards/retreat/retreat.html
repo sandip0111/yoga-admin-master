@@ -8,8 +8,8 @@
       <div class="header-title">
         <i class="bi bi-tree header-icon"></i>
         <div>
-          <h4>Mysore Retreat</h4>
-          <span class="subtitle">Student registrations, room allocations &amp; payment plans</span>
+          <h4>Yoga Retreats</h4>
+          <span class="subtitle">Mysore &amp; Rishikesh Retreat student registrations, room allocations &amp; payment plans</span>
         </div>
       </div>
       <div class="header-actions">
@@ -35,12 +35,12 @@
       </div>
 
       <div class="filter-group">
-        <label><i class="bi bi-calendar-month me-1"></i>Month</label>
+        <label><i class="bi bi-geo-alt me-1"></i>Retreat Type</label>
         <select
-          (change)="onMonthChange($any($event.target).value)"
+          (change)="onRetreatTypeChange($any($event.target).value)"
           class="filter-select form-select"
         >
-          <option *ngFor="let option of monthOption" [value]="option.value">
+          <option *ngFor="let option of retreatTypeOption" [value]="option.value">
             {{ option.label }}
           </option>
         </select>
@@ -93,7 +93,7 @@
             <th class="text-center">Room / Payment Plan</th>
             <th class="text-center">Payment Status</th>
             <th class="text-center">Gateway</th>
-            <th class="text-center">Month</th>
+            <th class="text-center">Retreat Type</th>
             <th>Registered On</th>
             <th class="text-center" style="width:60px">Action</th>
           </tr>
@@ -182,10 +182,10 @@
               <span class="text-muted" *ngIf="!obj.paymentType">—</span>
             </td>
 
-            <!-- Month -->
+            <!-- Retreat Type -->
             <td class="text-center">
-              <span class="course-badge" *ngIf="obj.month">{{ obj.month }}</span>
-              <span class="text-muted" *ngIf="!obj.month">—</span>
+              <span class="course-badge" *ngIf="obj.courseType">{{ getRetreatTypeLabel(obj.courseType) }}</span>
+              <span class="text-muted" *ngIf="!obj.courseType">—</span>
             </td>
 
             <!-- Registered On -->

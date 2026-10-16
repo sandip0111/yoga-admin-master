@@ -1,0 +1,248 @@
+<app-spinner *ngIf="loading"></app-spinner>
+
+<div class="pg-container">
+  <div class="pg-card">
+
+    <!-- ── Card Header ─────────────────────────────────────── -->
+    <div class="pg-card-header">
+      <div class="header-title">
+        <i class="bi bi-geo-alt-fill header-icon"></i>
+        <div>
+          <h4>Mysore TTC</h4>
+          <span class="subtitle">100 &amp; 200 Hours Mysore TTC student registrations, room allocations &amp; payment plans</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a (click)="mysoreTTCExportToExcel('MysoreTTC')" class="export-link">
+          <i class="bi bi-file-earmark-excel"></i> Export to Excel
+        </a>
+      </div>
+    </div>
+
+    <!-- ── Filter Bar ──────────────────────────────────────── -->
+    <div class="container_search">
+
+      <div class="search-box">
+        <label><i class="bi bi-search me-1"></i>Search</label>
+        <i class="bi bi-search search-icon"></i>
+        <input
+          type="text"
+          placeholder="Search by Name, Email, or Phone…"
+          class="search-input form-control"
+          [(ngModel)]="mysoreTTCFilter.searchText"
+          (keyup.enter)="getMysoreTTCData(mysoreTTCFilter, true)"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label><i class="bi bi-funnel me-1"></i>Payment Status</label>
+        <select
+          (change)="onPayStatusValueChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of paymentOption" [value]="option.value">
+            {{ option.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="bi bi-award me-1"></i>Course Type</label>
+        <select
+          (change)="onCourseTypeChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of courseTypeOption" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="bi bi-calendar-month me-1"></i>Month</label>
+        <select
+          (change)="onMonthChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of monthOption" [value]="option">
+            {{ option }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label><i class="bi bi-door-open me-1"></i>Room / Plan</label>
+        <select
+          (change)="onRoomTypeChange($any($event.target).value)"
+          class="filter-select form-select"
+        >
+          <option *ngFor="let option of roomTypeOption" [value]="option.value">
+            {{ option.label }}
+          </option>
+        </select>
+      </div>
+
+      <button class="btn-search" (click)="getMysoreTTCData(mysoreTTCFilter, true)">
+        <i class="bi bi-search"></i> Search
+      </button>
+      <button type="button" class="btn-clear" (click)="clearFilter()">
+        <i class="bi bi-arrow-counterclockwise"></i> Clear
+      </button>
+    </div>
+
+    <!-- ── Data Table ──────────────────────────────────────── -->
+    <div class="pranarambh-table-responsive">
+      <table id="MysoreTTC" class="fancy-table">
+        <thead>
+          <tr>
+            <th class="text-center" style="width:52px">#</th>
+            <th>Student Name</th>
+            <th class="text-center">Course</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Price</th>
+            <th class="text-center">Room / Payment Plan</th>
+            <th class="text-center">Month</th>
+            <th class="text-center">Payment Status</th>
+            <th class="text-center">Gateway</th>
+            <th>Registered On</th>
+            <th class="text-center" style="width:60px">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let obj of mysoreTTCList
+                | paginate
+                  : {
+                      id: 'mysoreTTC',
+                      itemsPerPage: mysoreTTCList?.length || 10,
+                      currentPage: mysoreTTCPage,
+                      totalItems: mysoreTTCTotal
+                    };
+              let i = index
+            "
+          >
+            <!-- # -->
+            <td class="text-center index-cell">
+              {{ i + 1 + (mysoreTTCPage - 1) * 10 }}
+            </td>
+
+            <!-- Name -->
+            <td class="fw-semibold text-dark">{{ obj.name }}</td>
+
+            <!-- Course type -->
+            <td class="text-center">
+              <span class="course-badge" *ngIf="obj.hour">{{ obj.hour }}h TTC</span>
+              <span class="text-muted" *ngIf="!obj.hour">—</span>
+            </td>
+
+            <!-- Email -->
+            <td class="text-secondary">
+              {{ obj.email }}
+            </td>
+
+            <!-- Phone -->
+            <td class="text-secondary">
+              {{ obj.phoneNumber || '—' }}
+            </td>
+
+            <!-- Price -->
+            <td class="price-cell">
+              {{ obj.price | currency: obj.currency }}
+            </td>
+
+            <!-- Room / Payment Plan -->
+            <td class="text-center">
+              <ng-container *ngIf="obj.room; else noRoom">
+                <span
+                  class="room-badge"
+                  [class.deposit-badge]="obj.room?.includes('30%')"
+                  [title]="obj.room"
+                >
+                  <i class="bi" [ngClass]="obj.room?.includes('30%') ? 'bi-piggy-bank' : 'bi-house-door'"></i>
+                  {{ obj.room }}
+                </span>
+              </ng-container>
+              <ng-template #noRoom>
+                <span class="text-muted">—</span>
+              </ng-template>
+            </td>
+
+            <!-- Month -->
+            <td class="text-center">
+              <span class="course-badge" *ngIf="obj.month">{{ obj.month }}</span>
+              <span class="text-muted" *ngIf="!obj.month">—</span>
+            </td>
+
+            <!-- Payment Status -->
+            <td class="text-center">
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-paid':    obj?.paymentStatus === 'paid',
+                  'status-pending': obj?.paymentStatus === 'pending',
+                  'status-failed':  obj?.paymentStatus === 'failed'
+                }"
+              >
+                <i
+                  class="bi"
+                  [ngClass]="{
+                    'bi-check-circle-fill': obj?.paymentStatus === 'paid',
+                    'bi-clock-history':     obj?.paymentStatus === 'pending',
+                    'bi-x-circle-fill':     obj?.paymentStatus === 'failed'
+                  }"
+                ></i>
+                {{ (obj.paymentStatus || 'pending') | titlecase }}
+              </span>
+            </td>
+
+            <!-- Gateway -->
+            <td class="text-center">
+              <span class="paytype-badge" *ngIf="obj.paymentType">
+                {{ obj.paymentType | titlecase }}
+              </span>
+              <span class="text-muted" *ngIf="!obj.paymentType">—</span>
+            </td>
+
+            <!-- Registered On -->
+            <td>
+              <ng-container *ngIf="obj.created; else noDate">
+                <i class="bi bi-calendar-event me-1 text-muted"></i>
+                {{ obj.created | date: 'dd MMM yyyy' }}
+              </ng-container>
+              <ng-template #noDate>
+                <span class="text-muted">N/A</span>
+              </ng-template>
+            </td>
+
+            <!-- Action -->
+            <td class="text-center">
+              <button class="delete-btn-fancy" (click)="deleteRow(obj)" title="Delete Record">
+                <i class="bi bi-trash3"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- Empty state -->
+          <tr *ngIf="!mysoreTTCList || mysoreTTCList.length === 0">
+            <td colspan="12" class="text-center py-5">
+              <i class="bi bi-inbox text-muted d-block mb-2" style="font-size:2.5rem"></i>
+              <p class="text-muted mb-0 fw-semibold">No Mysore TTC records found</p>
+              <small class="text-muted">Try adjusting your filters or search term</small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── Pagination ──────────────────────────────────────── -->
+    <div class="pg-card-footer">
+      <pagination-controls
+        id="mysoreTTC"
+        (pageChange)="onMysoreTTCTableDataChange($event)"
+      ></pagination-controls>
+    </div>
+
+  </div>
+</div>

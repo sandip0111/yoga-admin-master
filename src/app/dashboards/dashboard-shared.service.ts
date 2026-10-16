@@ -20,6 +20,7 @@ export class DashboardSharedService {
   pranayamaCertificationTitle: string = "Pranayama Certification";
   retreatTitle: string = "Retreat";
   pgTitle: string = "Personal Guidance";
+  mysoreTTCTitle: string = "Mysore TTC";
   constructor() { }
   escapeCSV(value: any): string {
     const str = value === null || value === undefined ? "" : String(value);

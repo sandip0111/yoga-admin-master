@@ -412,4 +412,15 @@ export class ServiceService {
       studentId,
     });
   }
+  getMysoreTTCData(data: searchPranaRambhFilter) {
+    return this.http.post(this.url + "api/v1/getMysoreTTCData", data);
+  }
+  removeMysoreTTCData(studentId: string) {
+    return this.http.post(this.url + "api/v1/removeMysoreTTCData", {
+      studentId,
+    });
+  }
+  createMysoreTTCCustomer(data: any) {
+    return this.http.post(this.url + "api/v1/createMysoreTTCCustomer", data);
+  }
 }
