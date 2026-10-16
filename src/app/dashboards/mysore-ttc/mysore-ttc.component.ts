@@ -26,7 +26,7 @@ export class MysoreTTCComponent implements OnInit {
     { label: "100 hours", value: "100" },
     { label: "200 hours", value: "200" },
   ];
-  monthOption = ["All Month Data", "October, 2026", "October, 2027"];
+  monthOption = ["All Month Data", "October, 2027"];
   roomTypeOption = [
     { label: "All Rooms", value: "" },
     { label: "Shared room", value: "Shared room" },
