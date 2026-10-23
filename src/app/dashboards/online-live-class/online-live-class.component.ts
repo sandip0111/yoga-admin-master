@@ -44,7 +44,8 @@ export class OnlineLiveClassComponent implements OnInit {
     "July, 2026",
     "August, 2026",
     "September, 2026",
-    "October, 2026"
+    "October, 2026",
+    "November, 2026",
   ];
   constructor(
     private service: ServiceService,

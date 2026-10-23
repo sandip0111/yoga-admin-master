@@ -297,6 +297,9 @@ export class ServiceService {
   getBaliData(data: searchPranaRambhFilter) {
     return this.http.post(this.url + "api/v1/getBaliData", data);
   }
+  sendMailToShivamJi(data: { name: string; email: string }) {
+    return this.http.post(this.url + "api/v1/sendMailToShivamJi", data);
+  }
   sendMailToPrashantJi(data: { name: string; email: string }) {
     return this.http.post(this.url + "api/v1/sendMailToPrashantJi", data);
   }
