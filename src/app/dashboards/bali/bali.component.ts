@@ -26,7 +26,7 @@ export class BaliComponent implements OnInit {
     { label: "200 hours", value: "200" },
     { label: "300 hours", value: "300" },
   ];
-  monthOption = ["All Month Data", "June, 2026", "July, 2026"];
+  monthOption = ["All Month Data", "July, 2027", "August, 2027"];
   roomTypeOption = [
     { label: "All Rooms", value: "" },
     { label: "Private room", value: "Private room" },
