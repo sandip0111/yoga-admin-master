@@ -30,6 +30,7 @@ export class AddCourseVideoComponent implements OnInit {
   // Additional dropdown with two names (values 1 and 3)
   teacherOptions: { value: number; label: string }[] = [
     { value: 1, label: "Prashant Ji" },
+    { value: 2, label: "Shivam Joshi" },
     { value: 3, label: "Taniya Ji" },
   ];
   selectedTeacherId: number | null = null;
