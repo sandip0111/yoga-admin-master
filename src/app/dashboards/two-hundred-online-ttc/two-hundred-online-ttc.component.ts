@@ -32,6 +32,7 @@ export class TwoHundredOnlineTtcComponent implements OnInit {
     { value: "October", label: "October" },
     { value: "November", label: "November, 2025" },
     { value: "November, 2026", label: "November, 2026" },
+    { value: "November, 2027", label: "November, 2027" },
   ];
   roomTypeOption = [
     { label: "All Plans", value: "" },
