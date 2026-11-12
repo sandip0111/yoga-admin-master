@@ -211,6 +211,7 @@ export interface twoHunTTCModel {
   hour: number;
   month: string;
   _id: string;
+  password: string;
 }
 export interface twoHunTTCModelResultModel {
   data: twoHunTTCModel[];
